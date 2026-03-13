@@ -2,12 +2,16 @@
 
 `Ramanujan Discovery Lab` is a local-first research tool for rediscovering and stress-testing Ramanujan-style `q`-continued fractions.
 
+- Repository: `https://github.com/peter941221/ramanujan-discovery-lab`
+- Pages: `https://peter941221.github.io/ramanujan-discovery-lab/`
+
 The current release is intentionally narrow:
 
 - CLI-first workflow
 - high-precision numerical evaluation with `mpmath`
 - benchmark verification against independent infinite-product formulas
 - GitHub Pages-friendly static site generation
+- GitHub Actions workflow that reruns discovery, verification, reporting, and Pages deployment on `main`
 
 ## What It Does
 
@@ -25,9 +29,10 @@ The pipeline has four stages:
 Current benchmark catalog:
 
 - Rogers-Ramanujan normalized continued fraction
-- Rogers-Ramanujan family benchmarks at `q^2` and `q^3`
+- Rogers-Ramanujan family benchmarks at `q^2`, `q^3`, and `q^4`
 - Ramanujan cubic continued fraction
-- Ramanujan cubic family benchmark at `q^2`
+- Ramanujan cubic family benchmarks at `q^2` and `q^3`
+- Conservative review audit for numerically stable unexplained candidates
 
 ## Quickstart
 
@@ -48,6 +53,11 @@ Then open `docs/index.html` locally or publish the `docs/` folder with GitHub Pa
 - `known_variant`: strong numerical match to a classical benchmark but not canonical
 - `fixture`: internal regression target
 - `review`: stable unexplained candidate that does not strongly match the benchmark catalog
+
+Review audit:
+
+- [REVIEW_AUDIT.md](REVIEW_AUDIT.md)
+- Pages view: `review-audit.html`
 
 ## Current Limits
 

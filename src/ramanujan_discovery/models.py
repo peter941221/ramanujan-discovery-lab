@@ -142,6 +142,8 @@ class CandidateRecord:
     q_values: list[float]
     value_estimates: list[str]
     matched_target: str
+    closest_benchmark: str
+    closest_benchmark_digits: int
     benchmark_kind: str
     digits_agree: int
     stability_score: int
@@ -155,6 +157,8 @@ class CandidateRecord:
             "q_values": self.q_values,
             "value_estimates": self.value_estimates,
             "matched_target": self.matched_target,
+            "closest_benchmark": self.closest_benchmark,
+            "closest_benchmark_digits": self.closest_benchmark_digits,
             "benchmark_kind": self.benchmark_kind,
             "digits_agree": self.digits_agree,
             "stability_score": self.stability_score,
@@ -170,6 +174,8 @@ class CandidateRecord:
             q_values=[float(value) for value in payload["q_values"]],
             value_estimates=[str(value) for value in payload["value_estimates"]],
             matched_target=str(payload["matched_target"]),
+            closest_benchmark=str(payload.get("closest_benchmark", payload["matched_target"])),
+            closest_benchmark_digits=int(payload.get("closest_benchmark_digits", payload["digits_agree"])),
             benchmark_kind=str(payload["benchmark_kind"]),
             digits_agree=int(payload["digits_agree"]),
             stability_score=int(payload["stability_score"]),

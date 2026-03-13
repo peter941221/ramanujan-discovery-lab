@@ -77,6 +77,8 @@ def verify_candidates(input_path: str, config: VerificationConfig) -> list[Candi
                     q_values=list(config.q_values),
                     value_estimates=[format_mpf(value) for value in values],
                     matched_target=best_name,
+                    closest_benchmark=best_name,
+                    closest_benchmark_digits=best_digits,
                     benchmark_kind=best_kind,
                     digits_agree=best_digits,
                     stability_score=stability,
@@ -94,11 +96,16 @@ def verify_candidates(input_path: str, config: VerificationConfig) -> list[Candi
                     q_values=list(config.q_values),
                     value_estimates=[format_mpf(value) for value in values],
                     matched_target="unmatched",
+                    closest_benchmark=best_name,
+                    closest_benchmark_digits=best_digits,
                     benchmark_kind="exploratory",
                     digits_agree=best_digits,
                     stability_score=stability,
                     novelty_status="review",
-                    notes="Stable at higher precision but still unmatched against the benchmark catalog.",
+                    notes=(
+                        "Stable at higher precision but still unmatched against the benchmark catalog. "
+                        f"Closest benchmark: {best_name} ({best_digits} shared digits)."
+                    ),
                 )
             )
 

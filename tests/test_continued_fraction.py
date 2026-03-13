@@ -1,4 +1,13 @@
-from ramanujan_discovery.benchmarks import CUBIC_TEMPLATE, RR_Q2_TEMPLATE, RR_Q3_TEMPLATE, RR_TEMPLATE, target_value
+from ramanujan_discovery.benchmarks import (
+    CUBIC_Q2_TEMPLATE,
+    CUBIC_Q3_TEMPLATE,
+    CUBIC_TEMPLATE,
+    RR_Q2_TEMPLATE,
+    RR_Q3_TEMPLATE,
+    RR_Q4_TEMPLATE,
+    RR_TEMPLATE,
+    target_value,
+)
 from ramanujan_discovery.continued_fraction import agreement_digits, evaluate_qcf
 
 
@@ -13,7 +22,10 @@ def test_extended_classical_benchmarks_match_product_formula():
     checks = [
         ("rogers_ramanujan_q2_normalized", RR_Q2_TEMPLATE),
         ("rogers_ramanujan_q3_normalized", RR_Q3_TEMPLATE),
+        ("rogers_ramanujan_q4_normalized", RR_Q4_TEMPLATE),
         ("ramanujan_cubic_normalized", CUBIC_TEMPLATE),
+        ("ramanujan_cubic_q2_normalized", CUBIC_Q2_TEMPLATE),
+        ("ramanujan_cubic_q3_normalized", CUBIC_Q3_TEMPLATE),
     ]
     for benchmark_name, template in checks:
         for q_value in (0.04, 0.09, 0.15):

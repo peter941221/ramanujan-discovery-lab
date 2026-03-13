@@ -1,4 +1,4 @@
-from ramanujan_discovery.benchmarks import CUBIC_TEMPLATE, RR_TEMPLATE
+from ramanujan_discovery.benchmarks import CUBIC_Q3_TEMPLATE, CUBIC_TEMPLATE, RR_Q4_TEMPLATE, RR_TEMPLATE
 from ramanujan_discovery.config import SearchConfig
 from ramanujan_discovery.discovery import discover_candidates
 
@@ -27,3 +27,14 @@ def test_discovery_rediscovers_classical_benchmark():
         and record.template.signature() == CUBIC_TEMPLATE.signature()
         for record in records
     )
+    assert any(
+        record.matched_target == "rogers_ramanujan_q4_normalized"
+        and record.template.signature() == RR_Q4_TEMPLATE.signature()
+        for record in records
+    )
+    assert any(
+        record.matched_target == "ramanujan_cubic_q3_normalized"
+        and record.template.signature() == CUBIC_Q3_TEMPLATE.signature()
+        for record in records
+    )
+    assert any(record.novelty_status == "review" for record in records)

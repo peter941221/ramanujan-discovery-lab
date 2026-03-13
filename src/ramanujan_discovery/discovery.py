@@ -20,7 +20,7 @@ def iter_search_templates():
         return template
 
     for shift in (1, 2, 3, 4):
-        for step in (1, 2, 3):
+        for step in (1, 2, 3, 4):
             template = emit(
                 QCFTemplate(
                     numerator_scale=1,
@@ -36,7 +36,7 @@ def iter_search_templates():
                 yield template
 
     for shift in (1, 2, 3, 4):
-        for step in (1, 2, 3):
+        for step in (1, 2, 3, 4):
             for denominator_shift in (1, 2, 3, 4):
                 for denominator_step in (0, 1, 2, 3):
                     template = emit(
@@ -161,6 +161,8 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
                     q_values=list(config.q_values),
                     value_estimates=[format_mpf(value) for value in values],
                     matched_target=target_name,
+                    closest_benchmark=target_name,
+                    closest_benchmark_digits=digits,
                     benchmark_kind=benchmark_kind,
                     digits_agree=digits,
                     stability_score=stability,
@@ -178,11 +180,16 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
                     q_values=list(config.q_values),
                     value_estimates=[format_mpf(value) for value in values],
                     matched_target="unmatched",
+                    closest_benchmark=target_name,
+                    closest_benchmark_digits=digits,
                     benchmark_kind="exploratory",
                     digits_agree=digits,
                     stability_score=stability,
                     novelty_status="review",
-                    notes="Stable under deeper truncation but not close to the built-in benchmark catalog.",
+                    notes=(
+                        "Stable under deeper truncation but not close to the built-in benchmark catalog. "
+                        f"Closest benchmark: {target_name} ({digits} shared digits)."
+                    ),
                 )
             )
 

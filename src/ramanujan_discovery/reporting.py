@@ -51,6 +51,7 @@ def build_report(input_path: str, output_path: str) -> None:
                 f"- Digits agree: `{record.digits_agree}`",
                 f"- Stability score: `{record.stability_score}`",
                 f"- Novelty status: `{record.novelty_status}`",
+                f"- Closest benchmark: `{record.closest_benchmark}` ({record.closest_benchmark_digits} digits)",
                 f"- Notes: {record.notes}",
                 f"- Template signature: `{record.template.signature()}`",
                 f"- Template LaTeX: `{record.template.latex()}`",
@@ -88,6 +89,7 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
         },
     }
 
+    (directory / ".nojekyll").write_text("", encoding="utf-8")
     (directory / "results.json").write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     (directory / "styles.css").write_text(_site_css(), encoding="utf-8")
     (directory / "index.html").write_text(_site_html(payload), encoding="utf-8")
@@ -112,6 +114,7 @@ def _site_html(payload: dict[str, object]) -> str:
       <div class="meta">
         <span>Generated: {payload["generated_at"]}</span>
         <span>Records: {len(payload["records"])}</span>
+        <a href="review-audit.html">Review audit</a>
       </div>
     </section>
     <section class="stats" id="stats"></section>
@@ -148,6 +151,7 @@ def _site_html(payload: dict[str, object]) -> str:
         <p class="notes">${{record.notes}}</p>
         <dl>
           <div><dt>Stability</dt><dd>${{record.stability_score}}</dd></div>
+          <div><dt>Closest benchmark</dt><dd>${{record.closest_benchmark}} (${{record.closest_benchmark_digits}} digits)</dd></div>
           <div><dt>Complexity</dt><dd>${{record.complexity_score}}</dd></div>
         </dl>
         <details>

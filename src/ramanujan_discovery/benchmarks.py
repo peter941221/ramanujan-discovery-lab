@@ -21,6 +21,7 @@ def _rr_template(step: int) -> QCFTemplate:
 RR_TEMPLATE = _rr_template(1)
 RR_Q2_TEMPLATE = _rr_template(2)
 RR_Q3_TEMPLATE = _rr_template(3)
+RR_Q4_TEMPLATE = _rr_template(4)
 
 def _cubic_template(step: int) -> QCFTemplate:
     return QCFTemplate(
@@ -39,6 +40,7 @@ def _cubic_template(step: int) -> QCFTemplate:
 
 CUBIC_TEMPLATE = _cubic_template(1)
 CUBIC_Q2_TEMPLATE = _cubic_template(2)
+CUBIC_Q3_TEMPLATE = _cubic_template(3)
 
 SHIFTED_FIXTURE_TEMPLATE = QCFTemplate(
     numerator_scale=1,
@@ -79,6 +81,12 @@ BENCHMARKS: dict[str, BenchmarkDefinition] = {
         description="Rogers-Ramanujan family benchmark evaluated at q^3.",
         canonical_template=RR_Q3_TEMPLATE,
     ),
+    "rogers_ramanujan_q4_normalized": BenchmarkDefinition(
+        name="rogers_ramanujan_q4_normalized",
+        kind="classical_family",
+        description="Rogers-Ramanujan family benchmark evaluated at q^4.",
+        canonical_template=RR_Q4_TEMPLATE,
+    ),
     "ramanujan_cubic_normalized": BenchmarkDefinition(
         name="ramanujan_cubic_normalized",
         kind="classical",
@@ -90,6 +98,12 @@ BENCHMARKS: dict[str, BenchmarkDefinition] = {
         kind="classical_family",
         description="Ramanujan cubic continued fraction benchmark evaluated at q^2.",
         canonical_template=CUBIC_Q2_TEMPLATE,
+    ),
+    "ramanujan_cubic_q3_normalized": BenchmarkDefinition(
+        name="ramanujan_cubic_q3_normalized",
+        kind="classical_family",
+        description="Ramanujan cubic continued fraction benchmark evaluated at q^3.",
+        canonical_template=CUBIC_Q3_TEMPLATE,
     ),
     "shifted_rr_fixture": BenchmarkDefinition(
         name="shifted_rr_fixture",
@@ -143,11 +157,17 @@ def target_value(name: str, q: float, precision: int, depth: int):
         if name == "rogers_ramanujan_q3_normalized":
             return _rr_product(q, precision, step=3)
 
+        if name == "rogers_ramanujan_q4_normalized":
+            return _rr_product(q, precision, step=4)
+
         if name == "ramanujan_cubic_normalized":
             return _cubic_product(q, precision, step=1)
 
         if name == "ramanujan_cubic_q2_normalized":
             return _cubic_product(q, precision, step=2)
+
+        if name == "ramanujan_cubic_q3_normalized":
+            return _cubic_product(q, precision, step=3)
 
     if name == "shifted_rr_fixture":
         return evaluate_qcf(SHIFTED_FIXTURE_TEMPLATE, q=q, depth=depth, precision=precision)
