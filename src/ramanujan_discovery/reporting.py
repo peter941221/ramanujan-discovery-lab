@@ -52,6 +52,7 @@ def build_report(input_path: str, output_path: str) -> None:
                 f"- Stability score: `{record.stability_score}`",
                 f"- Novelty status: `{record.novelty_status}`",
                 f"- Closest benchmark: `{record.closest_benchmark}` ({record.closest_benchmark_digits} digits)",
+                f"- Family bucket: `{record.family_bucket}`",
                 f"- Notes: {record.notes}",
                 f"- Template signature: `{record.template.signature()}`",
                 f"- Template LaTeX: `{record.template.latex()}`",
@@ -87,7 +88,55 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
             "fixture": sum(record.novelty_status == "fixture" for record in records),
             "review": sum(record.novelty_status == "review" for record in records),
         },
+        "benchmark_families": [
+            {
+                "name": "Rogers-Ramanujan",
+                "count": 4,
+                "description": "Product-backed baselines at q, q^2, q^3, and q^4.",
+            },
+            {
+                "name": "Ramanujan cubic",
+                "count": 3,
+                "description": "Independent cubic benchmarks at q, q^2, and q^3.",
+            },
+            {
+                "name": "Internal fixtures",
+                "count": 2,
+                "description": "Regression-only shifted and denominator-perturbed control templates.",
+            },
+        ],
+        "pipeline": [
+            {
+                "step": "discover",
+                "detail": "Enumerate a bounded q-continued-fraction grid and keep numerically stable candidates.",
+            },
+            {
+                "step": "verify",
+                "detail": "Re-score survivors at higher precision against the benchmark catalog.",
+            },
+            {
+                "step": "report",
+                "detail": "Publish a markdown artifact with signatures, buckets, and benchmark alignment.",
+            },
+            {
+                "step": "site",
+                "detail": "Ship the same snapshot to GitHub Pages without claiming unexplained templates are new formulas.",
+            },
+        ],
     }
+
+    review_records = [record for record in public_records if record["novelty_status"] == "review"]
+    top_leads = [record for record in review_records if record["id"] in {"cb60fd71d1d7", "1125ffe48b3b"}]
+    if len(top_leads) < 2:
+        seen_ids = {record["id"] for record in top_leads}
+        for record in review_records:
+            if record["id"] in seen_ids:
+                continue
+            top_leads.append(record)
+            seen_ids.add(record["id"])
+            if len(top_leads) >= 2:
+                break
+    payload["top_leads"] = top_leads
 
     (directory / ".nojekyll").write_text("", encoding="utf-8")
     (directory / "results.json").write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
@@ -118,6 +167,29 @@ def _site_html(payload: dict[str, object]) -> str:
       </div>
     </section>
     <section class="stats" id="stats"></section>
+    <section class="panel spotlight">
+      <div class="panel-header">
+        <h2>Top Leads</h2>
+        <p>The current release only highlights two weak leads for deeper manual audit. They are not public novelty claims.</p>
+      </div>
+      <div class="cards" id="top-leads"></div>
+    </section>
+    <section class="info-grid">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Benchmark Families</h2>
+          <p>The catalog stays intentionally small and independently checkable.</p>
+        </div>
+        <div class="stack" id="benchmark-families"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Pipeline Discipline</h2>
+          <p>This release is designed to surface candidates, not to auto-announce discoveries.</p>
+        </div>
+        <div class="stack" id="pipeline-list"></div>
+      </section>
+    </section>
     <section class="panel">
       <div class="panel-header">
         <h2>Candidate Gallery</h2>
@@ -129,18 +201,14 @@ def _site_html(payload: dict[str, object]) -> str:
   <script>
     const payload = {data_json};
     const stats = document.getElementById("stats");
+    const topLeads = document.getElementById("top-leads");
+    const benchmarkFamilies = document.getElementById("benchmark-families");
+    const pipelineList = document.getElementById("pipeline-list");
     const cards = document.getElementById("cards");
 
-    Object.entries(payload.status_counts).forEach(([key, value]) => {{
-      const item = document.createElement("article");
-      item.className = "stat";
-      item.innerHTML = `<h3>${{key}}</h3><p>${{value}}</p>`;
-      stats.appendChild(item);
-    }});
-
-    payload.records.forEach((record) => {{
+    const renderCard = (record, className = "") => {{
       const card = document.createElement("article");
-      card.className = `card status-${{record.novelty_status}}`;
+      card.className = `card status-${{record.novelty_status}} ${{className}}`.trim();
       card.innerHTML = `
         <div class="card-top">
           <span class="status-pill">${{record.novelty_status}}</span>
@@ -152,6 +220,7 @@ def _site_html(payload: dict[str, object]) -> str:
         <dl>
           <div><dt>Stability</dt><dd>${{record.stability_score}}</dd></div>
           <div><dt>Closest benchmark</dt><dd>${{record.closest_benchmark}} (${{record.closest_benchmark_digits}} digits)</dd></div>
+          <div><dt>Family bucket</dt><dd><code>${{record.family_bucket}}</code></dd></div>
           <div><dt>Complexity</dt><dd>${{record.complexity_score}}</dd></div>
         </dl>
         <details>
@@ -162,7 +231,43 @@ def _site_html(payload: dict[str, object]) -> str:
           <p><strong>LaTeX</strong><br><code>${{record.template_latex}}</code></p>
         </details>
       `;
-      cards.appendChild(card);
+      return card;
+    }};
+
+    Object.entries(payload.status_counts).forEach(([key, value]) => {{
+      const item = document.createElement("article");
+      item.className = "stat";
+      item.innerHTML = `<h3>${{key}}</h3><p>${{value}}</p>`;
+      stats.appendChild(item);
+    }});
+
+    payload.top_leads.forEach((record) => {{
+      topLeads.appendChild(renderCard(record, "lead-card"));
+    }});
+
+    payload.benchmark_families.forEach((family) => {{
+      const item = document.createElement("article");
+      item.className = "info-card";
+      item.innerHTML = `
+        <h3>${{family.name}}</h3>
+        <p class="digits">${{family.count}} catalog entries</p>
+        <p class="notes">${{family.description}}</p>
+      `;
+      benchmarkFamilies.appendChild(item);
+    }});
+
+    payload.pipeline.forEach((entry) => {{
+      const item = document.createElement("article");
+      item.className = "info-card";
+      item.innerHTML = `
+        <h3>${{entry.step}}</h3>
+        <p class="notes">${{entry.detail}}</p>
+      `;
+      pipelineList.appendChild(item);
+    }});
+
+    payload.records.forEach((record) => {{
+      cards.appendChild(renderCard(record));
     }});
   </script>
 </body>
@@ -254,6 +359,13 @@ body {
   margin: 24px 0;
 }
 
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
 .stat,
 .card,
 .panel {
@@ -286,6 +398,10 @@ body {
   padding: 24px;
 }
 
+.spotlight {
+  margin-bottom: 24px;
+}
+
 .panel-header p {
   color: var(--muted);
 }
@@ -294,6 +410,11 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
+}
+
+.stack {
+  display: grid;
+  gap: 14px;
 }
 
 .card {
@@ -332,6 +453,13 @@ body {
 .status-review .status-pill {
   background: rgba(14, 111, 122, 0.12);
   color: var(--review);
+}
+
+.lead-card {
+  border-color: rgba(14, 111, 122, 0.25);
+  background:
+    linear-gradient(180deg, rgba(14, 111, 122, 0.06), transparent 28%),
+    var(--panel);
 }
 
 .card h3 {
@@ -377,6 +505,18 @@ dt {
 
 dd {
   margin: 0;
+}
+
+.info-card {
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.info-card h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
 }
 
 details {

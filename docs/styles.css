@@ -80,6 +80,13 @@ body {
   margin: 24px 0;
 }
 
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
 .stat,
 .card,
 .panel {
@@ -112,6 +119,10 @@ body {
   padding: 24px;
 }
 
+.spotlight {
+  margin-bottom: 24px;
+}
+
 .panel-header p {
   color: var(--muted);
 }
@@ -120,6 +131,11 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
+}
+
+.stack {
+  display: grid;
+  gap: 14px;
 }
 
 .card {
@@ -158,6 +174,13 @@ body {
 .status-review .status-pill {
   background: rgba(14, 111, 122, 0.12);
   color: var(--review);
+}
+
+.lead-card {
+  border-color: rgba(14, 111, 122, 0.25);
+  background:
+    linear-gradient(180deg, rgba(14, 111, 122, 0.06), transparent 28%),
+    var(--panel);
 }
 
 .card h3 {
@@ -203,6 +226,18 @@ dt {
 
 dd {
   margin: 0;
+}
+
+.info-card {
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.info-card h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
 }
 
 details {

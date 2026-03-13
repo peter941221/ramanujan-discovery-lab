@@ -126,6 +126,27 @@ class QCFTemplate:
             score += 1
         return score
 
+    def exploratory_family_key(self, closest_benchmark: str) -> str:
+        if self.numerator_extra_scale == 0 and self.denominator_scale == 0:
+            family_kind = "single_numerator_family"
+        elif self.numerator_extra_scale != 0 and self.denominator_scale == 0:
+            family_kind = "double_numerator_family"
+        elif self.numerator_extra_scale == 0 and self.denominator_scale != 0:
+            family_kind = "denominator_perturbed_family"
+        else:
+            family_kind = "hybrid_perturbed_family"
+
+        extra_ratio = 0
+        if self.numerator_extra_scale != 0 and self.numerator_q_step != 0:
+            extra_ratio = self.numerator_extra_q_step // self.numerator_q_step
+
+        return (
+            f"{family_kind}::"
+            f"num_scale={self.numerator_scale}::"
+            f"extra_ratio={extra_ratio}::"
+            f"den_scale={self.denominator_scale}"
+        )
+
 
 @dataclass(frozen=True)
 class BenchmarkDefinition:
@@ -144,6 +165,7 @@ class CandidateRecord:
     matched_target: str
     closest_benchmark: str
     closest_benchmark_digits: int
+    family_bucket: str
     benchmark_kind: str
     digits_agree: int
     stability_score: int
@@ -159,6 +181,7 @@ class CandidateRecord:
             "matched_target": self.matched_target,
             "closest_benchmark": self.closest_benchmark,
             "closest_benchmark_digits": self.closest_benchmark_digits,
+            "family_bucket": self.family_bucket,
             "benchmark_kind": self.benchmark_kind,
             "digits_agree": self.digits_agree,
             "stability_score": self.stability_score,
@@ -176,6 +199,7 @@ class CandidateRecord:
             matched_target=str(payload["matched_target"]),
             closest_benchmark=str(payload.get("closest_benchmark", payload["matched_target"])),
             closest_benchmark_digits=int(payload.get("closest_benchmark_digits", payload["digits_agree"])),
+            family_bucket=str(payload.get("family_bucket", "legacy")),
             benchmark_kind=str(payload["benchmark_kind"]),
             digits_agree=int(payload["digits_agree"]),
             stability_score=int(payload["stability_score"]),

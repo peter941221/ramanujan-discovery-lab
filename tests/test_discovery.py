@@ -37,4 +37,7 @@ def test_discovery_rediscovers_classical_benchmark():
         and record.template.signature() == CUBIC_Q3_TEMPLATE.signature()
         for record in records
     )
-    assert any(record.novelty_status == "review" for record in records)
+    review_records = [record for record in records if record.novelty_status == "review"]
+    assert review_records
+    assert len(review_records) == 4
+    assert len(review_records) == len({record.family_bucket for record in review_records})

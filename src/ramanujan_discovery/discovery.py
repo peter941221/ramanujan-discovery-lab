@@ -136,6 +136,14 @@ def _rank_key(record: CandidateRecord) -> tuple[int, int, int, str]:
     )
 
 
+def _family_bucket(template: QCFTemplate, matched_target: str, closest_benchmark: str, novelty_status: str) -> str:
+    if novelty_status == "review":
+        return template.exploratory_family_key(closest_benchmark)
+    if matched_target != "unmatched":
+        return matched_target
+    return template.signature()
+
+
 def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
     started_at = time.monotonic()
     grouped: dict[str, list[CandidateRecord]] = defaultdict(list)
@@ -163,6 +171,12 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
                     matched_target=target_name,
                     closest_benchmark=target_name,
                     closest_benchmark_digits=digits,
+                    family_bucket=_family_bucket(
+                        template=template,
+                        matched_target=target_name,
+                        closest_benchmark=target_name,
+                        novelty_status="unreviewed",
+                    ),
                     benchmark_kind=benchmark_kind,
                     digits_agree=digits,
                     stability_score=stability,
@@ -182,6 +196,12 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
                     matched_target="unmatched",
                     closest_benchmark=target_name,
                     closest_benchmark_digits=digits,
+                    family_bucket=_family_bucket(
+                        template=template,
+                        matched_target="unmatched",
+                        closest_benchmark=target_name,
+                        novelty_status="review",
+                    ),
                     benchmark_kind="exploratory",
                     digits_agree=digits,
                     stability_score=stability,
@@ -208,12 +228,14 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
 
     ordered_reviews = sorted(review_records, key=_rank_key, reverse=True)
     seen_signatures = {record.template.signature() for record in results}
+    seen_family_buckets: set[str] = set()
     unique_reviews: list[CandidateRecord] = []
     for record in ordered_reviews:
         signature = record.template.signature()
-        if signature in seen_signatures:
+        if signature in seen_signatures or record.family_bucket in seen_family_buckets:
             continue
         seen_signatures.add(signature)
+        seen_family_buckets.add(record.family_bucket)
         unique_reviews.append(record)
         if len(unique_reviews) >= config.max_review_candidates:
             break
