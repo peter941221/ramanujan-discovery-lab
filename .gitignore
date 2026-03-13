@@ -1,0 +1,9 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+
+results/
+AGENTS.md
+MEMORY.md
+RUNBOOK.md
+TECHNICAL_DESIGN.md

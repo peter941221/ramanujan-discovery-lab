@@ -1,0 +1,506 @@
+{
+  "title": "Ramanujan Discovery Lab",
+  "generated_at": "2026-03-13 08:56:47 UTC",
+  "records": [
+    {
+      "id": "d9b5fd674333",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 2,
+        "numerator_q_step": 1,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.998402657976864789170521",
+        "0.988060358992057478100966",
+        "0.972045123636784664545912",
+        "0.950330180758873924590325"
+      ],
+      "matched_target": "shifted_rr_fixture",
+      "benchmark_kind": "internal_fixture",
+      "digits_agree": 158,
+      "stability_score": 158,
+      "novelty_status": "fixture",
+      "notes": "Exact canonical match to an internal regression fixture.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=2;nk=1;nes=0;ner=0;nek=0;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{2 + 1(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 1
+    },
+    {
+      "id": "26ff63998a8f",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 1,
+        "numerator_q_step": 1,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 1,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.963017660597299378689753",
+        "0.910709912663064685456978",
+        "0.875726953889129874674948",
+        "0.847649489867582579985575"
+      ],
+      "matched_target": "denominator_perturbed_fixture",
+      "benchmark_kind": "internal_fixture",
+      "digits_agree": 158,
+      "stability_score": 158,
+      "novelty_status": "fixture",
+      "notes": "Exact canonical match to an internal regression fixture.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=1;nk=1;nes=0;ner=0;nek=0;dc=1;ds=1;dr=1;dk=1",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{1 + 1(n-1)}}{1 + 1 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 2
+    },
+    {
+      "id": "8ddb7fe583d2",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 1,
+        "numerator_q_step": 1,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.961597538467597602733673",
+        "0.901968116492133222222205",
+        "0.858186654109463722548409",
+        "0.820630020569653118707423"
+      ],
+      "matched_target": "rogers_ramanujan_normalized",
+      "benchmark_kind": "classical",
+      "digits_agree": 152,
+      "stability_score": 158,
+      "novelty_status": "known",
+      "notes": "Exact canonical match to a classical benchmark.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=1;nk=1;nes=0;ner=0;nek=0;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{1 + 1(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 0
+    },
+    {
+      "id": "05fe7657191e",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 3,
+        "numerator_q_step": 3,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.999936004095999983223858",
+        "0.998670771557865743318931",
+        "0.995111136989226191827579",
+        "0.987981014237806118414699"
+      ],
+      "matched_target": "rogers_ramanujan_q3_normalized",
+      "benchmark_kind": "classical_family",
+      "digits_agree": 152,
+      "stability_score": 158,
+      "novelty_status": "known",
+      "notes": "Exact canonical match to a classical benchmark.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=3;nk=3;nes=0;ner=0;nek=0;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{3 + 3(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 2
+    },
+    {
+      "id": "e84e0a37cc8d",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 2,
+        "numerator_q_step": 2,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.998402559993456869009627",
+        "0.988046388820385687188848",
+        "0.971934532018397165119484",
+        "0.949890972408316039870452"
+      ],
+      "matched_target": "rogers_ramanujan_q2_normalized",
+      "benchmark_kind": "classical_family",
+      "digits_agree": 152,
+      "stability_score": 158,
+      "novelty_status": "known",
+      "notes": "Exact canonical match to a classical benchmark.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=2;nk=2;nes=0;ner=0;nek=0;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{2 + 2(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 2
+    },
+    {
+      "id": "46a12c872845",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 1,
+        "numerator_q_step": 1,
+        "numerator_extra_scale": 1,
+        "numerator_extra_q_shift": 2,
+        "numerator_extra_q_step": 2,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.960122793324099052462383",
+        "0.892359376991839624588585",
+        "0.838093820782656835146104",
+        "0.788552806286308585752639"
+      ],
+      "matched_target": "ramanujan_cubic_normalized",
+      "benchmark_kind": "classical",
+      "digits_agree": 152,
+      "stability_score": 158,
+      "novelty_status": "known",
+      "notes": "Exact canonical match to a classical benchmark.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=1;nk=1;nes=1;ner=2;nek=2;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{1 + 1(n-1)} + 1 q^{2 + 2(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 2
+    },
+    {
+      "id": "6d6d4d57abde",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 2,
+        "numerator_q_step": 2,
+        "numerator_extra_scale": 1,
+        "numerator_extra_q_shift": 4,
+        "numerator_extra_q_step": 4,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.998400008178882381241447",
+        "0.987903500003250952005799",
+        "0.971146862089333236299758",
+        "0.947380078300437247384569"
+      ],
+      "matched_target": "ramanujan_cubic_q2_normalized",
+      "benchmark_kind": "classical_family",
+      "digits_agree": 152,
+      "stability_score": 158,
+      "novelty_status": "known",
+      "notes": "Exact canonical match to a classical benchmark.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=2;nk=2;nes=1;ner=4;nek=4;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{2 + 2(n-1)} + 1 q^{4 + 4(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 4
+    },
+    {
+      "id": "cb60fd71d1d7",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 3,
+        "numerator_q_step": 3,
+        "numerator_extra_scale": 1,
+        "numerator_extra_q_shift": 6,
+        "numerator_extra_q_step": 6,
+        "denominator_constant": 1,
+        "denominator_scale": 1,
+        "denominator_q_shift": 3,
+        "denominator_q_step": 3
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.999936004095999966449863",
+        "0.998670771554739824461899",
+        "0.99511113641513511126752",
+        "0.987980993110192036134198"
+      ],
+      "matched_target": "unmatched",
+      "benchmark_kind": "exploratory",
+      "digits_agree": 7,
+      "stability_score": 158,
+      "novelty_status": "review",
+      "notes": "Stable at higher precision but still unmatched against the benchmark catalog.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=3;nk=3;nes=1;ner=6;nek=6;dc=1;ds=1;dr=3;dk=3",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{3 + 3(n-1)} + 1 q^{6 + 6(n-1)}}{1 + 1 q^{3 + 3(n-1)} + \\ddots}}",
+      "complexity_score": 6
+    },
+    {
+      "id": "1125ffe48b3b",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 2,
+        "numerator_q_step": 2,
+        "numerator_extra_scale": 1,
+        "numerator_extra_q_shift": 6,
+        "numerator_extra_q_step": 6,
+        "denominator_constant": 1,
+        "denominator_scale": 1,
+        "denominator_q_shift": 3,
+        "denominator_q_step": 2
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.998402657976864354412147",
+        "0.988060358961226813668908",
+        "0.972045119888720814994786",
+        "0.950330077811961293294078"
+      ],
+      "matched_target": "unmatched",
+      "benchmark_kind": "exploratory",
+      "digits_agree": 6,
+      "stability_score": 158,
+      "novelty_status": "review",
+      "notes": "Stable at higher precision but still unmatched against the benchmark catalog.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=2;nk=2;nes=1;ner=6;nek=6;dc=1;ds=1;dr=3;dk=2",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{2 + 2(n-1)} + 1 q^{6 + 6(n-1)}}{1 + 1 q^{3 + 2(n-1)} + \\ddots}}",
+      "complexity_score": 6
+    },
+    {
+      "id": "0998162d1829",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 3,
+        "numerator_q_step": 2,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.999936004102290633323833",
+        "0.998670790584778041889678",
+        "0.995111710232026547822139",
+        "0.987986895228778462430851"
+      ],
+      "matched_target": "unmatched",
+      "benchmark_kind": "exploratory",
+      "digits_agree": 5,
+      "stability_score": 158,
+      "novelty_status": "review",
+      "notes": "Stable at higher precision but still unmatched against the benchmark catalog.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=3;nk=2;nes=0;ner=0;nek=0;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{3 + 2(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 2
+    },
+    {
+      "id": "1f7d5e0528b3",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 2,
+        "numerator_q_step": 2,
+        "numerator_extra_scale": 1,
+        "numerator_extra_q_shift": 4,
+        "numerator_extra_q_step": 4,
+        "denominator_constant": 1,
+        "denominator_scale": 1,
+        "denominator_q_shift": 2,
+        "denominator_q_step": 2
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.998402559986934659234664",
+        "0.988046368150144766443436",
+        "0.971933892627861372911178",
+        "0.949884299021089130989069"
+      ],
+      "matched_target": "unmatched",
+      "benchmark_kind": "exploratory",
+      "digits_agree": 5,
+      "stability_score": 158,
+      "novelty_status": "review",
+      "notes": "Stable at higher precision but still unmatched against the benchmark catalog.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=2;nk=2;nes=1;ner=4;nek=4;dc=1;ds=1;dr=2;dk=2",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{2 + 2(n-1)} + 1 q^{4 + 4(n-1)}}{1 + 1 q^{2 + 2(n-1)} + \\ddots}}",
+      "complexity_score": 6
+    },
+    {
+      "id": "be3ebda85e26",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 3,
+        "numerator_q_step": 1,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 0,
+        "denominator_q_shift": 1,
+        "denominator_q_step": 1
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.999936004259556467145449",
+        "0.998670963528639410390646",
+        "0.995115078972702130312421",
+        "0.988012378102168683847353"
+      ],
+      "matched_target": "unmatched",
+      "benchmark_kind": "exploratory",
+      "digits_agree": 4,
+      "stability_score": 158,
+      "novelty_status": "review",
+      "notes": "Stable at higher precision but still unmatched against the benchmark catalog.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=3;nk=1;nes=0;ner=0;nek=0;dc=1;ds=0;dr=0;dk=0",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{3 + 1(n-1)}}{1 + 0 q^{1 + 1(n-1)} + \\ddots}}",
+      "complexity_score": 1
+    },
+    {
+      "id": "dc5e33eb459a",
+      "template": {
+        "top_constant": 1,
+        "base_denominator": 1,
+        "numerator_scale": 1,
+        "numerator_q_shift": 3,
+        "numerator_q_step": 3,
+        "numerator_extra_scale": 0,
+        "numerator_extra_q_shift": 1,
+        "numerator_extra_q_step": 1,
+        "denominator_constant": 1,
+        "denominator_scale": 1,
+        "denominator_q_shift": 4,
+        "denominator_q_step": 3
+      },
+      "q_values": [
+        0.04,
+        0.11,
+        0.17,
+        0.23
+      ],
+      "value_estimates": [
+        "0.999936004259818593026188",
+        "0.998670965882759697397579",
+        "0.995115196781485635350695",
+        "0.988014147470038483139345"
+      ],
+      "matched_target": "unmatched",
+      "benchmark_kind": "exploratory",
+      "digits_agree": 4,
+      "stability_score": 158,
+      "novelty_status": "review",
+      "notes": "Stable at higher precision but still unmatched against the benchmark catalog.",
+      "template_signature": "qcf:top=1;base=1;ns=1;nr=3;nk=3;nes=0;ner=0;nek=0;dc=1;ds=1;dr=4;dk=3",
+      "template_latex": "\\cfrac{1}{1 + \\cfrac{1 q^{3 + 3(n-1)}}{1 + 1 q^{4 + 3(n-1)} + \\ddots}}",
+      "complexity_score": 4
+    }
+  ],
+  "status_counts": {
+    "known": 5,
+    "known_variant": 0,
+    "fixture": 2,
+    "review": 6
+  }
+}
