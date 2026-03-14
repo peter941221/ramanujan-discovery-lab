@@ -39,6 +39,10 @@ e2cc74240b6f: 1 / (1 + K q^(3 + 4(n-1)) / 1)
 
 So it is the simple opposite-side step perturbation of the benchmark.
 
+A dedicated focused note for this branch now lives at:
+
+- `E2CC74240B6F_PLAIN_STEP_AUDIT.md`
+
 ### Branch B: Hybrid Perturbation
 
 `cb60fd71d1d7` keeps the same main step `3`, but adds two extra structural

@@ -11,6 +11,10 @@ def _generated_at() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
 
+def _repo_markdown_url(path: str) -> str:
+    return f"https://github.com/peter941221/ramanujan-discovery-lab/blob/main/{path}"
+
+
 def build_report(input_path: str, output_path: str) -> None:
     records = read_candidates(input_path)
     path = Path(output_path)
@@ -124,6 +128,43 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "detail": "Ship the same snapshot to GitHub Pages without claiming unexplained templates are new formulas.",
             },
         ],
+        "audit_notes": [
+            {
+                "title": "Review Audit",
+                "href": "review-audit.html",
+                "description": "Public conservative review summary for the current benchmark-relative review set.",
+            },
+            {
+                "title": "Hero Case Summary",
+                "href": _repo_markdown_url("CB60FD71D1D7_PUBLIC_SUMMARY.md"),
+                "description": "Short public-facing summary of the current lead candidate cb60fd71d1d7.",
+            },
+            {
+                "title": "Hero Transform Audit",
+                "href": _repo_markdown_url("CB60FD71D1D7_TRANSFORM_AUDIT.md"),
+                "description": "Detailed elimination log for direct, equivalence, contraction, and constrained Bauer-Muir paths.",
+            },
+            {
+                "title": "RR(q^3) Neighborhood",
+                "href": _repo_markdown_url("RR_Q3_NEIGHBORHOOD_AUDIT.md"),
+                "description": "Separates the plain RR(q^3) step branch from the hybrid cb60fd71d1d7 branch.",
+            },
+            {
+                "title": "E2CC Plain-Step Audit",
+                "href": _repo_markdown_url("E2CC74240B6F_PLAIN_STEP_AUDIT.md"),
+                "description": "Focused note on why e2cc74240b6f currently reads as a plain opposite-side RR step perturbation.",
+            },
+            {
+                "title": "RR(q^4) Step Ladder",
+                "href": _repo_markdown_url("RR_Q4_STEP_LADDER_AUDIT.md"),
+                "description": "Systematic note on the 4 -> 3 -> 2 -> 1 RR(q^4) single-ladder perturbation family.",
+            },
+            {
+                "title": "Second-Tier Audit",
+                "href": _repo_markdown_url("SECOND_TIER_REVIEW_AUDIT.md"),
+                "description": "Cross-candidate note covering bef31ddceea8 and e2cc74240b6f below the current hero case.",
+            },
+        ],
     }
 
     review_records = [record for record in public_records if record["novelty_status"] == "review"]
@@ -175,6 +216,13 @@ def _site_html(payload: dict[str, object]) -> str:
       </div>
       <div class="cards" id="top-leads"></div>
     </section>
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Audit Notes</h2>
+        <p>Long-form manual audit notes are linked here. External markdown notes open on GitHub.</p>
+      </div>
+      <div class="stack" id="audit-notes"></div>
+    </section>
     <section class="info-grid">
       <section class="panel">
         <div class="panel-header">
@@ -203,6 +251,7 @@ def _site_html(payload: dict[str, object]) -> str:
     const payload = {data_json};
     const stats = document.getElementById("stats");
     const topLeads = document.getElementById("top-leads");
+    const auditNotes = document.getElementById("audit-notes");
     const benchmarkFamilies = document.getElementById("benchmark-families");
     const pipelineList = document.getElementById("pipeline-list");
     const cards = document.getElementById("cards");
@@ -235,6 +284,21 @@ def _site_html(payload: dict[str, object]) -> str:
       return card;
     }};
 
+    const renderNote = (note) => {{
+      const link = document.createElement("a");
+      link.className = "info-card note-link";
+      link.href = note.href;
+      if (note.href.startsWith("http")) {{
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      }}
+      link.innerHTML = `
+        <h3>${{note.title}}</h3>
+        <p class="notes">${{note.description}}</p>
+      `;
+      return link;
+    }};
+
     Object.entries(payload.status_counts).forEach(([key, value]) => {{
       const item = document.createElement("article");
       item.className = "stat";
@@ -244,6 +308,10 @@ def _site_html(payload: dict[str, object]) -> str:
 
     payload.top_leads.forEach((record) => {{
       topLeads.appendChild(renderCard(record, "lead-card"));
+    }});
+
+    payload.audit_notes.forEach((note) => {{
+      auditNotes.appendChild(renderNote(note));
     }});
 
     payload.benchmark_families.forEach((family) => {{
@@ -513,6 +581,19 @@ dd {
   padding: 16px;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.55);
+}
+
+.note-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.note-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(187, 77, 0, 0.28);
+  box-shadow: 0 12px 22px rgba(38, 28, 16, 0.08);
 }
 
 .info-card h3 {

@@ -79,3 +79,7 @@ def test_cli_end_to_end(tmp_path: Path):
     assert (site_dir / "results.json").exists()
     payload = json.loads((site_dir / "results.json").read_text(encoding="utf-8"))
     assert all("equivalence_key" in record for record in payload["records"])
+    assert any(note["title"] == "RR(q^3) Neighborhood" for note in payload["audit_notes"])
+    index_text = (site_dir / "index.html").read_text(encoding="utf-8")
+    assert "Audit Notes" in index_text
+    assert "E2CC Plain-Step Audit" in index_text

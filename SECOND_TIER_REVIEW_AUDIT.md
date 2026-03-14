@@ -132,6 +132,10 @@ hybrid branch:     cb60fd71d1d7
 So `e2cc74240b6f` remains a simpler opposite-side step perturbation, while the
 hybrid branch still belongs to the hero case rather than to the second tier.
 
+The plain step branch also now has a focused note:
+
+- `E2CC74240B6F_PLAIN_STEP_AUDIT.md`
+
 ## Immediate Next Checks If Promoted
 
 - `bef31ddceea8`

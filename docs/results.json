@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-14 00:39:18 UTC",
+  "generated_at": "2026-03-14 02:51:49 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -672,6 +672,43 @@
     {
       "step": "site",
       "detail": "Ship the same snapshot to GitHub Pages without claiming unexplained templates are new formulas."
+    }
+  ],
+  "audit_notes": [
+    {
+      "title": "Review Audit",
+      "href": "review-audit.html",
+      "description": "Public conservative review summary for the current benchmark-relative review set."
+    },
+    {
+      "title": "Hero Case Summary",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_PUBLIC_SUMMARY.md",
+      "description": "Short public-facing summary of the current lead candidate cb60fd71d1d7."
+    },
+    {
+      "title": "Hero Transform Audit",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_TRANSFORM_AUDIT.md",
+      "description": "Detailed elimination log for direct, equivalence, contraction, and constrained Bauer-Muir paths."
+    },
+    {
+      "title": "RR(q^3) Neighborhood",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/RR_Q3_NEIGHBORHOOD_AUDIT.md",
+      "description": "Separates the plain RR(q^3) step branch from the hybrid cb60fd71d1d7 branch."
+    },
+    {
+      "title": "E2CC Plain-Step Audit",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/E2CC74240B6F_PLAIN_STEP_AUDIT.md",
+      "description": "Focused note on why e2cc74240b6f currently reads as a plain opposite-side RR step perturbation."
+    },
+    {
+      "title": "RR(q^4) Step Ladder",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/RR_Q4_STEP_LADDER_AUDIT.md",
+      "description": "Systematic note on the 4 -> 3 -> 2 -> 1 RR(q^4) single-ladder perturbation family."
+    },
+    {
+      "title": "Second-Tier Audit",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/SECOND_TIER_REVIEW_AUDIT.md",
+      "description": "Cross-candidate note covering bef31ddceea8 and e2cc74240b6f below the current hero case."
     }
   ],
   "top_leads": [
