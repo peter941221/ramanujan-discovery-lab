@@ -57,6 +57,20 @@ def heroData : GCFData ZPoly where
   a := fun k => heroTargetNumeratorPoly (k + 1)
   b := fun k => heroTargetDenominatorPoly (k + 1)
 
+def reducedHeroA : Nat -> ZPoly
+  | 0 => X
+  | 1 => X ^ 2
+  | k + 2 => X ^ (k + 3) * (1 + X ^ (k + 1))
+
+def reducedHeroB : Nat -> ZPoly
+  | 0 => 1
+  | k + 1 => 1 + X ^ (k + 1)
+
+def reducedHeroData : GCFData ZPoly where
+  b0 := 1
+  a := reducedHeroA
+  b := reducedHeroB
+
 def rrReciprocalData : GCFData ZPoly where
   b0 := 1
   a := fun k => X ^ (k + 1)
@@ -107,6 +121,93 @@ theorem heroSecondConvergentDenominator :
   simp [continuantDen, heroData, heroTargetDenominatorPoly]
   simp [heroTargetNumeratorPoly]
   ring_nf
+
+theorem reducedHeroData_stage0_a :
+    reducedHeroData.a 0 = X := rfl
+
+theorem reducedHeroData_stage1_a :
+    reducedHeroData.a 1 = X ^ 2 := rfl
+
+theorem reducedHeroData_stage2_a :
+    reducedHeroData.a 2 = X ^ 3 * (1 + X) := by
+  simp [reducedHeroData, reducedHeroA]
+
+theorem reducedHeroData_stage0_b :
+    reducedHeroData.b 0 = 1 := rfl
+
+theorem reducedHeroData_stage1_b :
+    reducedHeroData.b 1 = 1 + X := by
+  simp [reducedHeroData, reducedHeroB]
+
+theorem reducedHeroData_stage2_b :
+    reducedHeroData.b 2 = 1 + X ^ 2 := by
+  simp [reducedHeroData, reducedHeroB]
+
+theorem reducedHeroFirstConvergentNumerator :
+    continuantNum reducedHeroData 1 = 1 + X := by
+  simp [reducedHeroData, reducedHeroA, reducedHeroB]
+
+theorem reducedHeroFirstConvergentDenominator :
+    continuantDen reducedHeroData 1 = 1 := by
+  simp [reducedHeroData, reducedHeroB]
+
+theorem reducedHeroSecondConvergentNumerator :
+    continuantNum reducedHeroData 2 = 1 + 2 * X + 2 * X ^ 2 := by
+  simp [continuantNum, reducedHeroData, reducedHeroA, reducedHeroB]
+  ring_nf
+
+theorem reducedHeroSecondConvergentDenominator :
+    continuantDen reducedHeroData 2 = 1 + X + X ^ 2 := by
+  simp [continuantDen, reducedHeroData, reducedHeroA, reducedHeroB]
+
+theorem heroConvergentFactor_pair (n : Nat) :
+    (continuantNum heroData (n + 1) = (1 + X ^ (n + 1)) * continuantNum reducedHeroData (n + 1)) ∧
+      (continuantDen heroData (n + 1) = (1 + X ^ (n + 1)) * continuantDen reducedHeroData (n + 1)) := by
+  induction' n using Nat.twoStepInduction with n ih0 ih1
+  · constructor
+    · simp [heroData, reducedHeroData, reducedHeroA, reducedHeroB, heroTargetNumeratorPoly, heroTargetDenominatorPoly]
+      ring_nf
+    · simp [heroData, reducedHeroData, reducedHeroB, heroTargetDenominatorPoly]
+  · constructor
+    · simp [continuantNum, heroData, reducedHeroData, reducedHeroA, reducedHeroB, heroTargetNumeratorPoly, heroTargetDenominatorPoly]
+      ring_nf
+    · simp [continuantDen, heroData, reducedHeroData, reducedHeroA, reducedHeroB, heroTargetNumeratorPoly, heroTargetDenominatorPoly]
+      ring_nf
+  · rcases ih0 with ⟨ihNum0, ihDen0⟩
+    rcases ih1 with ⟨ihNum1, ihDen1⟩
+    constructor
+    · calc
+        continuantNum heroData (n + 3)
+            = heroData.b (n + 2) * continuantNum heroData (n + 2) + heroData.a (n + 2) * continuantNum heroData (n + 1) := by
+                simp [continuantNum]
+        _ = (1 + X ^ (n + 3)) *
+              ((1 + X ^ (n + 2)) * continuantNum reducedHeroData (n + 2) +
+                (X ^ (n + 3) * (1 + X ^ (n + 1))) * continuantNum reducedHeroData (n + 1)) := by
+              rw [ihNum1, ihNum0]
+              simp [heroData, heroTargetNumeratorPoly, heroTargetDenominatorPoly]
+              ring_nf
+        _ = (1 + X ^ (n + 3)) * continuantNum reducedHeroData (n + 3) := by
+              simp [continuantNum, reducedHeroData, reducedHeroA, reducedHeroB]
+    · calc
+        continuantDen heroData (n + 3)
+            = heroData.b (n + 2) * continuantDen heroData (n + 2) + heroData.a (n + 2) * continuantDen heroData (n + 1) := by
+                simp [continuantDen]
+        _ = (1 + X ^ (n + 3)) *
+              ((1 + X ^ (n + 2)) * continuantDen reducedHeroData (n + 2) +
+                (X ^ (n + 3) * (1 + X ^ (n + 1))) * continuantDen reducedHeroData (n + 1)) := by
+              rw [ihDen1, ihDen0]
+              simp [heroData, heroTargetNumeratorPoly, heroTargetDenominatorPoly]
+              ring_nf
+        _ = (1 + X ^ (n + 3)) * continuantDen reducedHeroData (n + 3) := by
+              simp [continuantDen, reducedHeroData, reducedHeroA, reducedHeroB]
+
+theorem heroConvergentNumerator_factor (n : Nat) :
+    continuantNum heroData (n + 1) = (1 + X ^ (n + 1)) * continuantNum reducedHeroData (n + 1) :=
+  (heroConvergentFactor_pair n).1
+
+theorem heroConvergentDenominator_factor (n : Nat) :
+    continuantDen heroData (n + 1) = (1 + X ^ (n + 1)) * continuantDen reducedHeroData (n + 1) :=
+  (heroConvergentFactor_pair n).2
 
 theorem rrDirectFirstNumerator_mismatch_at_one :
     rrDirectFirstNumerator 1 ≠ heroTargetNumerator 1 1 := by

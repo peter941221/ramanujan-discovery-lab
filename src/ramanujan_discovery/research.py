@@ -73,6 +73,31 @@ def _series_coeffs(expr, q: sp.Symbol, order: int) -> list[sp.Expr]:
     return coeffs
 
 
+def _monomial_coeff_map(expr, q: sp.Symbol) -> dict[int, sp.Expr]:
+    coefficients: dict[int, sp.Expr] = {}
+    expanded = sp.expand(expr)
+    if expanded == 0:
+        return coefficients
+    for term in expanded.as_ordered_terms():
+        coefficient, exponent = term.as_coeff_exponent(q)
+        if coefficient == 0:
+            continue
+        if not exponent.is_integer:
+            raise ValueError(f"non-integer exponent encountered: {exponent}")
+        exponent_int = int(exponent)
+        coefficients[exponent_int] = sp.simplify(coefficients.get(exponent_int, 0) + coefficient)
+    return {exponent: coeff for exponent, coeff in coefficients.items() if sp.simplify(coeff) != 0}
+
+
+def _coefficient_equations(left, right, q: sp.Symbol) -> list[sp.Equality]:
+    left_map = _monomial_coeff_map(left, q=q)
+    right_map = _monomial_coeff_map(right, q=q)
+    equations: list[sp.Equality] = []
+    for exponent in sorted(set(left_map) | set(right_map)):
+        equations.append(sp.Eq(left_map.get(exponent, 0), right_map.get(exponent, 0)))
+    return equations
+
+
 def _log_series_coeffs(series_coeffs: list[sp.Expr]) -> list[sp.Expr]:
     """Return coefficients g_n for log(F) where F = sum f_n q^n and f_0 == 1."""
     if not series_coeffs:
@@ -220,6 +245,37 @@ class HeineHCF2Coeffs:
     b_terms: list[sp.Expr]  # 1-indexed, b_terms[0] unused
 
 
+@dataclass(frozen=True)
+class ContinuedFractionCoeffs:
+    b0: sp.Expr
+    a_terms: list[sp.Expr]  # 1-indexed, a_terms[0] unused
+    b_terms: list[sp.Expr]  # 1-indexed, b_terms[0] unused
+
+
+@dataclass(frozen=True)
+class ConvergentCommonFactorReduction:
+    gcd_factors: list[sp.Expr]
+    reduced_coeffs: ContinuedFractionCoeffs
+
+
+@dataclass(frozen=True)
+class Page43MonomialHit:
+    family: str
+    a_shift: int
+    b_shift: int
+    lambda_shift: int
+    a_coeff: sp.Expr
+    b_coeff: sp.Expr
+    lambda_coeff: sp.Expr
+
+
+@dataclass(frozen=True)
+class SubsequenceContractionHit:
+    source_label: str
+    stride: int
+    offset: int
+
+
 def heine_hcf2_standardized_coeffs(
     *,
     a: sp.Expr,
@@ -259,6 +315,268 @@ def heine_hcf2_standardized_coeffs(
         b_terms.append(b_n)
 
     return HeineHCF2Coeffs(b0=b0, a_terms=a_terms, b_terms=b_terms)
+
+
+def continued_fraction_convergents(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+) -> list[tuple[sp.Expr, sp.Expr]]:
+    """Return convergent numerator/denominator pairs for b0 + K a_n / b_n."""
+    if len(a_terms) != len(b_terms):
+        raise ValueError("a_terms and b_terms must have the same length")
+    if len(a_terms) < 2:
+        raise ValueError("a_terms and b_terms must be 1-indexed with at least one term")
+
+    convergents: list[tuple[sp.Expr, sp.Expr]] = [(sp.simplify(b0), sp.Integer(1))]
+    a_prev2 = sp.Integer(1)
+    a_prev1 = sp.simplify(b0)
+    b_prev2 = sp.Integer(0)
+    b_prev1 = sp.Integer(1)
+
+    for n in range(1, len(a_terms)):
+        a_n = sp.expand(b_terms[n] * a_prev1 + a_terms[n] * a_prev2)
+        b_n = sp.expand(b_terms[n] * b_prev1 + a_terms[n] * b_prev2)
+        convergents.append((a_n, b_n))
+        a_prev2, a_prev1 = a_prev1, a_n
+        b_prev2, b_prev1 = b_prev1, b_n
+
+    return convergents
+
+
+def recover_cf_from_convergents(convergents: list[tuple[sp.Expr, sp.Expr]]) -> ContinuedFractionCoeffs:
+    """Recover one generalized continued fraction whose convergents match the supplied sequence."""
+    if not convergents:
+        raise ValueError("convergents must be non-empty")
+
+    b0 = sp.simplify(convergents[0][0] / convergents[0][1])
+    a_terms = [sp.Integer(0)]
+    b_terms = [sp.Integer(0)]
+
+    a_prev2 = sp.Integer(1)
+    b_prev2 = sp.Integer(0)
+    a_prev1 = convergents[0][0]
+    b_prev1 = convergents[0][1]
+
+    for numerator, denominator in convergents[1:]:
+        determinant = sp.simplify(a_prev1 * b_prev2 - b_prev1 * a_prev2)
+        if determinant == 0:
+            raise ValueError("degenerate convergent sequence")
+
+        b_n = sp.simplify((numerator * b_prev2 - denominator * a_prev2) / determinant)
+        a_n = sp.simplify((denominator * a_prev1 - numerator * b_prev1) / determinant)
+        a_terms.append(sp.expand(a_n))
+        b_terms.append(sp.expand(b_n))
+
+        next_a = sp.expand(b_n * a_prev1 + a_n * a_prev2)
+        next_b = sp.expand(b_n * b_prev1 + a_n * b_prev2)
+        a_prev2, a_prev1 = a_prev1, next_a
+        b_prev2, b_prev1 = b_prev1, next_b
+
+    return ContinuedFractionCoeffs(b0=b0, a_terms=a_terms, b_terms=b_terms)
+
+
+def convergent_common_factor_reduction(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+) -> ConvergentCommonFactorReduction:
+    """Cancel the exact gcd of each convergent pair and recover the induced continued fraction."""
+    convergents = continued_fraction_convergents(b0=b0, a_terms=a_terms, b_terms=b_terms)
+    reduced_convergents: list[tuple[sp.Expr, sp.Expr]] = []
+    gcd_factors: list[sp.Expr] = []
+
+    for numerator, denominator in convergents:
+        common_factor = sp.factor(sp.gcd(sp.expand(numerator), sp.expand(denominator)))
+        gcd_factors.append(common_factor)
+        reduced_convergents.append(
+            (
+                sp.expand(sp.cancel(numerator / common_factor)),
+                sp.expand(sp.cancel(denominator / common_factor)),
+            )
+        )
+
+    return ConvergentCommonFactorReduction(
+        gcd_factors=gcd_factors,
+        reduced_coeffs=recover_cf_from_convergents(reduced_convergents),
+    )
+
+
+def parity_contraction_coeffs(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+    parity: str,
+) -> ContinuedFractionCoeffs:
+    """Recover the odd or even canonical contraction from a truncated source continued fraction."""
+    if parity == "odd":
+        return arithmetic_subsequence_contraction_coeffs(
+            b0=b0,
+            a_terms=a_terms,
+            b_terms=b_terms,
+            stride=2,
+            offset=1,
+        )
+    if parity == "even":
+        return arithmetic_subsequence_contraction_coeffs(
+            b0=b0,
+            a_terms=a_terms,
+            b_terms=b_terms,
+            stride=2,
+            offset=0,
+        )
+    raise ValueError("parity must be 'odd' or 'even'")
+
+
+def arithmetic_subsequence_contraction_coeffs(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+    stride: int,
+    offset: int,
+) -> ContinuedFractionCoeffs:
+    """Recover the contraction determined by every `stride`-th convergent starting at `offset`."""
+    if stride < 1:
+        raise ValueError("stride must be positive")
+    if offset < 0 or offset >= stride:
+        raise ValueError("offset must satisfy 0 <= offset < stride")
+
+    convergents = continued_fraction_convergents(b0=b0, a_terms=a_terms, b_terms=b_terms)
+    selected = [convergents[index] for index in range(offset, len(convergents), stride)]
+    if not selected:
+        raise ValueError(f"source continued fraction has no subsequence for stride={stride}, offset={offset}")
+
+    return recover_cf_from_convergents(selected)
+
+
+def arithmetic_subsequence_contraction_search(
+    *,
+    source_label: str,
+    source_template: QCFTemplate,
+    target_template: QCFTemplate,
+    q: sp.Symbol,
+    max_stride: int = 4,
+    stages: int = 3,
+) -> list[SubsequenceContractionHit]:
+    """Search simple arithmetic convergent subsequences of a nearby source reciprocal."""
+    if max_stride < 2:
+        raise ValueError("max_stride must be at least 2")
+    if stages < 1:
+        raise ValueError("stages must be at least 1")
+
+    source_depth = stages * max_stride + (max_stride - 1)
+    source_b0, source_a_terms, source_b_terms = _template_reciprocal_coeffs(
+        source_template.normalized(),
+        q=q,
+        depth=source_depth,
+    )
+    target_b0, target_a_terms, target_b_terms = _template_reciprocal_coeffs(
+        target_template.normalized(),
+        q=q,
+        depth=stages,
+    )
+
+    hits: list[SubsequenceContractionHit] = []
+    for stride in range(2, max_stride + 1):
+        for offset in range(stride):
+            contraction = arithmetic_subsequence_contraction_coeffs(
+                b0=source_b0,
+                a_terms=source_a_terms,
+                b_terms=source_b_terms,
+                stride=stride,
+                offset=offset,
+            )
+            if sp.simplify(contraction.b0 - target_b0) != 0:
+                continue
+            exact = True
+            for n in range(1, stages + 1):
+                if sp.simplify(contraction.a_terms[n] - target_a_terms[n]) != 0:
+                    exact = False
+                    break
+                if sp.simplify(contraction.b_terms[n] - target_b_terms[n]) != 0:
+                    exact = False
+                    break
+            if exact:
+                hits.append(SubsequenceContractionHit(source_label=source_label, stride=stride, offset=offset))
+
+    return hits
+
+
+def page43_monomial_parameter_search(
+    *,
+    family: str,
+    target_template: QCFTemplate,
+    q: sp.Symbol,
+    max_shift: int = 3,
+    stages: int = 3,
+) -> list[Page43MonomialHit]:
+    """Search bounded monomial parameter substitutions in the page-43 gcf2/gcf3 families."""
+    if family not in {"f2", "f4"}:
+        raise ValueError("family must be 'f2' or 'f4'")
+    if stages < 1:
+        raise ValueError("stages must be at least 1")
+
+    _, target_a_terms, target_b_terms = _template_reciprocal_coeffs(target_template.normalized(), q=q, depth=stages)
+    alpha, beta, gamma = sp.symbols("alpha beta gamma")
+    hits: list[Page43MonomialHit] = []
+
+    for a_shift in range(-max_shift, max_shift + 1):
+        for b_shift in range(-max_shift, max_shift + 1):
+            for lambda_shift in range(-max_shift, max_shift + 1):
+                equations: list[sp.Equality] = []
+                for n in range(1, stages + 1):
+                    if family == "f2":
+                        source_a = gamma * q ** (lambda_shift + n) - alpha * beta * q ** (a_shift + b_shift + 2 * n)
+                        source_b = 1 + beta * q ** (b_shift + n) + alpha * q ** (a_shift + n + 1)
+                    else:
+                        source_a = alpha * q ** (a_shift + 1) + gamma * q ** (lambda_shift + n)
+                        source_b = 1 - alpha * q ** (a_shift + 1) + beta * q ** (b_shift + n)
+
+                    equations.extend(_coefficient_equations(source_a, target_a_terms[n], q=q))
+                    equations.extend(_coefficient_equations(source_b, target_b_terms[n], q=q))
+
+                solutions = sp.solve(equations, (alpha, beta, gamma), dict=True)
+                if not solutions:
+                    continue
+
+                for solution in solutions:
+                    if any(value.free_symbols for value in solution.values()):
+                        continue
+
+                    exact_match = True
+                    for n in range(1, stages + 1):
+                        if family == "f2":
+                            source_a = gamma * q ** (lambda_shift + n) - alpha * beta * q ** (a_shift + b_shift + 2 * n)
+                            source_b = 1 + beta * q ** (b_shift + n) + alpha * q ** (a_shift + n + 1)
+                        else:
+                            source_a = alpha * q ** (a_shift + 1) + gamma * q ** (lambda_shift + n)
+                            source_b = 1 - alpha * q ** (a_shift + 1) + beta * q ** (b_shift + n)
+
+                        if sp.simplify(source_a.subs(solution) - target_a_terms[n]) != 0:
+                            exact_match = False
+                            break
+                        if sp.simplify(source_b.subs(solution) - target_b_terms[n]) != 0:
+                            exact_match = False
+                            break
+
+                    if exact_match:
+                        hits.append(
+                            Page43MonomialHit(
+                                family=family,
+                                a_shift=a_shift,
+                                b_shift=b_shift,
+                                lambda_shift=lambda_shift,
+                                a_coeff=sp.simplify(solution[alpha]),
+                                b_coeff=sp.simplify(solution[beta]),
+                                lambda_coeff=sp.simplify(solution[gamma]),
+                            )
+                        )
+
+    return hits
 
 
 @dataclass(frozen=True)
@@ -736,6 +1054,113 @@ def build_candidate_research_note(
                     "- But the target reciprocal for this candidate has `a1 = t + t^2`, so this specialization cannot match at the coefficient level.",
                 ]
             )
+
+            f2_monomial_hits = page43_monomial_parameter_search(
+                family="f2",
+                target_template=reduced_candidate,
+                q=t,
+                max_shift=3,
+                stages=3,
+            )
+            f4_monomial_hits = page43_monomial_parameter_search(
+                family="f4",
+                target_template=reduced_candidate,
+                q=t,
+                max_shift=3,
+                stages=3,
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Page-43 Monomial Substitution Check",
+                    "",
+                    "- Search shape: `a = alpha*t^A`, `b = beta*t^B`, `lambda = gamma*t^L` with integer shifts `A,B,L in [-3,3]`.",
+                    "- Matching rule: solve exactly for `alpha, beta, gamma` so the first `3` reciprocal stages match the reduced target.",
+                    f"- `f2` / `gcf3` hits in this box: `{len(f2_monomial_hits)}`",
+                    f"- `f4` / `gcf2` hits in this box: `{len(f4_monomial_hits)}`",
+                ]
+            )
+            monomial_hits = f2_monomial_hits + f4_monomial_hits
+            if monomial_hits:
+                lines.extend(["", "```text"])
+                for hit in monomial_hits:
+                    lines.append(
+                        f"{hit.family}: A={hit.a_shift}, B={hit.b_shift}, L={hit.lambda_shift}, "
+                        f"alpha={_format_expr(hit.a_coeff)}, beta={_format_expr(hit.b_coeff)}, "
+                        f"lambda={_format_expr(hit.lambda_coeff)}"
+                    )
+                lines.extend(["```"])
+
+            cubic_b0, cubic_a_terms, cubic_b_terms = _template_reciprocal_coeffs(
+                get_benchmark("ramanujan_cubic_normalized").canonical_template,
+                q=t,
+                depth=6,
+            )
+            cubic_odd = parity_contraction_coeffs(
+                b0=cubic_b0,
+                a_terms=cubic_a_terms,
+                b_terms=cubic_b_terms,
+                parity="odd",
+            )
+            cubic_even = parity_contraction_coeffs(
+                b0=cubic_b0,
+                a_terms=cubic_a_terms,
+                b_terms=cubic_b_terms,
+                parity="even",
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Cubic Odd/Even Contraction Check",
+                    "",
+                    "- Treat the reduced cubic benchmark reciprocal as `1 + K (t^n + t^(2n)) / 1`.",
+                    (
+                        f"- Odd part: the initial term is `d0 = {_format_expr(cubic_odd.b0)}`, "
+                        f"already incompatible with the target initial term `{_format_expr(b0_target)}`."
+                    ),
+                    (
+                        f"- Even part: the initial term `{_format_expr(cubic_even.b0)}` and first numerator "
+                        f"`{_format_expr(cubic_even.a_terms[1])}` do match the target, "
+                        f"but the first denominator is `{_format_expr(cubic_even.b_terms[1])}` "
+                        f"instead of `{_format_expr(b_target[1])}`."
+                    ),
+                    "- So the reduced candidate is not a simple odd/even canonical contraction of the cubic reciprocal.",
+                ]
+            )
+
+            rr_subsequence_hits = arithmetic_subsequence_contraction_search(
+                source_label="RR reciprocal",
+                source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
+                target_template=reduced_candidate,
+                q=t,
+                max_stride=4,
+                stages=3,
+            )
+            cubic_subsequence_hits = arithmetic_subsequence_contraction_search(
+                source_label="cubic reciprocal",
+                source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
+                target_template=reduced_candidate,
+                q=t,
+                max_stride=4,
+                stages=3,
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Arithmetic Subsequence Contraction Scan",
+                    "",
+                    "- Search shape: every `stride`-th convergent subsequence with `stride in {2,3,4}` and all offsets.",
+                    "- Matching rule: recover the induced contracted fraction and compare `b0, a1..a3, b1..b3` exactly against the reduced target.",
+                    f"- RR source hits in this box: `{len(rr_subsequence_hits)}`",
+                    f"- Cubic source hits in this box: `{len(cubic_subsequence_hits)}`",
+                ]
+            )
+            subsequence_hits = rr_subsequence_hits + cubic_subsequence_hits
+            if subsequence_hits:
+                lines.extend(["", "```text"])
+                for hit in subsequence_hits:
+                    lines.append(f"{hit.source_label}: stride={hit.stride}, offset={hit.offset}")
+                lines.extend(["```"])
 
         bm_pattern_count = len(_bauer_muir_patterns())
         rr_one_step_hits = bauer_muir_pattern_search(
