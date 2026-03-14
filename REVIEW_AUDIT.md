@@ -29,19 +29,22 @@ Audit date: `2026-03-13`
 
 | Candidate | Closest benchmark | Local assessment | Public claim status |
 | --- | --- | --- | --- |
-| `bef31ddceea8` | `rogers_ramanujan_q4_normalized` (7 digits) | Off-diagonal exponent progression close to the `q^4` Rogers-Ramanujan family. Most likely a family-adjacent generalized variant. | Do not claim as new |
+| `bef31ddceea8` | `rogers_ramanujan_q4_normalized` (7 digits) | Strongest member of an off-diagonal single-numerator ladder near the `q^4` Rogers-Ramanujan family. Most likely a family-adjacent generalized variant. | Do not claim as new |
 | `cb60fd71d1d7` | `rogers_ramanujan_q3_normalized` (7 digits) | Structured denominator perturbation of the `q^3` Rogers-Ramanujan family. Interesting enough for a second pass, but still too close to a known family for a novelty claim. | Keep under review |
+| `e42a0d5f2679` | `rogers_ramanujan_q4_normalized` (6 digits) | Second member of the same off-diagonal single-numerator ladder near the `q^4` Rogers-Ramanujan family. Best treated as family-adjacent rather than new. | Do not claim as new |
 | `1125ffe48b3b` | `shifted_rr_fixture` (6 digits) | Family-adjacent perturbation mixing a `q^2` Rogers-Ramanujan numerator with a higher-order extra term and denominator shift. Worth a second pass, but not a publishable claim. | Keep under review |
-| `e451b4f305aa` | `rogers_ramanujan_q4_normalized` (5 digits) | Denominator-only perturbation near the `q^4` Rogers-Ramanujan family. Stable enough to retain, but still best treated as family-adjacent. | Do not claim as new |
+| `9dbafd59364c` | `rogers_ramanujan_q4_normalized` (5 digits) | Weaker third member of the off-diagonal single-numerator ladder near the `q^4` Rogers-Ramanujan family. Stable, but not a novelty signal. | Do not claim as new |
+| `e2cc74240b6f` | `rogers_ramanujan_q3_normalized` (5 digits) | Analogous off-diagonal single-numerator perturbation near the `q^3` Rogers-Ramanujan family. Family-adjacent and not ready for a public claim. | Do not claim as new |
 
 ## Result
 
 Current conclusion:
 
-- after structural-family dedupe, the public release keeps four `review` candidates
-- none of the four `review` candidates is ready for a public “new formula” claim
-- `cb60fd71d1d7` and `1125ffe48b3b` are the only two that currently look worth a second pass
-- the next serious step is not publicity; it is a deeper equivalence reduction plus targeted literature search around their nearest families
+- after benchmark-relative equivalence dedupe, the public release keeps six `review` candidates
+- four of the six `review` candidates form a short off-diagonal single-numerator ladder near the Rogers-Ramanujan `q^3` and `q^4` families
+- none of the six `review` candidates is ready for a public “new formula” claim
+- `cb60fd71d1d7` and `1125ffe48b3b` remain the only two that currently look worth a second pass
+- the next serious step is still not publicity; it is a stronger equivalence reduction plus targeted literature search around the nearest classical families
 
 ## Notes
 
