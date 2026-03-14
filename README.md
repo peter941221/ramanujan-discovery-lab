@@ -26,6 +26,13 @@ The pipeline has four stages:
 4. `site`
    Generate a static gallery suitable for GitHub Pages.
 
+Optional research stage:
+
+5. `analyze`
+   Write a focused Markdown note for one candidate, including structural deltas, symbolic `q`-series comparisons, and terminal-friendly formula output.
+6. `research`
+   Run heavier candidate probes (higher-order ratio series, Euler-product exponent extraction, and targeted literature coefficient checks).
+
 Current benchmark catalog:
 
 - Rogers-Ramanujan normalized continued fraction
@@ -42,8 +49,17 @@ $env:PYTHONPATH='src'
 python -m ramanujan_discovery discover --depth 36 --precision 80 --budget-hours 0.1 --out results/candidates.jsonl
 python -m ramanujan_discovery verify --in results/candidates.jsonl --precision 160 --out results/verified.jsonl
 python -m ramanujan_discovery report --in results/verified.jsonl --out results/report.md
+python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out HERO_CASE_CB60FD71D1D7.md
+python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out CB60FD71D1D7_RESEARCH_NOTE.md
 python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
 ```
+
+`analyze` stdout formats:
+
+- `unicode`: terminal-friendly pretty math via SymPy
+- `latex`: copyable LaTeX string for Markdown or papers
+- `plain`: ASCII fallback
+- `none`: suppress terminal summary
 
 Then open `docs/index.html` locally or publish the `docs/` folder with GitHub Pages.
 

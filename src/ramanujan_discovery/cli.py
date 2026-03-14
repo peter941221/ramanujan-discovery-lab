@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import argparse
 
+from ramanujan_discovery.analysis import build_candidate_analysis_note, build_candidate_terminal_summary
 from ramanujan_discovery.config import SearchConfig, VerificationConfig
 from ramanujan_discovery.discovery import discover_candidates
+from ramanujan_discovery.research import build_candidate_research_note
 from ramanujan_discovery.reporting import build_report, build_site
 from ramanujan_discovery.storage import write_candidates
 from ramanujan_discovery.verification import verify_candidates
@@ -42,6 +44,24 @@ def build_parser() -> argparse.ArgumentParser:
     report = subparsers.add_parser("report", help="Render a Markdown report from verified candidates.")
     report.add_argument("--in", dest="input_path", type=str, required=True)
     report.add_argument("--out", type=str, required=True)
+
+    analyze = subparsers.add_parser("analyze", help="Write a focused Markdown analysis for one candidate.")
+    analyze.add_argument("--in", dest="input_path", type=str, required=True)
+    analyze.add_argument("--candidate-id", type=str, required=True)
+    analyze.add_argument("--depth", type=int, default=12)
+    analyze.add_argument("--series-order", type=int, default=31)
+    analyze.add_argument("--stdout-format", choices=("unicode", "plain", "latex", "none"), default="unicode")
+    analyze.add_argument("--out", type=str, required=True)
+
+    research = subparsers.add_parser(
+        "research",
+        help="Run heavier candidate research helpers (ratio-series fits, literature coefficient checks).",
+    )
+    research.add_argument("--in", dest="input_path", type=str, required=True)
+    research.add_argument("--candidate-id", type=str, required=True)
+    research.add_argument("--depth", type=int, default=40)
+    research.add_argument("--series-order", type=int, default=151)
+    research.add_argument("--out", type=str, required=True)
 
     site = subparsers.add_parser("site", help="Render a GitHub Pages-friendly static site.")
     site.add_argument("--in", dest="input_path", type=str, required=True)
@@ -86,6 +106,36 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "report":
         build_report(args.input_path, args.out)
+        return 0
+
+    if args.command == "analyze":
+        build_candidate_analysis_note(
+            input_path=args.input_path,
+            candidate_id=args.candidate_id,
+            output_path=args.out,
+            depth=args.depth,
+            series_order=args.series_order,
+        )
+        if args.stdout_format != "none":
+            print(
+                build_candidate_terminal_summary(
+                    input_path=args.input_path,
+                    candidate_id=args.candidate_id,
+                    depth=args.depth,
+                    series_order=args.series_order,
+                    math_format=args.stdout_format,
+                )
+            )
+        return 0
+
+    if args.command == "research":
+        build_candidate_research_note(
+            input_path=args.input_path,
+            candidate_id=args.candidate_id,
+            output_path=args.out,
+            depth=args.depth,
+            series_order=args.series_order,
+        )
         return 0
 
     if args.command == "site":

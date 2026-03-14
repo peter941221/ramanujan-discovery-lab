@@ -46,6 +46,9 @@ class QCFTemplate:
             denominator_q_step,
         )
 
+    def normalized(self) -> "QCFTemplate":
+        return QCFTemplate(*self._normalized_parts())
+
     def signature(self) -> str:
         (
             top_constant,
@@ -166,6 +169,7 @@ class CandidateRecord:
     closest_benchmark: str
     closest_benchmark_digits: int
     family_bucket: str
+    equivalence_key: str
     benchmark_kind: str
     digits_agree: int
     stability_score: int
@@ -182,6 +186,7 @@ class CandidateRecord:
             "closest_benchmark": self.closest_benchmark,
             "closest_benchmark_digits": self.closest_benchmark_digits,
             "family_bucket": self.family_bucket,
+            "equivalence_key": self.equivalence_key,
             "benchmark_kind": self.benchmark_kind,
             "digits_agree": self.digits_agree,
             "stability_score": self.stability_score,
@@ -191,15 +196,18 @@ class CandidateRecord:
 
     @classmethod
     def from_dict(cls, payload: dict[str, object]) -> "CandidateRecord":
+        template = QCFTemplate.from_dict(dict(payload["template"]))
+        family_bucket = str(payload.get("family_bucket", "legacy"))
         return cls(
             id=str(payload["id"]),
-            template=QCFTemplate.from_dict(dict(payload["template"])),
+            template=template,
             q_values=[float(value) for value in payload["q_values"]],
             value_estimates=[str(value) for value in payload["value_estimates"]],
             matched_target=str(payload["matched_target"]),
             closest_benchmark=str(payload.get("closest_benchmark", payload["matched_target"])),
             closest_benchmark_digits=int(payload.get("closest_benchmark_digits", payload["digits_agree"])),
-            family_bucket=str(payload.get("family_bucket", "legacy")),
+            family_bucket=family_bucket,
+            equivalence_key=str(payload.get("equivalence_key", family_bucket or template.signature())),
             benchmark_kind=str(payload["benchmark_kind"]),
             digits_agree=int(payload["digits_agree"]),
             stability_score=int(payload["stability_score"]),

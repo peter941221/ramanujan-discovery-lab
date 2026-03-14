@@ -53,6 +53,7 @@ def build_report(input_path: str, output_path: str) -> None:
                 f"- Novelty status: `{record.novelty_status}`",
                 f"- Closest benchmark: `{record.closest_benchmark}` ({record.closest_benchmark_digits} digits)",
                 f"- Family bucket: `{record.family_bucket}`",
+                f"- Equivalence key: `{record.equivalence_key}`",
                 f"- Notes: {record.notes}",
                 f"- Template signature: `{record.template.signature()}`",
                 f"- Template LaTeX: `{record.template.latex()}`",

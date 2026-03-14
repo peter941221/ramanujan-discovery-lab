@@ -6,6 +6,7 @@ from collections import defaultdict
 from ramanujan_discovery.benchmarks import BENCHMARKS, benchmark_names, target_value
 from ramanujan_discovery.config import SearchConfig
 from ramanujan_discovery.continued_fraction import agreement_digits, evaluate_qcf, format_mpf
+from ramanujan_discovery.equivalence import equivalence_key, family_bucket, select_unique_reviews
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
 
 
@@ -135,15 +136,6 @@ def _rank_key(record: CandidateRecord) -> tuple[int, int, int, str]:
         record.template.signature(),
     )
 
-
-def _family_bucket(template: QCFTemplate, matched_target: str, closest_benchmark: str, novelty_status: str) -> str:
-    if novelty_status == "review":
-        return template.exploratory_family_key(closest_benchmark)
-    if matched_target != "unmatched":
-        return matched_target
-    return template.signature()
-
-
 def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
     started_at = time.monotonic()
     grouped: dict[str, list[CandidateRecord]] = defaultdict(list)
@@ -171,7 +163,13 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
                     matched_target=target_name,
                     closest_benchmark=target_name,
                     closest_benchmark_digits=digits,
-                    family_bucket=_family_bucket(
+                    family_bucket=family_bucket(
+                        template=template,
+                        matched_target=target_name,
+                        closest_benchmark=target_name,
+                        novelty_status="unreviewed",
+                    ),
+                    equivalence_key=equivalence_key(
                         template=template,
                         matched_target=target_name,
                         closest_benchmark=target_name,
@@ -196,7 +194,13 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
                     matched_target="unmatched",
                     closest_benchmark=target_name,
                     closest_benchmark_digits=digits,
-                    family_bucket=_family_bucket(
+                    family_bucket=family_bucket(
+                        template=template,
+                        matched_target="unmatched",
+                        closest_benchmark=target_name,
+                        novelty_status="review",
+                    ),
+                    equivalence_key=equivalence_key(
                         template=template,
                         matched_target="unmatched",
                         closest_benchmark=target_name,
@@ -227,18 +231,10 @@ def discover_candidates(config: SearchConfig) -> list[CandidateRecord]:
         results.extend(unique_records[: config.max_per_target])
 
     ordered_reviews = sorted(review_records, key=_rank_key, reverse=True)
-    seen_signatures = {record.template.signature() for record in results}
-    seen_family_buckets: set[str] = set()
-    unique_reviews: list[CandidateRecord] = []
-    for record in ordered_reviews:
-        signature = record.template.signature()
-        if signature in seen_signatures or record.family_bucket in seen_family_buckets:
-            continue
-        seen_signatures.add(signature)
-        seen_family_buckets.add(record.family_bucket)
-        unique_reviews.append(record)
-        if len(unique_reviews) >= config.max_review_candidates:
-            break
-
+    unique_reviews = select_unique_reviews(
+        ordered_reviews=ordered_reviews,
+        admitted_records=results,
+        max_review_candidates=config.max_review_candidates,
+    )
     results.extend(unique_reviews)
     return sorted(results, key=_rank_key, reverse=True)

@@ -3,6 +3,7 @@ from __future__ import annotations
 from ramanujan_discovery.benchmarks import benchmark_names, get_benchmark, target_value
 from ramanujan_discovery.config import VerificationConfig
 from ramanujan_discovery.continued_fraction import agreement_digits, evaluate_qcf, format_mpf
+from ramanujan_discovery.equivalence import equivalence_key, family_bucket, select_unique_reviews
 from ramanujan_discovery.models import CandidateRecord
 from ramanujan_discovery.storage import read_candidates
 
@@ -36,15 +37,6 @@ def _rank_key(record: CandidateRecord) -> tuple[int, int, int, str]:
         -record.template.complexity_score(),
         record.template.signature(),
     )
-
-
-def _family_bucket(record: CandidateRecord, matched_target: str, closest_benchmark: str, novelty_status: str) -> str:
-    if novelty_status == "review":
-        return record.template.exploratory_family_key(closest_benchmark)
-    if matched_target != "unmatched":
-        return matched_target
-    return record.template.signature()
-
 
 def verify_candidates(input_path: str, config: VerificationConfig) -> list[CandidateRecord]:
     verified: list[CandidateRecord] = []
@@ -87,8 +79,14 @@ def verify_candidates(input_path: str, config: VerificationConfig) -> list[Candi
                     matched_target=best_name,
                     closest_benchmark=best_name,
                     closest_benchmark_digits=best_digits,
-                    family_bucket=_family_bucket(
-                        record=record,
+                    family_bucket=family_bucket(
+                        template=record.template,
+                        matched_target=best_name,
+                        closest_benchmark=best_name,
+                        novelty_status=novelty_status,
+                    ),
+                    equivalence_key=equivalence_key(
+                        template=record.template,
                         matched_target=best_name,
                         closest_benchmark=best_name,
                         novelty_status=novelty_status,
@@ -112,8 +110,14 @@ def verify_candidates(input_path: str, config: VerificationConfig) -> list[Candi
                     matched_target="unmatched",
                     closest_benchmark=best_name,
                     closest_benchmark_digits=best_digits,
-                    family_bucket=_family_bucket(
-                        record=record,
+                    family_bucket=family_bucket(
+                        template=record.template,
+                        matched_target="unmatched",
+                        closest_benchmark=best_name,
+                        novelty_status="review",
+                    ),
+                    equivalence_key=equivalence_key(
+                        template=record.template,
                         matched_target="unmatched",
                         closest_benchmark=best_name,
                         novelty_status="review",
@@ -130,16 +134,12 @@ def verify_candidates(input_path: str, config: VerificationConfig) -> list[Candi
             )
 
     ordered_reviews = sorted(review_candidates, key=_rank_key, reverse=True)
-    seen_signatures = {record.template.signature() for record in verified}
-    seen_family_buckets: set[str] = set()
-    for record in ordered_reviews:
-        signature = record.template.signature()
-        if signature in seen_signatures or record.family_bucket in seen_family_buckets:
-            continue
-        seen_signatures.add(signature)
-        seen_family_buckets.add(record.family_bucket)
-        verified.append(record)
-        if sum(item.novelty_status == "review" for item in verified) >= config.max_review_candidates:
-            break
+    verified.extend(
+        select_unique_reviews(
+            ordered_reviews=ordered_reviews,
+            admitted_records=verified,
+            max_review_candidates=config.max_review_candidates,
+        )
+    )
 
     return sorted(verified, key=_rank_key, reverse=True)
