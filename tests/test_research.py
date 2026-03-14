@@ -6,6 +6,7 @@ from ramanujan_discovery.cli import main
 from ramanujan_discovery.benchmarks import CUBIC_TEMPLATE, RR_TEMPLATE
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
 from ramanujan_discovery.research import (
+    apply_equivalence_transform,
     arithmetic_subsequence_contraction_coeffs,
     arithmetic_subsequence_contraction_search,
     bauer_muir_pattern_search,
@@ -97,6 +98,45 @@ def test_convergent_common_factor_reduction_finds_exact_hero_reduction():
     assert sp.simplify(reduced.b_terms[3] - (1 + t**2)) == 0
     assert sp.simplify(reduced.a_terms[4] - t**4 * (1 + t**2)) == 0
     assert sp.simplify(reduced.b_terms[4] - (1 + t**3)) == 0
+
+
+def test_hero_template_is_equivalent_transform_of_reduced_fraction():
+    t = sp.Symbol("t")
+    hero = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=1,
+        numerator_q_step=1,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=2,
+        numerator_extra_q_step=2,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=1,
+        denominator_q_step=1,
+    )
+    b0, a_terms, b_terms = _template_reciprocal_coeffs(hero, q=t, depth=8)
+    reduction = convergent_common_factor_reduction(
+        b0=b0,
+        a_terms=a_terms,
+        b_terms=b_terms,
+    )
+    reduced = reduction.reduced_coeffs
+
+    scales = [sp.Integer(0), 1 + t]
+    for n in range(2, 9):
+        scales.append(sp.simplify((1 + t**n) / (1 + t ** (n - 1))))
+
+    transformed = apply_equivalence_transform(
+        b0=reduced.b0,
+        a_terms=reduced.a_terms[:9],
+        b_terms=reduced.b_terms[:9],
+        scale_terms=scales,
+    )
+
+    assert sp.simplify(transformed.b0 - b0) == 0
+    for n in range(1, 9):
+        assert sp.simplify(transformed.a_terms[n] - a_terms[n]) == 0
+        assert sp.simplify(transformed.b_terms[n] - b_terms[n]) == 0
 
 
 def test_direct_bauer_muir_obstruction_rules_out_rr_and_cubic_sources():

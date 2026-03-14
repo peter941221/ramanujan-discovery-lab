@@ -259,6 +259,13 @@ class ConvergentCommonFactorReduction:
 
 
 @dataclass(frozen=True)
+class EquivalenceTransformedCoeffs:
+    b0: sp.Expr
+    a_terms: list[sp.Expr]  # 1-indexed, a_terms[0] unused
+    b_terms: list[sp.Expr]  # 1-indexed, b_terms[0] unused
+
+
+@dataclass(frozen=True)
 class Page43MonomialHit:
     family: str
     a_shift: int
@@ -401,6 +408,41 @@ def convergent_common_factor_reduction(
     return ConvergentCommonFactorReduction(
         gcd_factors=gcd_factors,
         reduced_coeffs=recover_cf_from_convergents(reduced_convergents),
+    )
+
+
+def apply_equivalence_transform(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+    scale_terms: list[sp.Expr],
+) -> EquivalenceTransformedCoeffs:
+    """Apply an equivalence transformation with stage scales r_n to b0 + K a_n / b_n.
+
+    The input coefficient lists are 1-indexed. `scale_terms[n]` is the multiplier r_n
+    for the n-th stage, with `scale_terms[0]` unused.
+    """
+    if len(a_terms) != len(b_terms):
+        raise ValueError("a_terms and b_terms must have the same length")
+    if len(a_terms) < 2:
+        raise ValueError("a_terms and b_terms must be 1-indexed with at least one term")
+    if len(scale_terms) != len(a_terms):
+        raise ValueError("scale_terms must be 1-indexed and match a_terms length")
+
+    transformed_a = [sp.Integer(0)]
+    transformed_b = [sp.Integer(0)]
+    for n in range(1, len(a_terms)):
+        transformed_b.append(sp.expand(scale_terms[n] * b_terms[n]))
+        if n == 1:
+            transformed_a.append(sp.expand(scale_terms[n] * a_terms[n]))
+        else:
+            transformed_a.append(sp.expand(scale_terms[n - 1] * scale_terms[n] * a_terms[n]))
+
+    return EquivalenceTransformedCoeffs(
+        b0=sp.simplify(b0),
+        a_terms=transformed_a,
+        b_terms=transformed_b,
     )
 
 

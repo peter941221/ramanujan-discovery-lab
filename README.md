@@ -76,6 +76,8 @@ Its current scope is intentionally narrow but no longer purely ad hoc:
 - `Proofs/HeroCaseLocal.lean` machine-checks exact local obstruction lemmas for
   `cb60fd71d1d7`, including polynomial-level no-match theorems and an exact
   convergent-factor reduction theorem
+- the current hero case also admits an explicit equivalence transformation from
+  that reduced fraction back to the original reciprocal object
 - `formalize --lean-out ...` can now auto-generate a candidate-specific Lean
   proof module such as `proofs/Proofs/Generated/Cb60fd71d1d7.lean`
 
