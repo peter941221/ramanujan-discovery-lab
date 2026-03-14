@@ -32,6 +32,8 @@ Optional research stage:
    Write a focused Markdown note for one candidate, including structural deltas, symbolic `q`-series comparisons, and terminal-friendly formula output.
 6. `research`
    Run heavier candidate probes (higher-order ratio series, Euler-product exponent extraction, and targeted literature coefficient checks).
+7. `formalize`
+   Write a formalization-prep note for one candidate, separating exact local lemmas from bounded search evidence.
 
 Current benchmark catalog:
 
@@ -51,6 +53,7 @@ python -m ramanujan_discovery verify --in results/candidates.jsonl --precision 1
 python -m ramanujan_discovery report --in results/verified.jsonl --out results/report.md
 python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out HERO_CASE_CB60FD71D1D7.md
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out CB60FD71D1D7_RESEARCH_NOTE.md
+python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean
 python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
 ```
 
@@ -62,6 +65,24 @@ python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
 - `none`: suppress terminal summary
 
 Then open `docs/index.html` locally or publish the `docs/` folder with GitHub Pages.
+
+## Lean Proof Layer
+
+The repository now includes an initial Lean 4 proof workspace under `proofs/`.
+Its current scope is intentionally narrow but no longer purely ad hoc:
+
+- `Proofs/GeneralizedCF.lean` formalizes finite-truncation continuants and the
+  convergent recurrence
+- `Proofs/HeroCaseLocal.lean` machine-checks exact local obstruction lemmas for
+  `cb60fd71d1d7`, including polynomial-level no-match theorems
+- `formalize --lean-out ...` can now auto-generate a candidate-specific Lean
+  proof module such as `proofs/Proofs/Generated/Cb60fd71d1d7.lean`
+
+```powershell
+Set-Location proofs
+lake build
+lake env lean Proofs/Generated/Cb60fd71d1d7.lean
+```
 
 ## Status Semantics
 
@@ -78,5 +99,6 @@ Review audit:
 ## Current Limits
 
 - novelty is only checked against the built-in benchmark catalog
-- there is no formal proof layer yet
+- there is not yet a full formal proof of a final continued-fraction identity
+- `formalize` now emits a theorem-prep note plus an optional Lean proof module, but the formal layer is still obstruction-first rather than a final source proof
 - the search family is still intentionally small and biased toward interpretable templates

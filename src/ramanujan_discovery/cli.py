@@ -5,6 +5,7 @@ import argparse
 from ramanujan_discovery.analysis import build_candidate_analysis_note, build_candidate_terminal_summary
 from ramanujan_discovery.config import SearchConfig, VerificationConfig
 from ramanujan_discovery.discovery import discover_candidates
+from ramanujan_discovery.formalization import build_candidate_formalization_assets
 from ramanujan_discovery.research import build_candidate_research_note
 from ramanujan_discovery.reporting import build_report, build_site
 from ramanujan_discovery.storage import write_candidates
@@ -62,6 +63,16 @@ def build_parser() -> argparse.ArgumentParser:
     research.add_argument("--depth", type=int, default=40)
     research.add_argument("--series-order", type=int, default=151)
     research.add_argument("--out", type=str, required=True)
+
+    formalize = subparsers.add_parser(
+        "formalize",
+        help="Write a formalization-prep note for one candidate without invoking a proof assistant.",
+    )
+    formalize.add_argument("--in", dest="input_path", type=str, required=True)
+    formalize.add_argument("--candidate-id", type=str, required=True)
+    formalize.add_argument("--max-stride", type=int, default=4)
+    formalize.add_argument("--out", type=str, required=True)
+    formalize.add_argument("--lean-out", type=str, default=None)
 
     site = subparsers.add_parser("site", help="Render a GitHub Pages-friendly static site.")
     site.add_argument("--in", dest="input_path", type=str, required=True)
@@ -135,6 +146,16 @@ def main(argv: list[str] | None = None) -> int:
             output_path=args.out,
             depth=args.depth,
             series_order=args.series_order,
+        )
+        return 0
+
+    if args.command == "formalize":
+        build_candidate_formalization_assets(
+            input_path=args.input_path,
+            candidate_id=args.candidate_id,
+            output_path=args.out,
+            max_stride=args.max_stride,
+            lean_output_path=args.lean_out,
         )
         return 0
 
