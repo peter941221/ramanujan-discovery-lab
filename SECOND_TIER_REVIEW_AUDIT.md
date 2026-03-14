@@ -115,6 +115,23 @@ single-ladder family with steps
 
 and with `bef31ddceea8` as the strongest noncanonical member of that ladder.
 
+## `RR(q^3)` Neighborhood Update
+
+The `e2cc74240b6f` branch now also has a dedicated neighborhood note:
+
+- `RR_Q3_NEIGHBORHOOD_AUDIT.md`
+
+That audit confirms the current public `RR(q^3)` side is not an analogous
+monotone ladder. It splits instead into:
+
+```text
+plain step branch: e2cc74240b6f
+hybrid branch:     cb60fd71d1d7
+```
+
+So `e2cc74240b6f` remains a simpler opposite-side step perturbation, while the
+hybrid branch still belongs to the hero case rather than to the second tier.
+
 ## Immediate Next Checks If Promoted
 
 - `bef31ddceea8`
