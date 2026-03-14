@@ -100,11 +100,26 @@ Reason:
 - neither candidate currently shows the same transform-pressure signal,
   step-reduced purity, or mixed-family structure that keeps `cb60...` in front.
 
+## `RR(q^4)` Ladder Update
+
+The `bef31ddceea8` branch now has a dedicated ladder note:
+
+- `RR_Q4_STEP_LADDER_AUDIT.md`
+
+That audit confirms the current public `RR(q^4)` neighborhood is a monotone
+single-ladder family with steps
+
+```text
+4 -> 3 -> 2 -> 1
+```
+
+and with `bef31ddceea8` as the strongest noncanonical member of that ladder.
+
 ## Immediate Next Checks If Promoted
 
 - `bef31ddceea8`
-  - test whether the `4 -> 3` step change sits inside a larger monotone `RR(q^4)`
-    perturbation ladder rather than a singled-out transformed family
+  - extend the current `RR(q^4)` ladder note if more step-family members survive
+    future discovery runs
 - `e2cc74240b6f`
   - test whether the `3 -> 4` step change is just the symmetric opposite-side
     ladder member of the same RR neighborhood phenomenon

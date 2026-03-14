@@ -73,7 +73,7 @@ was found in the sources checked.
   - no direct constant-parameter match to Bowman-Mc Laughlin-Wyshinski `H_1`
   - no simple odd-part origin from Bowman-Mc Laughlin-Wyshinski `H_2` or `H_3`
   - no direct 1-step Bauer-Muir origin from either the RR reciprocal or the cubic reciprocal in reduced `t = q^3` form
-  - no hit in the current tiny low-complexity 1-step / 2-step Bauer-Muir scan built from those RR/cubic reciprocals
+  - no hit in the current tiny low-complexity 1-step / 2-step / 3-step Bauer-Muir scan built from those RR/cubic reciprocals
 - Additional signals recorded in the transform audit:
   - `cb60fd71d1d7 / RR(q^3)` appears to be a pure `t=q^3` series in the visible symbolic window
   - the only viable two-step contraction branch around the `cor2cf` specialization that preserves `b0=1` fails at the first numerator shape
@@ -85,5 +85,5 @@ was found in the sources checked.
 - It is enough to keep `cb60fd71d1d7` as the best current hero case.
 - The next literature pass should be narrower:
   - contraction / even-odd part identities
-  - longer or less rigid Bauer-Muir chains beyond the direct and tiny 2-step RR/cubic paths already ruled out
+  - longer or less rigid Bauer-Muir chains beyond the direct and tiny 3-step RR/cubic paths already ruled out
   - page-43 Ramanujan ratio families after nontrivial substitutions

@@ -455,10 +455,12 @@ Current result for the reduced candidate reciprocal:
 - RR source:
   - `13` one-step chains checked
   - `169` two-step chains checked
+  - `2197` three-step chains checked
   - no hits
 - cubic source:
   - `13` one-step chains checked
   - `169` two-step chains checked
+  - `2197` three-step chains checked
   - no hits
 
 These checks are still heuristic rather than exhaustive. They are verified at
@@ -473,7 +475,7 @@ The candidate survives a noticeably stronger audit than before:
 - not a direct constant-parameter specialization of the main nearby families
 - not an arbitrary `n`-dependent equivalence transformation of `RR`, `f2`, `f3`, `f4`, or `H_1`
 - not a direct 1-step Bauer-Muir transform of either the RR reciprocal or the cubic reciprocal
-- not any 1-step or 2-step chain inside the current tiny low-complexity Bauer-Muir pattern family built from those RR/cubic reciprocals
+- not any 1-step, 2-step, or 3-step chain inside the current tiny low-complexity Bauer-Muir pattern family built from those RR/cubic reciprocals
 - not a one-step odd/even contraction of the `cor2cf` specialization relevant to the Rogers-Ramanujan neighborhood
 - not the only remaining viable two-step contraction branch of that `cor2cf` specialization
 

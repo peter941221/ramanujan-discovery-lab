@@ -115,6 +115,16 @@ def test_bauer_muir_pattern_search_finds_identity_zero_chain():
     )
     assert any(hit["pattern_chain"] == ["w_n = 0", "w_n = 0"] for hit in two_step_hits)
 
+    three_step_hits = bauer_muir_pattern_search(
+        source_label="RR reciprocal",
+        source_template=RR_TEMPLATE,
+        target_template=RR_TEMPLATE,
+        q=t,
+        depth=3,
+        steps=3,
+    )
+    assert any(hit["pattern_chain"] == ["w_n = 0", "w_n = 0", "w_n = 0"] for hit in three_step_hits)
+
 
 def test_bauer_muir_pattern_search_has_no_small_chain_hit_for_hero_template():
     t = sp.Symbol("t")
@@ -172,6 +182,28 @@ def test_bauer_muir_pattern_search_has_no_small_chain_hit_for_hero_template():
             q=t,
             depth=4,
             steps=2,
+        )
+        == []
+    )
+    assert (
+        bauer_muir_pattern_search(
+            source_label="RR reciprocal",
+            source_template=RR_TEMPLATE,
+            target_template=target,
+            q=t,
+            depth=4,
+            steps=3,
+        )
+        == []
+    )
+    assert (
+        bauer_muir_pattern_search(
+            source_label="cubic reciprocal",
+            source_template=CUBIC_TEMPLATE,
+            target_template=target,
+            q=t,
+            depth=4,
+            steps=3,
         )
         == []
     )

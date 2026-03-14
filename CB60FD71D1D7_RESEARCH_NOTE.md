@@ -69,5 +69,7 @@ a1_hcf2 = -a/2 - a/(2*b) + 1/2 + 1/(2*b)
 - Pattern family per step: `13` low-complexity modifiers (`0`, `±(t^n-1)`, `±(t^(2n)-1)`, `±(t^n-t^(2n))`, with scales `1` or `2`).
 - RR source, 1-step search space: `13`; hits: `0`
 - RR source, 2-step search space: `169`; hits: `0`
+- RR source, 3-step search space: `2197`; hits: `0`
 - Cubic source, 1-step search space: `13`; hits: `0`
 - Cubic source, 2-step search space: `169`; hits: `0`
+- Cubic source, 3-step search space: `2197`; hits: `0`

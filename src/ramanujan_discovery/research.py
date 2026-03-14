@@ -469,8 +469,8 @@ def bauer_muir_pattern_search(
     steps: int,
 ) -> list[dict[str, object]]:
     """Search a tiny fixed Bauer-Muir pattern family against exact rational sample points."""
-    if steps not in {1, 2}:
-        raise ValueError("steps must be 1 or 2")
+    if steps < 1 or steps > 3:
+        raise ValueError("steps must be between 1 and 3")
 
     patterns = _bauer_muir_patterns()
     sample_points = (sp.Rational(1, 10), sp.Rational(1, 7), sp.Rational(1, 5))
@@ -485,59 +485,64 @@ def bauer_muir_pattern_search(
     }
 
     hits: list[dict[str, object]] = []
-    for first_label, first_func in patterns:
-        first_chain_matches = True
-        first_transforms: dict[sp.Expr, BauerMuirTransformResult] = {}
+
+    def _start_transforms() -> dict[sp.Expr, BauerMuirTransformResult]:
+        initial: dict[sp.Expr, BauerMuirTransformResult] = {}
         for sample in sample_points:
-            (source_b0, source_a_terms, source_b_terms), (target_b0, target_a_terms, target_b_terms) = sample_data[sample]
-            first_terms = [first_func(n, sample) for n in range(0, depth + 1)]
-            first_transform = bauer_muir_transform_trunc(
+            source_coeffs, _ = sample_data[sample]
+            source_b0, source_a_terms, source_b_terms = source_coeffs
+            initial[sample] = BauerMuirTransformResult(
                 b0=source_b0,
                 a_terms=source_a_terms,
                 b_terms=source_b_terms,
-                w_terms=first_terms,
+                lambdas=[sp.Integer(0)],
             )
-            first_transforms[sample] = first_transform
-            if not _bauer_muir_matches_numeric(first_transform, target_b0, target_a_terms, target_b_terms, depth):
-                first_chain_matches = False
-                break
+        return initial
 
-        if steps == 1:
-            if first_chain_matches:
-                hits.append(
-                    {
-                        "source": source_label,
-                        "steps": 1,
-                        "pattern_chain": [first_label],
-                        "samples": [str(sample) for sample in sample_points],
-                    }
-                )
-            continue
-
-        for second_label, second_func in patterns:
-            second_chain_matches = True
+    def _search(
+        *,
+        transforms_by_sample: dict[sp.Expr, BauerMuirTransformResult],
+        chain: list[str],
+        remaining_steps: int,
+    ) -> None:
+        for label, func in patterns:
+            next_transforms: dict[sp.Expr, BauerMuirTransformResult] = {}
+            chain_matches = True
             for sample in sample_points:
                 _, (target_b0, target_a_terms, target_b_terms) = sample_data[sample]
-                first_transform = first_transforms[sample]
-                second_terms = [second_func(n, sample) for n in range(0, depth + 1)]
-                second_transform = bauer_muir_transform_trunc(
-                    b0=first_transform.b0,
-                    a_terms=first_transform.a_terms,
-                    b_terms=first_transform.b_terms,
-                    w_terms=second_terms,
+                current_transform = transforms_by_sample[sample]
+                next_terms = [func(n, sample) for n in range(0, depth + 1)]
+                next_transform = bauer_muir_transform_trunc(
+                    b0=current_transform.b0,
+                    a_terms=current_transform.a_terms,
+                    b_terms=current_transform.b_terms,
+                    w_terms=next_terms,
                 )
-                if not _bauer_muir_matches_numeric(second_transform, target_b0, target_a_terms, target_b_terms, depth):
-                    second_chain_matches = False
-                    break
-            if second_chain_matches:
+                next_transforms[sample] = next_transform
+                if not _bauer_muir_matches_numeric(next_transform, target_b0, target_a_terms, target_b_terms, depth):
+                    chain_matches = False
+            next_chain = chain + [label]
+            if chain_matches and len(next_chain) == steps:
                 hits.append(
                     {
                         "source": source_label,
-                        "steps": 2,
-                        "pattern_chain": [first_label, second_label],
+                        "steps": len(next_chain),
+                        "pattern_chain": next_chain,
                         "samples": [str(sample) for sample in sample_points],
                     }
                 )
+            if remaining_steps > 1:
+                _search(
+                    transforms_by_sample=next_transforms,
+                    chain=next_chain,
+                    remaining_steps=remaining_steps - 1,
+                )
+
+    _search(
+        transforms_by_sample=_start_transforms(),
+        chain=[],
+        remaining_steps=steps,
+    )
 
     return hits
 
@@ -749,6 +754,14 @@ def build_candidate_research_note(
             depth=4,
             steps=2,
         )
+        rr_three_step_hits = bauer_muir_pattern_search(
+            source_label="RR reciprocal",
+            source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
+            target_template=reduced_candidate,
+            q=t,
+            depth=4,
+            steps=3,
+        )
         cubic_one_step_hits = bauer_muir_pattern_search(
             source_label="cubic reciprocal",
             source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
@@ -765,6 +778,14 @@ def build_candidate_research_note(
             depth=4,
             steps=2,
         )
+        cubic_three_step_hits = bauer_muir_pattern_search(
+            source_label="cubic reciprocal",
+            source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
+            target_template=reduced_candidate,
+            q=t,
+            depth=4,
+            steps=3,
+        )
         lines.extend(
             [
                 "",
@@ -777,11 +798,20 @@ def build_candidate_research_note(
                 ),
                 f"- RR source, 1-step search space: `{bm_pattern_count}`; hits: `{len(rr_one_step_hits)}`",
                 f"- RR source, 2-step search space: `{bm_pattern_count**2}`; hits: `{len(rr_two_step_hits)}`",
+                f"- RR source, 3-step search space: `{bm_pattern_count**3}`; hits: `{len(rr_three_step_hits)}`",
                 f"- Cubic source, 1-step search space: `{bm_pattern_count}`; hits: `{len(cubic_one_step_hits)}`",
                 f"- Cubic source, 2-step search space: `{bm_pattern_count**2}`; hits: `{len(cubic_two_step_hits)}`",
+                f"- Cubic source, 3-step search space: `{bm_pattern_count**3}`; hits: `{len(cubic_three_step_hits)}`",
             ]
         )
-        bm_hits = rr_one_step_hits + rr_two_step_hits + cubic_one_step_hits + cubic_two_step_hits
+        bm_hits = (
+            rr_one_step_hits
+            + rr_two_step_hits
+            + rr_three_step_hits
+            + cubic_one_step_hits
+            + cubic_two_step_hits
+            + cubic_three_step_hits
+        )
         if bm_hits:
             lines.extend(["", "```text"])
             for hit in bm_hits:
