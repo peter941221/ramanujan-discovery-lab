@@ -75,6 +75,8 @@ Python formalization pipeline.
 
 RR direct witness: w0 = 0, w1 = t, transformed a1 = t, target a1 = t^2 + t
 Cubic direct witness: w0 = 0, w1 = t, w2 = t^2, transformed a2 = t^4 - t^3 + t^2 - t, target a2 = t^4 + t^2
+First reverse-equivalence scales: r1 = t + 1, r2 = (t^2 + 1)/(t + 1), r3 = (t^3 + 1)/(t^2 + 1), r4 = (t^4 + 1)/(t^3 + 1)
+These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.
 -/
 
 
@@ -105,10 +107,12 @@ theorem even_contraction_obstruction :
 /-!
 Suggested next theorem extensions:
 
-1. Compare candidate convergents against nearby benchmark convergents.
-2. Formalize the Bauer-Muir transform algebra itself instead of injecting only
+1. Lift the coefficient domain from polynomials to rational functions and
+   formalize the reverse equivalence transform.
+2. Compare candidate convergents against nearby benchmark convergents.
+3. Formalize the Bauer-Muir transform algebra itself instead of injecting only
    the recovered witnesses.
-3. Attempt a final source theorem only after a unique identity is known.
+4. Attempt a final source theorem only after a unique identity is known.
 -/
 
 end
