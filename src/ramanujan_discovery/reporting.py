@@ -150,6 +150,16 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "description": "Small-degree algebraic relation guesses between the hero case and its nearest benchmark.",
             },
             {
+                "title": "Hero Case Study",
+                "href": _repo_markdown_url("CB60FD71D1D7_CASE_STUDY.md"),
+                "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim.",
+            },
+            {
+                "title": "Hero Shortlist",
+                "href": _repo_markdown_url("CB60FD71D1D7_SHORTLIST.md"),
+                "description": "Targeted checklist for the next literature and recognition pass (no novelty claim).",
+            },
+            {
                 "title": "RR(q^3) Neighborhood",
                 "href": _repo_markdown_url("RR_Q3_NEIGHBORHOOD_AUDIT.md"),
                 "description": "Separates the plain RR(q^3) step branch from the hybrid cb60fd71d1d7 branch.",

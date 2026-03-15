@@ -1,0 +1,100 @@
+# Case Study: `cb60fd71d1d7` (Audit-First Experimental Mathematics)
+
+This note is written as a "public-facing but conservative" narrative of what the
+project can already do on a single hard example, without claiming a new identity.
+
+## The Candidate
+
+The current hero-case candidate is
+
+```text
+1 / (1 + (q^3 + q^6)/(1 + q^3 + (q^6 + q^12)/(1 + q^6 + ...))).
+```
+
+It was produced by the discovery pipeline as a numerically stable template whose
+nearest built-in benchmark is the Rogers-Ramanujan family at `q^3`.
+
+## Why It Is Interesting (But Not Yet "A New Formula")
+
+- Symbolically, it matches `RR(q^3)` through `q^9`.
+- The first divergence from `RR(q^3)` is at `q^12`.
+- It survives several rings of "obvious" explanations:
+  constant-parameter specializations of the nearest published families,
+  direct odd/even contractions, and short constrained Bauer--Muir chains.
+
+Those eliminations do not prove novelty. They just justify why the candidate is
+worth treating as a high-value audit target.
+
+## The Clean Step-Reduced Model
+
+In reduced variable `t = q^3`, it is natural to study the **reciprocal**
+continued fraction (the `1 + ...` object):
+
+```text
+C(t) = 1 + K_{n>=1} (t^n + t^(2n)) / (1 + t^n).
+```
+
+The nearest benchmark reciprocal is the Rogers-Ramanujan ladder:
+
+```text
+B1(t) = 1 + K_{n>=1} t^n / 1.
+```
+
+## What Is Already Exact (Machine-Checkable)
+
+The proof layer currently focuses on theorem-grade local statements:
+
+1. Finite-truncation convergent recurrences for generalized continued fractions.
+2. Exact convergent-factor reduction:
+   the `n`th convergent numerator and denominator of `C(t)` both carry factor
+   `1 + t^n`, inducing a second "reduced-by-factor" continued fraction.
+3. Equivalence transformations:
+   the reverse scales needed to reconstruct the original coefficients from the
+   reduced-by-factor model can be expressed in a fraction-field coefficient layer.
+4. Local obstruction lemmas:
+   several nearby transform/contraction origins are ruled out at the coefficient level.
+
+The repository's Lean files reflect this scope (finite convergents and exact
+coefficient equalities), not a final analytic identity.
+
+## What Has Been Tried For Identification (Negative Results)
+
+Two simple "recognition" attempts have been run on the step-reduced reciprocals:
+
+1. Euler-product fingerprints:
+   the ratio `candidate / RR(q^3)` and the reciprocal `C(t)` both yield dense,
+   rapidly growing Euler-product exponents, making a small eta/Pochhammer tweak
+   explanation unlikely in the searched boxes.
+2. Small-degree algebraic relations:
+   no polynomial relation `P(C,B1)=0` was found up to total degree `4`, checked
+   modulo `t^90`; a small multivariate extension including `B1(t^2)` and `B1(t^3)`
+   also found no relation in the same box.
+
+These are not impossibility theorems. They only remove a class of "too simple"
+closed forms.
+
+## What Would Make This Publishable As A New Identity
+
+To cross the bar for a genuine new-formula paper, we would need one of:
+
+1. A sourced identity statement: `C(t) = known_object(t)` (or `candidate = ...`)
+   with a reliable reference chain, plus proof.
+2. A uniquely characterizing theorem that implies a new identity:
+   for example, a functional equation + normalization that pins down the function.
+
+At the moment, we have strong audit evidence and machine-checked local structure,
+but no final source object.
+
+## What Is Publishable Today (More Realistically)
+
+Even without a final identity, the current state is strong enough for a "methods"
+write-up if framed honestly:
+
+- automated search + verification pipeline for q-continued fractions
+- conservative benchmark-relative audit semantics
+- a worked "hero case" showing how computational eliminations and Lean-checked
+  local lemmas can interact
+
+This is closer to an experimental-math + formalization case study than a
+classical "new continued fraction identity" announcement.
+

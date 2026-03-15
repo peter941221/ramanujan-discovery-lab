@@ -21,15 +21,23 @@ from ramanujan_discovery.storage import read_candidates
 
 @dataclass(frozen=True)
 class PolynomialRelation:
-    order_checked: int
-    max_deg_x: int
-    max_deg_y: int
-    coefficients: dict[tuple[int, int], sp.Integer]  # (i,j) -> c_ij for X^i Y^j
+    """Multivariate polynomial relation P(X_0, ..., X_{k-1}) == 0 mod q^N."""
 
-    def as_sympy(self, x: sp.Symbol, y: sp.Symbol) -> sp.Expr:
+    order_checked: int
+    variables: tuple[str, ...]
+    max_total_degree: int
+    coefficients: dict[tuple[int, ...], sp.Integer]  # exponent tuple -> coefficient
+
+    def as_sympy(self, symbols: tuple[sp.Symbol, ...]) -> sp.Expr:
+        if len(symbols) != len(self.variables):
+            raise ValueError("symbol count must match variable count")
         expr = sp.Integer(0)
-        for (i, j), coeff in sorted(self.coefficients.items()):
-            expr += coeff * x**i * y**j
+        for exponents, coeff in sorted(self.coefficients.items()):
+            term = sp.Integer(1)
+            for sym, exp in zip(symbols, exponents):
+                if exp:
+                    term *= sym**exp
+            expr += coeff * term
         return sp.expand(expr)
 
 
@@ -48,43 +56,59 @@ def _series_active_exponents(template: QCFTemplate) -> list[int]:
     return [value for value in parts if value != 0]
 
 
-def guess_bivariate_polynomial_relation(
+def guess_polynomial_relation(
     *,
-    x_series: Series,
-    y_series: Series,
-    max_deg_x: int,
-    max_deg_y: int,
+    series_by_variable: dict[str, Series],
     order: int,
+    max_total_degree: int,
 ) -> PolynomialRelation | None:
-    """Find integer coefficients c_ij such that sum c_ij X^i Y^j == 0 modulo q^order."""
+    """Find integer coefficients for a small polynomial relation among series variables.
+
+    The search space is monomials with total degree <= max_total_degree.
+    """
     if order < 2:
         raise ValueError("order must be at least 2")
-    if max_deg_x < 0 or max_deg_y < 0:
-        raise ValueError("max degrees must be non-negative")
-    if len(x_series) < order or len(y_series) < order:
+    if max_total_degree < 1:
+        raise ValueError("max_total_degree must be at least 1")
+    if len(series_by_variable) < 2:
+        raise ValueError("need at least two variables for a relation search")
+    if any(len(series) < order for series in series_by_variable.values()):
         raise ValueError("series are shorter than requested order")
 
-    x_series = x_series[:order]
-    y_series = y_series[:order]
+    variables = tuple(series_by_variable.keys())
+    series_list = [series_by_variable[name][:order] for name in variables]
 
-    x_pows = [None] * (max_deg_x + 1)
-    x_pows[0] = [sp.Integer(0) for _ in range(order)]
-    x_pows[0][0] = sp.Integer(1)
-    for i in range(1, max_deg_x + 1):
-        x_pows[i] = series_mul(x_pows[i - 1], x_series)  # type: ignore[arg-type]
+    # Precompute powers up to max_total_degree for each variable.
+    one = [sp.Integer(0) for _ in range(order)]
+    one[0] = sp.Integer(1)
+    powers: list[list[Series]] = []
+    for series in series_list:
+        var_pows: list[Series] = [one]
+        for _ in range(max_total_degree):
+            var_pows.append(series_mul(var_pows[-1], series))
+        powers.append(var_pows)
 
-    y_pows = [None] * (max_deg_y + 1)
-    y_pows[0] = [sp.Integer(0) for _ in range(order)]
-    y_pows[0][0] = sp.Integer(1)
-    for j in range(1, max_deg_y + 1):
-        y_pows[j] = series_mul(y_pows[j - 1], y_series)  # type: ignore[arg-type]
-
-    monomials: list[tuple[int, int]] = []
+    # Enumerate exponent tuples with total degree <= max_total_degree.
+    exponent_tuples: list[tuple[int, ...]] = []
     columns: list[Series] = []
-    for i in range(max_deg_x + 1):
-        for j in range(max_deg_y + 1):
-            monomials.append((i, j))
-            columns.append(series_mul(x_pows[i], y_pows[j]))  # type: ignore[arg-type]
+
+    def _recurse(idx: int, remaining: int, current: list[int]) -> None:
+        if idx == len(variables):
+            exponent_tuples.append(tuple(current))
+            # Multiply the precomputed powers for this monomial.
+            term = one
+            for var_idx, exp in enumerate(current):
+                if exp == 0:
+                    continue
+                term = series_mul(term, powers[var_idx][exp])
+            columns.append(term)
+            return
+        for exp in range(remaining + 1):
+            current.append(exp)
+            _recurse(idx + 1, remaining - exp, current)
+            current.pop()
+
+    _recurse(0, max_total_degree, [])
 
     matrix = sp.Matrix([[columns[col][row] for col in range(len(columns))] for row in range(order)])
     nullspace = matrix.nullspace()
@@ -124,65 +148,64 @@ def guess_bivariate_polynomial_relation(
                 scaled = [-v for v in scaled]
             break
 
-    coeff_map: dict[tuple[int, int], sp.Integer] = {}
-    for (i, j), coeff in zip(monomials, scaled):
+    coeff_map: dict[tuple[int, ...], sp.Integer] = {}
+    for exponents, coeff in zip(exponent_tuples, scaled):
         coeff_s = sp.simplify(coeff)
-        if coeff_s != 0:
-            coeff_map[(i, j)] = sp.Integer(int(coeff_s))
+        if coeff_s == 0:
+            continue
+        coeff_map[exponents] = sp.Integer(int(coeff_s))
 
     if not coeff_map:
         return None
 
     return PolynomialRelation(
         order_checked=order,
-        max_deg_x=max_deg_x,
-        max_deg_y=max_deg_y,
+        variables=variables,
+        max_total_degree=max_total_degree,
         coefficients=coeff_map,
     )
 
 
-def search_bivariate_relation(
+def search_polynomial_relation(
     *,
-    x_series: Series,
-    y_series: Series,
-    max_degree: int,
+    series_by_variable: dict[str, Series],
     order: int,
+    max_total_degree: int,
 ) -> PolynomialRelation | None:
-    if max_degree < 1:
-        raise ValueError("max_degree must be at least 1")
-    for degree in range(1, max_degree + 1):
-        relation = guess_bivariate_polynomial_relation(
-            x_series=x_series,
-            y_series=y_series,
-            max_deg_x=degree,
-            max_deg_y=degree,
-            order=order,
-        )
-        if relation is not None:
-            return relation
-    return None
+    if max_total_degree < 1:
+        raise ValueError("max_total_degree must be at least 1")
+    return guess_polynomial_relation(
+        series_by_variable=series_by_variable,
+        order=order,
+        max_total_degree=max_total_degree,
+    )
 
 
 def _relation_residual_series(
     relation: PolynomialRelation,
     *,
-    x_series: Series,
-    y_series: Series,
+    series_by_variable: dict[str, Series],
     order: int,
 ) -> Series:
-    x_pows = {0: [sp.Integer(0) for _ in range(order)]}
-    x_pows[0][0] = sp.Integer(1)
-    for i in range(1, relation.max_deg_x + 1):
-        x_pows[i] = series_mul(x_pows[i - 1], x_series[:order])
+    variables = relation.variables
+    series_list = [series_by_variable[name][:order] for name in variables]
 
-    y_pows = {0: [sp.Integer(0) for _ in range(order)]}
-    y_pows[0][0] = sp.Integer(1)
-    for j in range(1, relation.max_deg_y + 1):
-        y_pows[j] = series_mul(y_pows[j - 1], y_series[:order])
+    one = [sp.Integer(0) for _ in range(order)]
+    one[0] = sp.Integer(1)
+    powers: list[list[Series]] = []
+    for series in series_list:
+        var_pows: list[Series] = [one]
+        for _ in range(relation.max_total_degree):
+            var_pows.append(series_mul(var_pows[-1], series))
+        powers.append(var_pows)
 
     residual: Series = [sp.Integer(0) for _ in range(order)]
-    for (i, j), coeff in relation.coefficients.items():
-        term = series_mul(x_pows[i], y_pows[j])
+    for exponents, coeff in relation.coefficients.items():
+        term = one
+        for var_idx, exp in enumerate(exponents):
+            if exp == 0:
+                continue
+            term = series_mul(term, powers[var_idx][exp])
         for n in range(order):
             if term[n] == 0:
                 continue
@@ -198,6 +221,7 @@ def build_candidate_identification_note(
     depth: int = 40,
     series_order: int = 90,
     max_degree: int = 4,
+    benchmark_powers: tuple[int, ...] = (),
     smoke: bool = False,
 ) -> None:
     records = read_candidates(input_path)
@@ -248,12 +272,35 @@ def build_candidate_identification_note(
     candidate_recip = series_invert(candidate_series)
     benchmark_recip = series_invert(benchmark_series)
 
-    relation = search_bivariate_relation(
-        x_series=candidate_recip,
-        y_series=benchmark_recip,
-        max_degree=profile_degree,
+    relation = search_polynomial_relation(
+        series_by_variable={"C": candidate_recip, "B1": benchmark_recip},
         order=profile_order,
+        max_total_degree=profile_degree,
     )
+
+    extra_relation: PolynomialRelation | None = None
+    benchmark_power_series: dict[int, Series] = {}
+    if benchmark_powers:
+        for power in sorted(set(benchmark_powers)):
+            if power < 2:
+                continue
+            powered: Series = [sp.Integer(0) for _ in range(profile_order)]
+            for idx, coeff in enumerate(benchmark_recip):
+                j = power * idx
+                if j >= profile_order:
+                    break
+                powered[j] = sp.simplify(coeff)
+            benchmark_power_series[power] = powered
+
+        variables: dict[str, Series] = {"C": candidate_recip, "B1": benchmark_recip}
+        for power, series in benchmark_power_series.items():
+            variables[f"B{power}"] = series
+
+        extra_relation = search_polynomial_relation(
+            series_by_variable=variables,
+            order=profile_order,
+            max_total_degree=min(profile_degree, 3 if smoke else profile_degree),
+        )
 
     lines: list[str] = [
         f"# Identification Note: `{record.id}`",
@@ -265,7 +312,7 @@ def build_candidate_identification_note(
         f"- Variable view: `{variable_label}`",
         f"- Depth: `{profile_depth}`",
         f"- Series order: `{profile_order}`",
-        f"- Algebraic relation search: degrees `<= {profile_degree}` (both variables)",
+        f"- Polynomial relation search: total degree `<= {profile_degree}`",
         "",
         "## Objects",
         "",
@@ -277,7 +324,7 @@ def build_candidate_identification_note(
         "We run the relation search on the **reciprocal** continued fractions (the `1 + ...` objects):",
         "",
         "- `C = 1 / candidate`",
-        f"- `B = 1 / {record.closest_benchmark}`",
+        f"- `B1 = 1 / {record.closest_benchmark}`",
         "",
         "## Result",
         "",
@@ -286,26 +333,28 @@ def build_candidate_identification_note(
     if relation is None:
         lines.extend(
             [
-                "No nontrivial bivariate polynomial relation",
+                "No nontrivial polynomial relation",
                 "",
-                f"```text\nP(C, B) = 0\n```",
+                "```text",
+                "P(C, B1) = 0",
+                "```",
                 "",
-                f"was found in the search box `deg_C, deg_B <= {profile_degree}` when checked modulo `{series_symbol}^{profile_order}`.",
+                f"was found in the search box `total degree <= {profile_degree}` when checked modulo `{series_symbol}^{profile_order}`.",
             ]
         )
     else:
-        X, Y = sp.symbols("C B")
-        poly = relation.as_sympy(X, Y)
+        sym_map = {name: sp.Symbol(name) for name in relation.variables}
+        symbols = tuple(sym_map[name] for name in relation.variables)
+        poly = relation.as_sympy(symbols)
         residual = _relation_residual_series(
             relation,
-            x_series=candidate_recip,
-            y_series=benchmark_recip,
+            series_by_variable={"C": candidate_recip, "B1": benchmark_recip},
             order=profile_order,
         )
         residual_ok = all(sp.simplify(value) == 0 for value in residual)
         lines.extend(
             [
-                "Found a candidate bivariate polynomial relation:",
+                "Found a candidate polynomial relation:",
                 "",
                 "```text",
                 _format_expr(poly),
@@ -314,5 +363,53 @@ def build_candidate_identification_note(
                 f"- Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
             ]
         )
+
+    if benchmark_power_series:
+        lines.extend(
+            [
+                "",
+                "## Extra Multivariate Search",
+                "",
+                "We also tried a small multivariate search that includes benchmark power substitutions:",
+                "",
+            ]
+        )
+        for power in sorted(benchmark_power_series):
+            lines.append(f"- `B{power} = B1({series_symbol}^{power})`")
+        lines.append("")
+
+        if extra_relation is None:
+            lines.extend(
+                [
+                    "No nontrivial multivariate polynomial relation was found",
+                    "",
+                    f"under `total degree <= {min(profile_degree, 3 if smoke else profile_degree)}` when checked modulo `{series_symbol}^{profile_order}`.",
+                ]
+            )
+        else:
+            sym_map = {name: sp.Symbol(name) for name in extra_relation.variables}
+            symbols = tuple(sym_map[name] for name in extra_relation.variables)
+            poly = extra_relation.as_sympy(symbols)
+            residual = _relation_residual_series(
+                extra_relation,
+                series_by_variable={
+                    "C": candidate_recip,
+                    "B1": benchmark_recip,
+                    **{f"B{p}": series for p, series in benchmark_power_series.items()},
+                },
+                order=profile_order,
+            )
+            residual_ok = all(sp.simplify(value) == 0 for value in residual)
+            lines.extend(
+                [
+                    "Found a candidate multivariate polynomial relation:",
+                    "",
+                    "```text",
+                    _format_expr(poly),
+                    "```",
+                    "",
+                    f"- Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                ]
+            )
 
     Path(output_path).write_text("\n".join(lines) + "\n", encoding="utf-8")

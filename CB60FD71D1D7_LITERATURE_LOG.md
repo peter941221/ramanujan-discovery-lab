@@ -64,6 +64,46 @@ with fixed complex constants `a`, `b`, `lambda` has no solution.
 was found in the sources checked.
 - The closest primary-source matches remain family-level, not exact-pattern matches.
 
+## 2026-03-15 Update: Extra Sources Scanned
+
+The goal of this pass was to widen the net toward older Rogers-Ramanujan-type
+continued fractions with `1 + q^n` partial denominators and classical modular
+invariant presentations.
+
+1. Bowman, Mc Laughlin, Wyshinski, 2005 (Hirschhorn special issue)
+   - PDF mirror: https://www.wcupa.edu/sciences-mathematics/mathematics/documents/hirschhornnov08.pdf
+   - Relevant hits:
+     - reprints Ramanujan notebook page-43 ratio family (Entry 6.4.4) in a
+       form consistent with the 2006 arXiv version
+     - includes two classical `1+q^n`-denominator fractions:
+       - `S(q)` with product `(q^2;q^3)_∞/(q;q^3)_∞`
+       - the Ramanujan--Gollnitz--Gordon continued fraction `GG(q)`
+   - Outcome: no exact stage pattern match to
+     `(t^n + t^(2n)) / (1 + t^n)` was found in the explicit formulas scanned.
+
+2. Adiga, Kim, et al., 2017 (Ramanujan--Weber class invariants)
+   - PDF: https://www.filomat.org/index.php/filomat/article/download/4026/4026/31-13-2-4026.pdf
+   - Relevant hits:
+     - continued fractions tied to Weber class invariants and the
+       Ramanujan--Gollnitz--Gordon neighborhood
+     - functional equations among those invariants
+   - Outcome: noted as a good next target for transform-style recognition, but
+     no direct coefficient-level template match was extracted in this scan.
+
+3. Ismail--Stanton, 2003 (orthogonal polynomial viewpoint)
+   - PDF: http://www-users.math.umn.edu/~isman/papers/ramanujan.pdf
+   - Reason: many Rogers-Ramanujan-type continued fractions can be recognized
+     as J-fractions / Stieltjes transforms with structured recurrence data.
+   - Outcome: no direct match was found in a first text search for the exact
+     `1+q^n` pattern, but the framework is relevant for deeper classification.
+
+## Updated Interpretation
+
+- The candidate still has no identified source identity.
+- The `1 + q^n` partial denominator feature is common in older literature
+  (e.g., `S(q)`, `GG(q)`), but the exact mixed numerator
+  `q^(3n) + q^(6n)` structure remains unlocated.
+
 ## Transform Audit Update
 
 - A dedicated audit note now records the first explicit transform eliminations:

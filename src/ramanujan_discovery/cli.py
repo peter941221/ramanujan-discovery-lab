@@ -16,6 +16,9 @@ from ramanujan_discovery.verification import verify_candidates
 def _parse_q_values(raw: str) -> tuple[float, ...]:
     return tuple(float(item.strip()) for item in raw.split(",") if item.strip())
 
+def _parse_int_list(raw: str) -> tuple[int, ...]:
+    return tuple(int(item.strip()) for item in raw.split(",") if item.strip())
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ramanujan-discovery")
@@ -86,6 +89,12 @@ def build_parser() -> argparse.ArgumentParser:
     identify.add_argument("--depth", type=int, default=40)
     identify.add_argument("--series-order", type=int, default=90)
     identify.add_argument("--max-degree", type=int, default=4)
+    identify.add_argument(
+        "--benchmark-powers",
+        type=str,
+        default="",
+        help="Comma-separated k>=2 values to include Bk = benchmark_recip(t^k) in a multivariate relation search.",
+    )
     identify.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
     identify.add_argument("--out", type=str, required=True)
 
@@ -184,6 +193,7 @@ def main(argv: list[str] | None = None) -> int:
             depth=args.depth,
             series_order=args.series_order,
             max_degree=args.max_degree,
+            benchmark_powers=_parse_int_list(args.benchmark_powers),
             smoke=args.smoke,
         )
         return 0

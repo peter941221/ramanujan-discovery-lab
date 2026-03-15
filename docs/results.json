@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-15 04:21:57 UTC",
+  "generated_at": "2026-03-15 04:51:35 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -694,6 +694,16 @@
       "title": "Hero Identification",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_IDENTIFICATION_NOTE.md",
       "description": "Small-degree algebraic relation guesses between the hero case and its nearest benchmark."
+    },
+    {
+      "title": "Hero Case Study",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_CASE_STUDY.md",
+      "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim."
+    },
+    {
+      "title": "Hero Shortlist",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_SHORTLIST.md",
+      "description": "Targeted checklist for the next literature and recognition pass (no novelty claim)."
     },
     {
       "title": "RR(q^3) Neighborhood",

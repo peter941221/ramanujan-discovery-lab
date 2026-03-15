@@ -7,7 +7,7 @@
 - Variable view: `t = q^3`
 - Depth: `40`
 - Series order: `90`
-- Algebraic relation search: degrees `<= 4` (both variables)
+- Polynomial relation search: total degree `<= 4`
 
 ## Objects
 
@@ -19,14 +19,25 @@
 We run the relation search on the **reciprocal** continued fractions (the `1 + ...` objects):
 
 - `C = 1 / candidate`
-- `B = 1 / rogers_ramanujan_q3_normalized`
+- `B1 = 1 / rogers_ramanujan_q3_normalized`
 
 ## Result
 
-No nontrivial bivariate polynomial relation
+No nontrivial polynomial relation
 
 ```text
-P(C, B) = 0
+P(C, B1) = 0
 ```
 
-was found in the search box `deg_C, deg_B <= 4` when checked modulo `t^90`.
+was found in the search box `total degree <= 4` when checked modulo `t^90`.
+
+## Extra Multivariate Search
+
+We also tried a small multivariate search that includes benchmark power substitutions:
+
+- `B2 = B1(t^2)`
+- `B3 = B1(t^3)`
+
+No nontrivial multivariate polynomial relation was found
+
+under `total degree <= 4` when checked modulo `t^90`.
