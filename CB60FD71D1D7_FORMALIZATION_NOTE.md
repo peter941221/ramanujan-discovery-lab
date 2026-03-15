@@ -34,6 +34,43 @@ a_n = t^n
 b_n = 1
 ```
 
+## Exact Reduction And Equivalence Witness
+
+- Exact convergent gcd factors were checked through stage `8`.
+- First common factors:
+
+```text
+g1 = t + 1
+g2 = t^2 + 1
+g3 = t^3 + 1
+g4 = t^4 + 1
+```
+
+- After cancellation, the induced reduced-by-factor object begins:
+
+```text
+b0_red = 1
+a1_red = t
+b1_red = 1
+a2_red = t^2
+b2_red = t + 1
+a3_red = t^4 + t^3
+b3_red = t^2 + 1
+a4_red = t^6 + t^4
+b4_red = t^3 + 1
+```
+
+- Reverse equivalence transform stage scales:
+
+```text
+r1 = t + 1
+r2 = (t^2 + 1)/(t + 1)
+r3 = (t^3 + 1)/(t^2 + 1)
+r4 = (t^4 + 1)/(t^3 + 1)
+```
+
+- These reverse scales are rational functions in `t`, so a full formalization of this step likely needs a fraction-field coefficient layer in addition to the current polynomial one.
+
 ## Exact Lemma Candidates
 
 ### Direct 1-Step Bauer-Muir Obstructions
@@ -56,10 +93,12 @@ b_n = 1
 ## Formalization Order
 
 1. Formalize generalized continued fractions and convergent recurrence for finite truncations.
-2. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
-3. Formalize odd/even contraction reconstruction and the cubic denominator mismatch lemma.
-4. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.
-5. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.
+2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.
+3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.
+4. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
+5. Formalize odd/even contraction reconstruction and the cubic denominator mismatch lemma.
+6. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.
+7. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.
 
 ## Why This Is Still Not A Full Theorem
 

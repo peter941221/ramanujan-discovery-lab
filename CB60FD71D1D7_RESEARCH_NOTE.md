@@ -47,6 +47,43 @@ c_1..c_30:
 - Periodic Pochhammer fit (bounded |e_r|<=8, period<=12): `no fit`
 - Eta-quotient fit (bounded |e_d|<=8, level<=12): `no fit`
 
+## Exact Convergent-Factor Reduction
+
+- Checked exact convergent gcd factors through stage `8`. The first visible factors are:
+
+```text
+g1 = t + 1
+g2 = t^2 + 1
+g3 = t^3 + 1
+g4 = t^4 + 1
+```
+
+- After cancellation, the induced reduced continued fraction begins:
+
+```text
+b0_red = 1
+a1_red = t
+b1_red = 1
+a2_red = t^2
+b2_red = t + 1
+a3_red = t^4 + t^3
+b3_red = t^2 + 1
+a4_red = t^6 + t^4
+b4_red = t^3 + 1
+```
+
+- The original reduced target is recovered by the reverse equivalence transform with stage scales:
+
+```text
+r1 = t + 1
+r2 = (t^2 + 1)/(t + 1)
+r3 = (t^3 + 1)/(t^2 + 1)
+r4 = (t^4 + 1)/(t^3 + 1)
+```
+
+- Applying those scales back to the cancelled fraction reproduces the target coefficients exactly through the checked depth: `True`.
+- These reverse scales are rational functions in `t`, so they point toward a future fraction-field formalization layer rather than a purely polynomial one.
+
 ## Direct 1-Step Bauer-Muir Obstruction
 
 - `RR reciprocal`: matching `b0` forces `w0 = 0` and matching `b1` forces `w1 = t`. That leaves the first transformed numerator at `t` instead of the target `t^2 + t`, so no direct 1-step transform exists.
@@ -62,6 +99,27 @@ a1_hcf2 = -a/2 - a/(2*b) + 1/2 + 1/(2*b)
 ```
 
 - But the target reciprocal for this candidate has `a1 = t + t^2`, so this specialization cannot match at the coefficient level.
+
+## Page-43 Monomial Substitution Check
+
+- Search shape: `a = alpha*t^A`, `b = beta*t^B`, `lambda = gamma*t^L` with integer shifts `A,B,L in [-3,3]`.
+- Matching rule: solve exactly for `alpha, beta, gamma` so the first `3` reciprocal stages match the reduced target.
+- `f2` / `gcf3` hits in this box: `0`
+- `f4` / `gcf2` hits in this box: `0`
+
+## Cubic Odd/Even Contraction Check
+
+- Treat the reduced cubic benchmark reciprocal as `1 + K (t^n + t^(2n)) / 1`.
+- Odd part: the initial term is `d0 = t^2 + t + 1`, already incompatible with the target initial term `1`.
+- Even part: the initial term `1` and first numerator `t^2 + t` do match the target, but the first denominator is `t^4 + t^2 + 1` instead of `t + 1`.
+- So the reduced candidate is not a simple odd/even canonical contraction of the cubic reciprocal.
+
+## Arithmetic Subsequence Contraction Scan
+
+- Search shape: every `stride`-th convergent subsequence with `stride in {2,3,4}` and all offsets.
+- Matching rule: recover the induced contracted fraction and compare `b0, a1..a3, b1..b3` exactly against the reduced target.
+- RR source hits in this box: `0`
+- Cubic source hits in this box: `0`
 
 ## Constrained Bauer-Muir Search
 
