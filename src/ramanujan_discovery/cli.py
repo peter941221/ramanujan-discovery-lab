@@ -62,6 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
     research.add_argument("--candidate-id", type=str, required=True)
     research.add_argument("--depth", type=int, default=40)
     research.add_argument("--series-order", type=int, default=151)
+    research.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
     research.add_argument("--out", type=str, required=True)
 
     formalize = subparsers.add_parser(
@@ -71,6 +72,7 @@ def build_parser() -> argparse.ArgumentParser:
     formalize.add_argument("--in", dest="input_path", type=str, required=True)
     formalize.add_argument("--candidate-id", type=str, required=True)
     formalize.add_argument("--max-stride", type=int, default=4)
+    formalize.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
     formalize.add_argument("--out", type=str, required=True)
     formalize.add_argument("--lean-out", type=str, default=None)
 
@@ -146,6 +148,7 @@ def main(argv: list[str] | None = None) -> int:
             output_path=args.out,
             depth=args.depth,
             series_order=args.series_order,
+            smoke=args.smoke,
         )
         return 0
 
@@ -156,6 +159,7 @@ def main(argv: list[str] | None = None) -> int:
             output_path=args.out,
             max_stride=args.max_stride,
             lean_output_path=args.lean_out,
+            smoke=args.smoke,
         )
         return 0
 

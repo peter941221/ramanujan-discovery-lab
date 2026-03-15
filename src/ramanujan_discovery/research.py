@@ -266,6 +266,29 @@ class EquivalenceTransformedCoeffs:
 
 
 @dataclass(frozen=True)
+class ConvergentFactorEquivalenceWitness:
+    reduction: ConvergentCommonFactorReduction
+    scale_terms: list[sp.Expr]  # 1-indexed, scale_terms[0] unused
+    retransformed_coeffs: EquivalenceTransformedCoeffs
+
+
+@dataclass(frozen=True)
+class ResearchBuildProfile:
+    label: str
+    raw_series_cap: int
+    reduced_order_cap: int
+    euler_order_cap: int
+    fit_order_cap: int
+    factor_depth_cap: int
+    page43_max_shift: int
+    page43_stages: int
+    max_subsequence_stride: int
+    subsequence_stages: int
+    max_bauer_muir_steps: int
+    bauer_muir_depth: int
+
+
+@dataclass(frozen=True)
 class Page43MonomialHit:
     family: str
     a_shift: int
@@ -443,6 +466,41 @@ def apply_equivalence_transform(
         b0=sp.simplify(b0),
         a_terms=transformed_a,
         b_terms=transformed_b,
+    )
+
+
+def convergent_factor_equivalence_witness(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+) -> ConvergentFactorEquivalenceWitness:
+    """Recover the convergent-factor reduction plus the reverse equivalence scales."""
+    reduction = convergent_common_factor_reduction(
+        b0=b0,
+        a_terms=a_terms,
+        b_terms=b_terms,
+    )
+
+    scale_terms = [sp.Integer(0)]
+    if len(reduction.gcd_factors) > 1:
+        scale_terms.append(sp.simplify(reduction.gcd_factors[1]))
+        for n in range(2, len(reduction.gcd_factors)):
+            previous_factor = sp.simplify(reduction.gcd_factors[n - 1])
+            if previous_factor == 0:
+                raise ValueError("gcd factors must stay nonzero to recover equivalence scales")
+            scale_terms.append(sp.simplify(reduction.gcd_factors[n] / previous_factor))
+
+    retransformed = apply_equivalence_transform(
+        b0=reduction.reduced_coeffs.b0,
+        a_terms=reduction.reduced_coeffs.a_terms,
+        b_terms=reduction.reduced_coeffs.b_terms,
+        scale_terms=scale_terms,
+    )
+    return ConvergentFactorEquivalenceWitness(
+        reduction=reduction,
+        scale_terms=scale_terms,
+        retransformed_coeffs=retransformed,
     )
 
 
@@ -745,6 +803,42 @@ def _format_expr(expr) -> str:
     return str(sp.expand(expr)).replace("**", "^")
 
 
+def _format_fraction_expr(expr) -> str:
+    return str(sp.cancel(expr)).replace("**", "^")
+
+
+def _research_build_profile(*, smoke: bool) -> ResearchBuildProfile:
+    if smoke:
+        return ResearchBuildProfile(
+            label="smoke",
+            raw_series_cap=31,
+            reduced_order_cap=24,
+            euler_order_cap=36,
+            fit_order_cap=24,
+            factor_depth_cap=4,
+            page43_max_shift=1,
+            page43_stages=2,
+            max_subsequence_stride=2,
+            subsequence_stages=2,
+            max_bauer_muir_steps=1,
+            bauer_muir_depth=3,
+        )
+    return ResearchBuildProfile(
+        label="full",
+        raw_series_cap=61,
+        reduced_order_cap=80,
+        euler_order_cap=80,
+        fit_order_cap=60,
+        factor_depth_cap=8,
+        page43_max_shift=3,
+        page43_stages=3,
+        max_subsequence_stride=4,
+        subsequence_stages=3,
+        max_bauer_muir_steps=3,
+        bauer_muir_depth=4,
+    )
+
+
 def _find_candidate(records: list[CandidateRecord], candidate_id: str) -> CandidateRecord:
     for record in records:
         if record.id == candidate_id:
@@ -914,17 +1008,19 @@ def build_candidate_research_note(
     output_path: str,
     depth: int = 40,
     series_order: int = 151,
+    smoke: bool = False,
 ) -> None:
     records = read_candidates(input_path)
     record = _find_candidate(records, candidate_id)
     benchmark = get_benchmark(record.closest_benchmark)
+    profile = _research_build_profile(smoke=smoke)
 
     q = sp.Symbol("q")
     step = benchmark.canonical_template.numerator_q_step
 
     # Computing very high-order q-series directly is expensive in Sympy. For the hero-case
     # RR(q^3) neighborhood, it's better to step-reduce to t=q^3 and work there.
-    raw_order = min(series_order, 61)
+    raw_order = min(series_order, profile.raw_series_cap)
     candidate_series = _series_expr(record.template, depth=depth, order=raw_order, q_symbol=q)
     benchmark_series = _series_expr(benchmark.canonical_template, depth=depth, order=raw_order, q_symbol=q)
     ratio_series = sp.expand(sp.series(candidate_series / benchmark_series, q, 0, raw_order).removeO())
@@ -947,6 +1043,7 @@ def build_candidate_research_note(
         f"- Depth: `{depth}`",
         f"- Series order request: `{series_order}`",
         f"- Raw q-series computed order: `{raw_order}`",
+        f"- Build profile: `{profile.label}`",
         "",
         "## Ratio Series",
         "",
@@ -963,7 +1060,7 @@ def build_candidate_research_note(
     reduced_benchmark = reduce_template_by_step(benchmark.canonical_template.normalized(), step=step)
     if reduced_candidate is not None and reduced_benchmark is not None:
         t = sp.Symbol("t")
-        reduced_order = (series_order // step) + 3
+        reduced_order = min((series_order // step) + 3, profile.reduced_order_cap)
         candidate_t = _series_expr(
             reduced_candidate,
             depth=depth,
@@ -977,7 +1074,7 @@ def build_candidate_research_note(
             q_symbol=t,
         )
         ratio_t = sp.expand(sp.series(candidate_t / benchmark_t, t, 0, reduced_order).removeO())
-        euler_exponents = euler_product_exponents(ratio_t, q=t, order=min(reduced_order, 80))
+        euler_exponents = euler_product_exponents(ratio_t, q=t, order=min(reduced_order, profile.euler_order_cap))
 
         max_abs_exponent = max(int(abs(sp.N(value))) for value in euler_exponents[:30] if value.is_number) if euler_exponents else 0
         nonzero_count = sum(1 for value in euler_exponents[:30] if sp.simplify(value) != 0)
@@ -1010,8 +1107,8 @@ def build_candidate_research_note(
             ]
         )
 
-        periodic_fit = try_fit_periodic_pochhammer(euler_exponents[:60], max_period=12, max_abs=8)
-        eta_fit = try_fit_eta_quotient(euler_exponents[:60], max_level=12, max_abs=8)
+        periodic_fit = try_fit_periodic_pochhammer(euler_exponents[: profile.fit_order_cap], max_period=12, max_abs=8)
+        eta_fit = try_fit_eta_quotient(euler_exponents[: profile.fit_order_cap], max_level=12, max_abs=8)
         lines.extend(
             [
                 "",
@@ -1027,6 +1124,80 @@ def build_candidate_research_note(
                 ),
             ]
         )
+
+        # Heine hcf2 c=bz=-1 coefficient check when the reduced reciprocal matches 1+K (t^n+t^(2n))/(1+t^n).
+        b0_target, a_target, b_target = _template_reciprocal_coeffs(reduced_candidate, q=t, depth=4)
+        factor_depth = min(depth, profile.factor_depth_cap)
+        factor_b0, factor_a_terms, factor_b_terms = _template_reciprocal_coeffs(
+            reduced_candidate,
+            q=t,
+            depth=factor_depth,
+        )
+        factor_witness = convergent_factor_equivalence_witness(
+            b0=factor_b0,
+            a_terms=factor_a_terms,
+            b_terms=factor_b_terms,
+        )
+        has_nontrivial_factor = any(
+            sp.simplify(common_factor - 1) != 0 for common_factor in factor_witness.reduction.gcd_factors[1:]
+        )
+        if has_nontrivial_factor:
+            display_stages = min(4, len(factor_witness.reduction.reduced_coeffs.a_terms) - 1)
+            factor_lines = []
+            for n in range(1, min(5, len(factor_witness.reduction.gcd_factors))):
+                factor_lines.append(f"g{n} = {_format_expr(factor_witness.reduction.gcd_factors[n])}")
+
+            reduced_lines = [f"b0_red = {_format_expr(factor_witness.reduction.reduced_coeffs.b0)}"]
+            for n in range(1, display_stages + 1):
+                reduced_lines.append(
+                    f"a{n}_red = {_format_expr(factor_witness.reduction.reduced_coeffs.a_terms[n])}"
+                )
+                reduced_lines.append(
+                    f"b{n}_red = {_format_expr(factor_witness.reduction.reduced_coeffs.b_terms[n])}"
+                )
+
+            scale_lines = []
+            for n in range(1, min(5, len(factor_witness.scale_terms))):
+                scale_lines.append(f"r{n} = {_format_fraction_expr(factor_witness.scale_terms[n])}")
+
+            retransformed_matches = all(
+                sp.simplify(factor_witness.retransformed_coeffs.a_terms[n] - factor_a_terms[n]) == 0
+                and sp.simplify(factor_witness.retransformed_coeffs.b_terms[n] - factor_b_terms[n]) == 0
+                for n in range(1, len(factor_a_terms))
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Exact Convergent-Factor Reduction",
+                    "",
+                    (
+                        f"- Checked exact convergent gcd factors through stage `{factor_depth}`. "
+                        "The first visible factors are:"
+                    ),
+                    "",
+                    "```text",
+                    *factor_lines,
+                    "```",
+                    "",
+                    "- After cancellation, the induced reduced continued fraction begins:",
+                    "",
+                    "```text",
+                    *reduced_lines,
+                    "```",
+                    "",
+                    "- The original reduced target is recovered by the reverse equivalence transform with stage scales:",
+                    "",
+                    "```text",
+                    *scale_lines,
+                    "```",
+                    "",
+                    (
+                        f"- Applying those scales back to the cancelled fraction reproduces the target "
+                        f"coefficients exactly through the checked depth: `{retransformed_matches}`."
+                    ),
+                    "- These reverse scales are rational functions in `t`, so they point toward a future fraction-field formalization layer rather than a purely polynomial one.",
+                ]
+            )
 
         rr_direct = direct_bauer_muir_obstruction(
             source_label="RR reciprocal",
@@ -1064,8 +1235,6 @@ def build_candidate_research_note(
             ]
         )
 
-        # Heine hcf2 c=bz=-1 coefficient check when the reduced reciprocal matches 1+K (t^n+t^(2n))/(1+t^n).
-        b0_target, a_target, b_target = _template_reciprocal_coeffs(reduced_candidate, q=t, depth=4)
         looks_like_hybrid = (
             sp.simplify(b0_target - 1) == 0
             and sp.simplify(b_target[1] - (1 + t)) == 0
@@ -1101,23 +1270,29 @@ def build_candidate_research_note(
                 family="f2",
                 target_template=reduced_candidate,
                 q=t,
-                max_shift=3,
-                stages=3,
+                max_shift=profile.page43_max_shift,
+                stages=profile.page43_stages,
             )
             f4_monomial_hits = page43_monomial_parameter_search(
                 family="f4",
                 target_template=reduced_candidate,
                 q=t,
-                max_shift=3,
-                stages=3,
+                max_shift=profile.page43_max_shift,
+                stages=profile.page43_stages,
             )
             lines.extend(
                 [
                     "",
                     "## Page-43 Monomial Substitution Check",
                     "",
-                    "- Search shape: `a = alpha*t^A`, `b = beta*t^B`, `lambda = gamma*t^L` with integer shifts `A,B,L in [-3,3]`.",
-                    "- Matching rule: solve exactly for `alpha, beta, gamma` so the first `3` reciprocal stages match the reduced target.",
+                    (
+                        "- Search shape: `a = alpha*t^A`, `b = beta*t^B`, `lambda = gamma*t^L` "
+                        f"with integer shifts `A,B,L in [-{profile.page43_max_shift},{profile.page43_max_shift}]`."
+                    ),
+                    (
+                        "- Matching rule: solve exactly for `alpha, beta, gamma` so the first "
+                        f"`{profile.page43_stages}` reciprocal stages match the reduced target."
+                    ),
                     f"- `f2` / `gcf3` hits in this box: `{len(f2_monomial_hits)}`",
                     f"- `f4` / `gcf2` hits in this box: `{len(f4_monomial_hits)}`",
                 ]
@@ -1175,24 +1350,31 @@ def build_candidate_research_note(
                 source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
                 target_template=reduced_candidate,
                 q=t,
-                max_stride=4,
-                stages=3,
+                max_stride=profile.max_subsequence_stride,
+                stages=profile.subsequence_stages,
             )
             cubic_subsequence_hits = arithmetic_subsequence_contraction_search(
                 source_label="cubic reciprocal",
                 source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
                 target_template=reduced_candidate,
                 q=t,
-                max_stride=4,
-                stages=3,
+                max_stride=profile.max_subsequence_stride,
+                stages=profile.subsequence_stages,
             )
+            stride_values = ", ".join(str(value) for value in range(2, profile.max_subsequence_stride + 1))
             lines.extend(
                 [
                     "",
                     "## Arithmetic Subsequence Contraction Scan",
                     "",
-                    "- Search shape: every `stride`-th convergent subsequence with `stride in {2,3,4}` and all offsets.",
-                    "- Matching rule: recover the induced contracted fraction and compare `b0, a1..a3, b1..b3` exactly against the reduced target.",
+                    (
+                        "- Search shape: every `stride`-th convergent subsequence with "
+                        f"`stride in {{{stride_values}}}` and all offsets."
+                    ),
+                    (
+                        "- Matching rule: recover the induced contracted fraction and compare "
+                        f"`b0, a1..a{profile.subsequence_stages}, b1..b{profile.subsequence_stages}` exactly against the reduced target."
+                    ),
                     f"- RR source hits in this box: `{len(rr_subsequence_hits)}`",
                     f"- Cubic source hits in this box: `{len(cubic_subsequence_hits)}`",
                 ]
@@ -1205,80 +1387,62 @@ def build_candidate_research_note(
                 lines.extend(["```"])
 
         bm_pattern_count = len(_bauer_muir_patterns())
-        rr_one_step_hits = bauer_muir_pattern_search(
-            source_label="RR reciprocal",
-            source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
-            target_template=reduced_candidate,
-            q=t,
-            depth=4,
-            steps=1,
-        )
-        rr_two_step_hits = bauer_muir_pattern_search(
-            source_label="RR reciprocal",
-            source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
-            target_template=reduced_candidate,
-            q=t,
-            depth=4,
-            steps=2,
-        )
-        rr_three_step_hits = bauer_muir_pattern_search(
-            source_label="RR reciprocal",
-            source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
-            target_template=reduced_candidate,
-            q=t,
-            depth=4,
-            steps=3,
-        )
-        cubic_one_step_hits = bauer_muir_pattern_search(
-            source_label="cubic reciprocal",
-            source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
-            target_template=reduced_candidate,
-            q=t,
-            depth=4,
-            steps=1,
-        )
-        cubic_two_step_hits = bauer_muir_pattern_search(
-            source_label="cubic reciprocal",
-            source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
-            target_template=reduced_candidate,
-            q=t,
-            depth=4,
-            steps=2,
-        )
-        cubic_three_step_hits = bauer_muir_pattern_search(
-            source_label="cubic reciprocal",
-            source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
-            target_template=reduced_candidate,
-            q=t,
-            depth=4,
-            steps=3,
-        )
+        rr_hits_by_step: dict[int, list[dict[str, object]]] = {}
+        cubic_hits_by_step: dict[int, list[dict[str, object]]] = {}
+        for step_count in range(1, profile.max_bauer_muir_steps + 1):
+            rr_hits_by_step[step_count] = bauer_muir_pattern_search(
+                source_label="RR reciprocal",
+                source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
+                target_template=reduced_candidate,
+                q=t,
+                depth=profile.bauer_muir_depth,
+                steps=step_count,
+            )
+            cubic_hits_by_step[step_count] = bauer_muir_pattern_search(
+                source_label="cubic reciprocal",
+                source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
+                target_template=reduced_candidate,
+                q=t,
+                depth=profile.bauer_muir_depth,
+                steps=step_count,
+            )
+
+        def _bm_line(source_label: str, hits_by_step: dict[int, list[dict[str, object]]], step_count: int) -> str:
+            if step_count not in hits_by_step:
+                return (
+                    f"- {source_label}, {step_count}-step search space: "
+                    f"`skipped in {profile.label} profile`"
+                )
+            return (
+                f"- {source_label}, {step_count}-step search space: "
+                f"`{bm_pattern_count**step_count}`; hits: `{len(hits_by_step[step_count])}`"
+            )
+
         lines.extend(
             [
                 "",
                 "## Constrained Bauer-Muir Search",
                 "",
-                "- Match target: reciprocal coefficients through depth `4`, checked at exact rational sample points `t = 1/10, 1/7, 1/5`.",
+                (
+                    "- Match target: reciprocal coefficients through depth "
+                    f"`{profile.bauer_muir_depth}`, checked at exact rational sample points `t = 1/10, 1/7, 1/5`."
+                ),
                 (
                     f"- Pattern family per step: `{bm_pattern_count}` low-complexity modifiers "
                     "(`0`, `±(t^n-1)`, `±(t^(2n)-1)`, `±(t^n-t^(2n))`, with scales `1` or `2`)."
                 ),
-                f"- RR source, 1-step search space: `{bm_pattern_count}`; hits: `{len(rr_one_step_hits)}`",
-                f"- RR source, 2-step search space: `{bm_pattern_count**2}`; hits: `{len(rr_two_step_hits)}`",
-                f"- RR source, 3-step search space: `{bm_pattern_count**3}`; hits: `{len(rr_three_step_hits)}`",
-                f"- Cubic source, 1-step search space: `{bm_pattern_count}`; hits: `{len(cubic_one_step_hits)}`",
-                f"- Cubic source, 2-step search space: `{bm_pattern_count**2}`; hits: `{len(cubic_two_step_hits)}`",
-                f"- Cubic source, 3-step search space: `{bm_pattern_count**3}`; hits: `{len(cubic_three_step_hits)}`",
+                _bm_line("RR source", rr_hits_by_step, 1),
+                _bm_line("RR source", rr_hits_by_step, 2),
+                _bm_line("RR source", rr_hits_by_step, 3),
+                _bm_line("Cubic source", cubic_hits_by_step, 1),
+                _bm_line("Cubic source", cubic_hits_by_step, 2),
+                _bm_line("Cubic source", cubic_hits_by_step, 3),
             ]
         )
-        bm_hits = (
-            rr_one_step_hits
-            + rr_two_step_hits
-            + rr_three_step_hits
-            + cubic_one_step_hits
-            + cubic_two_step_hits
-            + cubic_three_step_hits
-        )
+        bm_hits: list[dict[str, object]] = []
+        for hits_by_step in (rr_hits_by_step, cubic_hits_by_step):
+            for step_count in sorted(hits_by_step):
+                bm_hits.extend(hits_by_step[step_count])
         if bm_hits:
             lines.extend(["", "```text"])
             for hit in bm_hits:

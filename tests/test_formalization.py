@@ -47,6 +47,7 @@ def test_cli_formalize_writes_note(tmp_path: Path):
                 str(verified),
                 "--candidate-id",
                 "hero",
+                "--smoke",
                 "--out",
                 str(output_path),
                 "--lean-out",
@@ -57,9 +58,12 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     )
     text = output_path.read_text(encoding="utf-8")
     assert "Formalization Prep: `hero`" in text
+    assert "Build profile: `smoke`" in text
     assert "Current Theorem Status" in text
     assert "Exact Lemma Candidates" in text
     assert "Bounded Exact Exclusion Results" in text
+    assert "Exact Reduction And Equivalence Witness" in text
+    assert "fraction-field coefficient layer" in text
     assert "Formalization Order" in text
     assert "not ready" in text
 
@@ -69,6 +73,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "theorem candidate_stage0_a" in lean_text
     assert "theorem rr_direct_obstruction" in lean_text
     assert "theorem candidate_second_convergent_num" in lean_text
+    assert "reverse equivalence transform" in lean_text
+    assert "fraction-field coefficient layer" in lean_text
     assert "Suggested next theorem extensions" in lean_text
     assert "rr_direct_obstruction" in lean_text
     assert "sorry" not in lean_text

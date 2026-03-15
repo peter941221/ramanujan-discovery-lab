@@ -10,6 +10,7 @@ from ramanujan_discovery.research import (
     arithmetic_subsequence_contraction_coeffs,
     arithmetic_subsequence_contraction_search,
     bauer_muir_pattern_search,
+    convergent_factor_equivalence_witness,
     continued_fraction_convergents,
     convergent_common_factor_reduction,
     direct_bauer_muir_obstruction,
@@ -137,6 +138,35 @@ def test_hero_template_is_equivalent_transform_of_reduced_fraction():
     for n in range(1, 9):
         assert sp.simplify(transformed.a_terms[n] - a_terms[n]) == 0
         assert sp.simplify(transformed.b_terms[n] - b_terms[n]) == 0
+
+
+def test_convergent_factor_equivalence_witness_recovers_hero_scales():
+    t = sp.Symbol("t")
+    hero = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=1,
+        numerator_q_step=1,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=2,
+        numerator_extra_q_step=2,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=1,
+        denominator_q_step=1,
+    )
+    b0, a_terms, b_terms = _template_reciprocal_coeffs(hero, q=t, depth=8)
+    witness = convergent_factor_equivalence_witness(
+        b0=b0,
+        a_terms=a_terms,
+        b_terms=b_terms,
+    )
+
+    assert sp.simplify(witness.scale_terms[1] - (1 + t)) == 0
+    assert sp.simplify(witness.scale_terms[2] - ((1 + t**2) / (1 + t))) == 0
+    assert sp.simplify(witness.scale_terms[3] - ((1 + t**3) / (1 + t**2))) == 0
+    for n in range(1, 9):
+        assert sp.simplify(witness.retransformed_coeffs.a_terms[n] - a_terms[n]) == 0
+        assert sp.simplify(witness.retransformed_coeffs.b_terms[n] - b_terms[n]) == 0
 
 
 def test_direct_bauer_muir_obstruction_rules_out_rr_and_cubic_sources():
@@ -562,6 +592,7 @@ def test_cli_research_writes_note(tmp_path: Path):
                 "12",
                 "--series-order",
                 "61",
+                "--smoke",
                 "--out",
                 str(output_path),
             ]
@@ -570,7 +601,10 @@ def test_cli_research_writes_note(tmp_path: Path):
     )
     text = output_path.read_text(encoding="utf-8")
     assert "Research Note: `hero`" in text
+    assert "Build profile: `smoke`" in text
     assert "Euler Product Exponents" in text
+    assert "Exact Convergent-Factor Reduction" in text
+    assert "reverse equivalence transform" in text
     assert "Direct 1-Step Bauer-Muir Obstruction" in text
     assert "Page-43 Monomial Substitution Check" in text
     assert "Cubic Odd/Even Contraction Check" in text

@@ -11,10 +11,12 @@ from ramanujan_discovery.models import CandidateRecord, QCFTemplate
 from ramanujan_discovery.research import (
     BauerMuirDirectObstruction,
     ContinuedFractionCoeffs,
+    ConvergentFactorEquivalenceWitness,
     Page43MonomialHit,
     SubsequenceContractionHit,
     _template_reciprocal_coeffs,
     arithmetic_subsequence_contraction_search,
+    convergent_factor_equivalence_witness,
     continued_fraction_convergents,
     direct_bauer_muir_obstruction,
     page43_monomial_parameter_search,
@@ -25,16 +27,31 @@ from ramanujan_discovery.storage import read_candidates
 
 
 @dataclass(frozen=True)
+class FormalizationBuildProfile:
+    label: str
+    factor_depth: int
+    subsequence_stages: int
+    max_page43_shift: int
+    page43_stages: int
+
+
+@dataclass(frozen=True)
 class FormalizationContext:
     record: CandidateRecord
     benchmark: BenchmarkDefinition
     step: int
+    build_profile: str
     max_stride: int
+    subsequence_stages: int
+    page43_max_shift: int
+    page43_stages: int
     reduced_candidate: QCFTemplate | None
     reduced_benchmark: QCFTemplate | None
     target_b0: sp.Expr | None
     target_a_terms: list[sp.Expr]
     target_b_terms: list[sp.Expr]
+    factor_depth: int
+    factor_witness: ConvergentFactorEquivalenceWitness | None
     rr_direct: BauerMuirDirectObstruction | None
     cubic_direct: BauerMuirDirectObstruction | None
     cubic_odd: ContinuedFractionCoeffs | None
@@ -55,6 +72,28 @@ def _find_candidate(records: list[CandidateRecord], candidate_id: str) -> Candid
 
 def _format_expr(expr) -> str:
     return str(sp.expand(expr)).replace("**", "^")
+
+
+def _format_fraction_expr(expr) -> str:
+    return str(sp.cancel(expr)).replace("**", "^")
+
+
+def _formalization_build_profile(*, smoke: bool) -> FormalizationBuildProfile:
+    if smoke:
+        return FormalizationBuildProfile(
+            label="smoke",
+            factor_depth=4,
+            subsequence_stages=2,
+            max_page43_shift=1,
+            page43_stages=2,
+        )
+    return FormalizationBuildProfile(
+        label="full",
+        factor_depth=8,
+        subsequence_stages=3,
+        max_page43_shift=3,
+        page43_stages=3,
+    )
 
 
 def _power_term(scale: int, shift: int, step: int, variable: str) -> str:
@@ -103,11 +142,14 @@ def _build_formalization_context(
     input_path: str,
     candidate_id: str,
     max_stride: int,
+    smoke: bool,
 ) -> FormalizationContext:
     records = read_candidates(input_path)
     record = _find_candidate(records, candidate_id)
     benchmark = get_benchmark(record.closest_benchmark)
     step = benchmark.canonical_template.numerator_q_step or 1
+    profile = _formalization_build_profile(smoke=smoke)
+    effective_max_stride = min(max_stride, 2) if smoke else max_stride
 
     reduced_candidate = reduce_template_by_step(record.template.normalized(), step=step)
     reduced_benchmark = reduce_template_by_step(benchmark.canonical_template.normalized(), step=step)
@@ -117,12 +159,18 @@ def _build_formalization_context(
             record=record,
             benchmark=benchmark,
             step=step,
-            max_stride=max_stride,
+            build_profile=profile.label,
+            max_stride=effective_max_stride,
+            subsequence_stages=profile.subsequence_stages,
+            page43_max_shift=profile.max_page43_shift,
+            page43_stages=profile.page43_stages,
             reduced_candidate=reduced_candidate,
             reduced_benchmark=reduced_benchmark,
             target_b0=None,
             target_a_terms=[],
             target_b_terms=[],
+            factor_depth=0,
+            factor_witness=None,
             rr_direct=None,
             cubic_direct=None,
             cubic_odd=None,
@@ -136,6 +184,13 @@ def _build_formalization_context(
 
     t = sp.Symbol("t")
     target_b0, target_a_terms, target_b_terms = _template_reciprocal_coeffs(reduced_candidate, q=t, depth=4)
+    factor_depth = profile.factor_depth
+    factor_b0, factor_a_terms, factor_b_terms = _template_reciprocal_coeffs(reduced_candidate, q=t, depth=factor_depth)
+    factor_witness = convergent_factor_equivalence_witness(
+        b0=factor_b0,
+        a_terms=factor_a_terms,
+        b_terms=factor_b_terms,
+    )
     looks_like_hero = (
         sp.simplify(target_b0 - 1) == 0
         and sp.simplify(target_a_terms[1] - (t + t**2)) == 0
@@ -178,42 +233,48 @@ def _build_formalization_context(
         source_template=get_benchmark("rogers_ramanujan_normalized").canonical_template,
         target_template=reduced_candidate,
         q=t,
-        max_stride=max_stride,
-        stages=3,
+        max_stride=effective_max_stride,
+        stages=profile.subsequence_stages,
     )
     cubic_subsequence_hits = arithmetic_subsequence_contraction_search(
         source_label="cubic reciprocal",
         source_template=get_benchmark("ramanujan_cubic_normalized").canonical_template,
         target_template=reduced_candidate,
         q=t,
-        max_stride=max_stride,
-        stages=3,
+        max_stride=effective_max_stride,
+        stages=profile.subsequence_stages,
     )
     f2_hits = page43_monomial_parameter_search(
         family="f2",
         target_template=reduced_candidate,
         q=t,
-        max_shift=3,
-        stages=3,
+        max_shift=profile.max_page43_shift,
+        stages=profile.page43_stages,
     )
     f4_hits = page43_monomial_parameter_search(
         family="f4",
         target_template=reduced_candidate,
         q=t,
-        max_shift=3,
-        stages=3,
+        max_shift=profile.max_page43_shift,
+        stages=profile.page43_stages,
     )
 
     return FormalizationContext(
         record=record,
         benchmark=benchmark,
         step=step,
-        max_stride=max_stride,
+        build_profile=profile.label,
+        max_stride=effective_max_stride,
+        subsequence_stages=profile.subsequence_stages,
+        page43_max_shift=profile.max_page43_shift,
+        page43_stages=profile.page43_stages,
         reduced_candidate=reduced_candidate,
         reduced_benchmark=reduced_benchmark,
         target_b0=target_b0,
         target_a_terms=target_a_terms,
         target_b_terms=target_b_terms,
+        factor_depth=factor_depth,
+        factor_witness=factor_witness,
         rr_direct=rr_direct,
         cubic_direct=cubic_direct,
         cubic_odd=cubic_odd,
@@ -236,6 +297,7 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
         f"- Closest benchmark: `{context.record.closest_benchmark}` ({context.record.closest_benchmark_digits} shared digits)",
         f"- Candidate template: `{context.record.template.signature()}`",
         f"- Benchmark template: `{context.benchmark.canonical_template.signature()}`",
+        f"- Build profile: `{context.build_profile}`",
         "",
         "## Current Theorem Status",
         "",
@@ -274,6 +336,46 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 *_reciprocal_rule_lines(context.reduced_benchmark, "t"),
                 "```",
                 "",
+                "## Exact Reduction And Equivalence Witness",
+                "",
+                f"- Exact convergent gcd factors were checked through stage `{context.factor_depth}`.",
+                "- First common factors:",
+                "",
+                "```text",
+                *[
+                    f"g{n} = {_format_expr(context.factor_witness.reduction.gcd_factors[n])}"
+                    for n in range(1, min(5, len(context.factor_witness.reduction.gcd_factors)))
+                ],
+                "```",
+                "",
+                "- After cancellation, the induced reduced-by-factor object begins:",
+                "",
+                "```text",
+                f"b0_red = {_format_expr(context.factor_witness.reduction.reduced_coeffs.b0)}",
+                *[
+                    item
+                    for n in range(
+                        1,
+                        min(5, len(context.factor_witness.reduction.reduced_coeffs.a_terms)),
+                    )
+                    for item in (
+                        f"a{n}_red = {_format_expr(context.factor_witness.reduction.reduced_coeffs.a_terms[n])}",
+                        f"b{n}_red = {_format_expr(context.factor_witness.reduction.reduced_coeffs.b_terms[n])}",
+                    )
+                ],
+                "```",
+                "",
+                "- Reverse equivalence transform stage scales:",
+                "",
+                "```text",
+                *[
+                    f"r{n} = {_format_fraction_expr(context.factor_witness.scale_terms[n])}"
+                    for n in range(1, min(5, len(context.factor_witness.scale_terms)))
+                ],
+                "```",
+                "",
+                "- These reverse scales are rational functions in `t`, so a full formalization of this step likely needs a fraction-field coefficient layer in addition to the current polynomial one.",
+                "",
                 "## Exact Lemma Candidates",
                 "",
                 "### Direct 1-Step Bauer-Muir Obstructions",
@@ -304,9 +406,18 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "",
                 "## Bounded Exact Exclusion Results",
                 "",
-                f"- Arithmetic subsequence contractions up to stride `{context.max_stride}`: RR hits `{len(context.rr_subsequence_hits)}`, cubic hits `{len(context.cubic_subsequence_hits)}`.",
+                (
+                    f"- Arithmetic subsequence contractions up to stride `{context.max_stride}` "
+                    f"with stage comparison depth `{context.subsequence_stages}`: "
+                    f"RR hits `{len(context.rr_subsequence_hits)}`, cubic hits `{len(context.cubic_subsequence_hits)}`."
+                ),
                 "- These are exact statements for the bounded class being checked, but they do not identify a final source theorem.",
-                f"- Page-43 monomial substitutions in the current `[-3,3]` shift box: `f2/gcf3` hits `{len(context.f2_hits)}`, `f4/gcf2` hits `{len(context.f4_hits)}`.",
+                (
+                    f"- Page-43 monomial substitutions in the current "
+                    f"`[-{context.page43_max_shift},{context.page43_max_shift}]` shift box "
+                    f"with `{context.page43_stages}` matched stages: "
+                    f"`f2/gcf3` hits `{len(context.f2_hits)}`, `f4/gcf2` hits `{len(context.f4_hits)}`."
+                ),
                 "- These are bounded symbolic searches, useful for narrowing the theorem statement but not substitutes for a full origin proof.",
             ]
         )
@@ -328,10 +439,12 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "## Formalization Order",
                 "",
                 "1. Formalize generalized continued fractions and convergent recurrence for finite truncations.",
-                "2. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
-                "3. Formalize odd/even contraction reconstruction and the cubic denominator mismatch lemma.",
-                "4. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
-                "5. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.",
+                "2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.",
+                "3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.",
+                "4. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
+                "5. Formalize odd/even contraction reconstruction and the cubic denominator mismatch lemma.",
+                "6. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
+                "7. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.",
             ]
         )
 
@@ -578,6 +691,8 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 "",
                 f"RR direct witness: w0 = {_format_expr(context.rr_direct.forced_w0)}, w1 = {_format_expr(context.rr_direct.forced_w1)}, transformed a1 = {_format_expr(context.rr_direct.transformed_a1)}, target a1 = {_format_expr(context.rr_direct.target_a1)}",
                 f"Cubic direct witness: w0 = {_format_expr(context.cubic_direct.forced_w0)}, w1 = {_format_expr(context.cubic_direct.forced_w1)}, w2 = {_format_expr(context.cubic_direct.forced_w2)}, transformed a2 = {_format_expr(context.cubic_direct.transformed_a2)}, target a2 = {_format_expr(context.cubic_direct.target_a2)}",
+                f"First reverse-equivalence scales: {', '.join(f'r{n} = {_format_fraction_expr(context.factor_witness.scale_terms[n])}' for n in range(1, min(5, len(context.factor_witness.scale_terms))))}",
+                "These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.",
                 "-/",
                 "",
                 "",
@@ -608,10 +723,12 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 "/-!",
                 "Suggested next theorem extensions:",
                 "",
-                "1. Compare candidate convergents against nearby benchmark convergents.",
-                "2. Formalize the Bauer-Muir transform algebra itself instead of injecting only",
+                "1. Lift the coefficient domain from polynomials to rational functions and",
+                "   formalize the reverse equivalence transform.",
+                "2. Compare candidate convergents against nearby benchmark convergents.",
+                "3. Formalize the Bauer-Muir transform algebra itself instead of injecting only",
                 "   the recovered witnesses.",
-                "3. Attempt a final source theorem only after a unique identity is known.",
+                "4. Attempt a final source theorem only after a unique identity is known.",
                 "-/",
                 "",
                 "end",
@@ -634,11 +751,13 @@ def build_candidate_formalization_assets(
     output_path: str,
     max_stride: int = 4,
     lean_output_path: str | None = None,
+    smoke: bool = False,
 ) -> None:
     context = _build_formalization_context(
         input_path=input_path,
         candidate_id=candidate_id,
         max_stride=max_stride,
+        smoke=smoke,
     )
     _write_formalization_note(context, output_path)
     if lean_output_path:
@@ -651,6 +770,7 @@ def build_candidate_formalization_note(
     candidate_id: str,
     output_path: str,
     max_stride: int = 4,
+    smoke: bool = False,
 ) -> None:
     build_candidate_formalization_assets(
         input_path=input_path,
@@ -658,6 +778,7 @@ def build_candidate_formalization_note(
         output_path=output_path,
         max_stride=max_stride,
         lean_output_path=None,
+        smoke=smoke,
     )
 
 
@@ -667,10 +788,12 @@ def build_candidate_lean_skeleton(
     candidate_id: str,
     output_path: str,
     max_stride: int = 4,
+    smoke: bool = False,
 ) -> None:
     context = _build_formalization_context(
         input_path=input_path,
         candidate_id=candidate_id,
         max_stride=max_stride,
+        smoke=smoke,
     )
     _write_lean_skeleton(context, output_path)
