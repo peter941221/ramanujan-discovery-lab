@@ -64,6 +64,16 @@ python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
 - `plain`: ASCII fallback
 - `none`: suppress terminal summary
 
+Fast local validation:
+
+```powershell
+python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 12 --series-order 61 --smoke --out tmp/research-smoke.md
+python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/formalize-smoke.md --lean-out tmp/formalize-smoke.lean
+```
+
+`--smoke` keeps the same output sections but trims bounded symbolic searches so
+the command is suitable for quick regression checks.
+
 Then open `docs/index.html` locally or publish the `docs/` folder with GitHub Pages.
 
 ## Lean Proof Layer
@@ -78,6 +88,12 @@ Its current scope is intentionally narrow but no longer purely ad hoc:
   convergent-factor reduction theorem
 - the current hero case also admits an explicit equivalence transformation from
   that reduced fraction back to the original reciprocal object
+- `Proofs/RationalEquivalence.lean` is a first fraction-field testbed: it lifts
+  the reverse equivalence scales into `RatFunc Rat` and checks the first few
+  retransformed stages exactly
+- `formalize` and `research` now emit that exact reduction/equivalence witness
+  explicitly; the reverse transform scales are rational functions, so the next
+  formal step likely needs a fraction-field coefficient layer
 - `formalize --lean-out ...` can now auto-generate a candidate-specific Lean
   proof module such as `proofs/Proofs/Generated/Cb60fd71d1d7.lean`
 
