@@ -145,6 +145,11 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "description": "Detailed elimination log for direct, equivalence, contraction, and constrained Bauer-Muir paths.",
             },
             {
+                "title": "Hero Identification",
+                "href": _repo_markdown_url("CB60FD71D1D7_IDENTIFICATION_NOTE.md"),
+                "description": "Small-degree algebraic relation guesses between the hero case and its nearest benchmark.",
+            },
+            {
                 "title": "RR(q^3) Neighborhood",
                 "href": _repo_markdown_url("RR_Q3_NEIGHBORHOOD_AUDIT.md"),
                 "description": "Separates the plain RR(q^3) step branch from the hybrid cb60fd71d1d7 branch.",

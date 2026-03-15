@@ -6,6 +6,7 @@ from ramanujan_discovery.analysis import build_candidate_analysis_note, build_ca
 from ramanujan_discovery.config import SearchConfig, VerificationConfig
 from ramanujan_discovery.discovery import discover_candidates
 from ramanujan_discovery.formalization import build_candidate_formalization_assets
+from ramanujan_discovery.identification import build_candidate_identification_note
 from ramanujan_discovery.research import build_candidate_research_note
 from ramanujan_discovery.reporting import build_report, build_site
 from ramanujan_discovery.storage import write_candidates
@@ -75,6 +76,18 @@ def build_parser() -> argparse.ArgumentParser:
     formalize.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
     formalize.add_argument("--out", type=str, required=True)
     formalize.add_argument("--lean-out", type=str, default=None)
+
+    identify = subparsers.add_parser(
+        "identify",
+        help="Attempt to relate a candidate to its nearest benchmark (small algebraic relation guesses).",
+    )
+    identify.add_argument("--in", dest="input_path", type=str, required=True)
+    identify.add_argument("--candidate-id", type=str, required=True)
+    identify.add_argument("--depth", type=int, default=40)
+    identify.add_argument("--series-order", type=int, default=90)
+    identify.add_argument("--max-degree", type=int, default=4)
+    identify.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
+    identify.add_argument("--out", type=str, required=True)
 
     site = subparsers.add_parser("site", help="Render a GitHub Pages-friendly static site.")
     site.add_argument("--in", dest="input_path", type=str, required=True)
@@ -159,6 +172,18 @@ def main(argv: list[str] | None = None) -> int:
             output_path=args.out,
             max_stride=args.max_stride,
             lean_output_path=args.lean_out,
+            smoke=args.smoke,
+        )
+        return 0
+
+    if args.command == "identify":
+        build_candidate_identification_note(
+            input_path=args.input_path,
+            candidate_id=args.candidate_id,
+            output_path=args.out,
+            depth=args.depth,
+            series_order=args.series_order,
+            max_degree=args.max_degree,
             smoke=args.smoke,
         )
         return 0

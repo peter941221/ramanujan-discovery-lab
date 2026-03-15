@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-14 03:03:28 UTC",
+  "generated_at": "2026-03-15 04:21:57 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -689,6 +689,11 @@
       "title": "Hero Transform Audit",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_TRANSFORM_AUDIT.md",
       "description": "Detailed elimination log for direct, equivalence, contraction, and constrained Bauer-Muir paths."
+    },
+    {
+      "title": "Hero Identification",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_IDENTIFICATION_NOTE.md",
+      "description": "Small-degree algebraic relation guesses between the hero case and its nearest benchmark."
     },
     {
       "title": "RR(q^3) Neighborhood",

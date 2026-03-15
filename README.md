@@ -34,6 +34,8 @@ Optional research stage:
    Run heavier candidate probes (higher-order ratio series, Euler-product exponent extraction, and targeted literature coefficient checks).
 7. `formalize`
    Write a formalization-prep note for one candidate, separating exact local lemmas from bounded search evidence.
+8. `identify`
+   Attempt small algebraic relation guesses between a candidate and its nearest benchmark (step-reduced if possible).
 
 Current benchmark catalog:
 
@@ -54,6 +56,7 @@ python -m ramanujan_discovery report --in results/verified.jsonl --out results/r
 python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out HERO_CASE_CB60FD71D1D7.md
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out CB60FD71D1D7_RESEARCH_NOTE.md
 python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean
+python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_IDENTIFICATION_NOTE.md
 python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
 ```
 
@@ -69,6 +72,7 @@ Fast local validation:
 ```powershell
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 12 --series-order 61 --smoke --out tmp/research-smoke.md
 python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/formalize-smoke.md --lean-out tmp/formalize-smoke.lean
+python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/identify-smoke.md
 ```
 
 `--smoke` keeps the same output sections but trims bounded symbolic searches so
