@@ -155,9 +155,19 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim.",
             },
             {
+                "title": "Hero Public Article",
+                "href": _repo_markdown_url("CB60FD71D1D7_PUBLIC_ARTICLE.md"),
+                "description": "A publication-ready public article draft for the current hero case.",
+            },
+            {
                 "title": "Hero Shortlist",
                 "href": _repo_markdown_url("CB60FD71D1D7_SHORTLIST.md"),
                 "description": "Targeted checklist for the next literature and recognition pass (no novelty claim).",
+            },
+            {
+                "title": "AI-Friendly Publishing Plan",
+                "href": _repo_markdown_url("AI_FRIENDLY_PUBLISHING_PLAN.md"),
+                "description": "Platform and rollout plan optimized for discoverability by both humans and machines.",
             },
             {
                 "title": "RR(q^3) Neighborhood",

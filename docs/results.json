@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-15 04:51:35 UTC",
+  "generated_at": "2026-03-15 05:01:19 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -701,9 +701,19 @@
       "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim."
     },
     {
+      "title": "Hero Public Article",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_PUBLIC_ARTICLE.md",
+      "description": "A publication-ready public article draft for the current hero case."
+    },
+    {
       "title": "Hero Shortlist",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_SHORTLIST.md",
       "description": "Targeted checklist for the next literature and recognition pass (no novelty claim)."
+    },
+    {
+      "title": "AI-Friendly Publishing Plan",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/AI_FRIENDLY_PUBLISHING_PLAN.md",
+      "description": "Platform and rollout plan optimized for discoverability by both humans and machines."
     },
     {
       "title": "RR(q^3) Neighborhood",
