@@ -8,9 +8,11 @@ from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
     scan_benchmark_power_relation_prefixes,
     scan_ratio_benchmark_fractional_linear_prefixes,
+    scan_ratio_benchmark_multiplicative_prefixes,
     scan_ratio_benchmark_power_relation_prefixes,
     scan_ratio_benchmark_two_layer_fractional_linear_prefixes,
     search_fractional_linear_relation,
+    search_multiplicative_relation,
     search_polynomial_relation,
     search_two_layer_fractional_linear_relation,
 )
@@ -223,6 +225,48 @@ def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation
     assert first_hit.relation.denominator_coefficients == {"B2": sp.Integer(-1)}
 
 
+def test_search_multiplicative_relation_finds_integer_exponents():
+    order = 12
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    benchmark[0] = 1
+    benchmark[1] = 1
+    benchmark_q2 = benchmark_power_substitution_series(benchmark, power=2, order=order)
+
+    ratio = series_mul(series_pow(benchmark, 2), series_invert(benchmark_q2))
+
+    relation = search_multiplicative_relation(
+        target_series=ratio,
+        basis_series_by_variable={"B1": benchmark, "B2": benchmark_q2},
+        order=order,
+    )
+    assert relation is not None
+    assert relation.basis_variables == ("B1", "B2")
+    assert relation.exponents == {"B1": 2, "B2": -1}
+
+
+def test_scan_ratio_benchmark_multiplicative_prefixes_finds_hit():
+    order = 12
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    benchmark[0] = 1
+    benchmark[1] = 1
+
+    benchmark_q2 = benchmark_power_substitution_series(benchmark, power=2, order=order)
+    ratio = series_mul(series_pow(benchmark, 2), series_invert(benchmark_q2))
+
+    scans = scan_ratio_benchmark_multiplicative_prefixes(
+        ratio_series=ratio,
+        benchmark_series=benchmark,
+        powers=(2, 3, 4),
+        order=order,
+    )
+    assert scans
+    assert any(scan.relation is not None for scan in scans)
+    first_hit = next(scan for scan in scans if scan.relation is not None)
+    assert first_hit.powers == (2,)
+    assert first_hit.relation is not None
+    assert first_hit.relation.exponents == {"B1": 2, "B2": -1}
+
+
 def test_search_two_layer_fractional_linear_relation_finds_structured_ratio():
     order = 14
     benchmark = [sp.Integer(0) for _ in range(order)]
@@ -368,6 +412,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Extra Multivariate Search" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object RR-Tower Prefix Scan" in text
+    assert "Ratio-Object Multiplicative RR-Tower Scan" in text
     assert "Ratio-Object Fractional-Linear RR-Tower Scan" in text
     assert "Ratio-Object Two-Layer Fractional-Linear RR-Tower Scan" in text
     assert "`F = candidate / rogers_ramanujan_q3_normalized`" in text

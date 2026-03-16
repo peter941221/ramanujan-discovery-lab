@@ -17,6 +17,7 @@ from ramanujan_discovery.series import (
     series_div,
     series_invert,
     series_mul,
+    series_pow,
 )
 from ramanujan_discovery.storage import read_candidates
 
@@ -69,6 +70,24 @@ class FractionalLinearRelationScan:
 
     powers: tuple[int, ...]
     relation: FractionalLinearRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
+class MultiplicativeRelation:
+    """A structured relation F = prod_i B_i^e_i with small integer exponents."""
+
+    order_checked: int
+    basis_variables: tuple[str, ...]
+    exponents: dict[str, int]
+
+
+@dataclass(frozen=True)
+class MultiplicativeRelationScan:
+    """Outcome for one prefix scan of multiplicative benchmark-tower templates."""
+
+    powers: tuple[int, ...]
+    relation: MultiplicativeRelation | None
     error: str | None = None
 
 
@@ -319,6 +338,164 @@ def _series_subtract_one(series: Series) -> Series:
     shifted = [sp.simplify(value) for value in series]
     shifted[0] = sp.simplify(shifted[0] - 1)
     return shifted
+
+
+def _series_log_coeffs(series: Series) -> Series:
+    """Return coefficients of log(F) for a series F with constant term 1."""
+    if not series:
+        raise ValueError("series must be non-empty")
+    if sp.simplify(series[0] - 1) != 0:
+        raise ValueError("series constant term must be 1 for a logarithm expansion")
+
+    coeffs: Series = [sp.Integer(0) for _ in range(len(series))]
+    for n in range(1, len(series)):
+        rhs = sp.Integer(0)
+        for j in range(1, n):
+            rhs += sp.Integer(j) * coeffs[j] * series[n - j]
+        coeffs[n] = sp.simplify(series[n] - rhs / sp.Integer(n))
+    return coeffs
+
+
+def _signed_series_pow(base: Series, exponent: int) -> Series:
+    if exponent >= 0:
+        return series_pow(base, exponent)
+    return series_invert(series_pow(base, -exponent))
+
+
+def search_multiplicative_relation(
+    *,
+    target_series: Series,
+    basis_series_by_variable: dict[str, Series],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> MultiplicativeRelation | None:
+    """Search F = prod_i B_i^e_i with bounded integer exponents."""
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if not basis_series_by_variable:
+        raise ValueError("need at least one basis series for a multiplicative search")
+    if any(len(series) < order for series in basis_series_by_variable.values()):
+        raise ValueError("series are shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a multiplicative search")
+    if any(sp.simplify(series[0] - 1) != 0 for series in basis_series_by_variable.values()):
+        raise ValueError("basis series must have constant term 1 for a multiplicative search")
+    if max_abs_exponent < 1:
+        raise ValueError("max_abs_exponent must be at least 1")
+
+    basis_variables = tuple(basis_series_by_variable.keys())
+    num_unknowns = len(basis_variables)
+    num_constraints = order - 1
+    if num_unknowns > num_constraints:
+        raise ValueError(
+            "underdetermined multiplicative relation search: "
+            f"{num_unknowns} exponents > {num_constraints} constraints "
+            "(increase order or reduce variables)"
+        )
+
+    target_log = _series_log_coeffs(target_series[:order])
+    basis_logs = {
+        name: _series_log_coeffs(series[:order])
+        for name, series in basis_series_by_variable.items()
+    }
+
+    matrix = sp.Matrix(
+        [
+            [basis_logs[name][n] for name in basis_variables]
+            for n in range(1, order)
+        ]
+    )
+    rhs_vector = sp.Matrix([target_log[n] for n in range(1, order)])
+
+    rank = matrix.rank()
+    augmented_rank = matrix.row_join(rhs_vector).rank()
+    if augmented_rank > rank:
+        return None
+    if rank < num_unknowns:
+        raise ValueError(
+            "underdetermined multiplicative relation search: "
+            f"rank {rank} < {num_unknowns} exponents "
+            "(increase order or reduce variables)"
+        )
+
+    unknowns = sp.symbols(f"e0:{len(basis_variables)}")
+    solution_set = sp.linsolve((matrix, rhs_vector), unknowns)
+    if not solution_set:
+        return None
+    solution = next(iter(solution_set))
+    if any(value.free_symbols for value in solution):
+        raise ValueError("multiplicative relation search returned a parametric solution")
+
+    exponent_map: dict[str, int] = {}
+    for name, value in zip(basis_variables, solution):
+        value_simplified = sp.simplify(value)
+        if not value_simplified.is_integer:
+            return None
+        exponent = int(value_simplified)
+        if abs(exponent) > max_abs_exponent:
+            return None
+        if exponent != 0:
+            exponent_map[name] = exponent
+
+    if not exponent_map:
+        return None
+
+    relation = MultiplicativeRelation(
+        order_checked=order,
+        basis_variables=basis_variables,
+        exponents=exponent_map,
+    )
+    residual = _multiplicative_relation_residual_series(
+        relation,
+        target_series=target_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+    )
+    if any(sp.simplify(value) != 0 for value in residual):
+        return None
+    return relation
+
+
+def _format_multiplicative_relation(
+    relation: MultiplicativeRelation,
+    *,
+    target_variable: str,
+) -> str:
+    terms: list[str] = []
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name)
+        if exponent is None:
+            continue
+        terms.append(f"{name}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable} = {rhs}"
+
+
+def _multiplicative_relation_residual_series(
+    relation: MultiplicativeRelation,
+    *,
+    target_series: Series,
+    basis_series_by_variable: dict[str, Series],
+    order: int,
+) -> Series:
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if any(name not in basis_series_by_variable for name in relation.basis_variables):
+        raise ValueError("basis series are missing variables from the relation")
+    if any(len(basis_series_by_variable[name]) < order for name in relation.basis_variables):
+        raise ValueError("basis series are shorter than requested order")
+
+    product_series: Series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name, 0)
+        if exponent == 0:
+            continue
+        factor = _signed_series_pow(basis_series_by_variable[name][:order], exponent)
+        product_series = series_mul(product_series, factor)
+    return [sp.simplify(target_series[n] - product_series[n]) for n in range(order)]
 
 
 def search_fractional_linear_relation(
@@ -783,7 +960,55 @@ def scan_ratio_benchmark_fractional_linear_prefixes(
                     relation=None,
                     error=str(exc),
                 )
+            )
+    return scans
+
+
+def scan_ratio_benchmark_multiplicative_prefixes(
+    *,
+    ratio_series: Series,
+    benchmark_series: Series,
+    powers: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[MultiplicativeRelationScan]:
+    unique_powers = tuple(sorted({power for power in powers if power >= 2}))
+    if not unique_powers:
+        return []
+
+    benchmark_power_series = {
+        power: benchmark_power_substitution_series(benchmark_series, power=power, order=order)
+        for power in unique_powers
+    }
+
+    scans: list[MultiplicativeRelationScan] = []
+    prefix: list[int] = []
+    for power in unique_powers:
+        prefix.append(power)
+        variables = {"B1": benchmark_series}
+        for prefix_power in prefix:
+            variables[f"B{prefix_power}"] = benchmark_power_series[prefix_power]
+        try:
+            relation = search_multiplicative_relation(
+                target_series=ratio_series,
+                basis_series_by_variable=variables,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+            scans.append(
+                MultiplicativeRelationScan(
+                    powers=tuple(prefix),
+                    relation=relation,
                 )
+            )
+        except ValueError as exc:
+            scans.append(
+                MultiplicativeRelationScan(
+                    powers=tuple(prefix),
+                    relation=None,
+                    error=str(exc),
+                )
+            )
     return scans
 
 
@@ -952,6 +1177,7 @@ def build_candidate_identification_note(
     extra_search_degree = min(profile_degree, 3 if smoke else profile_degree)
     power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
+    ratio_multiplicative_scans: list[MultiplicativeRelationScan] = []
     ratio_fractional_linear_scans: list[FractionalLinearRelationScan] = []
     ratio_two_layer_fractional_linear_scans: list[TwoLayerFractionalLinearRelationScan] = []
     if benchmark_powers:
@@ -993,6 +1219,13 @@ def build_candidate_identification_note(
             order=profile_order,
             degree_values=tuple(value for value in (1, min(profile_degree, 2)) if value >= 1),
             required_variable="F",
+        )
+        ratio_multiplicative_scans = scan_ratio_benchmark_multiplicative_prefixes(
+            ratio_series=ratio_series,
+            benchmark_series=benchmark_series,
+            powers=tuple(benchmark_power_series),
+            order=profile_order,
+            max_abs_exponent=6 if smoke else 8,
         )
         ratio_fractional_linear_scans = scan_ratio_benchmark_fractional_linear_prefixes(
             ratio_series=ratio_series,
@@ -1263,6 +1496,80 @@ def build_candidate_identification_note(
                             "",
                         ]
                     )
+
+    if ratio_fractional_linear_scans:
+        lines.extend(
+            [
+                "",
+                "## Ratio-Object Multiplicative RR-Tower Scan",
+                "",
+                "We also searched for exact multiplicative corrections built from the benchmark tower:",
+                "",
+                "```text",
+                "F = prod_i B_i^e_i",
+                "```",
+                "",
+                f"- `F = candidate / {record.closest_benchmark}`",
+                f"- `B1 = {record.closest_benchmark}`",
+            ]
+        )
+        for power in sorted(benchmark_power_series):
+            lines.append(f"- `B{power} = B1({series_symbol}^{power})`")
+        lines.extend(
+            [
+                "",
+                "- Prefixes checked: `(B1, B2)`, then `(B1, B2, B3)`, and so on through the final listed power.",
+                "- Exponents are solved exactly from the log-series constraints, then verified by exact series re-expansion.",
+                "",
+            ]
+        )
+
+        any_multiplicative_hit = any(scan.relation is not None for scan in ratio_multiplicative_scans)
+        if not any_multiplicative_hit:
+            lines.append("No multiplicative ratio-object relation was found in any scanned prefix box.")
+            lines.append("")
+
+        multiplicative_no_hit_labels = [f"`B{scan.powers[-1]}`" for scan in ratio_multiplicative_scans if scan.error is None]
+        if not any_multiplicative_hit and multiplicative_no_hit_labels:
+            lines.append(
+                f"- No hit for multiplicative prefixes ending at {', '.join(multiplicative_no_hit_labels)}."
+            )
+
+        for scan in ratio_multiplicative_scans:
+            if scan.error is not None:
+                lines.append(
+                    f"- Multiplicative prefix ending at `B{scan.powers[-1]}` skipped: {scan.error}"
+                )
+            elif scan.relation is not None:
+                residual = _multiplicative_relation_residual_series(
+                    scan.relation,
+                    target_series=ratio_series,
+                    basis_series_by_variable={
+                        "B1": benchmark_series,
+                        **{
+                            f"B{p}": benchmark_power_substitution_series(
+                                benchmark_series,
+                                power=p,
+                                order=profile_order,
+                            )
+                            for p in scan.powers
+                        },
+                    },
+                    order=profile_order,
+                )
+                residual_ok = all(sp.simplify(value) == 0 for value in residual)
+                lines.extend(
+                    [
+                        f"- Multiplicative prefix ending at `B{scan.powers[-1]}` produced a candidate relation:",
+                        "",
+                        "```text",
+                        _format_multiplicative_relation(scan.relation, target_variable="F"),
+                        "```",
+                        "",
+                        f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                        "",
+                    ]
+                )
 
     if ratio_fractional_linear_scans:
         lines.extend(

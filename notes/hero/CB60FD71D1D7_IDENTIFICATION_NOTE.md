@@ -91,6 +91,31 @@ No candidate-dependent relation was found for the ratio object in any scanned pr
 - `total degree <= 1`: no hit for ratio-object prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
 - `total degree <= 2`: no hit for ratio-object prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
 
+## Ratio-Object Multiplicative RR-Tower Scan
+
+We also searched for exact multiplicative corrections built from the benchmark tower:
+
+```text
+F = prod_i B_i^e_i
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- `B1 = rogers_ramanujan_q3_normalized`
+- `B2 = B1(t^2)`
+- `B3 = B1(t^3)`
+- `B4 = B1(t^4)`
+- `B5 = B1(t^5)`
+- `B6 = B1(t^6)`
+- `B12 = B1(t^12)`
+- `B20 = B1(t^20)`
+
+- Prefixes checked: `(B1, B2)`, then `(B1, B2, B3)`, and so on through the final listed power.
+- Exponents are solved exactly from the log-series constraints, then verified by exact series re-expansion.
+
+No multiplicative ratio-object relation was found in any scanned prefix box.
+
+- No hit for multiplicative prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+
 ## Ratio-Object Fractional-Linear RR-Tower Scan
 
 We also searched for low-complexity fractional-linear corrections built from the benchmark tower:

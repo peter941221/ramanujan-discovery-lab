@@ -72,14 +72,16 @@ Two simple "recognition" attempts have been run on the step-reduced reciprocals:
    `B1(t^2), B1(t^3), B1(t^4), B1(t^5), B1(t^6), B1(t^12), B1(t^20)`.
    The same low-degree prefix scan also found no candidate-dependent relation
    for the multiplicative correction object `candidate / RR(q^3)` against the
-   same RR tower. Even the richer structured box
+   same RR tower, and the exact multiplicative ansatz
+   `F = prod_i B_i^(e_i)` also has no small-integer hit in the current prefix
+   scan. Even the richer structured box
    `F = (1 + sum a_i (B_i - 1)) / (1 + sum b_i (B_i - 1))` still gives no hit
    through the same RR-tower prefixes. A second-ring nonlinear pass with two
    single-basis fractional-linear factors still gives no hit there either.
-   On the source-family side, the zero-shift `f2/gcf3` `n`-dependent
-   equivalence lane is now also ruled out exactly: the necessary residual
-   polynomial forces `a = b = 0`, then `lambda = 1`, but still leaves a
-   surviving `m^2` coefficient `t`.
+   On the source-family side, the zero-shift `f2/gcf3` and `f4/gcf2`
+   `n`-dependent equivalence lanes are now also ruled out exactly: in both
+   cases the necessary residual polynomial forces `a = b = 0`, then
+   `lambda = 1`, but still leaves a surviving `m^2` coefficient `t`.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.

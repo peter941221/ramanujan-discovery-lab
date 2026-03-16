@@ -30,7 +30,9 @@ B1(t) = 1 + K_{n>=1} t^n / 1.
   (see `CB60FD71D1D7_IDENTIFICATION_NOTE.md`).
 - The same note now also records that the multiplicative correction object
   `candidate / RR(q^3)` has no candidate-dependent RR-tower prefix relation in
-  the current low-degree (`1` / `2`) search boxes.
+  the current low-degree (`1` / `2`) search boxes, and no exact small-integer
+  multiplicative RR-tower product relation
+  `F = prod_i B_i^(e_i)` was found in the current benchmark-prefix scan either.
 
 ## Shortlist: Next Sources To Check
 
@@ -38,13 +40,18 @@ The point of this list is not breadth, but "most likely to contain a close cousi
 of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
 
 1. Basil Gordon, 1965
-   - Title often cited as: *Some continued fractions of the Rogers-Ramanujan type*.
+   - Exact citation:
+     *Some continued fractions of the Rogers-Ramanujan type*,
+     Duke Mathematical Journal 32 (1965), 741-748.
    - Goal: find any RR-like continued fractions whose partial denominators are
      `1 + q^n` (or can be equivalence-transformed into that form).
 
 2. Hirschhorn, 1974 and 1980
-   - Cited in the Bowman--Mc Laughlin--Wyshinski 2005/2006 paper as the source
-     of older `1+q^n`-denominator continued fractions.
+   - Exact citations:
+     - M. D. Hirschhorn, *A continued fraction*,
+       Duke Mathematical Journal 41 (1974), 27-33.
+     - M. D. Hirschhorn, *A continued fraction of Ramanujan*,
+       Journal of the Australian Mathematical Society Series A 29 (1980), 80-86.
    - Goal: locate fractions where numerators involve both `q^n` and `q^(2n)`
      (or a fixed-shift variant that could become our numerator after an index shift).
 
@@ -62,20 +69,21 @@ These are concrete expansions to the current tooling that would make a new
 "candidate origin" test cheap:
 
 1. Broaden the RR-tower relation search
-   - Keep the current reciprocal, ratio-object polynomial, and ratio-object
-     fractional-linear prefix scans, plus the current two-layer single-basis
-     nonlinear pass, then move to source-family-specific relation templates
+   - Keep the current reciprocal, ratio-object polynomial, ratio-object
+     multiplicative, ratio-object fractional-linear, and two-layer single-basis
+     nonlinear scans, then move to source-family-specific relation templates
      before trying larger raw degree boxes.
 
-2. Push the source-family-specific exact lane into Lean
-   - The zero-shift `f2/gcf3` `n`-dependent equivalence obstruction is now
-     executable and documented; the next proof-facing step is to formalize that
-     obstruction rather than re-deriving it informally.
+2. Extend the source-family-specific exact lane
+   - The zero-shift `f2/gcf3` and `f4/gcf2` `n`-dependent equivalence
+     obstructions are now executable and formalized in Lean.
+   - The next proof-facing step is to widen that exact page-43 layer beyond the
+     current zero-shift nearest lanes rather than re-formalizing the same case.
 
-2. Add a second-ring Bauer--Muir chain search
+3. Add a second-ring Bauer--Muir chain search
    - Current scan uses a tiny fixed modifier family; if a literature family is
      found, implement its exact `w_n` templates and search within that.
 
-3. Add a dedicated `1+q^n`-denominator benchmark family (only with a reliable source)
+4. Add a dedicated `1+q^n`-denominator benchmark family (only with a reliable source)
    - This would let the discovery pipeline classify "Hirschhorn/Gordon-style"
      neighbors early, instead of treating them as unexplained review cases.
