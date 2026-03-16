@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-16 09:21:43 UTC",
+  "generated_at": "2026-03-16 09:27:52 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -743,11 +743,6 @@
       "title": "Hero Shortlist",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/notes/hero/CB60FD71D1D7_SHORTLIST.md",
       "description": "Targeted checklist for the next literature and recognition pass (no novelty claim)."
-    },
-    {
-      "title": "AI-Friendly Publishing Plan",
-      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/AI_FRIENDLY_PUBLISHING_PLAN.md",
-      "description": "Platform and rollout plan optimized for discoverability by both humans and machines."
     },
     {
       "title": "RR(q^3) Neighborhood",

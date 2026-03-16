@@ -219,11 +219,6 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "description": "Targeted checklist for the next literature and recognition pass (no novelty claim).",
             },
             {
-                "title": "AI-Friendly Publishing Plan",
-                "href": _repo_markdown_url("AI_FRIENDLY_PUBLISHING_PLAN.md"),
-                "description": "Platform and rollout plan optimized for discoverability by both humans and machines.",
-            },
-            {
                 "title": "RR(q^3) Neighborhood",
                 "href": _repo_markdown_url("notes/review/RR_Q3_NEIGHBORHOOD_AUDIT.md"),
                 "description": "Separates the plain RR(q^3) step branch from the hybrid cb60fd71d1d7 branch.",

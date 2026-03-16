@@ -355,7 +355,6 @@ Current built-in benchmark families:
 |-- MEMORY.md
 |-- RUNBOOK.md
 |-- TECHNICAL_DESIGN.md
-|-- AI_FRIENDLY_PUBLISHING_PLAN.md
 |-- notes/
 |   |-- hero/
 |   `-- review/
