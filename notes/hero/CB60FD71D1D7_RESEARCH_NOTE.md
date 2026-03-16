@@ -147,6 +147,34 @@ b4 = 1
 - `f2` / `gcf3` hits in this prefactor box: `0`
 - `f4` / `gcf2` hits in this prefactor box: `0`
 
+## Exact `f2` / `gcf3` n-Dependent Equivalence Check
+
+- Prioritized source-family-specific lane: the zero-shift `f2` / `gcf3` family under an arbitrary `n`-dependent equivalence transformation.
+- Write `m = t^(n-1)` and enforce the necessary identity for matching the hero-case reciprocal:
+
+```text
+alpha_n * (1 + t^(n-1)) = t^n * beta_(n-1) * beta_n
+```
+
+- In the zero-shift `f2` lane this becomes:
+
+```text
+alpha_n = lambda*m*t - a*b*m^2*t^2
+beta_(n-1) = 1 + b*m + a*m*t
+beta_n = 1 + b*m*t + a*m*t^2
+```
+
+- Residual polynomial:
+
+```text
+-a^2*m^3*t^4 - 2*a*b*m^3*t^3 - a*b*m^3*t^2 - a*b*m^2*t^2 - a*m^2*t^3 - a*m^2*t^2 - b^2*m^3*t^2 - b*m^2*t^2 - b*m^2*t + lambda*m^2*t + lambda*m*t - m*t
+```
+
+- `m^3` coefficient: `-a^2*t^4 - 2*a*b*t^3 - a*b*t^2 - b^2*t^2`; exact vanishing forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient is `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
+- So the current hero case is not in this zero-shift `f2` / `gcf3` equivalence lane.
+
 ## Cubic Odd/Even Contraction Check
 
 - Treat the reduced cubic benchmark reciprocal as `1 + K (t^n + t^(2n)) / 1`.

@@ -14,6 +14,8 @@ from ramanujan_discovery.research import (
     ConvergentFactorEquivalenceWitness,
     HeineCor2CFContractionObstruction,
     Page43ParameterHit,
+    Page43F2EquivalenceObstruction,
+    Page43F4EquivalenceObstruction,
     SubsequenceContractionHit,
     _template_reciprocal_coeffs,
     arithmetic_subsequence_contraction_search,
@@ -21,6 +23,8 @@ from ramanujan_discovery.research import (
     continued_fraction_convergents,
     direct_bauer_muir_obstruction,
     heine_cor2cf_a_zero_contraction_obstruction,
+    page43_f2_zero_shift_equivalence_obstruction,
+    page43_f4_zero_shift_equivalence_obstruction,
     page43_monomial_parameter_search,
     page43_rational_parameter_search,
     parity_contraction_coeffs,
@@ -62,6 +66,8 @@ class FormalizationContext:
     cubic_odd: ContinuedFractionCoeffs | None
     cubic_even: ContinuedFractionCoeffs | None
     heine_cor2cf: HeineCor2CFContractionObstruction | None
+    f2_equivalence: Page43F2EquivalenceObstruction | None
+    f4_equivalence: Page43F4EquivalenceObstruction | None
     rr_subsequence_hits: list[SubsequenceContractionHit]
     cubic_subsequence_hits: list[SubsequenceContractionHit]
     f2_hits: list[Page43ParameterHit]
@@ -172,6 +178,8 @@ def _build_formalization_context(
             subsequence_stages=profile.subsequence_stages,
             page43_max_shift=profile.max_page43_shift,
             page43_stages=profile.page43_stages,
+            page43_rational_max_shift=0,
+            page43_rational_stages=min(profile.page43_stages, 2),
             reduced_candidate=reduced_candidate,
             reduced_benchmark=reduced_benchmark,
             target_b0=None,
@@ -184,10 +192,14 @@ def _build_formalization_context(
             cubic_odd=None,
             cubic_even=None,
             heine_cor2cf=None,
+            f2_equivalence=None,
+            f4_equivalence=None,
             rr_subsequence_hits=[],
             cubic_subsequence_hits=[],
             f2_hits=[],
             f4_hits=[],
+            f2_rational_hits=[],
+            f4_rational_hits=[],
             looks_like_hero=False,
         )
 
@@ -237,6 +249,8 @@ def _build_formalization_context(
         parity="even",
     )
     heine_cor2cf = None
+    f2_equivalence = None
+    f4_equivalence = None
     if looks_like_hero:
         b_cor, lam_cor = sp.symbols("b lambda")
         heine_cor2cf = heine_cor2cf_a_zero_contraction_obstruction(
@@ -245,6 +259,8 @@ def _build_formalization_context(
             q=t,
             depth=12,
         )
+        f2_equivalence = page43_f2_zero_shift_equivalence_obstruction(q=t)
+        f4_equivalence = page43_f4_zero_shift_equivalence_obstruction(q=t)
 
     rr_subsequence_hits = arithmetic_subsequence_contraction_search(
         source_label="RR reciprocal",
@@ -316,6 +332,8 @@ def _build_formalization_context(
         cubic_odd=cubic_odd,
         cubic_even=cubic_even,
         heine_cor2cf=heine_cor2cf,
+        f2_equivalence=f2_equivalence,
+        f4_equivalence=f4_equivalence,
         rr_subsequence_hits=rr_subsequence_hits,
         cubic_subsequence_hits=cubic_subsequence_hits,
         f2_hits=f2_hits,
@@ -474,6 +492,94 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     "",
                 ]
             )
+        if context.f2_equivalence is not None:
+            lines.extend(
+                [
+                    "### Exact `f2` / `gcf3` `n`-Dependent Equivalence Lane",
+                    "",
+                    "- Lean mirror module: `proofs/Proofs/HeroCasePage43Equivalence.lean`.",
+                    "- Prioritized source-family-specific lane: zero-shift `f2` / `gcf3` under arbitrary `n`-dependent equivalence factors.",
+                    "- Write `m = t^(n-1)` and enforce the exact necessary identity",
+                    "",
+                    "```text",
+                    "alpha_n * (1 + t^(n-1)) = t^n * beta_(n-1) * beta_n",
+                    "```",
+                    "",
+                    "- In the zero-shift `f2` / `gcf3` lane this becomes",
+                    "",
+                    "```text",
+                    "alpha_n = lambda*m*t - a*b*m^2*t^2",
+                    "beta_(n-1) = 1 + b*m + a*m*t",
+                    "beta_n = 1 + b*m*t + a*m*t^2",
+                    "```",
+                    "",
+                    "- Residual polynomial:",
+                    "",
+                    "```text",
+                    _format_expr(context.f2_equivalence.residual_polynomial),
+                    "```",
+                    "",
+                    (
+                        "- `m^3` coefficient is "
+                        f"`{_format_expr(context.f2_equivalence.m_coefficients[3])}`; "
+                        "exact vanishing forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the `m^1` coefficient is "
+                        f"`{_format_expr(context.f2_equivalence.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes "
+                        f"`{_format_expr(context.f2_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    "- So no arbitrary `n`-dependent equivalence transformation sends the hero case into this zero-shift `f2` / `gcf3` lane.",
+                    "",
+                ]
+            )
+        if context.f4_equivalence is not None:
+            lines.extend(
+                [
+                    "### Exact `f4` / `gcf2` `n`-Dependent Equivalence Lane",
+                    "",
+                    "- The same Lean mirror module also now covers the zero-shift `f4` / `gcf2` lane.",
+                    "- In that lane the necessary identity becomes",
+                    "",
+                    "```text",
+                    "alpha_n = a*t + lambda*m*t",
+                    "beta_(n-1) = 1 - a*t + b*m",
+                    "beta_n = 1 - a*t + b*m*t",
+                    "```",
+                    "",
+                    "- Residual polynomial:",
+                    "",
+                    "```text",
+                    _format_expr(context.f4_equivalence.residual_polynomial),
+                    "```",
+                    "",
+                    (
+                        "- `m^0` coefficient is "
+                        f"`{_format_expr(context.f4_equivalence.m_coefficients[0])}`; "
+                        "exact vanishing forces `a = 0`."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient is "
+                        f"`{_format_expr(sp.simplify(context.f4_equivalence.m_coefficients[3].subs(context.f4_equivalence.forced_a_solution)))}`; "
+                        "exact vanishing forces `b = 0`."
+                    ),
+                    (
+                        "- Then the `m^1` coefficient is "
+                        f"`{_format_expr(context.f4_equivalence.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes "
+                        f"`{_format_expr(context.f4_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    "- So no arbitrary `n`-dependent equivalence transformation sends the hero case into this zero-shift `f4` / `gcf2` lane either.",
+                    "",
+                ]
+            )
         lines.extend(
             [
                 "## Bounded Exact Exclusion Results",
@@ -535,10 +641,11 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "1. Formalize generalized continued fractions and convergent recurrence for finite truncations.",
                 "2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.",
                 "3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.",
-                "4. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
-                "5. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.",
-                "6. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
-                "7. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.",
+                "4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift `f2/gcf3` and `f4/gcf2` lanes.",
+                "5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
+                "6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.",
+                "7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
+                "8. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.",
             ]
         )
 
@@ -799,6 +906,19 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 f"Cubic direct witness: w0 = {_format_expr(context.cubic_direct.forced_w0)}, w1 = {_format_expr(context.cubic_direct.forced_w1)}, w2 = {_format_expr(context.cubic_direct.forced_w2)}, transformed a2 = {_format_expr(context.cubic_direct.transformed_a2)}, target a2 = {_format_expr(context.cubic_direct.target_a2)}",
                 f"First reverse-equivalence scales: {', '.join(f'r{n} = {_format_fraction_expr(context.factor_witness.scale_terms[n])}' for n in range(1, min(5, len(context.factor_witness.scale_terms))))}",
                 "These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.",
+                (
+                    "Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2"
+                    " n-dependent equivalence, formalized in Proofs/HeroCasePage43Equivalence.lean,"
+                    f" with final surviving obstruction coefficients {_format_expr(context.f2_equivalence.final_m2_coefficient)}"
+                    f" and {_format_expr(context.f4_equivalence.final_m2_coefficient)}."
+                    if context.f2_equivalence is not None and context.f4_equivalence is not None
+                    else (
+                        "Current source-family-specific exact lane: zero-shift f2/gcf3 n-dependent equivalence,"
+                        f" whose final surviving obstruction coefficient is {_format_expr(context.f2_equivalence.final_m2_coefficient)}."
+                        if context.f2_equivalence is not None
+                        else "No source-family-specific exact lane has been attached yet."
+                    )
+                ),
                 "-/",
                 "",
                 "",
@@ -831,10 +951,12 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 "",
                 "1. Lift the coefficient domain from polynomials to rational functions and",
                 "   formalize the reverse equivalence transform.",
-                "2. Compare candidate convergents against nearby benchmark convergents.",
-                "3. Formalize the Bauer-Muir transform algebra itself instead of injecting only",
+                "2. Extend the zero-shift page-43 equivalence layer beyond the currently formalized",
+                "   f2/gcf3 and f4/gcf2 obstruction theorems.",
+                "3. Compare candidate convergents against nearby benchmark convergents.",
+                "4. Formalize the Bauer-Muir transform algebra itself instead of injecting only",
                 "   the recovered witnesses.",
-                "4. Attempt a final source theorem only after a unique identity is known.",
+                "5. Attempt a final source theorem only after a unique identity is known.",
                 "-/",
                 "",
                 "end",

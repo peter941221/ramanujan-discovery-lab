@@ -155,6 +155,8 @@ F = candidate / RR(q^3)
 
   inside the current one-layer or two-layer fractional-linear prefix boxes built
   from `B1(t^k) - 1`
+- no zero-shift `f2` / `gcf3` origin even after allowing arbitrary
+  `n`-dependent equivalence factors in the exact necessary-identity lane
 
 That does not prove novelty. It only means the candidate is not sitting in the first ring of standard published transforms around the Rogers-Ramanujan and Ramanujan-cubic neighborhoods already checked.
 

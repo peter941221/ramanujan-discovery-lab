@@ -67,6 +67,11 @@ These are concrete expansions to the current tooling that would make a new
      nonlinear pass, then move to source-family-specific relation templates
      before trying larger raw degree boxes.
 
+2. Push the source-family-specific exact lane into Lean
+   - The zero-shift `f2/gcf3` `n`-dependent equivalence obstruction is now
+     executable and documented; the next proof-facing step is to formalize that
+     obstruction rather than re-deriving it informally.
+
 2. Add a second-ring Bauer--Muir chain search
    - Current scan uses a tiny fixed modifier family; if a literature family is
      found, implement its exact `w_n` templates and search within that.

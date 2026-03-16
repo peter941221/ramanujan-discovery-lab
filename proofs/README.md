@@ -20,6 +20,9 @@ Current scope:
   branch mismatches against the hero target
 - `Proofs/HeroCasePage43.lean` formalizes a stage-2 exclusion theorem for the
   page-43 monomial-substitution families (`f2`, `f4`) in Laurent polynomials
+- `Proofs/HeroCasePage43Equivalence.lean` formalizes the zero-shift
+  `n`-dependent equivalence obstructions for the page-43 `f2/gcf3` and
+  `f4/gcf2` lanes
 - `Proofs/HeroCaseSubsequence.lean` mirrors the bounded arithmetic subsequence
   contraction scan (stride ≤ 4) as a computation-checked theorem over exact
   rational sample points
@@ -54,6 +57,7 @@ Primary file:
 - `Proofs/HeroCaseLocal.lean`
 - `Proofs/HeroCaseHeineCor2cf.lean`
 - `Proofs/HeroCasePage43.lean`
+- `Proofs/HeroCasePage43Equivalence.lean`
 - `Proofs/HeroCaseSubsequence.lean`
 - `Proofs/HeroCaseSubsequenceExact.lean`
 - `Proofs/HeroCaseFinalIdentity.lean`

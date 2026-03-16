@@ -92,6 +92,34 @@ r4 = (t^4 + 1)/(t^3 + 1)
 - The odd-of-even branch changes the initial term to `(b*t + lambda*t^2 + lambda*t + 1)/(b*t + lambda*t^2 + 1)`, so it fails before the first nontrivial numerator.
 - The even-of-even branch keeps initial term `1`, but its first numerator is `b*lambda*t^3 + lambda^2*t^5 + lambda^2*t^4 + lambda*t`. That numerator has no `t^2` term, so it cannot equal the target `t + t^2`.
 
+### Exact `f2` / `gcf3` `n`-Dependent Equivalence Lane
+
+- Prioritized source-family-specific lane: zero-shift `f2` / `gcf3` under arbitrary `n`-dependent equivalence factors.
+- Write `m = t^(n-1)` and enforce the exact necessary identity
+
+```text
+alpha_n * (1 + t^(n-1)) = t^n * beta_(n-1) * beta_n
+```
+
+- In the zero-shift `f2` / `gcf3` lane this becomes
+
+```text
+alpha_n = lambda*m*t - a*b*m^2*t^2
+beta_(n-1) = 1 + b*m + a*m*t
+beta_n = 1 + b*m*t + a*m*t^2
+```
+
+- Residual polynomial:
+
+```text
+-a^2*m^3*t^4 - 2*a*b*m^3*t^3 - a*b*m^3*t^2 - a*b*m^2*t^2 - a*m^2*t^3 - a*m^2*t^2 - b^2*m^3*t^2 - b*m^2*t^2 - b*m^2*t + lambda*m^2*t + lambda*m*t - m*t
+```
+
+- `m^3` coefficient is `-a^2*t^4 - 2*a*b*t^3 - a*b*t^2 - b^2*t^2`; exact vanishing forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient is `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
+- So no arbitrary `n`-dependent equivalence transformation sends the hero case into this zero-shift `f2` / `gcf3` lane.
+
 ## Bounded Exact Exclusion Results
 
 - Arithmetic subsequence contractions up to stride `4` with stage comparison depth `3`: RR hits `0`, cubic hits `0`.
@@ -105,10 +133,11 @@ r4 = (t^4 + 1)/(t^3 + 1)
 1. Formalize generalized continued fractions and convergent recurrence for finite truncations.
 2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.
 3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.
-4. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
-5. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.
-6. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.
-7. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.
+4. Formalize the zero-shift `f2/gcf3` `n`-dependent equivalence obstruction as the current source-family-specific exact lane.
+5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
+6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.
+7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.
+8. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.
 
 ## Why This Is Still Not A Full Theorem
 

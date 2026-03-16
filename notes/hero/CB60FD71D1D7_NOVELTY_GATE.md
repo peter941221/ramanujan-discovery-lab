@@ -37,6 +37,9 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
 
 4. Exact or computation-checked elimination layers
      - bounded page-43 monomial-substitution exclusions
+     - an exact zero-shift `f2/gcf3` `n`-dependent equivalence obstruction,
+       where the necessary residual polynomial forces `a = 0`, `b = 0`, then
+       `lambda = 1`, but still leaves a surviving `m^2` coefficient `t`
      - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
        stronger exact obstruction for the RR and cubic source lanes, plus a
        machine-checked Lean proof layer:
@@ -140,10 +143,12 @@ At least one of the following two routes should be completed.
 ## Practical Next Actions
 
 1. Upgrade one bounded exclusion family into an all-parameter theorem.
-2. Shift the next identification pass from generic RR-tower ansatz boxes toward
-   source-family-specific transforms with explicit parameter meaning.
-3. Expand the literature log into a dated bibliography matrix by source family.
-4. Keep public wording at "unexplained candidate" until steps 1-3 are all
+2. Lift the new exact zero-shift `f2/gcf3` equivalence lane into a named Lean
+   exclusion theorem.
+3. Shift the next identification pass from generic RR-tower ansatz boxes toward
+   the next source-family-specific transforms with explicit parameter meaning.
+4. Expand the literature log into a dated bibliography matrix by source family.
+5. Keep public wording at "unexplained candidate" until steps 1-4 are all
    materially stronger.
 
 ## Companion Notes

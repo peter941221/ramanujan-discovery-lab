@@ -17,6 +17,15 @@ This file is intentionally a *scaffold*:
 
 Once a concrete closed form is identified (q-product / eta-quotient / theta ratio, etc.),
 replace `finalIdentityStatement` with the actual theorem statement and build out the proof.
+
+Current source-family-specific exact lane:
+
+- `Proofs/HeroCasePage43Equivalence.lean` now formalizes the zero-shift
+  `f2/gcf3` and `f4/gcf2` `n`-dependent equivalence obstructions
+- both lanes end with a surviving nonzero `m^2` coefficient after the forced
+  parameter specializations
+- so this scaffold should currently treat those lanes as exclusion theorems,
+  not as positive final-identity targets
 -/
 
 -- AwardTrackStatus: placeholder
@@ -36,7 +45,10 @@ TODO (award track, endgame):
 2. Prove the closed form satisfies the same characterization as the continued fraction value
    (functional equation / modular equation / uniqueness lemma).
 3. Bridge the finite convergents (`heroConvergentRatFunc`) to the infinite object.
-4. Prove the final identity in Lean and remove this placeholder.
+4. Generalize the new page-43 zero-shift equivalence obstruction layer beyond
+   the currently formalized `f2/gcf3` and `f4/gcf2` lanes if that remains the
+   best route toward a final theorem.
+5. Prove the final identity in Lean and remove this placeholder.
 -/
 
 def finalIdentityStatement : Prop :=

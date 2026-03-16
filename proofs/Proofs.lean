@@ -4,6 +4,7 @@ import Proofs.HeroCaseObjects
 import Proofs.HeroCaseLocal
 import Proofs.HeroCaseHeineCor2cf
 import Proofs.HeroCasePage43
+import Proofs.HeroCasePage43Equivalence
 import Proofs.HeroCaseSubsequence
 import Proofs.HeroCaseSubsequenceExact
 import Proofs.HeroCaseBauerMuir

@@ -19,6 +19,8 @@ from ramanujan_discovery.research import (
     heine_cor2cf_a_zero_specialized_coeffs,
     heine_hcf2_standardized_coeffs,
     parity_contraction_coeffs,
+    page43_f2_zero_shift_equivalence_obstruction,
+    page43_f4_zero_shift_equivalence_obstruction,
     page43_monomial_parameter_search,
     page43_rational_parameter_search,
     reduce_template_by_step,
@@ -76,6 +78,34 @@ def test_heine_cor2cf_a_zero_contraction_obstruction_has_exact_low_stage_mismatc
         obstruction.even_even_part.a_terms[1] - lam * q * (1 + b * q**2 + lam * q**3 + lam * q**4)
     ) == 0
     assert sp.expand(obstruction.even_even_part.a_terms[1]).coeff(q, 2) == 0
+
+
+def test_page43_f2_zero_shift_equivalence_obstruction_has_forced_parameter_failures():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_zero_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(
+        obstruction.m_coefficients[3] - (-q**2 * (a**2 * q**2 + 2 * a * b * q + a * b + b**2))
+    ) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 0}
+    assert sp.simplify(obstruction.reduced_m1_coefficient - (lam * q - q)) == 0
+    assert obstruction.forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
+
+
+def test_page43_f4_zero_shift_equivalence_obstruction_has_forced_parameter_failures():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_zero_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(obstruction.m_coefficients[0] - (a * q)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert sp.simplify(obstruction.m_coefficients[3].subs(obstruction.forced_a_solution) - (-b**2 * q**2)) == 0
+    assert obstruction.forced_b_solution == {b: 0}
+    assert sp.simplify(obstruction.reduced_m1_coefficient - (lam * q - q)) == 0
+    assert obstruction.forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
 
 
 def test_two_modulus_pochhammer_fit_recovers_mixed_moduli_beyond_single_period_box():
@@ -761,6 +791,8 @@ def test_cli_research_writes_note(tmp_path: Path):
     assert "Direct 1-Step Bauer-Muir Obstruction" in text
     assert "Page-43 Monomial Substitution Check" in text
     assert "Page-43 Low-Complexity Rational Prefactor Check" in text
+    assert "Exact `f2` / `gcf3` n-Dependent Equivalence Check" in text
+    assert "Exact `f4` / `gcf2` n-Dependent Equivalence Check" in text
     assert "Heine `cor2cf` Contraction Check (`a = 0` lane)" in text
     assert "Cubic Odd/Even Contraction Check" in text
     assert "Arithmetic Subsequence Contraction Scan" in text

@@ -667,6 +667,27 @@ class HeineCor2CFContractionObstruction:
 
 
 @dataclass(frozen=True)
+class Page43F2EquivalenceObstruction:
+    residual_polynomial: sp.Expr
+    m_coefficients: dict[int, sp.Expr]
+    forced_ab_solution: dict[sp.Symbol, sp.Expr]
+    reduced_m1_coefficient: sp.Expr
+    forced_lambda_solution: dict[sp.Symbol, sp.Expr]
+    final_m2_coefficient: sp.Expr
+
+
+@dataclass(frozen=True)
+class Page43F4EquivalenceObstruction:
+    residual_polynomial: sp.Expr
+    m_coefficients: dict[int, sp.Expr]
+    forced_a_solution: dict[sp.Symbol, sp.Expr]
+    forced_b_solution: dict[sp.Symbol, sp.Expr]
+    reduced_m1_coefficient: sp.Expr
+    forced_lambda_solution: dict[sp.Symbol, sp.Expr]
+    final_m2_coefficient: sp.Expr
+
+
+@dataclass(frozen=True)
 class TwoModulusPochhammerFit:
     first_modulus: int
     first_exponents: list[int]
@@ -795,6 +816,122 @@ def heine_cor2cf_a_zero_contraction_obstruction(
         even_part=even,
         even_odd_part=even_odd,
         even_even_part=even_even,
+    )
+
+
+def page43_f2_zero_shift_equivalence_obstruction(
+    *,
+    q: sp.Symbol,
+) -> Page43F2EquivalenceObstruction:
+    """Return the exact zero-shift `f2` / `gcf3` equivalence obstruction.
+
+    This is the source-family-specific lane where the page-43 `f2` family is tested
+    against the hero-case reciprocal under an arbitrary `n`-dependent equivalence
+    transformation, with the low-complexity zero-shift specialization
+
+        a = alpha,  b = beta,  lambda = gamma.
+
+    Writing `m = q^(n-1)`, the necessary identity becomes a polynomial in `m`
+    and `q`. Vanishing identically would force the source-family parameters to
+    satisfy impossible exact coefficient constraints.
+    """
+    a, b, lam, m = sp.symbols("a b lambda m")
+
+    alpha_n = sp.simplify(lam * m * q - a * b * m**2 * q**2)
+    beta_prev = sp.simplify(1 + b * m + a * m * q)
+    beta_curr = sp.simplify(1 + b * m * q + a * m * q**2)
+    residual = sp.expand(alpha_n * (1 + m) - m * q * beta_prev * beta_curr)
+
+    residual_poly = sp.Poly(residual, m)
+    m_coefficients = {
+        degree: sp.expand(residual_poly.nth(degree))
+        for degree in range(1, residual_poly.degree() + 1)
+        if sp.simplify(residual_poly.nth(degree)) != 0
+    }
+
+    leading_coefficient = m_coefficients[max(m_coefficients)]
+    forced_ab_solutions = sp.solve(_exact_zero_equations(leading_coefficient, q=q), (a, b), dict=True)
+    if forced_ab_solutions != [{a: sp.Integer(0), b: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the zero-shift `f2` equivalence leading coefficient")
+    forced_ab_solution = forced_ab_solutions[0]
+
+    reduced_m1_coefficient = sp.simplify(m_coefficients[1].subs(forced_ab_solution))
+    forced_lambda_solutions = sp.solve(_exact_zero_equations(reduced_m1_coefficient, q=q), (lam,), dict=True)
+    if forced_lambda_solutions != [{lam: sp.Integer(1)}]:
+        raise ValueError("unexpected exact-solution set for the zero-shift `f2` equivalence linear coefficient")
+    forced_lambda_solution = forced_lambda_solutions[0]
+
+    final_m2_coefficient = sp.simplify(
+        m_coefficients[2].subs(forced_ab_solution).subs(forced_lambda_solution)
+    )
+    if _exact_zero_equations(final_m2_coefficient, q=q) == []:
+        raise ValueError("unexpected vanishing final obstruction in the zero-shift `f2` equivalence lane")
+
+    return Page43F2EquivalenceObstruction(
+        residual_polynomial=residual,
+        m_coefficients=m_coefficients,
+        forced_ab_solution=forced_ab_solution,
+        reduced_m1_coefficient=reduced_m1_coefficient,
+        forced_lambda_solution=forced_lambda_solution,
+        final_m2_coefficient=final_m2_coefficient,
+    )
+
+
+def page43_f4_zero_shift_equivalence_obstruction(
+    *,
+    q: sp.Symbol,
+) -> Page43F4EquivalenceObstruction:
+    """Return the exact zero-shift `f4` / `gcf2` equivalence obstruction."""
+    a, b, lam, m = sp.symbols("a b lambda m")
+
+    alpha_n = sp.simplify(a * q + lam * m * q)
+    beta_prev = sp.simplify(1 - a * q + b * m)
+    beta_curr = sp.simplify(1 - a * q + b * m * q)
+    residual = sp.expand(alpha_n * (1 + m) - m * q * beta_prev * beta_curr)
+
+    residual_poly = sp.Poly(residual, m)
+    m_coefficients = {
+        degree: sp.expand(residual_poly.nth(degree))
+        for degree in range(0, residual_poly.degree() + 1)
+        if sp.simplify(residual_poly.nth(degree)) != 0
+    }
+
+    forced_a_solutions = sp.solve(_exact_zero_equations(m_coefficients[0], q=q), (a,), dict=True)
+    if forced_a_solutions != [{a: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the zero-shift `f4` equivalence constant coefficient")
+    forced_a_solution = forced_a_solutions[0]
+
+    reduced_m3_coefficient = sp.simplify(m_coefficients[3].subs(forced_a_solution))
+    forced_b_solutions = sp.solve(_exact_zero_equations(reduced_m3_coefficient, q=q), (b,), dict=True)
+    if forced_b_solutions != [{b: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the zero-shift `f4` equivalence cubic coefficient")
+    forced_b_solution = forced_b_solutions[0]
+
+    reduced_m1_coefficient = sp.simplify(
+        m_coefficients[1].subs(forced_a_solution).subs(forced_b_solution)
+    )
+    forced_lambda_solutions = sp.solve(_exact_zero_equations(reduced_m1_coefficient, q=q), (lam,), dict=True)
+    if forced_lambda_solutions != [{lam: sp.Integer(1)}]:
+        raise ValueError("unexpected exact-solution set for the zero-shift `f4` equivalence linear coefficient")
+    forced_lambda_solution = forced_lambda_solutions[0]
+
+    final_m2_coefficient = sp.simplify(
+        m_coefficients[2]
+        .subs(forced_a_solution)
+        .subs(forced_b_solution)
+        .subs(forced_lambda_solution)
+    )
+    if _exact_zero_equations(final_m2_coefficient, q=q) == []:
+        raise ValueError("unexpected vanishing final obstruction in the zero-shift `f4` equivalence lane")
+
+    return Page43F4EquivalenceObstruction(
+        residual_polynomial=residual,
+        m_coefficients=m_coefficients,
+        forced_a_solution=forced_a_solution,
+        forced_b_solution=forced_b_solution,
+        reduced_m1_coefficient=reduced_m1_coefficient,
+        forced_lambda_solution=forced_lambda_solution,
+        final_m2_coefficient=final_m2_coefficient,
     )
 
 
@@ -2023,6 +2160,8 @@ def build_candidate_research_note(
         )
         if looks_like_hybrid:
             a_sym, b_sym = sp.symbols("a b")
+            f2_equivalence_obstruction = page43_f2_zero_shift_equivalence_obstruction(q=t)
+            f4_equivalence_obstruction = page43_f4_zero_shift_equivalence_obstruction(q=t)
             coeffs = heine_hcf2_standardized_coeffs(
                 a=a_sym,
                 b=b_sym,
@@ -2186,6 +2325,100 @@ def build_candidate_research_note(
                         f"lambda={_format_expr(hit.lambda_coeff)}"
                     )
                 lines.extend(["```"])
+
+            lines.extend(
+                [
+                    "",
+                    "## Exact `f2` / `gcf3` n-Dependent Equivalence Check",
+                    "",
+                    "- Prioritized source-family-specific lane: the zero-shift `f2` / `gcf3` family under an arbitrary `n`-dependent equivalence transformation.",
+                    "- Write `m = t^(n-1)` and enforce the necessary identity for matching the hero-case reciprocal:",
+                    "",
+                    "```text",
+                    "alpha_n * (1 + t^(n-1)) = t^n * beta_(n-1) * beta_n",
+                    "```",
+                    "",
+                    "- In the zero-shift `f2` lane this becomes:",
+                    "",
+                    "```text",
+                    "alpha_n = lambda*m*t - a*b*m^2*t^2",
+                    "beta_(n-1) = 1 + b*m + a*m*t",
+                    "beta_n = 1 + b*m*t + a*m*t^2",
+                    "```",
+                    "",
+                    "- Residual polynomial:",
+                    "",
+                    "```text",
+                    _format_expr(f2_equivalence_obstruction.residual_polynomial),
+                    "```",
+                    "",
+                    (
+                        "- `m^3` coefficient: "
+                        f"`{_format_expr(f2_equivalence_obstruction.m_coefficients[3])}`; "
+                        "exact vanishing forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the `m^1` coefficient is "
+                        f"`{_format_expr(f2_equivalence_obstruction.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes "
+                        f"`{_format_expr(f2_equivalence_obstruction.final_m2_coefficient)}`, "
+                        "still nonzero."
+                    ),
+                    "- So the current hero case is not in this zero-shift `f2` / `gcf3` equivalence lane.",
+                ]
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Exact `f4` / `gcf2` n-Dependent Equivalence Check",
+                    "",
+                    "- Next source-family-specific lane: the zero-shift `f4` / `gcf2` family under an arbitrary `n`-dependent equivalence transformation.",
+                    "- Write `m = t^(n-1)` and enforce the same necessary identity:",
+                    "",
+                    "```text",
+                    "alpha_n * (1 + t^(n-1)) = t^n * beta_(n-1) * beta_n",
+                    "```",
+                    "",
+                    "- In the zero-shift `f4` lane this becomes:",
+                    "",
+                    "```text",
+                    "alpha_n = a*t + lambda*m*t",
+                    "beta_(n-1) = 1 - a*t + b*m",
+                    "beta_n = 1 - a*t + b*m*t",
+                    "```",
+                    "",
+                    "- Residual polynomial:",
+                    "",
+                    "```text",
+                    _format_expr(f4_equivalence_obstruction.residual_polynomial),
+                    "```",
+                    "",
+                    (
+                        "- `m^0` coefficient: "
+                        f"`{_format_expr(f4_equivalence_obstruction.m_coefficients[0])}`; "
+                        "exact vanishing forces `a = 0`."
+                    ),
+                    (
+                        "- After `a = 0`, the `m^3` coefficient is "
+                        f"`{_format_expr(sp.simplify(f4_equivalence_obstruction.m_coefficients[3].subs(f4_equivalence_obstruction.forced_a_solution)))}`; "
+                        "exact vanishing forces `b = 0`."
+                    ),
+                    (
+                        "- After that, the `m^1` coefficient is "
+                        f"`{_format_expr(f4_equivalence_obstruction.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes "
+                        f"`{_format_expr(f4_equivalence_obstruction.final_m2_coefficient)}`, "
+                        "still nonzero."
+                    ),
+                    "- So the current hero case is not in this zero-shift `f4` / `gcf2` equivalence lane either.",
+                ]
+            )
 
             cubic_b0, cubic_a_terms, cubic_b_terms = _template_reciprocal_coeffs(
                 get_benchmark("ramanujan_cubic_normalized").canonical_template,

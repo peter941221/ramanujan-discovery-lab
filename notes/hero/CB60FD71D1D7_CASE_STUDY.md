@@ -76,6 +76,10 @@ Two simple "recognition" attempts have been run on the step-reduced reciprocals:
    `F = (1 + sum a_i (B_i - 1)) / (1 + sum b_i (B_i - 1))` still gives no hit
    through the same RR-tower prefixes. A second-ring nonlinear pass with two
    single-basis fractional-linear factors still gives no hit there either.
+   On the source-family side, the zero-shift `f2/gcf3` `n`-dependent
+   equivalence lane is now also ruled out exactly: the necessary residual
+   polynomial forces `a = b = 0`, then `lambda = 1`, but still leaves a
+   surviving `m^2` coefficient `t`.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.
