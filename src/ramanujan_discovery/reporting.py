@@ -165,47 +165,47 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
             },
             {
                 "title": "Hero Case Summary",
-                "href": _repo_markdown_url("CB60FD71D1D7_PUBLIC_SUMMARY.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_PUBLIC_SUMMARY.md"),
                 "description": "Short public-facing summary of the current lead candidate cb60fd71d1d7.",
             },
             {
                 "title": "Hero Transform Audit",
-                "href": _repo_markdown_url("CB60FD71D1D7_TRANSFORM_AUDIT.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_TRANSFORM_AUDIT.md"),
                 "description": "Detailed elimination log for direct, equivalence, contraction, and constrained Bauer-Muir paths.",
             },
             {
                 "title": "Hero Exact Subsequence Obstruction",
-                "href": _repo_markdown_url("CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md"),
                 "description": "A stronger human-written exact obstruction for RR and cubic arithmetic-subsequence origins, beyond the old bounded sample scan.",
             },
             {
                 "title": "Hero Heine cor2cf Obstruction",
-                "href": _repo_markdown_url("CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md"),
                 "description": "Exact low-stage obstruction for the relevant Heine-derived cor2cf contraction branches around the hero case.",
             },
             {
                 "title": "Hero Identification",
-                "href": _repo_markdown_url("CB60FD71D1D7_IDENTIFICATION_NOTE.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md"),
                 "description": "Small-degree algebraic relation guesses between the hero case and its nearest benchmark.",
             },
             {
                 "title": "Hero Case Study",
-                "href": _repo_markdown_url("CB60FD71D1D7_CASE_STUDY.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_CASE_STUDY.md"),
                 "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim.",
             },
             {
                 "title": "Hero Novelty Gate",
-                "href": _repo_markdown_url("CB60FD71D1D7_NOVELTY_GATE.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_NOVELTY_GATE.md"),
                 "description": "Explicit checklist for why cb60fd71d1d7 is still an unexplained candidate rather than a settled novelty claim.",
             },
             {
                 "title": "Hero Bibliography Matrix",
-                "href": _repo_markdown_url("CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md"),
                 "description": "Coverage map of which primary-source families have been checked and why the literature gate is still open.",
             },
             {
                 "title": "Hero Public Article",
-                "href": _repo_markdown_url("CB60FD71D1D7_PUBLIC_ARTICLE.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_PUBLIC_ARTICLE.md"),
                 "description": "A publication-ready public article draft for the current hero case.",
             },
             {
@@ -215,7 +215,7 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
             },
             {
                 "title": "Hero Shortlist",
-                "href": _repo_markdown_url("CB60FD71D1D7_SHORTLIST.md"),
+                "href": _repo_markdown_url("notes/hero/CB60FD71D1D7_SHORTLIST.md"),
                 "description": "Targeted checklist for the next literature and recognition pass (no novelty claim).",
             },
             {
@@ -225,22 +225,22 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
             },
             {
                 "title": "RR(q^3) Neighborhood",
-                "href": _repo_markdown_url("RR_Q3_NEIGHBORHOOD_AUDIT.md"),
+                "href": _repo_markdown_url("notes/review/RR_Q3_NEIGHBORHOOD_AUDIT.md"),
                 "description": "Separates the plain RR(q^3) step branch from the hybrid cb60fd71d1d7 branch.",
             },
             {
                 "title": "E2CC Plain-Step Audit",
-                "href": _repo_markdown_url("E2CC74240B6F_PLAIN_STEP_AUDIT.md"),
+                "href": _repo_markdown_url("notes/review/E2CC74240B6F_PLAIN_STEP_AUDIT.md"),
                 "description": "Focused note on why e2cc74240b6f currently reads as a plain opposite-side RR step perturbation.",
             },
             {
                 "title": "RR(q^4) Step Ladder",
-                "href": _repo_markdown_url("RR_Q4_STEP_LADDER_AUDIT.md"),
+                "href": _repo_markdown_url("notes/review/RR_Q4_STEP_LADDER_AUDIT.md"),
                 "description": "Systematic note on the 4 -> 3 -> 2 -> 1 RR(q^4) single-ladder perturbation family.",
             },
             {
                 "title": "Second-Tier Audit",
-                "href": _repo_markdown_url("SECOND_TIER_REVIEW_AUDIT.md"),
+                "href": _repo_markdown_url("notes/review/SECOND_TIER_REVIEW_AUDIT.md"),
                 "description": "Cross-candidate note covering bef31ddceea8 and e2cc74240b6f below the current hero case.",
             },
         ],
@@ -267,6 +267,8 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
 
 def _site_html(payload: dict[str, object]) -> str:
     data_json = json.dumps(payload, ensure_ascii=True)
+    repo_href = "https://github.com/peter941221/ramanujan-discovery-lab"
+    hero_summary_href = _repo_markdown_url("notes/hero/CB60FD71D1D7_PUBLIC_SUMMARY.md")
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -278,51 +280,114 @@ def _site_html(payload: dict[str, object]) -> str:
 <body>
   <main class="page">
     <section class="hero">
-      <p class="eyebrow">Ramanujan-style q-continued fractions</p>
-      <h1>{payload["title"]}</h1>
-      <p class="lede">A static snapshot of benchmark rediscoveries and exploratory candidates generated by the local-first CLI pipeline.</p>
-      <div class="meta">
-        <span>Generated: {payload["generated_at"]}</span>
-        <span>Records: {len(payload["records"])}</span>
-        <span id="final-identity"></span>
-        <a href="review-audit.html">Review audit</a>
+      <div class="hero-copy">
+        <p class="eyebrow">Ramanujan-style q-continued fractions · local-first research</p>
+        <h1>{payload["title"]}</h1>
+        <p class="lede">A CLI-first research workspace for rediscovering classical q-continued fractions, auditing unexplained candidates, and keeping mathematical beauty downstream of reproducibility.</p>
+        <p class="hero-note">Mathematical beauty is treated as a clue, not as a proof.</p>
+        <div class="hero-links">
+          <a class="hero-link" href="review-audit.html">Review Audit</a>
+          <a class="hero-link" href="{hero_summary_href}" target="_blank" rel="noreferrer">Hero Case</a>
+          <a class="hero-link" href="results.json">Results JSON</a>
+          <a class="hero-link" href="{repo_href}" target="_blank" rel="noreferrer">GitHub Repo</a>
+        </div>
+        <div class="meta">
+          <span>Generated: {payload["generated_at"]}</span>
+          <span>Records: {len(payload["records"])}</span>
+          <span id="final-identity"></span>
+        </div>
+      </div>
+      <pre class="hero-art" aria-hidden="true">+----------------------------------------------------------------------------+
+| F(q) = 1 / ( b0(q) + a1(q)/(b1(q) + a2(q)/(b2(q) + ... )) )               |
+|                                                                            |
+| discover -> verify -> report -> site                                       |
+| analyze  -> research -> identify -> formalize -> Lean 4                    |
+|                                                                            |
+| beauty -> pattern -> conjecture -> proof                                   |
++----------------------------------------------------------------------------+</pre>
+    </section>
+
+    <section class="panel toc">
+      <div class="panel-header">
+        <h2>Field Guide</h2>
+        <p>Start with the hero case, then the audit notes, then the full candidate gallery.</p>
+      </div>
+      <nav class="toc-links" aria-label="Contents">
+        <a href="#top-leads-panel">Top Leads</a>
+        <a href="#research-posture">Research Posture</a>
+        <a href="#audit-notes-panel">Audit Notes</a>
+        <a href="#benchmark-panel">Benchmark Families</a>
+        <a href="#pipeline-panel">Pipeline Discipline</a>
+        <a href="#gallery-panel">Candidate Gallery</a>
+      </nav>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="panel manifesto" id="research-posture">
+      <div class="panel-header">
+        <p class="panel-kicker">+================ Research Posture ================+</p>
+        <h2>Research Posture</h2>
+        <p>This site is designed to surface strong evidence without inflating unexplained candidates into novelty claims.</p>
+      </div>
+      <div class="manifesto-grid">
+        <article class="info-card">
+          <h3>Benchmark-backed</h3>
+          <p class="notes">The catalog is intentionally small, interpretable, and independently checkable against product formulas.</p>
+        </article>
+        <article class="info-card">
+          <h3>Proof-aware</h3>
+          <p class="notes">Bounded scans, transform audits, and symbolic fits are evidence. Final claims still require theorem-grade closure.</p>
+        </article>
+        <article class="info-card">
+          <h3>Publicly conservative</h3>
+          <p class="notes">A record marked <code>review</code> is an unexplained candidate, not a declared new identity.</p>
+        </article>
       </div>
     </section>
-    <section class="stats" id="stats"></section>
-    <section class="panel spotlight">
+
+    <section class="panel spotlight" id="top-leads-panel">
       <div class="panel-header">
+        <p class="panel-kicker">+=================== Hero Candidates ===================+</p>
         <h2>Top Leads</h2>
-        <p>The current release only highlights two weak leads for deeper manual audit. They are not public novelty claims.</p>
+        <p>The current release highlights two manual-audit priorities. They are research leads, not public novelty claims.</p>
       </div>
       <div class="cards" id="top-leads"></div>
     </section>
-    <section class="panel">
+
+    <section class="panel" id="audit-notes-panel">
       <div class="panel-header">
+        <p class="panel-kicker">+=================== Long-Form Audit Notes ===================+</p>
         <h2>Audit Notes</h2>
-        <p>Long-form manual audit notes are linked here. External markdown notes open on GitHub.</p>
+        <p>Long-form manual audit notes live here. GitHub-hosted markdown opens in a new tab.</p>
       </div>
       <div class="stack" id="audit-notes"></div>
     </section>
+
     <section class="info-grid">
-      <section class="panel">
+      <section class="panel" id="benchmark-panel">
         <div class="panel-header">
+          <p class="panel-kicker">+================ Classical Families ================+</p>
           <h2>Benchmark Families</h2>
-          <p>The catalog stays intentionally small and independently checkable.</p>
+          <p>The built-in catalog stays small enough to inspect by hand and strong enough to anchor the public story.</p>
         </div>
         <div class="stack" id="benchmark-families"></div>
       </section>
-      <section class="panel">
+      <section class="panel" id="pipeline-panel">
         <div class="panel-header">
+          <p class="panel-kicker">+================ Pipeline Discipline ================+</p>
           <h2>Pipeline Discipline</h2>
-          <p>This release is designed to surface candidates, not to auto-announce discoveries.</p>
+          <p>The pipeline is built to produce reproducible artifacts first and bold mathematical claims only later.</p>
         </div>
         <div class="stack" id="pipeline-list"></div>
       </section>
     </section>
-    <section class="panel">
+
+    <section class="panel" id="gallery-panel">
       <div class="panel-header">
+        <p class="panel-kicker">+================ Full Candidate Gallery ================+</p>
         <h2>Candidate Gallery</h2>
-        <p>Known benchmarks and review-worthy unexplained templates are rendered side by side.</p>
+        <p>Known benchmarks, fixtures, and review-worthy unexplained templates are rendered side by side.</p>
       </div>
       <div class="cards" id="cards"></div>
     </section>
@@ -437,9 +502,11 @@ def _site_css() -> str:
 :root {
   --bg: #f6f1e8;
   --panel: #fffaf2;
+  --panel-strong: #fff7ec;
   --ink: #1f1b16;
   --muted: #6e6456;
   --accent: #bb4d00;
+  --accent-deep: #8f3900;
   --accent-soft: #f3c9a2;
   --review: #0e6f7a;
   --known: #256029;
@@ -457,9 +524,14 @@ body {
   margin: 0;
   background:
     radial-gradient(circle at top right, rgba(187, 77, 0, 0.12), transparent 28%),
+    radial-gradient(circle at left 20%, rgba(14, 111, 122, 0.08), transparent 25%),
     linear-gradient(180deg, #f8f2e7 0%, #f2eadc 100%);
   color: var(--ink);
   font-family: var(--font-sans);
+}
+
+a {
+  color: var(--accent-deep);
 }
 
 .page {
@@ -469,6 +541,9 @@ body {
 }
 
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.95fr);
+  gap: 24px;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 28px;
@@ -501,12 +576,96 @@ body {
   line-height: 1.6;
 }
 
+.hero-note {
+  margin: 10px 0 0;
+  color: var(--accent-deep);
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(187, 77, 0, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--accent-deep);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.hero-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(187, 77, 0, 0.3);
+  box-shadow: 0 12px 24px rgba(38, 28, 16, 0.08);
+}
+
+.hero-art {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(14, 111, 122, 0.18);
+  background:
+    linear-gradient(180deg, rgba(14, 111, 122, 0.08), rgba(14, 111, 122, 0.02)),
+    #fffdfa;
+  color: #18454a;
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  overflow-x: auto;
+}
+
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 20px;
   color: var(--muted);
+}
+
+.meta span,
+.meta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(70, 50, 30, 0.08);
+  text-decoration: none;
+}
+
+.toc,
+.manifesto {
+  margin-top: 24px;
+}
+
+.toc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toc-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .stats {
@@ -559,8 +718,22 @@ body {
   margin-bottom: 24px;
 }
 
+.panel-kicker {
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+}
+
 .panel-header p {
   color: var(--muted);
+}
+
+.manifesto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
 }
 
 .cards {
@@ -668,7 +841,7 @@ dd {
   border-radius: 20px;
   padding: 16px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.62);
 }
 
 .note-link {
@@ -704,6 +877,16 @@ code {
   font-size: 0.92rem;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+pre {
+  font-family: "Cascadia Code", "Fira Code", monospace;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {

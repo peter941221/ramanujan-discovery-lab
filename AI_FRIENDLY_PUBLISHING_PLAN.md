@@ -44,7 +44,7 @@ Use it for:
 
 Recommended page to publish:
 
-- `CB60FD71D1D7_PUBLIC_ARTICLE.md`
+- `notes/hero/CB60FD71D1D7_PUBLIC_ARTICLE.md`
 
 ### 2. arXiv
 

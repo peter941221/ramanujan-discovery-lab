@@ -1,9 +1,11 @@
 :root {
   --bg: #f6f1e8;
   --panel: #fffaf2;
+  --panel-strong: #fff7ec;
   --ink: #1f1b16;
   --muted: #6e6456;
   --accent: #bb4d00;
+  --accent-deep: #8f3900;
   --accent-soft: #f3c9a2;
   --review: #0e6f7a;
   --known: #256029;
@@ -21,9 +23,14 @@ body {
   margin: 0;
   background:
     radial-gradient(circle at top right, rgba(187, 77, 0, 0.12), transparent 28%),
+    radial-gradient(circle at left 20%, rgba(14, 111, 122, 0.08), transparent 25%),
     linear-gradient(180deg, #f8f2e7 0%, #f2eadc 100%);
   color: var(--ink);
   font-family: var(--font-sans);
+}
+
+a {
+  color: var(--accent-deep);
 }
 
 .page {
@@ -33,6 +40,9 @@ body {
 }
 
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.95fr);
+  gap: 24px;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 28px;
@@ -65,12 +75,96 @@ body {
   line-height: 1.6;
 }
 
+.hero-note {
+  margin: 10px 0 0;
+  color: var(--accent-deep);
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(187, 77, 0, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--accent-deep);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.hero-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(187, 77, 0, 0.3);
+  box-shadow: 0 12px 24px rgba(38, 28, 16, 0.08);
+}
+
+.hero-art {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(14, 111, 122, 0.18);
+  background:
+    linear-gradient(180deg, rgba(14, 111, 122, 0.08), rgba(14, 111, 122, 0.02)),
+    #fffdfa;
+  color: #18454a;
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  overflow-x: auto;
+}
+
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 20px;
   color: var(--muted);
+}
+
+.meta span,
+.meta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(70, 50, 30, 0.08);
+  text-decoration: none;
+}
+
+.toc,
+.manifesto {
+  margin-top: 24px;
+}
+
+.toc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toc-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .stats {
@@ -123,8 +217,22 @@ body {
   margin-bottom: 24px;
 }
 
+.panel-kicker {
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+}
+
 .panel-header p {
   color: var(--muted);
+}
+
+.manifesto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
 }
 
 .cards {
@@ -232,7 +340,7 @@ dd {
   border-radius: 20px;
   padding: 16px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.62);
 }
 
 .note-link {
@@ -268,6 +376,16 @@ code {
   font-size: 0.92rem;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+pre {
+  font-family: "Cascadia Code", "Fira Code", monospace;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {

@@ -24,7 +24,6 @@
 
 *Mathematical beauty is treated as a clue, not as a proof.*
 
-*中文摘要：一个面向拉马努金风格 `q`-连分式的 CLI-first 研究工作台。*
 
 - Repository: `https://github.com/peter941221/ramanujan-discovery-lab`
 - GitHub Pages: `https://peter941221.github.io/ramanujan-discovery-lab/`
@@ -142,8 +141,11 @@ Ramanujan Discovery Lab
 |-- tests/                  regression checks
 |-- proofs/                 Lean 4 workspace
 |-- results/                generated candidate snapshots
+|-- notes/
+|   |-- hero/               hero-case research and formalization notes
+|   `-- review/             review-set audits and comparison notes
 |-- docs/                   static public site for GitHub Pages
-`-- *.md                    long-form audit notes and research artifacts
+`-- README.md               public-facing project overview
 ```
 
 ```text
@@ -210,10 +212,10 @@ Then open `docs/index.html` locally or publish `docs/` with GitHub Pages.
 
 ```powershell
 $env:PYTHONPATH='src'
-python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out HERO_CASE_CB60FD71D1D7.md
-python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out CB60FD71D1D7_RESEARCH_NOTE.md
-python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean
-python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_IDENTIFICATION_NOTE.md
+python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out notes/hero/HERO_CASE_CB60FD71D1D7.md
+python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out notes/hero/CB60FD71D1D7_RESEARCH_NOTE.md
+python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out notes/hero/CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean
+python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md
 ```
 
 ### Fast Smoke Validation
@@ -255,17 +257,17 @@ Current conservative read:
 
 Key notes:
 
-- [Hero case summary](CB60FD71D1D7_PUBLIC_SUMMARY.md)
-- [Hero case study](CB60FD71D1D7_CASE_STUDY.md)
-- [Hero transform audit](CB60FD71D1D7_TRANSFORM_AUDIT.md)
-- [Hero exact subsequence obstruction](CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md)
-- [Hero Heine `cor2cf` obstruction](CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md)
-- [Hero identification note](CB60FD71D1D7_IDENTIFICATION_NOTE.md)
-- [Hero formalization note](CB60FD71D1D7_FORMALIZATION_NOTE.md)
-- [Hero novelty gate](CB60FD71D1D7_NOVELTY_GATE.md)
-- [Hero bibliography matrix](CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md)
-- [Hero literature log](CB60FD71D1D7_LITERATURE_LOG.md)
-- [Hero public article draft](CB60FD71D1D7_PUBLIC_ARTICLE.md)
+- [Hero case summary](notes/hero/CB60FD71D1D7_PUBLIC_SUMMARY.md)
+- [Hero case study](notes/hero/CB60FD71D1D7_CASE_STUDY.md)
+- [Hero transform audit](notes/hero/CB60FD71D1D7_TRANSFORM_AUDIT.md)
+- [Hero exact subsequence obstruction](notes/hero/CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md)
+- [Hero Heine `cor2cf` obstruction](notes/hero/CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md)
+- [Hero identification note](notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md)
+- [Hero formalization note](notes/hero/CB60FD71D1D7_FORMALIZATION_NOTE.md)
+- [Hero novelty gate](notes/hero/CB60FD71D1D7_NOVELTY_GATE.md)
+- [Hero bibliography matrix](notes/hero/CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md)
+- [Hero literature log](notes/hero/CB60FD71D1D7_LITERATURE_LOG.md)
+- [Hero public article draft](notes/hero/CB60FD71D1D7_PUBLIC_ARTICLE.md)
 
 ```text
 +==========================================================================+
@@ -353,6 +355,10 @@ Current built-in benchmark families:
 |-- MEMORY.md
 |-- RUNBOOK.md
 |-- TECHNICAL_DESIGN.md
+|-- AI_FRIENDLY_PUBLISHING_PLAN.md
+|-- notes/
+|   |-- hero/
+|   `-- review/
 |-- src/
 |   `-- ramanujan_discovery/
 |       |-- __main__.py
@@ -374,6 +380,8 @@ Important entrypoints:
 
 - `src/ramanujan_discovery/cli.py`
 - `src/ramanujan_discovery/__main__.py`
+- `notes/hero/`
+- `notes/review/`
 - `proofs/`
 - `tests/`
 - `docs/`
@@ -398,7 +406,7 @@ Important entrypoints:
 
 Review audit:
 
-- [Review audit note](REVIEW_AUDIT.md)
+- [Review audit note](notes/review/REVIEW_AUDIT.md)
 - Pages view: `review-audit.html`
 
 ```text
@@ -439,9 +447,9 @@ Current constraints:
   `https://peter941221.github.io/ramanujan-discovery-lab/`
 - candidate report: `results/report.md`
 - hero-case long-form notes:
-  `HERO_CASE_CB60FD71D1D7.md`,
-  `CB60FD71D1D7_RESEARCH_NOTE.md`,
-  `CB60FD71D1D7_FORMALIZATION_NOTE.md`
+  `notes/hero/HERO_CASE_CB60FD71D1D7.md`,
+  `notes/hero/CB60FD71D1D7_RESEARCH_NOTE.md`,
+  `notes/hero/CB60FD71D1D7_FORMALIZATION_NOTE.md`
 
 ---
 

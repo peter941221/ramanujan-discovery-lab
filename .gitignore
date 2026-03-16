@@ -4,6 +4,7 @@ __pycache__/
 
 results/
 tmp/
+notes/local/
 AGENTS.md
 MEMORY.md
 RUNBOOK.md

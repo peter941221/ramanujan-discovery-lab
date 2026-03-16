@@ -138,5 +138,5 @@ Useful commands:
 
 ```powershell
 $env:PYTHONPATH='src'; pytest tests/test_research.py -q
-$env:PYTHONPATH='src'; python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out CB60FD71D1D7_RESEARCH_NOTE.md
+$env:PYTHONPATH='src'; python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out notes/hero/CB60FD71D1D7_RESEARCH_NOTE.md
 ```
