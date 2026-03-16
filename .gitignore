@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 
 results/
+tmp/
 AGENTS.md
 MEMORY.md
 RUNBOOK.md

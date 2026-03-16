@@ -1,3 +1,4 @@
+import pytest
 import sympy as sp
 
 from ramanujan_discovery.identification import search_polynomial_relation
@@ -55,3 +56,47 @@ def test_search_bivariate_relation_returns_none_when_no_relation_in_box():
 
     relation = search_polynomial_relation(series_by_variable={"x": x, "y": y}, max_total_degree=1, order=order)
     assert relation is None
+
+
+def test_search_relation_can_require_variable_to_appear():
+    # y and z are identical, so a relation exists (y - z == 0) that does not involve x.
+    order = 8
+    x = [sp.Integer(0) for _ in range(order)]
+    y = [sp.Integer(0) for _ in range(order)]
+    z = [sp.Integer(0) for _ in range(order)]
+    x[0] = 1
+    x[1] = 1
+    y[0] = 1
+    y[2] = 1
+    z[0] = 1
+    z[2] = 1
+
+    relation = search_polynomial_relation(series_by_variable={"x": x, "y": y, "z": z}, max_total_degree=1, order=order)
+    assert relation is not None
+
+    relation_x = search_polynomial_relation(
+        series_by_variable={"x": x, "y": y, "z": z},
+        max_total_degree=1,
+        order=order,
+        required_variable="x",
+    )
+    assert relation_x is None
+
+
+def test_search_relation_raises_when_underdetermined():
+    order = 10
+    x = [sp.Integer(0) for _ in range(order)]
+    y = [sp.Integer(0) for _ in range(order)]
+    z = [sp.Integer(0) for _ in range(order)]
+    w = [sp.Integer(0) for _ in range(order)]
+    x[0] = 1
+    y[0] = 1
+    z[0] = 1
+    w[0] = 1
+
+    with pytest.raises(ValueError, match="underdetermined"):
+        search_polynomial_relation(
+            series_by_variable={"x": x, "y": y, "z": z, "w": w},
+            max_total_degree=3,
+            order=order,
+        )

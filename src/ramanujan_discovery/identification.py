@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import gcd
+from math import comb, gcd
 from pathlib import Path
 
 import sympy as sp
@@ -47,6 +47,14 @@ def _lcm(a: int, b: int) -> int:
     return abs(a // gcd(a, b) * b)
 
 
+def _monomial_count(num_variables: int, max_total_degree: int) -> int:
+    if num_variables < 1:
+        raise ValueError("num_variables must be at least 1")
+    if max_total_degree < 0:
+        raise ValueError("max_total_degree must be non-negative")
+    return comb(num_variables + max_total_degree, num_variables)
+
+
 def _series_active_exponents(template: QCFTemplate) -> list[int]:
     parts = [abs(template.numerator_q_shift), abs(template.numerator_q_step)]
     if template.numerator_extra_scale != 0:
@@ -61,6 +69,7 @@ def guess_polynomial_relation(
     series_by_variable: dict[str, Series],
     order: int,
     max_total_degree: int,
+    required_variable: str | None = None,
 ) -> PolynomialRelation | None:
     """Find integer coefficients for a small polynomial relation among series variables.
 
@@ -74,6 +83,17 @@ def guess_polynomial_relation(
         raise ValueError("need at least two variables for a relation search")
     if any(len(series) < order for series in series_by_variable.values()):
         raise ValueError("series are shorter than requested order")
+
+    if required_variable is not None and required_variable not in series_by_variable:
+        raise ValueError("required_variable must be one of the series variable names")
+
+    num_monomials = _monomial_count(len(series_by_variable), max_total_degree)
+    if num_monomials > order:
+        raise ValueError(
+            "underdetermined polynomial relation search: "
+            f"{num_monomials} monomials > {order} constraints "
+            "(increase order, lower max_total_degree, or reduce variables)"
+        )
 
     variables = tuple(series_by_variable.keys())
     series_list = [series_by_variable[name][:order] for name in variables]
@@ -116,7 +136,19 @@ def guess_polynomial_relation(
         return None
 
     # Pick a small-ish basis vector and scale it to integer coefficients.
-    basis_vec = min(nullspace, key=lambda v: sum(1 for item in v if item != 0))
+    candidate_vecs = nullspace
+    if required_variable is not None:
+        required_index = variables.index(required_variable)
+        required_columns = [idx for idx, exps in enumerate(exponent_tuples) if exps[required_index] > 0]
+        candidate_vecs = [
+            vec
+            for vec in nullspace
+            if any(vec[col] != 0 for col in required_columns)
+        ]
+        if not candidate_vecs:
+            return None
+
+    basis_vec = min(candidate_vecs, key=lambda v: sum(1 for item in v if item != 0))
     den_lcm = 1
     nums: list[sp.Integer] = []
     dens: list[int] = []
@@ -171,6 +203,7 @@ def search_polynomial_relation(
     series_by_variable: dict[str, Series],
     order: int,
     max_total_degree: int,
+    required_variable: str | None = None,
 ) -> PolynomialRelation | None:
     if max_total_degree < 1:
         raise ValueError("max_total_degree must be at least 1")
@@ -178,6 +211,7 @@ def search_polynomial_relation(
         series_by_variable=series_by_variable,
         order=order,
         max_total_degree=max_total_degree,
+        required_variable=required_variable,
     )
 
 
@@ -272,13 +306,20 @@ def build_candidate_identification_note(
     candidate_recip = series_invert(candidate_series)
     benchmark_recip = series_invert(benchmark_series)
 
-    relation = search_polynomial_relation(
-        series_by_variable={"C": candidate_recip, "B1": benchmark_recip},
-        order=profile_order,
-        max_total_degree=profile_degree,
-    )
+    relation: PolynomialRelation | None = None
+    relation_error: str | None = None
+    try:
+        relation = search_polynomial_relation(
+            series_by_variable={"C": candidate_recip, "B1": benchmark_recip},
+            order=profile_order,
+            max_total_degree=profile_degree,
+            required_variable="C",
+        )
+    except ValueError as exc:
+        relation_error = str(exc)
 
     extra_relation: PolynomialRelation | None = None
+    extra_relation_error: str | None = None
     benchmark_power_series: dict[int, Series] = {}
     if benchmark_powers:
         for power in sorted(set(benchmark_powers)):
@@ -296,11 +337,15 @@ def build_candidate_identification_note(
         for power, series in benchmark_power_series.items():
             variables[f"B{power}"] = series
 
-        extra_relation = search_polynomial_relation(
-            series_by_variable=variables,
-            order=profile_order,
-            max_total_degree=min(profile_degree, 3 if smoke else profile_degree),
-        )
+        try:
+            extra_relation = search_polynomial_relation(
+                series_by_variable=variables,
+                order=profile_order,
+                max_total_degree=min(profile_degree, 3 if smoke else profile_degree),
+                required_variable="C",
+            )
+        except ValueError as exc:
+            extra_relation_error = str(exc)
 
     lines: list[str] = [
         f"# Identification Note: `{record.id}`",
@@ -330,7 +375,17 @@ def build_candidate_identification_note(
         "",
     ]
 
-    if relation is None:
+    if relation_error is not None:
+        lines.extend(
+            [
+                "Skipped polynomial relation search:",
+                "",
+                "```text",
+                relation_error,
+                "```",
+            ]
+        )
+    elif relation is None:
         lines.extend(
             [
                 "No nontrivial polynomial relation",
@@ -378,10 +433,20 @@ def build_candidate_identification_note(
             lines.append(f"- `B{power} = B1({series_symbol}^{power})`")
         lines.append("")
 
-        if extra_relation is None:
+        if extra_relation_error is not None:
             lines.extend(
                 [
-                    "No nontrivial multivariate polynomial relation was found",
+                    "Skipped multivariate relation search:",
+                    "",
+                    "```text",
+                    extra_relation_error,
+                    "```",
+                ]
+            )
+        elif extra_relation is None:
+            lines.extend(
+                [
+                    "No candidate-dependent multivariate polynomial relation was found",
                     "",
                     f"under `total degree <= {min(profile_degree, 3 if smoke else profile_degree)}` when checked modulo `{series_symbol}^{profile_order}`.",
                 ]
