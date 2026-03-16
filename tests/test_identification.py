@@ -1,8 +1,22 @@
+from pathlib import Path
+
 import pytest
 import sympy as sp
 
-from ramanujan_discovery.identification import search_polynomial_relation
-from ramanujan_discovery.series import series_mul, series_pow
+from ramanujan_discovery.cli import main
+from ramanujan_discovery.identification import (
+    benchmark_power_substitution_series,
+    scan_benchmark_power_relation_prefixes,
+    scan_ratio_benchmark_fractional_linear_prefixes,
+    scan_ratio_benchmark_power_relation_prefixes,
+    scan_ratio_benchmark_two_layer_fractional_linear_prefixes,
+    search_fractional_linear_relation,
+    search_polynomial_relation,
+    search_two_layer_fractional_linear_relation,
+)
+from ramanujan_discovery.models import CandidateRecord, QCFTemplate
+from ramanujan_discovery.series import series_invert, series_mul, series_pow
+from ramanujan_discovery.storage import write_candidates
 
 
 def _eval_relation_series(relation, x_series, y_series, order: int):
@@ -100,3 +114,263 @@ def test_search_relation_raises_when_underdetermined():
             max_total_degree=3,
             order=order,
         )
+
+
+def test_scan_benchmark_power_relation_prefixes_finds_identity_relation():
+    order = 10
+    candidate = [sp.Integer(0) for _ in range(order)]
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    candidate[0] = 1
+    candidate[1] = 1
+    benchmark[0] = 1
+    benchmark[1] = 1
+
+    scans = scan_benchmark_power_relation_prefixes(
+        candidate_recip=candidate,
+        benchmark_recip=benchmark,
+        powers=(2, 3, 4),
+        order=order,
+        degree_values=(1, 2),
+        required_variable="C",
+    )
+    assert scans
+    assert any(scan.relation is not None for scan in scans)
+    first_hit = next(scan for scan in scans if scan.relation is not None)
+    assert first_hit.powers == (2,)
+    assert first_hit.max_total_degree == 1
+    assert first_hit.relation is not None
+    assert first_hit.relation.variables == ("C", "B1", "B2")
+
+
+def test_scan_ratio_benchmark_power_relation_prefixes_finds_identity_relation():
+    order = 10
+    ratio = [sp.Integer(0) for _ in range(order)]
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    ratio[0] = 1
+    ratio[1] = 1
+    benchmark[0] = 1
+    benchmark[1] = 1
+
+    scans = scan_ratio_benchmark_power_relation_prefixes(
+        ratio_series=ratio,
+        benchmark_series=benchmark,
+        powers=(2, 3, 4),
+        order=order,
+        degree_values=(1, 2),
+        required_variable="F",
+    )
+    assert scans
+    assert any(scan.relation is not None for scan in scans)
+    first_hit = next(scan for scan in scans if scan.relation is not None)
+    assert first_hit.powers == (2,)
+    assert first_hit.max_total_degree == 1
+    assert first_hit.relation is not None
+    assert first_hit.relation.variables == ("F", "B1", "B2")
+
+
+def test_search_fractional_linear_relation_finds_structured_ratio():
+    order = 10
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    benchmark[0] = 1
+    benchmark[1] = 1
+    benchmark_q2 = benchmark_power_substitution_series(benchmark, power=2, order=order)
+
+    numerator = [sp.Integer(0) for _ in range(order)]
+    denominator = [sp.Integer(0) for _ in range(order)]
+    numerator[0] = 1
+    denominator[0] = 1
+    numerator[1] = 2
+    denominator[2] = -1
+    ratio = series_mul(numerator, series_invert(denominator))
+
+    relation = search_fractional_linear_relation(
+        target_series=ratio,
+        basis_series_by_variable={"B1": benchmark, "B2": benchmark_q2},
+        order=order,
+    )
+    assert relation is not None
+    assert relation.basis_variables == ("B1", "B2")
+    assert relation.numerator_coefficients == {"B1": sp.Integer(2)}
+    assert relation.denominator_coefficients == {"B2": sp.Integer(-1)}
+
+
+def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation():
+    order = 10
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    benchmark[0] = 1
+    benchmark[1] = 1
+
+    numerator = [sp.Integer(0) for _ in range(order)]
+    denominator = [sp.Integer(0) for _ in range(order)]
+    numerator[0] = 1
+    denominator[0] = 1
+    numerator[1] = 2
+    denominator[2] = -1
+    ratio = series_mul(numerator, series_invert(denominator))
+
+    scans = scan_ratio_benchmark_fractional_linear_prefixes(
+        ratio_series=ratio,
+        benchmark_series=benchmark,
+        powers=(2, 3, 4),
+        order=order,
+    )
+    assert scans
+    assert any(scan.relation is not None for scan in scans)
+    first_hit = next(scan for scan in scans if scan.relation is not None)
+    assert first_hit.powers == (2,)
+    assert first_hit.relation is not None
+    assert first_hit.relation.numerator_coefficients == {"B1": sp.Integer(2)}
+    assert first_hit.relation.denominator_coefficients == {"B2": sp.Integer(-1)}
+
+
+def test_search_two_layer_fractional_linear_relation_finds_structured_ratio():
+    order = 14
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    benchmark[0] = 1
+    benchmark[1] = 1
+    benchmark_q2 = benchmark_power_substitution_series(benchmark, power=2, order=order)
+
+    u1 = [sp.Integer(0) for _ in range(order)]
+    u2 = [sp.Integer(0) for _ in range(order)]
+    u1[1] = 1
+    u2[2] = 1
+
+    num_factor_1 = [sp.Integer(0) for _ in range(order)]
+    den_factor_1 = [sp.Integer(0) for _ in range(order)]
+    num_factor_2 = [sp.Integer(0) for _ in range(order)]
+    den_factor_2 = [sp.Integer(0) for _ in range(order)]
+    num_factor_1[0] = 1
+    den_factor_1[0] = 1
+    num_factor_2[0] = 1
+    den_factor_2[0] = 1
+    num_factor_1[1] = 2
+    den_factor_1[2] = -1
+    num_factor_2[2] = 3
+    den_factor_2[1] = 4
+
+    ratio = series_mul(
+        series_mul(num_factor_1, num_factor_2),
+        series_invert(series_mul(den_factor_1, den_factor_2)),
+    )
+
+    relation = search_two_layer_fractional_linear_relation(
+        target_series=ratio,
+        basis_series_by_variable={"B1": benchmark, "B2": benchmark_q2},
+        numerator_variables=("B1", "B2"),
+        denominator_variables=("B2", "B1"),
+        order=order,
+        solve_order=10,
+    )
+    assert relation is not None
+    assert relation.numerator_variables == ("B1", "B2")
+    assert relation.denominator_variables == ("B2", "B1")
+    assert relation.numerator_coefficients == (sp.Integer(2), sp.Integer(3))
+    assert relation.denominator_coefficients == (sp.Integer(-1), sp.Integer(4))
+
+
+def test_scan_ratio_benchmark_two_layer_fractional_linear_prefixes_finds_hit():
+    order = 14
+    benchmark = [sp.Integer(0) for _ in range(order)]
+    benchmark[0] = 1
+    benchmark[1] = 1
+
+    num_factor_1 = [sp.Integer(0) for _ in range(order)]
+    den_factor_1 = [sp.Integer(0) for _ in range(order)]
+    num_factor_2 = [sp.Integer(0) for _ in range(order)]
+    den_factor_2 = [sp.Integer(0) for _ in range(order)]
+    num_factor_1[0] = 1
+    den_factor_1[0] = 1
+    num_factor_2[0] = 1
+    den_factor_2[0] = 1
+    num_factor_1[1] = 2
+    den_factor_1[2] = -1
+    num_factor_2[2] = 3
+    den_factor_2[1] = 4
+
+    ratio = series_mul(
+        series_mul(num_factor_1, num_factor_2),
+        series_invert(series_mul(den_factor_1, den_factor_2)),
+    )
+
+    scans = scan_ratio_benchmark_two_layer_fractional_linear_prefixes(
+        ratio_series=ratio,
+        benchmark_series=benchmark,
+        powers=(2, 3, 4),
+        order=order,
+        solve_order=10,
+    )
+    assert scans
+    assert any(scan.total_hits > 0 for scan in scans)
+    first_hit = next(scan for scan in scans if scan.total_hits > 0)
+    assert first_hit.powers == (2,)
+    assert first_hit.relations
+    assert first_hit.total_hits >= 1
+    assert all(
+        variable in {"B1", "B2"}
+        for relation in first_hit.relations
+        for variable in relation.numerator_variables + relation.denominator_variables
+    )
+
+
+def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
+    verified = tmp_path / "verified.jsonl"
+    output_path = tmp_path / "identify.md"
+
+    record = CandidateRecord(
+        id="hero",
+        template=QCFTemplate(
+            numerator_scale=1,
+            numerator_q_shift=3,
+            numerator_q_step=3,
+            numerator_extra_scale=1,
+            numerator_extra_q_shift=6,
+            numerator_extra_q_step=6,
+            denominator_constant=1,
+            denominator_scale=1,
+            denominator_q_shift=3,
+            denominator_q_step=3,
+        ),
+        q_values=[0.04],
+        value_estimates=["0.0"],
+        matched_target="unmatched",
+        closest_benchmark="rogers_ramanujan_q3_normalized",
+        closest_benchmark_digits=7,
+        family_bucket="hybrid_perturbed_family",
+        equivalence_key="review::demo",
+        benchmark_kind="exploratory",
+        digits_agree=7,
+        stability_score=50,
+        novelty_status="review",
+        notes="demo",
+    )
+    write_candidates(verified, [record])
+
+    assert (
+        main(
+            [
+                "identify",
+                "--in",
+                str(verified),
+                "--candidate-id",
+                "hero",
+                "--benchmark-powers",
+                "2,3,4",
+                "--smoke",
+                "--out",
+                str(output_path),
+            ]
+        )
+        == 0
+    )
+
+    text = output_path.read_text(encoding="utf-8")
+    assert "Identification Note: `hero`" in text
+    assert "Extra Multivariate Search" in text
+    assert "Benchmark Power-Tower Prefix Scan" in text
+    assert "Ratio-Object RR-Tower Prefix Scan" in text
+    assert "Ratio-Object Fractional-Linear RR-Tower Scan" in text
+    assert "Ratio-Object Two-Layer Fractional-Linear RR-Tower Scan" in text
+    assert "`F = candidate / rogers_ramanujan_q3_normalized`" in text
+    assert "`B2 = B1(t^2)`" in text
+    assert "`B4 = B1(t^4)`" in text
+    assert "total degree <= 1" in text

@@ -67,8 +67,15 @@ Two simple "recognition" attempts have been run on the step-reduced reciprocals:
    explanation unlikely in the searched boxes.
 2. Small-degree algebraic relations:
    no polynomial relation `P(C,B1)=0` was found up to total degree `4`, checked
-   modulo `t^90`; a small multivariate extension including `B1(t^2)` and `B1(t^3)`
-   also found no relation in the same box.
+   modulo `t^90`; the broader RR-tower pass still found no candidate-dependent
+   low-degree relation in the scanned prefixes built from
+   `B1(t^2), B1(t^3), B1(t^4), B1(t^5), B1(t^6), B1(t^12), B1(t^20)`.
+   The same low-degree prefix scan also found no candidate-dependent relation
+   for the multiplicative correction object `candidate / RR(q^3)` against the
+   same RR tower. Even the richer structured box
+   `F = (1 + sum a_i (B_i - 1)) / (1 + sum b_i (B_i - 1))` still gives no hit
+   through the same RR-tower prefixes. A second-ring nonlinear pass with two
+   single-basis fractional-linear factors still gives no hit there either.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.
@@ -97,4 +104,3 @@ write-up if framed honestly:
 
 This is closer to an experimental-math + formalization case study than a
 classical "new continued fraction identity" announcement.
-

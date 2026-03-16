@@ -24,7 +24,13 @@ B1(t) = 1 + K_{n>=1} t^n / 1.
   ratio families or nearby Bauer--Muir chain families (see `CB60FD71D1D7_TRANSFORM_AUDIT.md`).
 - A small-degree algebraic relation guess between the reciprocals `C(t)` and
   `B1(t)` did not find any `P(C,B1)=0` up to total degree `4` modulo `t^90`
+  and the current low-degree RR-tower prefix scan also found no
+  candidate-dependent relation using
+  `B1(t^2), B1(t^3), B1(t^4), B1(t^5), B1(t^6), B1(t^12), B1(t^20)`
   (see `CB60FD71D1D7_IDENTIFICATION_NOTE.md`).
+- The same note now also records that the multiplicative correction object
+  `candidate / RR(q^3)` has no candidate-dependent RR-tower prefix relation in
+  the current low-degree (`1` / `2`) search boxes.
 
 ## Shortlist: Next Sources To Check
 
@@ -55,9 +61,11 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
 These are concrete expansions to the current tooling that would make a new
 "candidate origin" test cheap:
 
-1. Broaden the page-43 substitution search
-   - Allow `a(t), b(t), lambda(t)` to be very low-complexity rational functions
-     of `t` (not just monomials), but keep the search box small and verified.
+1. Broaden the RR-tower relation search
+   - Keep the current reciprocal, ratio-object polynomial, and ratio-object
+     fractional-linear prefix scans, plus the current two-layer single-basis
+     nonlinear pass, then move to source-family-specific relation templates
+     before trying larger raw degree boxes.
 
 2. Add a second-ring Bauer--Muir chain search
    - Current scan uses a tiny fixed modifier family; if a literature family is
@@ -66,4 +74,3 @@ These are concrete expansions to the current tooling that would make a new
 3. Add a dedicated `1+q^n`-denominator benchmark family (only with a reliable source)
    - This would let the discovery pipeline classify "Hirschhorn/Gordon-style"
      neighbors early, instead of treating them as unexplained review cases.
-

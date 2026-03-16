@@ -36,13 +36,18 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
    - `Proofs/RationalEquivalence.lean`
 
 4. Exact or computation-checked elimination layers
-    - bounded page-43 monomial-substitution exclusions
-    - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
-      stronger exact obstruction for the RR and cubic source lanes, plus a
-      machine-checked Lean proof layer:
-      - `Proofs/HeroCaseSubsequenceExact.lean`
-    - bounded 1/2/3-step Bauer-Muir exclusions
-    - small-degree algebraic relation search against the nearest benchmark
+     - bounded page-43 monomial-substitution exclusions
+     - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
+       stronger exact obstruction for the RR and cubic source lanes, plus a
+       machine-checked Lean proof layer:
+       - `Proofs/HeroCaseSubsequenceExact.lean`
+     - bounded 1/2/3-step Bauer-Muir exclusions
+     - small-degree algebraic relation search against the nearest benchmark,
+       including:
+       - direct polynomial boxes in `(C, B1)` and low-degree RR-tower prefixes
+       - ratio-object polynomial prefix boxes for `F = candidate / RR(q^3)`
+       - ratio-object one-layer fractional-linear RR-tower boxes
+       - ratio-object two-layer single-basis fractional-linear RR-tower boxes
 
 5. Public audit posture
    - the repo already separates:
@@ -80,6 +85,7 @@ but they are still bounded by:
 
 - finite transform depth
 - finite modifier family
+- finite generic relation-template families around the RR tower
 - exact rational sample points
 - finite truncation depth
 
@@ -89,7 +95,8 @@ entire natural transform class.
 Note: for the two closest source lanes (reduced RR reciprocal and reduced cubic
 reciprocal), the arithmetic-subsequence obstruction is now exact and
 machine-checked in Lean. The remaining boundedness mostly concerns other source
-classes and the Bauer-Muir / transform neighborhoods.
+classes, the Bauer-Muir / transform neighborhoods, and source families not
+captured by the current low-complexity RR-tower ansatz boxes.
 
 ### 3. There is no final source theorem
 
@@ -133,8 +140,10 @@ At least one of the following two routes should be completed.
 ## Practical Next Actions
 
 1. Upgrade one bounded exclusion family into an all-parameter theorem.
-2. Expand the literature log into a dated bibliography matrix by source family.
-3. Keep public wording at "unexplained candidate" until steps 1 and 2 are both
+2. Shift the next identification pass from generic RR-tower ansatz boxes toward
+   source-family-specific transforms with explicit parameter meaning.
+3. Expand the literature log into a dated bibliography matrix by source family.
+4. Keep public wording at "unexplained candidate" until steps 1-3 are all
    materially stronger.
 
 ## Companion Notes

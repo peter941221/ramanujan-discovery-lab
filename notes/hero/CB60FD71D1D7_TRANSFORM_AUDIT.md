@@ -147,6 +147,14 @@ This audit rules out the most obvious transformed origins:
 - no direct constant-parameter specialization of `f2`, `f3`, `f4`, or `H_1`
 - no direct match to the Heine-derived `cor2cf` alternating family
 - no simple odd-part contraction coming from `H_2` or `H_3`
+- no low-complexity RR-tower correction of the form
+
+```text
+F = candidate / RR(q^3)
+```
+
+  inside the current one-layer or two-layer fractional-linear prefix boxes built
+  from `B1(t^k) - 1`
 
 That does not prove novelty. It only means the candidate is not sitting in the first ring of standard published transforms around the Rogers-Ramanujan and Ramanujan-cubic neighborhoods already checked.
 

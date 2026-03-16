@@ -97,6 +97,7 @@ r4 = (t^4 + 1)/(t^3 + 1)
 - Arithmetic subsequence contractions up to stride `4` with stage comparison depth `3`: RR hits `0`, cubic hits `0`.
 - These are exact statements for the bounded class being checked, but they do not identify a final source theorem.
 - Page-43 monomial substitutions in the current `[-3,3]` shift box with `3` matched stages: `f2/gcf3` hits `0`, `f4/gcf2` hits `0`.
+- Page-43 low-complexity rational-prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active, shift box `[-0,0]`, and `2` matched stages: `f2/gcf3` hits `0`, `f4/gcf2` hits `0`.
 - These are bounded symbolic searches, useful for narrowing the theorem statement but not substitutes for a full origin proof.
 
 ## Formalization Order

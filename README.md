@@ -215,7 +215,7 @@ $env:PYTHONPATH='src'
 python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out notes/hero/HERO_CASE_CB60FD71D1D7.md
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out notes/hero/CB60FD71D1D7_RESEARCH_NOTE.md
 python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out notes/hero/CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean
-python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md
+python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --benchmark-powers 2,3,4,5,6,12,20 --out notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md
 ```
 
 ### Fast Smoke Validation
@@ -224,7 +224,7 @@ python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-i
 $env:PYTHONPATH='src'
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 12 --series-order 61 --smoke --out tmp/research-smoke.md
 python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/formalize-smoke.md --lean-out tmp/formalize-smoke.lean
-python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/identify-smoke.md
+python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --benchmark-powers 2,3,4 --smoke --out tmp/identify-smoke.md
 ```
 
 `--smoke` keeps the same output sections while reducing bounded symbolic search

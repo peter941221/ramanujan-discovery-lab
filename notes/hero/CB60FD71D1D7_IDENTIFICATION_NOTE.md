@@ -37,7 +37,106 @@ We also tried a small multivariate search that includes benchmark power substitu
 
 - `B2 = B1(t^2)`
 - `B3 = B1(t^3)`
+- `B4 = B1(t^4)`
+- `B5 = B1(t^5)`
+- `B6 = B1(t^6)`
+- `B12 = B1(t^12)`
+- `B20 = B1(t^20)`
 
-No candidate-dependent multivariate polynomial relation was found
+Skipped multivariate relation search:
 
-under `total degree <= 4` when checked modulo `t^90`.
+```text
+underdetermined polynomial relation search: 715 monomials > 90 constraints (increase order, lower max_total_degree, or reduce variables)
+```
+
+## Benchmark Power-Tower Prefix Scan
+
+We also ran a structured low-degree scan against prefixes of the benchmark power tower:
+
+- `B2 = B1(t^2)`
+- `B3 = B1(t^3)`
+- `B4 = B1(t^4)`
+- `B5 = B1(t^5)`
+- `B6 = B1(t^6)`
+- `B12 = B1(t^12)`
+- `B20 = B1(t^20)`
+
+- Prefixes checked: `(C, B1, B2)`, then `(C, B1, B2, B3)`, and so on through the final listed power.
+- Degrees scanned here are intentionally low (`1` and `2`) to stay in candidate-dependent, well-determined boxes.
+
+No candidate-dependent relation was found in any scanned prefix box.
+
+- `total degree <= 1`: no hit for prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+- `total degree <= 2`: no hit for prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+
+## Ratio-Object RR-Tower Prefix Scan
+
+We also scanned the multiplicative correction object against prefixes of the benchmark tower:
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- `B1 = rogers_ramanujan_q3_normalized`
+- `B2 = B1(t^2)`
+- `B3 = B1(t^3)`
+- `B4 = B1(t^4)`
+- `B5 = B1(t^5)`
+- `B6 = B1(t^6)`
+- `B12 = B1(t^12)`
+- `B20 = B1(t^20)`
+
+- Prefixes checked: `(F, B1, B2)`, then `(F, B1, B2, B3)`, and so on through the final listed power.
+- Degrees scanned here are intentionally low (`1` and `2`) to stay in candidate-dependent, well-determined boxes.
+
+No candidate-dependent relation was found for the ratio object in any scanned prefix box.
+
+- `total degree <= 1`: no hit for ratio-object prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+- `total degree <= 2`: no hit for ratio-object prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+
+## Ratio-Object Fractional-Linear RR-Tower Scan
+
+We also searched for low-complexity fractional-linear corrections built from the benchmark tower:
+
+```text
+F = (1 + sum a_i*(B_i - 1)) / (1 + sum b_i*(B_i - 1))
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- `B1 = rogers_ramanujan_q3_normalized`
+- `B2 = B1(t^2)`
+- `B3 = B1(t^3)`
+- `B4 = B1(t^4)`
+- `B5 = B1(t^5)`
+- `B6 = B1(t^6)`
+- `B12 = B1(t^12)`
+- `B20 = B1(t^20)`
+
+- Prefixes checked: `(B1, B2)`, then `(B1, B2, B3)`, and so on through the final listed power.
+- Each prefix solves an exact linear system for the numerator and denominator correction coefficients.
+
+No fractional-linear ratio-object relation was found in any scanned prefix box.
+
+- No hit for fractional-linear prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+
+## Ratio-Object Two-Layer Fractional-Linear RR-Tower Scan
+
+We then expanded to a second-ring nonlinear box built from two single-basis fractional-linear factors:
+
+```text
+F = ((1 + a0*(X1 - 1)) / (1 + b0*(Y1 - 1))) * ((1 + a1*(X2 - 1)) / (1 + b1*(Y2 - 1)))
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- `B1 = rogers_ramanujan_q3_normalized`
+- `B2 = B1(t^2)`
+- `B3 = B1(t^3)`
+- `B4 = B1(t^4)`
+- `B5 = B1(t^5)`
+- `B6 = B1(t^6)`
+- `B12 = B1(t^12)`
+- `B20 = B1(t^20)`
+
+- Prefixes checked: `(B1, B2)`, then `(B1, B2, B3)`, and so on through the final listed power.
+- Each prefix scans low-complexity two-factor templates and verifies any candidate hit by exact series re-expansion.
+
+No two-layer fractional-linear ratio-object relation was found in any scanned prefix box.
+
+- No hit for two-layer fractional-linear prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.

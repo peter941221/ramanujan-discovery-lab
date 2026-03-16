@@ -63,6 +63,7 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "Exact Lemma Candidates" in text
     assert "Heine `cor2cf` Odd/Even Branch Obstructions" in text
     assert "Bounded Exact Exclusion Results" in text
+    assert "Page-43 low-complexity rational-prefactor box" in text
     assert "Exact Reduction And Equivalence Witness" in text
     assert "fraction-field coefficient layer" in text
     assert "Formalization Order" in text

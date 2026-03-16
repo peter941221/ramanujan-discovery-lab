@@ -20,6 +20,7 @@ from ramanujan_discovery.research import (
     heine_hcf2_standardized_coeffs,
     parity_contraction_coeffs,
     page43_monomial_parameter_search,
+    page43_rational_parameter_search,
     reduce_template_by_step,
     try_fit_periodic_pochhammer,
     try_fit_two_modulus_pochhammer,
@@ -565,6 +566,74 @@ def test_page43_monomial_search_has_no_hit_for_hero_template():
     )
 
 
+def test_page43_rational_search_contains_plain_monomial_specialization():
+    t = sp.Symbol("t")
+    target = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=1,
+        numerator_q_step=1,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=1,
+        denominator_q_step=1,
+    )
+    hits = page43_rational_parameter_search(
+        family="f2",
+        target_template=target,
+        q=t,
+        max_shift=0,
+        stages=2,
+    )
+    assert any(
+        hit.a_shift == 0
+        and hit.b_shift == 0
+        and hit.lambda_shift == 0
+        and hit.a_profile == "1"
+        and hit.b_profile == "1"
+        and hit.lambda_profile == "1"
+        and sp.simplify(hit.a_coeff) == 0
+        and sp.simplify(hit.b_coeff - 1) == 0
+        and sp.simplify(hit.lambda_coeff - 1) == 0
+        for hit in hits
+    )
+
+
+def test_page43_rational_search_has_no_hit_for_hero_template():
+    t = sp.Symbol("t")
+    target = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=1,
+        numerator_q_step=1,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=2,
+        numerator_extra_q_step=2,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=1,
+        denominator_q_step=1,
+    )
+    assert (
+        page43_rational_parameter_search(
+            family="f2",
+            target_template=target,
+            q=t,
+            max_shift=0,
+            stages=2,
+        )
+        == []
+    )
+    assert (
+        page43_rational_parameter_search(
+            family="f4",
+            target_template=target,
+            q=t,
+            max_shift=0,
+            stages=2,
+        )
+        == []
+    )
+
+
 def test_arithmetic_subsequence_contraction_search_has_no_hit_for_hero_template():
     t = sp.Symbol("t")
     target = QCFTemplate(
@@ -691,6 +760,7 @@ def test_cli_research_writes_note(tmp_path: Path):
     assert "reverse equivalence transform" in text
     assert "Direct 1-Step Bauer-Muir Obstruction" in text
     assert "Page-43 Monomial Substitution Check" in text
+    assert "Page-43 Low-Complexity Rational Prefactor Check" in text
     assert "Heine `cor2cf` Contraction Check (`a = 0` lane)" in text
     assert "Cubic Odd/Even Contraction Check" in text
     assert "Arithmetic Subsequence Contraction Scan" in text

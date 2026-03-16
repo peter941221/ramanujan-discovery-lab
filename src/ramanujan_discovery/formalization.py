@@ -13,7 +13,7 @@ from ramanujan_discovery.research import (
     ContinuedFractionCoeffs,
     ConvergentFactorEquivalenceWitness,
     HeineCor2CFContractionObstruction,
-    Page43MonomialHit,
+    Page43ParameterHit,
     SubsequenceContractionHit,
     _template_reciprocal_coeffs,
     arithmetic_subsequence_contraction_search,
@@ -22,6 +22,7 @@ from ramanujan_discovery.research import (
     direct_bauer_muir_obstruction,
     heine_cor2cf_a_zero_contraction_obstruction,
     page43_monomial_parameter_search,
+    page43_rational_parameter_search,
     parity_contraction_coeffs,
     reduce_template_by_step,
 )
@@ -47,6 +48,8 @@ class FormalizationContext:
     subsequence_stages: int
     page43_max_shift: int
     page43_stages: int
+    page43_rational_max_shift: int
+    page43_rational_stages: int
     reduced_candidate: QCFTemplate | None
     reduced_benchmark: QCFTemplate | None
     target_b0: sp.Expr | None
@@ -61,8 +64,10 @@ class FormalizationContext:
     heine_cor2cf: HeineCor2CFContractionObstruction | None
     rr_subsequence_hits: list[SubsequenceContractionHit]
     cubic_subsequence_hits: list[SubsequenceContractionHit]
-    f2_hits: list[Page43MonomialHit]
-    f4_hits: list[Page43MonomialHit]
+    f2_hits: list[Page43ParameterHit]
+    f4_hits: list[Page43ParameterHit]
+    f2_rational_hits: list[Page43ParameterHit]
+    f4_rational_hits: list[Page43ParameterHit]
     looks_like_hero: bool
 
 
@@ -271,6 +276,22 @@ def _build_formalization_context(
         max_shift=profile.max_page43_shift,
         stages=profile.page43_stages,
     )
+    page43_rational_max_shift = 0
+    page43_rational_stages = min(profile.page43_stages, 2)
+    f2_rational_hits = page43_rational_parameter_search(
+        family="f2",
+        target_template=reduced_candidate,
+        q=t,
+        max_shift=page43_rational_max_shift,
+        stages=page43_rational_stages,
+    )
+    f4_rational_hits = page43_rational_parameter_search(
+        family="f4",
+        target_template=reduced_candidate,
+        q=t,
+        max_shift=page43_rational_max_shift,
+        stages=page43_rational_stages,
+    )
 
     return FormalizationContext(
         record=record,
@@ -281,6 +302,8 @@ def _build_formalization_context(
         subsequence_stages=profile.subsequence_stages,
         page43_max_shift=profile.max_page43_shift,
         page43_stages=profile.page43_stages,
+        page43_rational_max_shift=page43_rational_max_shift,
+        page43_rational_stages=page43_rational_stages,
         reduced_candidate=reduced_candidate,
         reduced_benchmark=reduced_benchmark,
         target_b0=target_b0,
@@ -297,6 +320,8 @@ def _build_formalization_context(
         cubic_subsequence_hits=cubic_subsequence_hits,
         f2_hits=f2_hits,
         f4_hits=f4_hits,
+        f2_rational_hits=f2_rational_hits,
+        f4_rational_hits=f4_rational_hits,
         looks_like_hero=looks_like_hero,
     )
 
@@ -465,16 +490,38 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     f"with `{context.page43_stages}` matched stages: "
                     f"`f2/gcf3` hits `{len(context.f2_hits)}`, `f4/gcf2` hits `{len(context.f4_hits)}`."
                 ),
+                (
+                    "- Page-43 low-complexity rational-prefactor box: "
+                    "`phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active, "
+                    f"shift box `[-{context.page43_rational_max_shift},{context.page43_rational_max_shift}]`, "
+                    f"and `{context.page43_rational_stages}` matched stages: "
+                    f"`f2/gcf3` hits `{len(context.f2_rational_hits)}`, "
+                    f"`f4/gcf2` hits `{len(context.f4_rational_hits)}`."
+                ),
                 "- These are bounded symbolic searches, useful for narrowing the theorem statement but not substitutes for a full origin proof.",
             ]
         )
-        if context.rr_subsequence_hits or context.cubic_subsequence_hits or context.f2_hits or context.f4_hits:
+        if (
+            context.rr_subsequence_hits
+            or context.cubic_subsequence_hits
+            or context.f2_hits
+            or context.f4_hits
+            or context.f2_rational_hits
+            or context.f4_rational_hits
+        ):
             lines.extend(["", "```text"])
             for hit in context.rr_subsequence_hits + context.cubic_subsequence_hits:
                 lines.append(f"{hit.source_label}: stride={hit.stride}, offset={hit.offset}")
             for hit in context.f2_hits + context.f4_hits:
                 lines.append(
                     f"{hit.family}: A={hit.a_shift}, B={hit.b_shift}, L={hit.lambda_shift}, "
+                    f"alpha={_format_expr(hit.a_coeff)}, beta={_format_expr(hit.b_coeff)}, "
+                    f"lambda={_format_expr(hit.lambda_coeff)}"
+                )
+            for hit in context.f2_rational_hits + context.f4_rational_hits:
+                lines.append(
+                    f"{hit.family}: A={hit.a_shift}, B={hit.b_shift}, L={hit.lambda_shift}, "
+                    f"phi_a={hit.a_profile}, phi_b={hit.b_profile}, phi_lambda={hit.lambda_profile}, "
                     f"alpha={_format_expr(hit.a_coeff)}, beta={_format_expr(hit.b_coeff)}, "
                     f"lambda={_format_expr(hit.lambda_coeff)}"
                 )

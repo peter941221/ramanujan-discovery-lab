@@ -100,6 +100,16 @@ def _coefficient_equations(left, right, q: sp.Symbol) -> list[sp.Equality]:
     return equations
 
 
+def _exact_zero_equations(expr, q: sp.Symbol) -> list[sp.Equality]:
+    numerator = sp.expand(sp.together(expr).as_numer_denom()[0])
+    numerator_map = _monomial_coeff_map(numerator, q=q)
+    return [sp.Eq(value, 0) for _, value in sorted(numerator_map.items())]
+
+
+def _exact_match_equations(left, right, q: sp.Symbol) -> list[sp.Equality]:
+    return _exact_zero_equations(left - right, q=q)
+
+
 def _log_series_coeffs(series_coeffs: list[sp.Expr]) -> list[sp.Expr]:
     """Return coefficients g_n for log(F) where F = sum f_n q^n and f_0 == 1."""
     if not series_coeffs:
@@ -624,7 +634,7 @@ class ResearchBuildProfile:
 
 
 @dataclass(frozen=True)
-class Page43MonomialHit:
+class Page43ParameterHit:
     family: str
     a_shift: int
     b_shift: int
@@ -632,6 +642,12 @@ class Page43MonomialHit:
     a_coeff: sp.Expr
     b_coeff: sp.Expr
     lambda_coeff: sp.Expr
+    a_profile: str = "1"
+    b_profile: str = "1"
+    lambda_profile: str = "1"
+
+
+Page43MonomialHit = Page43ParameterHit
 
 
 @dataclass(frozen=True)
@@ -1064,13 +1080,17 @@ def page43_monomial_parameter_search(
             for lambda_shift in range(-max_shift, max_shift + 1):
                 equations: list[sp.Equality] = []
                 for n in range(1, stages + 1):
-                    if family == "f2":
-                        source_a = gamma * q ** (lambda_shift + n) - alpha * beta * q ** (a_shift + b_shift + 2 * n)
-                        source_b = 1 + beta * q ** (b_shift + n) + alpha * q ** (a_shift + n + 1)
-                    else:
-                        source_a = alpha * q ** (a_shift + 1) + gamma * q ** (lambda_shift + n)
-                        source_b = 1 - alpha * q ** (a_shift + 1) + beta * q ** (b_shift + n)
-
+                    source_a, source_b = _page43_family_terms(
+                        family=family,
+                        alpha=alpha,
+                        beta=beta,
+                        gamma=gamma,
+                        a_shift=a_shift,
+                        b_shift=b_shift,
+                        lambda_shift=lambda_shift,
+                        q=q,
+                        n=n,
+                    )
                     equations.extend(_coefficient_equations(source_a, target_a_terms[n], q=q))
                     equations.extend(_coefficient_equations(source_b, target_b_terms[n], q=q))
 
@@ -1084,13 +1104,17 @@ def page43_monomial_parameter_search(
 
                     exact_match = True
                     for n in range(1, stages + 1):
-                        if family == "f2":
-                            source_a = gamma * q ** (lambda_shift + n) - alpha * beta * q ** (a_shift + b_shift + 2 * n)
-                            source_b = 1 + beta * q ** (b_shift + n) + alpha * q ** (a_shift + n + 1)
-                        else:
-                            source_a = alpha * q ** (a_shift + 1) + gamma * q ** (lambda_shift + n)
-                            source_b = 1 - alpha * q ** (a_shift + 1) + beta * q ** (b_shift + n)
-
+                        source_a, source_b = _page43_family_terms(
+                            family=family,
+                            alpha=alpha,
+                            beta=beta,
+                            gamma=gamma,
+                            a_shift=a_shift,
+                            b_shift=b_shift,
+                            lambda_shift=lambda_shift,
+                            q=q,
+                            n=n,
+                        )
                         if sp.simplify(source_a.subs(solution) - target_a_terms[n]) != 0:
                             exact_match = False
                             break
@@ -1110,6 +1134,152 @@ def page43_monomial_parameter_search(
                                 lambda_coeff=sp.simplify(solution[gamma]),
                             )
                         )
+
+    return hits
+
+
+def _page43_plus_profile_catalog(q: sp.Symbol) -> list[tuple[str, sp.Expr]]:
+    variable = str(q)
+    return [
+        ("1", sp.Integer(1)),
+        (f"1 + {variable}", 1 + q),
+        (f"1 / (1 + {variable})", sp.simplify(1 / (1 + q))),
+    ]
+
+
+def _page43_family_terms(
+    *,
+    family: str,
+    alpha: sp.Expr,
+    beta: sp.Expr,
+    gamma: sp.Expr,
+    a_shift: int,
+    b_shift: int,
+    lambda_shift: int,
+    q: sp.Symbol,
+    n: int,
+) -> tuple[sp.Expr, sp.Expr]:
+    if family not in {"f2", "f4"}:
+        raise ValueError("family must be 'f2' or 'f4'")
+    if family == "f2":
+        source_a = gamma * q ** (lambda_shift + n) - alpha * beta * q ** (a_shift + b_shift + 2 * n)
+        source_b = 1 + beta * q ** (b_shift + n) + alpha * q ** (a_shift + n + 1)
+    else:
+        source_a = alpha * q ** (a_shift + 1) + gamma * q ** (lambda_shift + n)
+        source_b = 1 - alpha * q ** (a_shift + 1) + beta * q ** (b_shift + n)
+    return sp.simplify(source_a), sp.simplify(source_b)
+
+
+def page43_rational_parameter_search(
+    *,
+    family: str,
+    target_template: QCFTemplate,
+    q: sp.Symbol,
+    max_shift: int = 3,
+    stages: int = 3,
+    profile_catalog: list[tuple[str, sp.Expr]] | None = None,
+    max_nontrivial_profiles: int = 1,
+) -> list[Page43ParameterHit]:
+    """Search bounded low-complexity rational substitutions in the page-43 gcf2/gcf3 families."""
+    if family not in {"f2", "f4"}:
+        raise ValueError("family must be 'f2' or 'f4'")
+    if stages < 1:
+        raise ValueError("stages must be at least 1")
+    if max_nontrivial_profiles < 0:
+        raise ValueError("max_nontrivial_profiles must be non-negative")
+
+    _, target_a_terms, target_b_terms = _template_reciprocal_coeffs(target_template.normalized(), q=q, depth=stages)
+    alpha, beta, gamma = sp.symbols("alpha beta gamma")
+    profiles = profile_catalog or _page43_plus_profile_catalog(q)
+    hits: list[Page43ParameterHit] = []
+    seen: set[tuple[str, int, int, int, str, str, str, str, str, str]] = set()
+
+    for a_profile_label, a_profile in profiles:
+        for b_profile_label, b_profile in profiles:
+            for lambda_profile_label, lambda_profile in profiles:
+                if (
+                    sum(
+                        label != "1"
+                        for label in (a_profile_label, b_profile_label, lambda_profile_label)
+                    )
+                    > max_nontrivial_profiles
+                ):
+                    continue
+                for a_shift in range(-max_shift, max_shift + 1):
+                    for b_shift in range(-max_shift, max_shift + 1):
+                        for lambda_shift in range(-max_shift, max_shift + 1):
+                            equations: list[sp.Equality] = []
+                            for n in range(1, stages + 1):
+                                source_a, source_b = _page43_family_terms(
+                                    family=family,
+                                    alpha=alpha * a_profile,
+                                    beta=beta * b_profile,
+                                    gamma=gamma * lambda_profile,
+                                    a_shift=a_shift,
+                                    b_shift=b_shift,
+                                    lambda_shift=lambda_shift,
+                                    q=q,
+                                    n=n,
+                                )
+                                equations.extend(_exact_match_equations(source_a, target_a_terms[n], q=q))
+                                equations.extend(_exact_match_equations(source_b, target_b_terms[n], q=q))
+
+                            solutions = sp.solve(equations, (alpha, beta, gamma), dict=True)
+                            if not solutions:
+                                continue
+
+                            for solution in solutions:
+                                if any(value.free_symbols for value in solution.values()):
+                                    continue
+
+                                exact_match = True
+                                for n in range(1, stages + 1):
+                                    source_a, source_b = _page43_family_terms(
+                                        family=family,
+                                        alpha=alpha * a_profile,
+                                        beta=beta * b_profile,
+                                        gamma=gamma * lambda_profile,
+                                        a_shift=a_shift,
+                                        b_shift=b_shift,
+                                        lambda_shift=lambda_shift,
+                                        q=q,
+                                        n=n,
+                                    )
+                                    if sp.simplify(source_a.subs(solution) - target_a_terms[n]) != 0:
+                                        exact_match = False
+                                        break
+                                    if sp.simplify(source_b.subs(solution) - target_b_terms[n]) != 0:
+                                        exact_match = False
+                                        break
+
+                                if exact_match:
+                                    hit = Page43ParameterHit(
+                                        family=family,
+                                        a_shift=a_shift,
+                                        b_shift=b_shift,
+                                        lambda_shift=lambda_shift,
+                                        a_coeff=sp.simplify(solution[alpha]),
+                                        b_coeff=sp.simplify(solution[beta]),
+                                        lambda_coeff=sp.simplify(solution[gamma]),
+                                        a_profile=a_profile_label,
+                                        b_profile=b_profile_label,
+                                        lambda_profile=lambda_profile_label,
+                                    )
+                                    key = (
+                                        hit.family,
+                                        hit.a_shift,
+                                        hit.b_shift,
+                                        hit.lambda_shift,
+                                        sp.srepr(hit.a_coeff),
+                                        sp.srepr(hit.b_coeff),
+                                        sp.srepr(hit.lambda_coeff),
+                                        hit.a_profile if sp.simplify(hit.a_coeff) != 0 else "0",
+                                        hit.b_profile if sp.simplify(hit.b_coeff) != 0 else "0",
+                                        hit.lambda_profile if sp.simplify(hit.lambda_coeff) != 0 else "0",
+                                    )
+                                    if key not in seen:
+                                        seen.add(key)
+                                        hits.append(hit)
 
     return hits
 
@@ -1963,6 +2133,55 @@ def build_candidate_research_note(
                 for hit in monomial_hits:
                     lines.append(
                         f"{hit.family}: A={hit.a_shift}, B={hit.b_shift}, L={hit.lambda_shift}, "
+                        f"alpha={_format_expr(hit.a_coeff)}, beta={_format_expr(hit.b_coeff)}, "
+                        f"lambda={_format_expr(hit.lambda_coeff)}"
+                    )
+                lines.extend(["```"])
+
+            rational_page43_shift = 0
+            rational_page43_stages = min(profile.page43_stages, 2)
+            f2_rational_hits = page43_rational_parameter_search(
+                family="f2",
+                target_template=reduced_candidate,
+                q=t,
+                max_shift=rational_page43_shift,
+                stages=rational_page43_stages,
+            )
+            f4_rational_hits = page43_rational_parameter_search(
+                family="f4",
+                target_template=reduced_candidate,
+                q=t,
+                max_shift=rational_page43_shift,
+                stages=rational_page43_stages,
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Page-43 Low-Complexity Rational Prefactor Check",
+                    "",
+                    (
+                        "- Search shape: `a = alpha*phi_a(t)*t^A`, `b = beta*phi_b(t)*t^B`, "
+                        "`lambda = gamma*phi_lambda(t)*t^L`."
+                    ),
+                    (
+                        "- Prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active "
+                        f"and integer shifts fixed to `A=B=L=0`."
+                    ),
+                    (
+                        "- Matching rule: solve exactly for scalar `alpha, beta, gamma` so the first "
+                        f"`{rational_page43_stages}` reciprocal stages match the reduced target."
+                    ),
+                    f"- `f2` / `gcf3` hits in this prefactor box: `{len(f2_rational_hits)}`",
+                    f"- `f4` / `gcf2` hits in this prefactor box: `{len(f4_rational_hits)}`",
+                ]
+            )
+            rational_hits = f2_rational_hits + f4_rational_hits
+            if rational_hits:
+                lines.extend(["", "```text"])
+                for hit in rational_hits:
+                    lines.append(
+                        f"{hit.family}: A={hit.a_shift}, B={hit.b_shift}, L={hit.lambda_shift}, "
+                        f"phi_a={hit.a_profile}, phi_b={hit.b_profile}, phi_lambda={hit.lambda_profile}, "
                         f"alpha={_format_expr(hit.a_coeff)}, beta={_format_expr(hit.b_coeff)}, "
                         f"lambda={_format_expr(hit.lambda_coeff)}"
                     )

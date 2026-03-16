@@ -139,6 +139,14 @@ b4 = 1
 - `f2` / `gcf3` hits in this box: `0`
 - `f4` / `gcf2` hits in this box: `0`
 
+## Page-43 Low-Complexity Rational Prefactor Check
+
+- Search shape: `a = alpha*phi_a(t)*t^A`, `b = beta*phi_b(t)*t^B`, `lambda = gamma*phi_lambda(t)*t^L`.
+- Prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active and integer shifts fixed to `A=B=L=0`.
+- Matching rule: solve exactly for scalar `alpha, beta, gamma` so the first `2` reciprocal stages match the reduced target.
+- `f2` / `gcf3` hits in this prefactor box: `0`
+- `f4` / `gcf2` hits in this prefactor box: `0`
+
 ## Cubic Odd/Even Contraction Check
 
 - Treat the reduced cubic benchmark reciprocal as `1 + K (t^n + t^(2n)) / 1`.
