@@ -223,6 +223,17 @@ beta_n = 1 - a*t + b*m*t
 - The surviving `m^2` coefficient is then `t`, still nonzero.
 - So the first nonzero `a`-shift nearest lanes also fail by an exact final obstruction, rather than by a bounded scan.
 
+## Exact Unit-Shift `b` Page-43 Equivalence Check
+
+- We also checked the next nearby shift choice `b -> b*t` while keeping the `a` and `lambda` shifts at `0`.
+- In `f2/gcf3`, the new `m^3` coefficient is `-a^2*t^4 - 2*a*b*t^4 - a*b*t^3 - b^2*t^4`, and exact vanishing again forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient becomes `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
+- In `f4/gcf2`, the constant coefficient remains `a*t`, so exact vanishing still forces `a = 0` first.
+- After that, the `m^3` coefficient becomes `-b^2*t^4`, forcing `b = 0`, and then the `m^1` coefficient `lambda*t - t` forces `lambda = 1`.
+- The surviving `m^2` coefficient is then `t`, still nonzero.
+- So the first nonzero `b`-shift nearest lanes also fail by an exact final obstruction.
+
 ## Cubic Odd/Even Contraction Check
 
 - Treat the reduced cubic benchmark reciprocal as `1 + K (t^n + t^(2n)) / 1`.

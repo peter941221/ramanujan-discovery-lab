@@ -1066,6 +1066,53 @@ def page43_f2_unit_a_shift_equivalence_obstruction(
     )
 
 
+def page43_f2_unit_b_shift_equivalence_obstruction(
+    *,
+    q: sp.Symbol,
+) -> Page43F2EquivalenceObstruction:
+    """Return the exact `f2` / `gcf3` obstruction for the next `b`-shift lane."""
+    a, b, lam, m = sp.symbols("a b lambda m")
+
+    alpha_n = sp.simplify(lam * m * q - a * b * m**2 * q**3)
+    beta_prev = sp.simplify(1 + b * m * q + a * m * q)
+    beta_curr = sp.simplify(1 + b * m * q**2 + a * m * q**2)
+    residual = sp.expand(alpha_n * (1 + m) - m * q * beta_prev * beta_curr)
+
+    residual_poly = sp.Poly(residual, m)
+    m_coefficients = {
+        degree: sp.expand(residual_poly.nth(degree))
+        for degree in range(1, residual_poly.degree() + 1)
+        if sp.simplify(residual_poly.nth(degree)) != 0
+    }
+
+    leading_coefficient = m_coefficients[max(m_coefficients)]
+    forced_ab_solutions = sp.solve(_exact_zero_equations(leading_coefficient, q=q), (a, b), dict=True)
+    if forced_ab_solutions != [{a: sp.Integer(0), b: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the unit-b-shift `f2` equivalence leading coefficient")
+    forced_ab_solution = forced_ab_solutions[0]
+
+    reduced_m1_coefficient = sp.simplify(m_coefficients[1].subs(forced_ab_solution))
+    forced_lambda_solutions = sp.solve(_exact_zero_equations(reduced_m1_coefficient, q=q), (lam,), dict=True)
+    if forced_lambda_solutions != [{lam: sp.Integer(1)}]:
+        raise ValueError("unexpected exact-solution set for the unit-b-shift `f2` equivalence linear coefficient")
+    forced_lambda_solution = forced_lambda_solutions[0]
+
+    final_m2_coefficient = sp.simplify(
+        m_coefficients[2].subs(forced_ab_solution).subs(forced_lambda_solution)
+    )
+    if _exact_zero_equations(final_m2_coefficient, q=q) == []:
+        raise ValueError("unexpected vanishing final obstruction in the unit-b-shift `f2` equivalence lane")
+
+    return Page43F2EquivalenceObstruction(
+        residual_polynomial=residual,
+        m_coefficients=m_coefficients,
+        forced_ab_solution=forced_ab_solution,
+        reduced_m1_coefficient=reduced_m1_coefficient,
+        forced_lambda_solution=forced_lambda_solution,
+        final_m2_coefficient=final_m2_coefficient,
+    )
+
+
 def page43_f4_unit_lambda_shift_equivalence_obstruction(
     *,
     q: sp.Symbol,
@@ -1155,6 +1202,61 @@ def page43_f4_unit_a_shift_equivalence_obstruction(
     )
     if _exact_zero_equations(final_m2_coefficient, q=q) == []:
         raise ValueError("unexpected vanishing final obstruction in the unit-a-shift `f4` equivalence lane")
+
+    return Page43F4EquivalenceObstruction(
+        residual_polynomial=residual,
+        m_coefficients=m_coefficients,
+        forced_a_solution=forced_a_solution,
+        forced_b_solution=forced_b_solution,
+        reduced_m1_coefficient=reduced_m1_coefficient,
+        forced_lambda_solution=forced_lambda_solution,
+        final_m2_coefficient=final_m2_coefficient,
+    )
+
+
+def page43_f4_unit_b_shift_equivalence_obstruction(
+    *,
+    q: sp.Symbol,
+) -> Page43F4EquivalenceObstruction:
+    """Return the exact `f4` / `gcf2` obstruction for the next `b`-shift lane."""
+    a, b, lam, m = sp.symbols("a b lambda m")
+
+    alpha_n = sp.simplify(a * q + lam * m * q)
+    beta_prev = sp.simplify(1 - a * q + b * m * q)
+    beta_curr = sp.simplify(1 - a * q + b * m * q**2)
+    residual = sp.expand(alpha_n * (1 + m) - m * q * beta_prev * beta_curr)
+
+    residual_poly = sp.Poly(residual, m)
+    m_coefficients = {
+        degree: sp.expand(residual_poly.nth(degree))
+        for degree in range(0, residual_poly.degree() + 1)
+        if sp.simplify(residual_poly.nth(degree)) != 0
+    }
+
+    forced_a_solutions = sp.solve(_exact_zero_equations(m_coefficients[0], q=q), (a,), dict=True)
+    if forced_a_solutions != [{a: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the unit-b-shift `f4` equivalence constant coefficient")
+    forced_a_solution = forced_a_solutions[0]
+
+    reduced_m3_coefficient = sp.simplify(m_coefficients[3].subs(forced_a_solution))
+    forced_b_solutions = sp.solve(_exact_zero_equations(reduced_m3_coefficient, q=q), (b,), dict=True)
+    if forced_b_solutions != [{b: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the unit-b-shift `f4` equivalence cubic coefficient")
+    forced_b_solution = forced_b_solutions[0]
+
+    reduced_m1_coefficient = sp.simplify(
+        m_coefficients[1].subs(forced_a_solution).subs(forced_b_solution)
+    )
+    forced_lambda_solutions = sp.solve(_exact_zero_equations(reduced_m1_coefficient, q=q), (lam,), dict=True)
+    if forced_lambda_solutions != [{lam: sp.Integer(1)}]:
+        raise ValueError("unexpected exact-solution set for the unit-b-shift `f4` equivalence linear coefficient")
+    forced_lambda_solution = forced_lambda_solutions[0]
+
+    final_m2_coefficient = sp.simplify(
+        m_coefficients[2].subs(forced_a_solution).subs(forced_b_solution).subs(forced_lambda_solution)
+    )
+    if _exact_zero_equations(final_m2_coefficient, q=q) == []:
+        raise ValueError("unexpected vanishing final obstruction in the unit-b-shift `f4` equivalence lane")
 
     return Page43F4EquivalenceObstruction(
         residual_polynomial=residual,
@@ -2398,6 +2500,8 @@ def build_candidate_research_note(
             a_sym, b_sym = sp.symbols("a b")
             f2_equivalence_obstruction = page43_f2_zero_shift_equivalence_obstruction(q=t)
             f4_equivalence_obstruction = page43_f4_zero_shift_equivalence_obstruction(q=t)
+            f2_unit_b_shift_equivalence = page43_f2_unit_b_shift_equivalence_obstruction(q=t)
+            f4_unit_b_shift_equivalence = page43_f4_unit_b_shift_equivalence_obstruction(q=t)
             f2_unit_lambda_shift_equivalence = page43_f2_unit_lambda_shift_equivalence_obstruction(q=t)
             f4_unit_lambda_shift_equivalence = page43_f4_unit_lambda_shift_equivalence_obstruction(q=t)
             f2_unit_a_shift_equivalence = page43_f2_unit_a_shift_equivalence_obstruction(q=t)
@@ -2718,6 +2822,44 @@ def build_candidate_research_note(
                         f"`{_format_expr(f4_unit_a_shift_equivalence.final_m2_coefficient)}`, still nonzero."
                     ),
                     "- So the first nonzero `a`-shift nearest lanes also fail by an exact final obstruction, rather than by a bounded scan.",
+                ]
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Exact Unit-Shift `b` Page-43 Equivalence Check",
+                    "",
+                    "- We also checked the next nearby shift choice `b -> b*t` while keeping the `a` and `lambda` shifts at `0`.",
+                    (
+                        "- In `f2/gcf3`, the new `m^3` coefficient is "
+                        f"`{_format_expr(f2_unit_b_shift_equivalence.m_coefficients[3])}`, "
+                        "and exact vanishing again forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the `m^1` coefficient becomes "
+                        f"`{_format_expr(f2_unit_b_shift_equivalence.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes "
+                        f"`{_format_expr(f2_unit_b_shift_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    (
+                        "- In `f4/gcf2`, the constant coefficient remains "
+                        f"`{_format_expr(f4_unit_b_shift_equivalence.m_coefficients[0])}`, "
+                        "so exact vanishing still forces `a = 0` first."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient becomes "
+                        f"`{_format_expr(sp.simplify(f4_unit_b_shift_equivalence.m_coefficients[3].subs(f4_unit_b_shift_equivalence.forced_a_solution)))}`, "
+                        "forcing `b = 0`, and then the `m^1` coefficient "
+                        f"`{_format_expr(f4_unit_b_shift_equivalence.reduced_m1_coefficient)}` forces `lambda = 1`."
+                    ),
+                    (
+                        "- The surviving `m^2` coefficient is then "
+                        f"`{_format_expr(f4_unit_b_shift_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    "- So the first nonzero `b`-shift nearest lanes also fail by an exact final obstruction.",
                 ]
             )
 

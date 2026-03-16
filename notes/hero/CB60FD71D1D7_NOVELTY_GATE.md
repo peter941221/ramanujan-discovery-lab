@@ -46,6 +46,9 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
      - an exact unit-`a`-shift extension of those same `f2/gcf3` and `f4/gcf2`
        lanes, where the forced parameter specializations still leave a
        surviving nonzero `m^2` coefficient `t`
+     - an exact unit-`b`-shift extension of those same `f2/gcf3` and `f4/gcf2`
+       lanes, where the forced parameter specializations again still leave a
+       surviving nonzero `m^2` coefficient `t`
      - an exact unit-`lambda`-shift extension of those same `f2/gcf3` and
        `f4/gcf2` lanes, where the surviving `m^1` coefficient is
        `lambda*t^2 - t`, so no constant `lambda` can make either nearest shift

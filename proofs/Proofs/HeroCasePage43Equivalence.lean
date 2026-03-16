@@ -16,6 +16,7 @@ the Python research pipeline:
 * `f2 / gcf3` at zero shift
 * `f4 / gcf2` at zero shift
 * the nearest unit-`a` shift lanes
+* the nearest unit-`b` shift lanes
 * the nearest unit-`lambda` shift lanes
 
 For each family, the necessary residual identity is expanded as a polynomial in
@@ -67,6 +68,15 @@ def f2UnitAShiftM2 (a b lam : Rat) : QPoly :=
 def f2UnitAShiftM3 (a b : Rat) : QPoly :=
   C (-(a * a)) * X ^ 6 + C (-(2 * a * b)) * X ^ 4 + C (-(a * b)) * X ^ 3 + C (-(b * b)) * X ^ 2
 
+def f2UnitBShiftM1 (lam : Rat) : QPoly :=
+  f2ZeroShiftM1 lam
+
+def f2UnitBShiftM2 (a b lam : Rat) : QPoly :=
+  C (-(a * b + a + b)) * X ^ 3 + C (-(a + b)) * X ^ 2 + C lam * X
+
+def f2UnitBShiftM3 (a b : Rat) : QPoly :=
+  C (-(a * b)) * X ^ 3 + C (-(a * a + 2 * a * b + b * b)) * X ^ 4
+
 def f4UnitLambdaShiftM1 (a lam : Rat) : QPoly :=
   C (-(a * a)) * X ^ 3 + C (2 * a + lam) * X ^ 2 + C (a - 1) * X
 
@@ -87,6 +97,18 @@ def f4UnitAShiftM2 (a b lam : Rat) : QPoly :=
 
 def f4UnitAShiftM3 (b : Rat) : QPoly :=
   C (-(b * b)) * X ^ 2
+
+def f4UnitBShiftM0 (a : Rat) : QPoly :=
+  f4ZeroShiftM0 a
+
+def f4UnitBShiftM1 (a lam : Rat) : QPoly :=
+  f4ZeroShiftM1 a lam
+
+def f4UnitBShiftM2 (a b lam : Rat) : QPoly :=
+  C (a * b) * X ^ 4 + C (a * b - b) * X ^ 3 + C (-b) * X ^ 2 + C lam * X
+
+def f4UnitBShiftM3 (b : Rat) : QPoly :=
+  C (-(b * b)) * X ^ 4
 
 theorem f2ZeroShiftM3_forces_a_zero (a b : Rat) (h : f2ZeroShiftM3 a b = 0) :
     a = 0 := by
@@ -297,6 +319,89 @@ theorem noUnitAShiftF4ExactEquivalence :
   have hSpec : f4UnitAShiftM2 0 0 1 = 0 := by
     simpa [ha, hb, hlam] using hM2
   exact f4UnitAShiftM2_specialized_nonzero hSpec
+
+theorem f2UnitBShiftM3_forces_a_zero (a b : Rat) (h : f2UnitBShiftM3 a b = 0) :
+    a = 0 := by
+  have hEval1 := congrArg (fun p : QPoly => Polynomial.eval (1 : Rat) p) h
+  have hEvalNeg1 := congrArg (fun p : QPoly => Polynomial.eval (-1 : Rat) p) h
+  norm_num [f2UnitBShiftM3] at hEval1 hEvalNeg1
+  have hab : a * b = 0 := by
+    nlinarith [hEval1, hEvalNeg1]
+  have hsum : a * a + 2 * a * b + b * b = 0 := by
+    nlinarith [hEval1, hEvalNeg1]
+  have hsq : a * a + b * b = 0 := by
+    nlinarith [hab, hsum]
+  have haSq : a * a = 0 := by
+    nlinarith [hab, hsq]
+  nlinarith
+
+theorem f2UnitBShiftM3_forces_b_zero (a b : Rat) (h : f2UnitBShiftM3 a b = 0) :
+    b = 0 := by
+  have hEval1 := congrArg (fun p : QPoly => Polynomial.eval (1 : Rat) p) h
+  have hEvalNeg1 := congrArg (fun p : QPoly => Polynomial.eval (-1 : Rat) p) h
+  norm_num [f2UnitBShiftM3] at hEval1 hEvalNeg1
+  have hab : a * b = 0 := by
+    nlinarith [hEval1, hEvalNeg1]
+  have hsum : a * a + 2 * a * b + b * b = 0 := by
+    nlinarith [hEval1, hEvalNeg1]
+  have hsq : a * a + b * b = 0 := by
+    nlinarith [hab, hsum]
+  have hbSq : b * b = 0 := by
+    nlinarith [hab, hsq]
+  nlinarith
+
+theorem f2UnitBShiftM2_specialized :
+    f2UnitBShiftM2 0 0 1 = X := by
+  simp [f2UnitBShiftM2]
+
+theorem f2UnitBShiftM2_specialized_nonzero :
+    f2UnitBShiftM2 0 0 1 ≠ 0 := by
+  intro h
+  have hCoeff := congrArg (fun p : QPoly => p.coeff 1) h
+  norm_num [f2UnitBShiftM2] at hCoeff
+
+theorem noUnitBShiftF2ExactEquivalence :
+    ¬ ∃ a b lam : Rat,
+      f2UnitBShiftM1 lam = 0 ∧
+      f2UnitBShiftM2 a b lam = 0 ∧
+      f2UnitBShiftM3 a b = 0 := by
+  rintro ⟨a, b, lam, hM1, hM2, hM3⟩
+  have ha : a = 0 := f2UnitBShiftM3_forces_a_zero a b hM3
+  have hb : b = 0 := f2UnitBShiftM3_forces_b_zero a b hM3
+  have hlam : lam = 1 := f2ZeroShiftM1_forces_lambda_one lam hM1
+  have hSpec : f2UnitBShiftM2 0 0 1 = 0 := by
+    simpa [ha, hb, hlam] using hM2
+  exact f2UnitBShiftM2_specialized_nonzero hSpec
+
+theorem f4UnitBShiftM3_forces_b_zero (b : Rat) (h : f4UnitBShiftM3 b = 0) :
+    b = 0 := by
+  have hEval := congrArg (fun p : QPoly => Polynomial.eval (1 : Rat) p) h
+  norm_num [f4UnitBShiftM3] at hEval
+  nlinarith [hEval]
+
+theorem f4UnitBShiftM2_specialized :
+    f4UnitBShiftM2 0 0 1 = X := by
+  simp [f4UnitBShiftM2]
+
+theorem f4UnitBShiftM2_specialized_nonzero :
+    f4UnitBShiftM2 0 0 1 ≠ 0 := by
+  intro h
+  have hCoeff := congrArg (fun p : QPoly => p.coeff 1) h
+  norm_num [f4UnitBShiftM2] at hCoeff
+
+theorem noUnitBShiftF4ExactEquivalence :
+    ¬ ∃ a b lam : Rat,
+      f4UnitBShiftM0 a = 0 ∧
+      f4UnitBShiftM1 a lam = 0 ∧
+      f4UnitBShiftM2 a b lam = 0 ∧
+      f4UnitBShiftM3 b = 0 := by
+  rintro ⟨a, b, lam, hM0, hM1, hM2, hM3⟩
+  have ha : a = 0 := f4ZeroShiftM0_forces_a_zero a hM0
+  have hb : b = 0 := f4UnitBShiftM3_forces_b_zero b hM3
+  have hlam : lam = 1 := f4ZeroShiftM1_forces_lambda_one a lam ha hM1
+  have hSpec : f4UnitBShiftM2 0 0 1 = 0 := by
+    simpa [ha, hb, hlam] using hM2
+  exact f4UnitBShiftM2_specialized_nonzero hSpec
 
 theorem f2UnitLambdaShiftM1_nonzero (lam : Rat) :
     f2UnitLambdaShiftM1 lam ≠ 0 := by

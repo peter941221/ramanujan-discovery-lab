@@ -96,6 +96,7 @@ their ratio objects:
    still leaves a surviving `m^2` coefficient `t`. The first nearby
    unit-`a`-shift lanes also fail exactly and end with the same surviving
    `m^2` coefficient `t` after the forced parameter specializations. The first nearby
+   unit-`b`-shift lanes now fail in exactly the same way. The first nearby
    unit-`lambda`-shift lanes fail even earlier: after the same forced
    specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`,
    so no constant `lambda` can make those lanes vanish identically.
