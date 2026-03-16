@@ -61,6 +61,9 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
        - ratio-object two-layer single-basis fractional-linear RR-tower boxes
        - named source-family multiplicative boxes for
          `F = candidate / RR(q^3)` built from `RR`, `cubic`, `GG`, and `S`
+       - named source-family fractional-linear boxes for
+         `F = candidate / RR(q^3)` built from the same `RR`, `cubic`, `GG`,
+         and `S` basis order
 
 5. Public audit posture
    - the repo already separates:

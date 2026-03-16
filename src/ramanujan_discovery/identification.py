@@ -101,6 +101,15 @@ class NamedMultiplicativeRelationScan:
 
 
 @dataclass(frozen=True)
+class NamedFractionalLinearRelationScan:
+    """Outcome for one prefix scan of named source-family fractional-linear templates."""
+
+    basis_labels: tuple[str, ...]
+    relation: FractionalLinearRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class TwoLayerFractionalLinearRelation:
     """A product of two low-complexity fractional-linear factors."""
 
@@ -1060,6 +1069,43 @@ def scan_named_multiplicative_prefixes(
     return scans
 
 
+def scan_named_fractional_linear_prefixes(
+    *,
+    target_series: Series,
+    ordered_basis_series: tuple[tuple[str, Series], ...],
+    order: int,
+) -> list[NamedFractionalLinearRelationScan]:
+    if not ordered_basis_series:
+        return []
+
+    scans: list[NamedFractionalLinearRelationScan] = []
+    prefix: list[tuple[str, Series]] = []
+    for label, series in ordered_basis_series:
+        prefix.append((label, series))
+        basis_series_by_variable = {name: basis for name, basis in prefix}
+        try:
+            relation = search_fractional_linear_relation(
+                target_series=target_series,
+                basis_series_by_variable=basis_series_by_variable,
+                order=order,
+            )
+            scans.append(
+                NamedFractionalLinearRelationScan(
+                    basis_labels=tuple(name for name, _ in prefix),
+                    relation=relation,
+                )
+            )
+        except ValueError as exc:
+            scans.append(
+                NamedFractionalLinearRelationScan(
+                    basis_labels=tuple(name for name, _ in prefix),
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+    return scans
+
+
 def scan_ratio_benchmark_two_layer_fractional_linear_prefixes(
     *,
     ratio_series: Series,
@@ -1268,6 +1314,11 @@ def build_candidate_identification_note(
         ordered_basis_series=source_family_basis_series,
         order=profile_order,
         max_abs_exponent=4 if smoke else 6,
+    )
+    source_family_fractional_linear_scans = scan_named_fractional_linear_prefixes(
+        target_series=ratio_series,
+        ordered_basis_series=source_family_basis_series,
+        order=profile_order,
     )
     power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
@@ -1585,6 +1636,79 @@ def build_candidate_identification_note(
                         "",
                         "```text",
                         _format_multiplicative_relation(scan.relation, target_variable="F"),
+                        "```",
+                        "",
+                        f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                        "",
+                    ]
+                )
+
+    if source_family_fractional_linear_scans:
+        lines.extend(
+            [
+                "",
+                "## Ratio-Object Source-Family Fractional-Linear Scan",
+                "",
+                "We also searched for low-complexity fractional-linear corrections built from nearby named source families:",
+                "",
+                "```text",
+                "F = (1 + sum a_i*(S_i - 1)) / (1 + sum b_i*(S_i - 1))",
+                "```",
+                "",
+                f"- `F = candidate / {record.closest_benchmark}`",
+                "- The source-family bases are evaluated in the same variable view used above.",
+            ]
+        )
+        for label, benchmark_name in source_family_basis_catalog:
+            lines.append(f"- `{label} = {benchmark_name}`")
+        lines.extend(
+            [
+                "",
+                "- Prefixes are scanned in that order, solving an exact linear system for the numerator and denominator correction coefficients in each source-family box.",
+                "",
+            ]
+        )
+
+        any_source_fractional_hit = any(
+            scan.relation is not None for scan in source_family_fractional_linear_scans
+        )
+        if not any_source_fractional_hit:
+            lines.append("No source-family fractional-linear relation was found in any scanned prefix box.")
+            lines.append("")
+
+        no_hit_labels = [
+            f"`{scan.basis_labels[-1]}`"
+            for scan in source_family_fractional_linear_scans
+            if scan.error is None
+        ]
+        if not any_source_fractional_hit and no_hit_labels:
+            lines.append(
+                f"- No hit for source-family fractional-linear prefixes ending at {', '.join(no_hit_labels)}."
+            )
+
+        for scan in source_family_fractional_linear_scans:
+            if scan.error is not None:
+                lines.append(
+                    f"- Source-family fractional-linear prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                )
+            elif scan.relation is not None:
+                residual = _fractional_linear_relation_residual_series(
+                    scan.relation,
+                    target_series=ratio_series,
+                    basis_series_by_variable={
+                        label: series
+                        for label, series in source_family_basis_series
+                        if label in scan.basis_labels
+                    },
+                    order=profile_order,
+                )
+                residual_ok = all(sp.simplify(value) == 0 for value in residual)
+                lines.extend(
+                    [
+                        f"- Source-family fractional-linear prefix ending at `{scan.basis_labels[-1]}` produced a candidate relation:",
+                        "",
+                        "```text",
+                        _format_fractional_linear_relation(scan.relation, target_variable="F"),
                         "```",
                         "",
                         f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",

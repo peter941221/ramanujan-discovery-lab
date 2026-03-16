@@ -90,6 +90,27 @@ No source-family multiplicative relation was found in any scanned prefix box.
 
 - No hit for source-family prefixes ending at `RR`, `cubic`, `GG`, `S`.
 
+## Ratio-Object Source-Family Fractional-Linear Scan
+
+We also searched for low-complexity fractional-linear corrections built from nearby named source families:
+
+```text
+F = (1 + sum a_i*(S_i - 1)) / (1 + sum b_i*(S_i - 1))
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- The source-family bases are evaluated in the same variable view used above.
+- `RR = rogers_ramanujan_normalized`
+- `cubic = ramanujan_cubic_normalized`
+- `GG = gollnitz_gordon_normalized`
+- `S = hirschhorn_s_normalized`
+
+- Prefixes are scanned in that order, solving an exact linear system for the numerator and denominator correction coefficients in each source-family box.
+
+No source-family fractional-linear relation was found in any scanned prefix box.
+
+- No hit for source-family fractional-linear prefixes ending at `RR`, `cubic`, `GG`, `S`.
+
 ## Ratio-Object RR-Tower Prefix Scan
 
 We also scanned the multiplicative correction object against prefixes of the benchmark tower:
