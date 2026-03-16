@@ -43,6 +43,10 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
      - an exact zero-shift `f4/gcf2` `n`-dependent equivalence obstruction,
        where the necessary residual polynomial again forces `a = 0`, `b = 0`,
        then `lambda = 1`, but still leaves a surviving `m^2` coefficient `t`
+     - an exact unit-`lambda`-shift extension of those same `f2/gcf3` and
+       `f4/gcf2` lanes, where the surviving `m^1` coefficient is
+       `lambda*t^2 - t`, so no constant `lambda` can make either nearest shift
+       lane vanish identically
      - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
        stronger exact obstruction for the RR and cubic source lanes, plus a
        machine-checked Lean proof layer:
@@ -55,6 +59,8 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
        - ratio-object multiplicative RR-tower boxes of the form `F = prod_i B_i^(e_i)`
        - ratio-object one-layer fractional-linear RR-tower boxes
        - ratio-object two-layer single-basis fractional-linear RR-tower boxes
+       - named source-family multiplicative boxes for
+         `F = candidate / RR(q^3)` built from `RR`, `cubic`, `GG`, and `S`
 
 5. Public audit posture
    - the repo already separates:
@@ -145,12 +151,14 @@ At least one of the following two routes should be completed.
 ## Practical Next Actions
 
 1. Upgrade one bounded exclusion family into an all-parameter theorem.
-2. Extend the exact zero-shift page-43 equivalence layer beyond the current
-   formalized `f2/gcf3` and `f4/gcf2` nearest lanes.
-3. Shift the next identification pass from generic RR-tower ansatz boxes
-   (now including multiplicative, fractional-linear, and two-layer scans) toward
-   the next source-family-specific transforms with explicit parameter meaning.
-4. Expand the literature log into a dated bibliography matrix by source family.
+2. Extend the exact page-43 equivalence layer beyond the now-formalized
+   zero-shift and unit-`lambda` nearest `f2/gcf3` and `f4/gcf2` lanes.
+3. Replace the current named source-family multiplicative scan with
+   parameterized source-family solvers or exact transform templates that keep
+   the Gordon/Hirschhorn parameter meaning explicit.
+4. Expand the literature log and bibliography matrix further across the older
+   Gordon / Hirschhorn / Weber lines and newer RR-adjacent papers that could
+   hide transformed presentations of `S(q)` or `GG(q)`.
 5. Keep public wording at "unexplained candidate" until steps 1-4 are all
    materially stronger.
 

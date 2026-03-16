@@ -7,6 +7,7 @@ from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
     scan_benchmark_power_relation_prefixes,
+    scan_named_multiplicative_prefixes,
     scan_ratio_benchmark_fractional_linear_prefixes,
     scan_ratio_benchmark_multiplicative_prefixes,
     scan_ratio_benchmark_power_relation_prefixes,
@@ -267,6 +268,30 @@ def test_scan_ratio_benchmark_multiplicative_prefixes_finds_hit():
     assert first_hit.relation.exponents == {"B1": 2, "B2": -1}
 
 
+def test_scan_named_multiplicative_prefixes_finds_hit():
+    order = 12
+    rr = [sp.Integer(0) for _ in range(order)]
+    cubic = [sp.Integer(0) for _ in range(order)]
+    rr[0] = 1
+    rr[1] = 1
+    cubic[0] = 1
+    cubic[2] = 1
+
+    ratio = series_mul(series_pow(rr, 2), series_invert(cubic))
+
+    scans = scan_named_multiplicative_prefixes(
+        target_series=ratio,
+        ordered_basis_series=(("RR", rr), ("cubic", cubic)),
+        order=order,
+    )
+    assert scans
+    assert any(scan.relation is not None for scan in scans)
+    first_hit = next(scan for scan in scans if scan.relation is not None)
+    assert first_hit.basis_labels == ("RR", "cubic")
+    assert first_hit.relation is not None
+    assert first_hit.relation.exponents == {"RR": 2, "cubic": -1}
+
+
 def test_search_two_layer_fractional_linear_relation_finds_structured_ratio():
     order = 14
     benchmark = [sp.Integer(0) for _ in range(order)]
@@ -411,6 +436,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Identification Note: `hero`" in text
     assert "Extra Multivariate Search" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
+    assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object RR-Tower Prefix Scan" in text
     assert "Ratio-Object Multiplicative RR-Tower Scan" in text
     assert "Ratio-Object Fractional-Linear RR-Tower Scan" in text

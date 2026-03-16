@@ -24,6 +24,14 @@ def reduce_template_by_step(template: QCFTemplate, step: int) -> QCFTemplate | N
             return None
         return value // step
 
+    base_denominator_q_shift = template.base_denominator_q_shift
+    if template.base_denominator_q_scale != 0:
+        base_denominator_q_shift = _maybe_div(template.base_denominator_q_shift)
+        if base_denominator_q_shift is None:
+            return None
+    else:
+        base_denominator_q_shift = 0
+
     numerator_q_shift = _maybe_div(template.numerator_q_shift)
     numerator_q_step = _maybe_div(template.numerator_q_step)
     if numerator_q_shift is None or numerator_q_step is None:
@@ -54,6 +62,8 @@ def reduce_template_by_step(template: QCFTemplate, step: int) -> QCFTemplate | N
     return QCFTemplate(
         top_constant=template.top_constant,
         base_denominator=template.base_denominator,
+        base_denominator_q_scale=template.base_denominator_q_scale,
+        base_denominator_q_shift=base_denominator_q_shift,
         numerator_scale=template.numerator_scale,
         numerator_q_shift=numerator_q_shift,
         numerator_q_step=numerator_q_step,
@@ -580,6 +590,18 @@ def _benchmark_product_closed_form_in_reduced_variable(benchmark_name: str, vari
         )
         denom = _pochhammer_inf_symbol(variable=variable, shift=3, step=6)
         return f"{base} / ({denom}^2)"
+    if benchmark_name == "gollnitz_gordon_normalized":
+        return (
+            f"{_pochhammer_inf_symbol(variable=variable, shift=1, step=8)}"
+            f" * {_pochhammer_inf_symbol(variable=variable, shift=7, step=8)}"
+            f" / ({_pochhammer_inf_symbol(variable=variable, shift=3, step=8)}"
+            f" * {_pochhammer_inf_symbol(variable=variable, shift=5, step=8)})"
+        )
+    if benchmark_name == "hirschhorn_s_normalized":
+        return (
+            f"{_pochhammer_inf_symbol(variable=variable, shift=2, step=3)}"
+            f" / {_pochhammer_inf_symbol(variable=variable, shift=1, step=3)}"
+        )
     return None
 
 
@@ -685,6 +707,23 @@ class Page43F4EquivalenceObstruction:
     reduced_m1_coefficient: sp.Expr
     forced_lambda_solution: dict[sp.Symbol, sp.Expr]
     final_m2_coefficient: sp.Expr
+
+
+@dataclass(frozen=True)
+class Page43F2UnitLambdaShiftEquivalenceObstruction:
+    residual_polynomial: sp.Expr
+    m_coefficients: dict[int, sp.Expr]
+    forced_ab_solution: dict[sp.Symbol, sp.Expr]
+    impossible_m1_coefficient: sp.Expr
+
+
+@dataclass(frozen=True)
+class Page43F4UnitLambdaShiftEquivalenceObstruction:
+    residual_polynomial: sp.Expr
+    m_coefficients: dict[int, sp.Expr]
+    forced_a_solution: dict[sp.Symbol, sp.Expr]
+    forced_b_solution: dict[sp.Symbol, sp.Expr]
+    impossible_m1_coefficient: sp.Expr
 
 
 @dataclass(frozen=True)
@@ -932,6 +971,97 @@ def page43_f4_zero_shift_equivalence_obstruction(
         reduced_m1_coefficient=reduced_m1_coefficient,
         forced_lambda_solution=forced_lambda_solution,
         final_m2_coefficient=final_m2_coefficient,
+    )
+
+
+def page43_f2_unit_lambda_shift_equivalence_obstruction(
+    *,
+    q: sp.Symbol,
+) -> Page43F2UnitLambdaShiftEquivalenceObstruction:
+    """Return the exact `f2` / `gcf3` obstruction for the next `lambda`-shift lane.
+
+    This is the nearest nonzero-shift extension of the current exact lane:
+
+        a = alpha,  b = beta,  lambda = gamma*q
+
+    with the same arbitrary `n`-dependent equivalence factors as in the zero-shift audit.
+    """
+    a, b, lam, m = sp.symbols("a b lambda m")
+
+    alpha_n = sp.simplify(lam * m * q**2 - a * b * m**2 * q**2)
+    beta_prev = sp.simplify(1 + b * m + a * m * q)
+    beta_curr = sp.simplify(1 + b * m * q + a * m * q**2)
+    residual = sp.expand(alpha_n * (1 + m) - m * q * beta_prev * beta_curr)
+
+    residual_poly = sp.Poly(residual, m)
+    m_coefficients = {
+        degree: sp.expand(residual_poly.nth(degree))
+        for degree in range(1, residual_poly.degree() + 1)
+        if sp.simplify(residual_poly.nth(degree)) != 0
+    }
+
+    leading_coefficient = m_coefficients[max(m_coefficients)]
+    forced_ab_solutions = sp.solve(_exact_zero_equations(leading_coefficient, q=q), (a, b), dict=True)
+    if forced_ab_solutions != [{a: sp.Integer(0), b: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the unit-lambda-shift `f2` equivalence leading coefficient")
+    forced_ab_solution = forced_ab_solutions[0]
+
+    impossible_m1_coefficient = sp.simplify(m_coefficients[1].subs(forced_ab_solution))
+    forced_lambda_solutions = sp.solve(_exact_zero_equations(impossible_m1_coefficient, q=q), (lam,), dict=True)
+    if forced_lambda_solutions != []:
+        raise ValueError("unexpected exact-solution set for the unit-lambda-shift `f2` equivalence linear coefficient")
+
+    return Page43F2UnitLambdaShiftEquivalenceObstruction(
+        residual_polynomial=residual,
+        m_coefficients=m_coefficients,
+        forced_ab_solution=forced_ab_solution,
+        impossible_m1_coefficient=impossible_m1_coefficient,
+    )
+
+
+def page43_f4_unit_lambda_shift_equivalence_obstruction(
+    *,
+    q: sp.Symbol,
+) -> Page43F4UnitLambdaShiftEquivalenceObstruction:
+    """Return the exact `f4` / `gcf2` obstruction for the next `lambda`-shift lane."""
+    a, b, lam, m = sp.symbols("a b lambda m")
+
+    alpha_n = sp.simplify(a * q + lam * m * q**2)
+    beta_prev = sp.simplify(1 - a * q + b * m)
+    beta_curr = sp.simplify(1 - a * q + b * m * q)
+    residual = sp.expand(alpha_n * (1 + m) - m * q * beta_prev * beta_curr)
+
+    residual_poly = sp.Poly(residual, m)
+    m_coefficients = {
+        degree: sp.expand(residual_poly.nth(degree))
+        for degree in range(0, residual_poly.degree() + 1)
+        if sp.simplify(residual_poly.nth(degree)) != 0
+    }
+
+    forced_a_solutions = sp.solve(_exact_zero_equations(m_coefficients[0], q=q), (a,), dict=True)
+    if forced_a_solutions != [{a: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the unit-lambda-shift `f4` equivalence constant coefficient")
+    forced_a_solution = forced_a_solutions[0]
+
+    reduced_m3_coefficient = sp.simplify(m_coefficients[3].subs(forced_a_solution))
+    forced_b_solutions = sp.solve(_exact_zero_equations(reduced_m3_coefficient, q=q), (b,), dict=True)
+    if forced_b_solutions != [{b: sp.Integer(0)}]:
+        raise ValueError("unexpected exact-solution set for the unit-lambda-shift `f4` equivalence cubic coefficient")
+    forced_b_solution = forced_b_solutions[0]
+
+    impossible_m1_coefficient = sp.simplify(
+        m_coefficients[1].subs(forced_a_solution).subs(forced_b_solution)
+    )
+    forced_lambda_solutions = sp.solve(_exact_zero_equations(impossible_m1_coefficient, q=q), (lam,), dict=True)
+    if forced_lambda_solutions != []:
+        raise ValueError("unexpected exact-solution set for the unit-lambda-shift `f4` equivalence linear coefficient")
+
+    return Page43F4UnitLambdaShiftEquivalenceObstruction(
+        residual_polynomial=residual,
+        m_coefficients=m_coefficients,
+        forced_a_solution=forced_a_solution,
+        forced_b_solution=forced_b_solution,
+        impossible_m1_coefficient=impossible_m1_coefficient,
     )
 
 
@@ -1523,6 +1653,8 @@ def direct_bauer_muir_obstruction(
 def _template_reciprocal_coeffs(template: QCFTemplate, q: sp.Symbol, depth: int) -> tuple[sp.Expr, list[sp.Expr], list[sp.Expr]]:
     """Return b0 and coefficient lists for 1/value(template) = b0 + K a_n / b_n (truncated)."""
     b0 = sp.Rational(template.base_denominator, template.top_constant)
+    if template.base_denominator_q_scale != 0:
+        b0 += sp.Rational(template.base_denominator_q_scale, template.top_constant) * q**template.base_denominator_q_shift
     a_terms = [sp.Integer(0)]
     b_terms = [sp.Integer(0)]
     for n in range(1, depth + 1):
@@ -1619,6 +1751,8 @@ def _template_reciprocal_coeffs_at_value(
     depth: int,
 ) -> tuple[sp.Expr, list[sp.Expr], list[sp.Expr]]:
     b0 = sp.Rational(template.base_denominator, template.top_constant)
+    if template.base_denominator_q_scale != 0:
+        b0 += sp.Rational(template.base_denominator_q_scale, template.top_constant) * q_value**template.base_denominator_q_shift
     a_terms = [sp.Integer(0)]
     b_terms = [sp.Integer(0)]
     for n in range(1, depth + 1):
@@ -2162,6 +2296,8 @@ def build_candidate_research_note(
             a_sym, b_sym = sp.symbols("a b")
             f2_equivalence_obstruction = page43_f2_zero_shift_equivalence_obstruction(q=t)
             f4_equivalence_obstruction = page43_f4_zero_shift_equivalence_obstruction(q=t)
+            f2_unit_lambda_shift_equivalence = page43_f2_unit_lambda_shift_equivalence_obstruction(q=t)
+            f4_unit_lambda_shift_equivalence = page43_f4_unit_lambda_shift_equivalence_obstruction(q=t)
             coeffs = heine_hcf2_standardized_coeffs(
                 a=a_sym,
                 b=b_sym,
@@ -2417,6 +2553,29 @@ def build_candidate_research_note(
                         "still nonzero."
                     ),
                     "- So the current hero case is not in this zero-shift `f4` / `gcf2` equivalence lane either.",
+                ]
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Exact Unit-Shift `lambda` Page-43 Equivalence Check",
+                    "",
+                    "- We also checked the next nearby shift choice `lambda -> lambda*t` while keeping the `a` and `b` shifts at `0`.",
+                    (
+                        "- In `f2/gcf3`, the `m^3` coefficient is still "
+                        f"`{_format_expr(f2_unit_lambda_shift_equivalence.m_coefficients[3])}`, "
+                        "so exact vanishing still forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the `m^1` coefficient becomes "
+                        f"`{_format_expr(f2_unit_lambda_shift_equivalence.impossible_m1_coefficient)}`; "
+                        "no constant `lambda` makes that polynomial vanish identically."
+                    ),
+                    (
+                        "- In `f4/gcf2`, exact vanishing again forces `a = 0`, then `b = 0`, and the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(f4_unit_lambda_shift_equivalence.impossible_m1_coefficient)}`."
+                    ),
+                    "- So the first nonzero `lambda`-shift nearest lanes already fail before any final `m^2` obstruction is needed.",
                 ]
             )
 

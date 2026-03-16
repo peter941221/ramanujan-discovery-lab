@@ -36,9 +36,13 @@ def _series_expr(template: QCFTemplate, depth: int, order: int, q_symbol: sp.Sym
         else:
             tail = sp.series(numerator / (denominator + tail), q, 0, order).removeO()
 
+    base_denominator = sp.Integer(template.base_denominator)
+    if template.base_denominator_q_scale != 0:
+        base_denominator += template.base_denominator_q_scale * q**template.base_denominator_q_shift
+
     return sp.expand(
         sp.series(
-            sp.Integer(template.top_constant) / (sp.Integer(template.base_denominator) + tail),
+            sp.Integer(template.top_constant) / (base_denominator + tail),
             q,
             0,
             order,

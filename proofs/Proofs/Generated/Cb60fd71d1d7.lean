@@ -77,7 +77,7 @@ RR direct witness: w0 = 0, w1 = t, transformed a1 = t, target a1 = t^2 + t
 Cubic direct witness: w0 = 0, w1 = t, w2 = t^2, transformed a2 = t^4 - t^3 + t^2 - t, target a2 = t^4 + t^2
 First reverse-equivalence scales: r1 = t + 1, r2 = (t^2 + 1)/(t + 1), r3 = (t^3 + 1)/(t^2 + 1), r4 = (t^4 + 1)/(t^3 + 1)
 These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.
-Current source-family-specific exact lane: zero-shift f2/gcf3 n-dependent equivalence, whose final surviving obstruction coefficient is t.
+Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2 n-dependent equivalence, plus the unit-lambda-shift nearest lanes, formalized in Proofs/HeroCasePage43Equivalence.lean, with zero-shift final surviving obstruction coefficients t and t, and shifted impossible m1 coefficients lambda*t^2 - t and lambda*t^2 - t.
 -/
 
 
@@ -110,8 +110,8 @@ Suggested next theorem extensions:
 
 1. Lift the coefficient domain from polynomials to rational functions and
    formalize the reverse equivalence transform.
-2. Formalize the zero-shift f2/gcf3 n-dependent equivalence obstruction
-   from the exact residual polynomial already emitted by the Python audit.
+2. Extend the page-43 equivalence layer beyond the currently formalized
+   zero-shift and unit-lambda-shift f2/gcf3 and f4/gcf2 obstruction theorems.
 3. Compare candidate convergents against nearby benchmark convergents.
 4. Formalize the Bauer-Muir transform algebra itself instead of injecting only
    the recovered witnesses.

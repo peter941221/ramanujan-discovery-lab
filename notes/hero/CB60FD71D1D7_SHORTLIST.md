@@ -33,8 +33,16 @@ B1(t) = 1 + K_{n>=1} t^n / 1.
   the current low-degree (`1` / `2`) search boxes, and no exact small-integer
   multiplicative RR-tower product relation
   `F = prod_i B_i^(e_i)` was found in the current benchmark-prefix scan either.
+- The named source-family multiplicative scan for
+  `F = candidate / RR(q^3)` also reports `0` hits in the current prefix boxes
+  built from `RR`, `cubic`, `GG`, and `S`, so wiring the Gordon/Hirschhorn line
+  into the benchmark family did not collapse the hero case to an obvious
+  literature basis product.
+- The exact page-43 equivalence layer now rules out both the zero-shift and the
+  first unit-`lambda` nearest `f2/gcf3` and `f4/gcf2` lanes; the unit-shift
+  lanes already fail at the surviving `m^1` term `lambda*t^2 - t`.
 
-## Shortlist: Next Sources To Check
+## Shortlist: Next Source Lanes To Deepen
 
 The point of this list is not breadth, but "most likely to contain a close cousin"
 of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
@@ -43,8 +51,11 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
    - Exact citation:
      *Some continued fractions of the Rogers-Ramanujan type*,
      Duke Mathematical Journal 32 (1965), 741-748.
-   - Goal: find any RR-like continued fractions whose partial denominators are
-     `1 + q^n` (or can be equivalence-transformed into that form).
+   - Current state: the nearby Gordon/Hirschhorn orbit is now partially encoded
+     in the benchmark layer through `GG(q)` and `S(q)`.
+   - Goal: revisit Gordon-style variants, reciprocal forms, and transform
+     presentations around those base objects rather than just re-encoding the
+     base objects themselves.
 
 2. Hirschhorn, 1974 and 1980
    - Exact citations:
@@ -52,8 +63,11 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
        Duke Mathematical Journal 41 (1974), 27-33.
      - M. D. Hirschhorn, *A continued fraction of Ramanujan*,
        Journal of the Australian Mathematical Society Series A 29 (1980), 80-86.
-   - Goal: locate fractions where numerators involve both `q^n` and `q^(2n)`
-     (or a fixed-shift variant that could become our numerator after an index shift).
+   - Current state: `S(q)` is now a verified normalized project benchmark, and
+     the hero ratio object still has no simple multiplicative scan hit against
+     the `RR/cubic/GG/S` basis.
+   - Goal: look for shifted, reciprocated, or equivalence-transformed
+     Hirschhorn-family presentations that could still hide the hero pattern.
 
 3. Berndt (Ramanujan notebooks) and Slater-style catalogs
    - Goal: search for continued fraction entries indexed by modulus `3` or
@@ -63,6 +77,11 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
    - Goal: check whether `C(t)` can be expressed as a rational function of a
      known Weber/Ramanujan continued fraction (even if not an eta-quotient itself).
 
+5. Page-43 substitutions with explicit source-family meaning
+   - Goal: move beyond the current zero-shift and unit-`lambda` nearest lanes
+     and test the next low-complexity parameter shifts or transform templates
+     that still preserve interpretable `f2/gcf3` or `f4/gcf2` provenance.
+
 ## Automation Targets (If A Source Family Looks Promising)
 
 These are concrete expansions to the current tooling that would make a new
@@ -70,20 +89,24 @@ These are concrete expansions to the current tooling that would make a new
 
 1. Broaden the RR-tower relation search
    - Keep the current reciprocal, ratio-object polynomial, ratio-object
-     multiplicative, ratio-object fractional-linear, and two-layer single-basis
-     nonlinear scans, then move to source-family-specific relation templates
+     multiplicative, ratio-object fractional-linear, two-layer single-basis
+     nonlinear, and named source-family multiplicative scans.
+   - The next jump should be parameterized source-family relation templates
      before trying larger raw degree boxes.
 
 2. Extend the source-family-specific exact lane
-   - The zero-shift `f2/gcf3` and `f4/gcf2` `n`-dependent equivalence
-     obstructions are now executable and formalized in Lean.
+   - The zero-shift and first unit-`lambda` nearest `f2/gcf3` and `f4/gcf2`
+     `n`-dependent equivalence obstructions are now executable and formalized
+     in Lean.
    - The next proof-facing step is to widen that exact page-43 layer beyond the
-     current zero-shift nearest lanes rather than re-formalizing the same case.
+     currently formalized nearest lanes rather than re-formalizing the same case.
 
 3. Add a second-ring Bauer--Muir chain search
    - Current scan uses a tiny fixed modifier family; if a literature family is
      found, implement its exact `w_n` templates and search within that.
 
-4. Add a dedicated `1+q^n`-denominator benchmark family (only with a reliable source)
-   - This would let the discovery pipeline classify "Hirschhorn/Gordon-style"
-     neighbors early, instead of treating them as unexplained review cases.
+4. Keep the `1+q^n`-denominator benchmark family literature-backed
+   - `GG(q)` and `S(q)` are now wired as normalized benchmarks with verified
+     product formulas.
+   - Only add more Gordon/Hirschhorn-style bases when the exact continued
+     fraction and product formula are both sourced confidently.

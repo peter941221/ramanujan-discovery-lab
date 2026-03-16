@@ -94,6 +94,7 @@ r4 = (t^4 + 1)/(t^3 + 1)
 
 ### Exact `f2` / `gcf3` `n`-Dependent Equivalence Lane
 
+- Lean mirror module: `proofs/Proofs/HeroCasePage43Equivalence.lean`.
 - Prioritized source-family-specific lane: zero-shift `f2` / `gcf3` under arbitrary `n`-dependent equivalence factors.
 - Write `m = t^(n-1)` and enforce the exact necessary identity
 
@@ -120,6 +121,37 @@ beta_n = 1 + b*m*t + a*m*t^2
 - With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
 - So no arbitrary `n`-dependent equivalence transformation sends the hero case into this zero-shift `f2` / `gcf3` lane.
 
+### Exact `f4` / `gcf2` `n`-Dependent Equivalence Lane
+
+- The same Lean mirror module also now covers the zero-shift `f4` / `gcf2` lane.
+- In that lane the necessary identity becomes
+
+```text
+alpha_n = a*t + lambda*m*t
+beta_(n-1) = 1 - a*t + b*m
+beta_n = 1 - a*t + b*m*t
+```
+
+- Residual polynomial:
+
+```text
+-a^2*m*t^3 + a*b*m^2*t^3 + a*b*m^2*t^2 + 2*a*m*t^2 + a*m*t + a*t - b^2*m^3*t^2 - b*m^2*t^2 - b*m^2*t + lambda*m^2*t + lambda*m*t - m*t
+```
+
+- `m^0` coefficient is `a*t`; exact vanishing forces `a = 0`.
+- After that, the `m^3` coefficient is `-b^2*t^2`; exact vanishing forces `b = 0`.
+- Then the `m^1` coefficient is `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
+- So no arbitrary `n`-dependent equivalence transformation sends the hero case into this zero-shift `f4` / `gcf2` lane either.
+
+### Exact Unit-Shift `lambda` Page-43 Lanes
+
+- The same exact-equivalence layer now also covers the next nearby shift choice `lambda -> lambda*t` with zero `a`/`b` shifts.
+- For `f2/gcf3`, the `m^3` coefficient is unchanged from the zero-shift lane, so exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` can make that polynomial vanish identically.
+- For `f4/gcf2`, exact vanishing again forces `a = 0`, then `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first nonzero `lambda`-shift nearest lanes already fail before any final `m^2` obstruction is needed.
+
 ## Bounded Exact Exclusion Results
 
 - Arithmetic subsequence contractions up to stride `4` with stage comparison depth `3`: RR hits `0`, cubic hits `0`.
@@ -133,7 +165,7 @@ beta_n = 1 + b*m*t + a*m*t^2
 1. Formalize generalized continued fractions and convergent recurrence for finite truncations.
 2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.
 3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.
-4. Formalize the zero-shift `f2/gcf3` `n`-dependent equivalence obstruction as the current source-family-specific exact lane.
+4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.
 5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
 6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.
 7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.

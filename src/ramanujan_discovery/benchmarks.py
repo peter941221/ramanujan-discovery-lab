@@ -23,6 +23,7 @@ RR_Q2_TEMPLATE = _rr_template(2)
 RR_Q3_TEMPLATE = _rr_template(3)
 RR_Q4_TEMPLATE = _rr_template(4)
 
+
 def _cubic_template(step: int) -> QCFTemplate:
     return QCFTemplate(
         numerator_scale=1,
@@ -41,6 +42,28 @@ def _cubic_template(step: int) -> QCFTemplate:
 CUBIC_TEMPLATE = _cubic_template(1)
 CUBIC_Q2_TEMPLATE = _cubic_template(2)
 CUBIC_Q3_TEMPLATE = _cubic_template(3)
+
+GOLLNITZ_GORDON_TEMPLATE = QCFTemplate(
+    base_denominator_q_scale=1,
+    base_denominator_q_shift=1,
+    numerator_scale=1,
+    numerator_q_shift=2,
+    numerator_q_step=2,
+    denominator_constant=1,
+    denominator_scale=1,
+    denominator_q_shift=3,
+    denominator_q_step=2,
+)
+
+HIRSCHHORN_S_TEMPLATE = QCFTemplate(
+    numerator_scale=-1,
+    numerator_q_shift=1,
+    numerator_q_step=2,
+    denominator_constant=1,
+    denominator_scale=1,
+    denominator_q_shift=1,
+    denominator_q_step=1,
+)
 
 SHIFTED_FIXTURE_TEMPLATE = QCFTemplate(
     numerator_scale=1,
@@ -105,6 +128,18 @@ BENCHMARKS: dict[str, BenchmarkDefinition] = {
         description="Ramanujan cubic continued fraction benchmark evaluated at q^3.",
         canonical_template=CUBIC_Q3_TEMPLATE,
     ),
+    "gollnitz_gordon_normalized": BenchmarkDefinition(
+        name="gollnitz_gordon_normalized",
+        kind="literature_family",
+        description="Normalized Ramanujan-Gollnitz-Gordon continued fraction verified by its product formula.",
+        canonical_template=GOLLNITZ_GORDON_TEMPLATE,
+    ),
+    "hirschhorn_s_normalized": BenchmarkDefinition(
+        name="hirschhorn_s_normalized",
+        kind="literature_family",
+        description="Normalized Hirschhorn S(q) continued fraction verified by its product formula.",
+        canonical_template=HIRSCHHORN_S_TEMPLATE,
+    ),
     "shifted_rr_fixture": BenchmarkDefinition(
         name="shifted_rr_fixture",
         kind="internal_fixture",
@@ -146,6 +181,22 @@ def _cubic_product(q, precision: int, step: int):
     return numerator / denominator
 
 
+def _gollnitz_gordon_product(q, precision: int):
+    q_value = mp.mpf(str(q))
+    q_step = q_value**8
+    numerator = q_pochhammer(q_value, q_step, precision) * q_pochhammer(q_value**7, q_step, precision)
+    denominator = q_pochhammer(q_value**3, q_step, precision) * q_pochhammer(q_value**5, q_step, precision)
+    return numerator / denominator
+
+
+def _hirschhorn_s_product(q, precision: int):
+    q_value = mp.mpf(str(q))
+    q_step = q_value**3
+    numerator = q_pochhammer(q_value**2, q_step, precision)
+    denominator = q_pochhammer(q_value, q_step, precision)
+    return numerator / denominator
+
+
 def target_value(name: str, q: float, precision: int, depth: int):
     with mp.workdps(precision):
         if name == "rogers_ramanujan_normalized":
@@ -168,6 +219,12 @@ def target_value(name: str, q: float, precision: int, depth: int):
 
         if name == "ramanujan_cubic_q3_normalized":
             return _cubic_product(q, precision, step=3)
+
+        if name == "gollnitz_gordon_normalized":
+            return _gollnitz_gordon_product(q, precision)
+
+        if name == "hirschhorn_s_normalized":
+            return _hirschhorn_s_product(q, precision)
 
     if name == "shifted_rr_fixture":
         return evaluate_qcf(SHIFTED_FIXTURE_TEMPLATE, q=q, depth=depth, precision=precision)

@@ -47,6 +47,24 @@ def f4ZeroShiftM2 (a b lam : Rat) : QPoly :=
 def f4ZeroShiftM3 (b : Rat) : QPoly :=
   C (-(b * b)) * X ^ 2
 
+def f2UnitLambdaShiftM1 (lam : Rat) : QPoly :=
+  C lam * X ^ 2 + C (-1) * X
+
+def f2UnitLambdaShiftM2 (a b lam : Rat) : QPoly :=
+  C (-a) * X ^ 3 + C (-(a * b + a + b) + lam) * X ^ 2 + C (-b) * X
+
+def f2UnitLambdaShiftM3 (a b : Rat) : QPoly :=
+  f2ZeroShiftM3 a b
+
+def f4UnitLambdaShiftM1 (a lam : Rat) : QPoly :=
+  C (-(a * a)) * X ^ 3 + C (2 * a + lam) * X ^ 2 + C (a - 1) * X
+
+def f4UnitLambdaShiftM2 (a b lam : Rat) : QPoly :=
+  C (a * b) * X ^ 3 + C (a * b - b + lam) * X ^ 2 + C (-b) * X
+
+def f4UnitLambdaShiftM3 (b : Rat) : QPoly :=
+  f4ZeroShiftM3 b
+
 theorem f2ZeroShiftM3_forces_a_zero (a b : Rat) (h : f2ZeroShiftM3 a b = 0) :
     a = 0 := by
   have hEval1 := congrArg (fun p : QPoly => Polynomial.eval (1 : Rat) p) h
@@ -150,6 +168,39 @@ theorem noZeroShiftF4ExactEquivalence :
   have hSpec : f4ZeroShiftM2 0 0 1 = 0 := by
     simpa [ha, hb, hlam] using hM2
   exact f4ZeroShiftM2_specialized_nonzero hSpec
+
+theorem f2UnitLambdaShiftM1_nonzero (lam : Rat) :
+    f2UnitLambdaShiftM1 lam ≠ 0 := by
+  intro h
+  have hCoeff := congrArg (fun p : QPoly => p.coeff 1) h
+  norm_num [f2UnitLambdaShiftM1] at hCoeff
+
+theorem noUnitLambdaShiftF2ExactEquivalence :
+    ¬ ∃ a b lam : Rat,
+      f2UnitLambdaShiftM1 lam = 0 ∧
+      f2UnitLambdaShiftM2 a b lam = 0 ∧
+      f2UnitLambdaShiftM3 a b = 0 := by
+  rintro ⟨a, b, lam, hM1, hM2, hM3⟩
+  exact f2UnitLambdaShiftM1_nonzero lam hM1
+
+theorem f4UnitLambdaShiftM1_specialized_nonzero (lam : Rat) :
+    f4UnitLambdaShiftM1 0 lam ≠ 0 := by
+  intro h
+  have hCoeff := congrArg (fun p : QPoly => p.coeff 1) h
+  norm_num [f4UnitLambdaShiftM1] at hCoeff
+
+theorem noUnitLambdaShiftF4ExactEquivalence :
+    ¬ ∃ a b lam : Rat,
+      f4ZeroShiftM0 a = 0 ∧
+      f4UnitLambdaShiftM1 a lam = 0 ∧
+      f4UnitLambdaShiftM2 a b lam = 0 ∧
+      f4UnitLambdaShiftM3 b = 0 := by
+  rintro ⟨a, b, lam, hM0, hM1, hM2, hM3⟩
+  have ha : a = 0 := f4ZeroShiftM0_forces_a_zero a hM0
+  have hb : b = 0 := f4ZeroShiftM3_forces_b_zero b hM3
+  have hSpec : f4UnitLambdaShiftM1 0 lam = 0 := by
+    simpa [ha] using hM1
+  exact f4UnitLambdaShiftM1_specialized_nonzero lam hSpec
 
 end
 

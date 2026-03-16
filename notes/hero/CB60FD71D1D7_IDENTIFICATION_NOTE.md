@@ -69,6 +69,27 @@ No candidate-dependent relation was found in any scanned prefix box.
 - `total degree <= 1`: no hit for prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
 - `total degree <= 2`: no hit for prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
 
+## Ratio-Object Source-Family Multiplicative Scan
+
+We also searched for exact multiplicative corrections built from nearby named source families:
+
+```text
+F = prod_i S_i^e_i
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- The source-family bases are evaluated in the same variable view used above.
+- `RR = rogers_ramanujan_normalized`
+- `cubic = ramanujan_cubic_normalized`
+- `GG = gollnitz_gordon_normalized`
+- `S = hirschhorn_s_normalized`
+
+- Prefixes are scanned in that order, solving exact integer exponents from the log-series constraints and then verifying by exact series re-expansion.
+
+No source-family multiplicative relation was found in any scanned prefix box.
+
+- No hit for source-family prefixes ending at `RR`, `cubic`, `GG`, `S`.
+
 ## Ratio-Object RR-Tower Prefix Scan
 
 We also scanned the multiplicative correction object against prefixes of the benchmark tower:

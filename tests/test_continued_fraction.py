@@ -2,6 +2,8 @@ from ramanujan_discovery.benchmarks import (
     CUBIC_Q2_TEMPLATE,
     CUBIC_Q3_TEMPLATE,
     CUBIC_TEMPLATE,
+    GOLLNITZ_GORDON_TEMPLATE,
+    HIRSCHHORN_S_TEMPLATE,
     RR_Q2_TEMPLATE,
     RR_Q3_TEMPLATE,
     RR_Q4_TEMPLATE,
@@ -26,6 +28,8 @@ def test_extended_classical_benchmarks_match_product_formula():
         ("ramanujan_cubic_normalized", CUBIC_TEMPLATE),
         ("ramanujan_cubic_q2_normalized", CUBIC_Q2_TEMPLATE),
         ("ramanujan_cubic_q3_normalized", CUBIC_Q3_TEMPLATE),
+        ("gollnitz_gordon_normalized", GOLLNITZ_GORDON_TEMPLATE),
+        ("hirschhorn_s_normalized", HIRSCHHORN_S_TEMPLATE),
     ]
     for benchmark_name, template in checks:
         for q_value in (0.04, 0.09, 0.15):

@@ -64,6 +64,7 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "Heine `cor2cf` Odd/Even Branch Obstructions" in text
     assert "Exact `f2` / `gcf3` `n`-Dependent Equivalence Lane" in text
     assert "Exact `f4` / `gcf2` `n`-Dependent Equivalence Lane" in text
+    assert "Exact Unit-Shift `lambda` Page-43 Lanes" in text
     assert "Bounded Exact Exclusion Results" in text
     assert "Page-43 low-complexity rational-prefactor box" in text
     assert "Exact Reduction And Equivalence Witness" in text

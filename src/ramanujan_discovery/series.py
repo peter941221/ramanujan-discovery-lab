@@ -105,6 +105,8 @@ def series_to_sympy(series: Series, q: sp.Symbol) -> sp.Expr:
 
 
 def _template_exponent_parts(template: QCFTemplate) -> Iterable[int]:
+    if template.base_denominator_q_scale != 0:
+        yield template.base_denominator_q_shift
     yield template.numerator_q_shift
     yield template.numerator_q_step
     if template.numerator_extra_scale != 0:
@@ -167,6 +169,10 @@ def continued_fraction_series_coeffs(template: QCFTemplate, *, depth: int, order
 
     final_den = _zero_series(order)
     final_den[0] = sp.Integer(template.base_denominator)
+    if template.base_denominator_q_scale != 0 and 0 <= template.base_denominator_q_shift < order:
+        final_den[template.base_denominator_q_shift] = sp.simplify(
+            final_den[template.base_denominator_q_shift] + template.base_denominator_q_scale
+        )
     for idx, coeff in enumerate(tail):
         if coeff == 0:
             continue
@@ -174,4 +180,3 @@ def continued_fraction_series_coeffs(template: QCFTemplate, *, depth: int, order
 
     inv_final = series_invert(final_den)
     return [sp.simplify(sp.Integer(template.top_constant) * coeff) for coeff in inv_final]
-

@@ -20,7 +20,9 @@ from ramanujan_discovery.research import (
     heine_hcf2_standardized_coeffs,
     parity_contraction_coeffs,
     page43_f2_zero_shift_equivalence_obstruction,
+    page43_f2_unit_lambda_shift_equivalence_obstruction,
     page43_f4_zero_shift_equivalence_obstruction,
+    page43_f4_unit_lambda_shift_equivalence_obstruction,
     page43_monomial_parameter_search,
     page43_rational_parameter_search,
     reduce_template_by_step,
@@ -106,6 +108,30 @@ def test_page43_f4_zero_shift_equivalence_obstruction_has_forced_parameter_failu
     assert sp.simplify(obstruction.reduced_m1_coefficient - (lam * q - q)) == 0
     assert obstruction.forced_lambda_solution == {lam: 1}
     assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
+
+
+def test_page43_f2_unit_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_unit_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(
+        obstruction.m_coefficients[3] - (-q**2 * (a**2 * q**2 + 2 * a * b * q + a * b + b**2))
+    ) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
+
+
+def test_page43_f4_unit_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_unit_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(obstruction.m_coefficients[0] - (a * q)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert sp.simplify(obstruction.m_coefficients[3].subs(obstruction.forced_a_solution) - (-b**2 * q**2)) == 0
+    assert obstruction.forced_b_solution == {b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
 
 
 def test_two_modulus_pochhammer_fit_recovers_mixed_moduli_beyond_single_period_box():

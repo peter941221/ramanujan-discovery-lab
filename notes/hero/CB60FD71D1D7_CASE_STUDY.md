@@ -59,13 +59,14 @@ coefficient equalities), not a final analytic identity.
 
 ## What Has Been Tried For Identification (Negative Results)
 
-Two simple "recognition" attempts have been run on the step-reduced reciprocals:
+Three recognition layers have now been run on the step-reduced reciprocals or
+their ratio objects:
 
 1. Euler-product fingerprints:
    the ratio `candidate / RR(q^3)` and the reciprocal `C(t)` both yield dense,
    rapidly growing Euler-product exponents, making a small eta/Pochhammer tweak
    explanation unlikely in the searched boxes.
-2. Small-degree algebraic relations:
+2. Generic RR-tower relation boxes:
    no polynomial relation `P(C,B1)=0` was found up to total degree `4`, checked
    modulo `t^90`; the broader RR-tower pass still found no candidate-dependent
    low-degree relation in the scanned prefixes built from
@@ -78,10 +79,19 @@ Two simple "recognition" attempts have been run on the step-reduced reciprocals:
    `F = (1 + sum a_i (B_i - 1)) / (1 + sum b_i (B_i - 1))` still gives no hit
    through the same RR-tower prefixes. A second-ring nonlinear pass with two
    single-basis fractional-linear factors still gives no hit there either.
-   On the source-family side, the zero-shift `f2/gcf3` and `f4/gcf2`
-   `n`-dependent equivalence lanes are now also ruled out exactly: in both
-   cases the necessary residual polynomial forces `a = b = 0`, then
-   `lambda = 1`, but still leaves a surviving `m^2` coefficient `t`.
+3. Named source-family and exact nearby-lane checks:
+   the older `1 + q^n` denominator literature is now represented directly by
+   the normalized source-family bases `RR`, `cubic`, `GG`, and `S`, but the
+   exact multiplicative correction box
+   `F = prod_i S_i^(e_i)` still has no hit for the ratio
+   `F = candidate / RR(q^3)`.
+   On the page-43 side, the zero-shift `f2/gcf3` and `f4/gcf2`
+   `n`-dependent equivalence lanes are ruled out exactly: in both cases the
+   necessary residual polynomial forces `a = b = 0`, then `lambda = 1`, but
+   still leaves a surviving `m^2` coefficient `t`. The first nearby
+   unit-`lambda`-shift lanes fail even earlier: after the same forced
+   specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`,
+   so no constant `lambda` can make those lanes vanish identically.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.

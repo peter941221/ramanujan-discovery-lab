@@ -175,6 +175,43 @@ beta_n = 1 + b*m*t + a*m*t^2
 - With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
 - So the current hero case is not in this zero-shift `f2` / `gcf3` equivalence lane.
 
+## Exact `f4` / `gcf2` n-Dependent Equivalence Check
+
+- Next source-family-specific lane: the zero-shift `f4` / `gcf2` family under an arbitrary `n`-dependent equivalence transformation.
+- Write `m = t^(n-1)` and enforce the same necessary identity:
+
+```text
+alpha_n * (1 + t^(n-1)) = t^n * beta_(n-1) * beta_n
+```
+
+- In the zero-shift `f4` lane this becomes:
+
+```text
+alpha_n = a*t + lambda*m*t
+beta_(n-1) = 1 - a*t + b*m
+beta_n = 1 - a*t + b*m*t
+```
+
+- Residual polynomial:
+
+```text
+-a^2*m*t^3 + a*b*m^2*t^3 + a*b*m^2*t^2 + 2*a*m*t^2 + a*m*t + a*t - b^2*m^3*t^2 - b*m^2*t^2 - b*m^2*t + lambda*m^2*t + lambda*m*t - m*t
+```
+
+- `m^0` coefficient: `a*t`; exact vanishing forces `a = 0`.
+- After `a = 0`, the `m^3` coefficient is `-b^2*t^2`; exact vanishing forces `b = 0`.
+- After that, the `m^1` coefficient is `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
+- So the current hero case is not in this zero-shift `f4` / `gcf2` equivalence lane either.
+
+## Exact Unit-Shift `lambda` Page-43 Equivalence Check
+
+- We also checked the next nearby shift choice `lambda -> lambda*t` while keeping the `a` and `b` shifts at `0`.
+- In `f2/gcf3`, the `m^3` coefficient is still `-a^2*t^4 - 2*a*b*t^3 - a*b*t^2 - b^2*t^2`, so exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` makes that polynomial vanish identically.
+- In `f4/gcf2`, exact vanishing again forces `a = 0`, then `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first nonzero `lambda`-shift nearest lanes already fail before any final `m^2` obstruction is needed.
+
 ## Cubic Odd/Even Contraction Check
 
 - Treat the reduced cubic benchmark reciprocal as `1 + K (t^n + t^(2n)) / 1`.

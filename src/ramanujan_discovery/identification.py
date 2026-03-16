@@ -92,6 +92,15 @@ class MultiplicativeRelationScan:
 
 
 @dataclass(frozen=True)
+class NamedMultiplicativeRelationScan:
+    """Outcome for one prefix scan of named source-family multiplicative templates."""
+
+    basis_labels: tuple[str, ...]
+    relation: MultiplicativeRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class TwoLayerFractionalLinearRelation:
     """A product of two low-complexity fractional-linear factors."""
 
@@ -1012,6 +1021,45 @@ def scan_ratio_benchmark_multiplicative_prefixes(
     return scans
 
 
+def scan_named_multiplicative_prefixes(
+    *,
+    target_series: Series,
+    ordered_basis_series: tuple[tuple[str, Series], ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[NamedMultiplicativeRelationScan]:
+    if not ordered_basis_series:
+        return []
+
+    scans: list[NamedMultiplicativeRelationScan] = []
+    prefix: list[tuple[str, Series]] = []
+    for label, series in ordered_basis_series:
+        prefix.append((label, series))
+        basis_series_by_variable = {name: basis for name, basis in prefix}
+        try:
+            relation = search_multiplicative_relation(
+                target_series=target_series,
+                basis_series_by_variable=basis_series_by_variable,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+            scans.append(
+                NamedMultiplicativeRelationScan(
+                    basis_labels=tuple(name for name, _ in prefix),
+                    relation=relation,
+                )
+            )
+        except ValueError as exc:
+            scans.append(
+                NamedMultiplicativeRelationScan(
+                    basis_labels=tuple(name for name, _ in prefix),
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+    return scans
+
+
 def scan_ratio_benchmark_two_layer_fractional_linear_prefixes(
     *,
     ratio_series: Series,
@@ -1099,6 +1147,34 @@ def scan_ratio_benchmark_two_layer_fractional_linear_prefixes(
     return scans
 
 
+def _closest_source_family_base_name(closest_benchmark: str) -> str | None:
+    if closest_benchmark.startswith("rogers_ramanujan"):
+        return "rogers_ramanujan_normalized"
+    if closest_benchmark.startswith("ramanujan_cubic"):
+        return "ramanujan_cubic_normalized"
+    if closest_benchmark.startswith("gollnitz_gordon"):
+        return "gollnitz_gordon_normalized"
+    if closest_benchmark.startswith("hirschhorn_s"):
+        return "hirschhorn_s_normalized"
+    return None
+
+
+def _source_family_basis_catalog(closest_benchmark: str) -> tuple[tuple[str, str], ...]:
+    catalog: list[tuple[str, str]] = [
+        ("RR", "rogers_ramanujan_normalized"),
+        ("cubic", "ramanujan_cubic_normalized"),
+        ("GG", "gollnitz_gordon_normalized"),
+        ("S", "hirschhorn_s_normalized"),
+    ]
+    preferred = _closest_source_family_base_name(closest_benchmark)
+    if preferred is not None:
+        for index, (_, benchmark_name) in enumerate(catalog):
+            if benchmark_name == preferred:
+                catalog.insert(0, catalog.pop(index))
+                break
+    return tuple(catalog)
+
+
 def build_candidate_identification_note(
     *,
     input_path: str,
@@ -1175,6 +1251,24 @@ def build_candidate_identification_note(
     extra_relation_error: str | None = None
     benchmark_power_series: dict[int, Series] = {}
     extra_search_degree = min(profile_degree, 3 if smoke else profile_degree)
+    source_family_basis_catalog = _source_family_basis_catalog(record.closest_benchmark)
+    source_family_basis_series = tuple(
+        (
+            label,
+            continued_fraction_series_coeffs(
+                get_benchmark(benchmark_name).canonical_template.normalized(),
+                depth=profile_depth,
+                order=profile_order,
+            ),
+        )
+        for label, benchmark_name in source_family_basis_catalog
+    )
+    source_family_multiplicative_scans = scan_named_multiplicative_prefixes(
+        target_series=ratio_series,
+        ordered_basis_series=source_family_basis_series,
+        order=profile_order,
+        max_abs_exponent=4 if smoke else 6,
+    )
     power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_multiplicative_scans: list[MultiplicativeRelationScan] = []
@@ -1426,6 +1520,77 @@ def build_candidate_identification_note(
                             "",
                         ]
                     )
+
+    if source_family_multiplicative_scans:
+        lines.extend(
+            [
+                "",
+                "## Ratio-Object Source-Family Multiplicative Scan",
+                "",
+                "We also searched for exact multiplicative corrections built from nearby named source families:",
+                "",
+                "```text",
+                "F = prod_i S_i^e_i",
+                "```",
+                "",
+                f"- `F = candidate / {record.closest_benchmark}`",
+                "- The source-family bases are evaluated in the same variable view used above.",
+            ]
+        )
+        for label, benchmark_name in source_family_basis_catalog:
+            lines.append(f"- `{label} = {benchmark_name}`")
+        lines.extend(
+            [
+                "",
+                "- Prefixes are scanned in that order, solving exact integer exponents from the log-series constraints and then verifying by exact series re-expansion.",
+                "",
+            ]
+        )
+
+        any_source_hit = any(scan.relation is not None for scan in source_family_multiplicative_scans)
+        if not any_source_hit:
+            lines.append("No source-family multiplicative relation was found in any scanned prefix box.")
+            lines.append("")
+
+        no_hit_labels = [
+            f"`{scan.basis_labels[-1]}`"
+            for scan in source_family_multiplicative_scans
+            if scan.error is None
+        ]
+        if not any_source_hit and no_hit_labels:
+            lines.append(
+                f"- No hit for source-family prefixes ending at {', '.join(no_hit_labels)}."
+            )
+
+        for scan in source_family_multiplicative_scans:
+            if scan.error is not None:
+                lines.append(
+                    f"- Source-family prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                )
+            elif scan.relation is not None:
+                residual = _multiplicative_relation_residual_series(
+                    scan.relation,
+                    target_series=ratio_series,
+                    basis_series_by_variable={
+                        label: series
+                        for label, series in source_family_basis_series
+                        if label in scan.basis_labels
+                    },
+                    order=profile_order,
+                )
+                residual_ok = all(sp.simplify(value) == 0 for value in residual)
+                lines.extend(
+                    [
+                        f"- Source-family prefix ending at `{scan.basis_labels[-1]}` produced a candidate relation:",
+                        "",
+                        "```text",
+                        _format_multiplicative_relation(scan.relation, target_variable="F"),
+                        "```",
+                        "",
+                        f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                        "",
+                    ]
+                )
 
     if ratio_power_tower_scans:
         lines.extend(

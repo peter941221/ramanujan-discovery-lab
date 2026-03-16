@@ -7,6 +7,8 @@ from dataclasses import dataclass
 class QCFTemplate:
     top_constant: int = 1
     base_denominator: int = 1
+    base_denominator_q_scale: int = 0
+    base_denominator_q_shift: int = 1
     numerator_scale: int = 1
     numerator_q_shift: int = 1
     numerator_q_step: int = 1
@@ -18,7 +20,11 @@ class QCFTemplate:
     denominator_q_shift: int = 1
     denominator_q_step: int = 1
 
-    def _normalized_parts(self) -> tuple[int, int, int, int, int, int, int, int, int, int, int, int]:
+    def _normalized_parts(self) -> tuple[int, int, int, int, int, int, int, int, int, int, int, int, int, int]:
+        base_denominator_q_shift = self.base_denominator_q_shift
+        if self.base_denominator_q_scale == 0:
+            base_denominator_q_shift = 0
+
         numerator_extra_q_shift = self.numerator_extra_q_shift
         numerator_extra_q_step = self.numerator_extra_q_step
         if self.numerator_extra_scale == 0:
@@ -34,6 +40,8 @@ class QCFTemplate:
         return (
             self.top_constant,
             self.base_denominator,
+            self.base_denominator_q_scale,
+            base_denominator_q_shift,
             self.numerator_scale,
             self.numerator_q_shift,
             self.numerator_q_step,
@@ -53,6 +61,8 @@ class QCFTemplate:
         (
             top_constant,
             base_denominator,
+            base_denominator_q_scale,
+            base_denominator_q_shift,
             numerator_scale,
             numerator_q_shift,
             numerator_q_step,
@@ -64,9 +74,12 @@ class QCFTemplate:
             denominator_q_shift,
             denominator_q_step,
         ) = self._normalized_parts()
+        base_part = f"top={top_constant};base={base_denominator}"
+        if base_denominator_q_scale != 0:
+            base_part += f";bqs={base_denominator_q_scale};bqr={base_denominator_q_shift}"
         return (
             "qcf:"
-            f"top={top_constant};base={base_denominator};"
+            f"{base_part};"
             f"ns={numerator_scale};nr={numerator_q_shift};nk={numerator_q_step};"
             f"nes={numerator_extra_scale};ner={numerator_extra_q_shift};nek={numerator_extra_q_step};"
             f"dc={denominator_constant};ds={denominator_scale};"
@@ -74,6 +87,13 @@ class QCFTemplate:
         )
 
     def latex(self) -> str:
+        base_denominator = str(self.base_denominator)
+        if self.base_denominator_q_scale != 0:
+            base_denominator += (
+                " + "
+                f"{self.base_denominator_q_scale} q^{{{self.base_denominator_q_shift}}}"
+            )
+
         numerator = (
             f"{self.numerator_scale} q^{{{self.numerator_q_shift} + {self.numerator_q_step}(n-1)}}"
         )
@@ -85,7 +105,9 @@ class QCFTemplate:
             )
 
         return (
-            r"\cfrac{1}{1 + \cfrac{"
+            r"\cfrac{1}{"
+            f"{base_denominator}"
+            r" + \cfrac{"
             f"{numerator}"
             r"}{"
             f"{self.denominator_constant} + "
@@ -97,6 +119,8 @@ class QCFTemplate:
         return {
             "top_constant": self.top_constant,
             "base_denominator": self.base_denominator,
+            "base_denominator_q_scale": self.base_denominator_q_scale,
+            "base_denominator_q_shift": self.base_denominator_q_shift,
             "numerator_scale": self.numerator_scale,
             "numerator_q_shift": self.numerator_q_shift,
             "numerator_q_step": self.numerator_q_step,
@@ -115,6 +139,8 @@ class QCFTemplate:
 
     def complexity_score(self) -> int:
         score = 0
+        if self.base_denominator_q_scale != 0:
+            score += 2
         if self.numerator_scale != 1:
             score += 1
         if self.numerator_q_shift != 1:
@@ -130,7 +156,9 @@ class QCFTemplate:
         return score
 
     def exploratory_family_key(self, closest_benchmark: str) -> str:
-        if self.numerator_extra_scale == 0 and self.denominator_scale == 0:
+        if self.base_denominator_q_scale != 0 and self.numerator_extra_scale == 0 and self.denominator_scale == 0:
+            family_kind = "base_perturbed_family"
+        elif self.numerator_extra_scale == 0 and self.denominator_scale == 0:
             family_kind = "single_numerator_family"
         elif self.numerator_extra_scale != 0 and self.denominator_scale == 0:
             family_kind = "double_numerator_family"

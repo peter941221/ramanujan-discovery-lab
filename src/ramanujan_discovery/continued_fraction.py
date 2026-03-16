@@ -40,7 +40,12 @@ def evaluate_qcf(template: QCFTemplate, q: float, depth: int, precision: int):
         for index in range(depth - 2, -1, -1):
             tail = numerators[index] / (denominators[index] + tail)
 
-        return template.top_constant / (template.base_denominator + tail)
+        base_denominator = mp.mpf(template.base_denominator)
+        if template.base_denominator_q_scale != 0:
+            base_denominator += template.base_denominator_q_scale * (
+                q_value ** template.base_denominator_q_shift
+            )
+        return template.top_constant / (base_denominator + tail)
 
 
 def q_pochhammer(a, q, precision: int, max_terms: int | None = None):

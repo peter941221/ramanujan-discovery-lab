@@ -104,6 +104,45 @@ invariant presentations.
   (e.g., `S(q)`, `GG(q)`), but the exact mixed numerator
   `q^(3n) + q^(6n)` structure remains unlocated.
 
+## 2026-03-16 Update: Encoded `1+q^n` Literature Bases
+
+This pass turned the older `1 + q^n` denominator references into exact project
+benchmarks rather than keeping them only as prose reminders.
+
+1. `S(q)` benchmark
+   - Encoded as `hirschhorn_s_normalized`.
+   - Continued fraction model:
+
+```text
+1 / (1 - q/(1 + q + (-q^3)/(1 + q^2 + (-q^5)/(1 + q^3 + ...))))
+```
+
+   - Verified against the product
+     `(q^2; q^3)_∞ / (q; q^3)_∞`.
+
+2. `GG(q)` benchmark
+   - Encoded as `gollnitz_gordon_normalized`.
+   - Normalized object:
+
+```text
+1 / (1 + q + q^2/(1 + q^3 + q^4/(1 + q^5 + ...)))
+```
+
+   - Verified against the product
+     `(q, q^7; q^8)_∞ / ((q^3; q^8)_∞ (q^5; q^8)_∞)`.
+
+3. Outcome for the hero case
+   - The identification note now scans the multiplicative correction
+     `candidate / RR(q^3)` against the named source-family basis
+     `RR`, `cubic`, `GG`, `S`.
+   - Result: `0` hits in the current exact multiplicative prefix boxes.
+
+Interpretation:
+
+- This narrows the "simple named source-family product correction" explanation.
+- It still does **not** rule out transformed, shifted, reciprocated, or more
+  nonlinear Gordon/Hirschhorn presentations.
+
 ## Transform Audit Update
 
 - A dedicated audit note now records the first explicit transform eliminations:
