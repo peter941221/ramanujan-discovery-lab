@@ -1,5 +1,4 @@
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Proofs.GeneralizedCF
+import Proofs.HeroCaseObjects
 
 open Polynomial
 
@@ -11,20 +10,23 @@ abbrev QRatFunc := RatFunc Rat
 
 noncomputable section
 
-def heroA : Nat → QRatFunc
-  | k => RatFunc.X ^ (k + 1) + RatFunc.X ^ (2 * (k + 1))
+/-!
+This file upgrades the Python-derived "reverse equivalence witness" into a fully
+checked theorem over `RatFunc Rat`, so the stage scales are genuine rational
+functions and we can prove the transform is correct for all stages.
+-/
 
-def heroB : Nat → QRatFunc
-  | k => 1 + RatFunc.X ^ (k + 1)
+def heroA : Nat → QRatFunc :=
+  Proofs.HeroCase.heroA (t := RatFunc.X)
 
-def reducedHeroA : Nat → QRatFunc
-  | 0 => RatFunc.X
-  | 1 => RatFunc.X ^ 2
-  | k + 2 => RatFunc.X ^ (k + 3) * (1 + RatFunc.X ^ (k + 1))
+def heroB : Nat → QRatFunc :=
+  Proofs.HeroCase.heroB (t := RatFunc.X)
 
-def reducedHeroB : Nat → QRatFunc
-  | 0 => 1
-  | k + 1 => 1 + RatFunc.X ^ (k + 1)
+def reducedHeroA : Nat → QRatFunc :=
+  Proofs.HeroCase.reducedHeroAGeneric (t := RatFunc.X)
+
+def reducedHeroB : Nat → QRatFunc :=
+  Proofs.HeroCase.reducedHeroBGeneric (t := RatFunc.X)
 
 def reverseScale : Nat → QRatFunc
   | 0 => 1 + RatFunc.X
@@ -91,7 +93,8 @@ theorem reverseScale_stage2 :
 
 theorem reverseTransform_stage0_a :
     reverseTransformedA 0 = heroA 0 := by
-  simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale, reducedHeroA, heroA]
+  simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale,
+    reducedHeroA, Proofs.HeroCase.reducedHeroAGeneric, heroA, Proofs.HeroCase.heroA]
   ring_nf
 
 theorem reverseTransform_stage1_a :
@@ -99,7 +102,8 @@ theorem reverseTransform_stage1_a :
   calc
     reverseTransformedA 1
         = reverseScale 1 * (reverseScale 0 * RatFunc.X ^ 2) := by
-            simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale, reducedHeroA, mul_left_comm, mul_comm]
+            simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale,
+              reducedHeroA, Proofs.HeroCase.reducedHeroAGeneric, mul_left_comm, mul_comm]
     _ = reverseScale 1 * ((1 + RatFunc.X) * RatFunc.X ^ 2) := by
           simp [reverseScale, mul_left_comm, mul_comm]
     _ = (reverseScale 1 * (1 + RatFunc.X)) * RatFunc.X ^ 2 := by
@@ -107,15 +111,16 @@ theorem reverseTransform_stage1_a :
     _ = (1 + RatFunc.X ^ 2) * RatFunc.X ^ 2 := by
           rw [reverseScale_mul_denominator_stage1]
     _ = heroA 1 := by
-          simp [heroA]
-          ring
+          simp [heroA, Proofs.HeroCase.heroA]
+          ring_nf
 
 theorem reverseTransform_stage2_a :
     reverseTransformedA 2 = heroA 2 := by
   calc
     reverseTransformedA 2
         = reverseScale 2 * (reverseScale 1 * (RatFunc.X ^ 3 * (1 + RatFunc.X))) := by
-            simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale, reducedHeroA, mul_left_comm, mul_comm]
+            simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale,
+              reducedHeroA, Proofs.HeroCase.reducedHeroAGeneric, mul_left_comm, mul_comm]
     _ = reverseScale 2 * ((reverseScale 1 * (1 + RatFunc.X)) * RatFunc.X ^ 3) := by
           ring
     _ = reverseScale 2 * ((1 + RatFunc.X ^ 2) * RatFunc.X ^ 3) := by
@@ -125,32 +130,35 @@ theorem reverseTransform_stage2_a :
     _ = (1 + RatFunc.X ^ 3) * RatFunc.X ^ 3 := by
           rw [reverseScale_mul_denominator_stage2]
     _ = heroA 2 := by
-          simp [heroA]
-          ring
+          simp [heroA, Proofs.HeroCase.heroA]
+          ring_nf
 
 theorem reverseTransform_stage0_b :
     reverseTransformedB 0 = heroB 0 := by
-  simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale, reducedHeroB, heroB]
+  simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale,
+    reducedHeroB, Proofs.HeroCase.reducedHeroBGeneric, heroB, Proofs.HeroCase.heroB]
 
 theorem reverseTransform_stage1_b :
     reverseTransformedB 1 = heroB 1 := by
   calc
     reverseTransformedB 1 = reverseScale 1 * (1 + RatFunc.X) := by
-      simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reducedHeroB]
+      simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat,
+        reducedHeroB, Proofs.HeroCase.reducedHeroBGeneric]
     _ = 1 + RatFunc.X ^ 2 := by
       rw [reverseScale_mul_denominator_stage1]
     _ = heroB 1 := by
-      simp [heroB]
+      simp [heroB, Proofs.HeroCase.heroB]
 
 theorem reverseTransform_stage2_b :
     reverseTransformedB 2 = heroB 2 := by
   calc
     reverseTransformedB 2 = reverseScale 2 * (1 + RatFunc.X ^ 2) := by
-      simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reducedHeroB]
+      simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat,
+        reducedHeroB, Proofs.HeroCase.reducedHeroBGeneric]
     _ = 1 + RatFunc.X ^ 3 := by
       rw [reverseScale_mul_denominator_stage2]
     _ = heroB 2 := by
-      simp [heroB]
+      simp [heroB, Proofs.HeroCase.heroB]
 
 theorem reverseTransformA_all (k : Nat) :
     reverseTransformedA k = heroA k := by
@@ -163,7 +171,8 @@ theorem reverseTransformA_all (k : Nat) :
           simpa using reverseTransform_stage1_a
       | succ k =>
           -- General stage: the (1 + X^(k+1)) and (1 + X^(k+2)) factors cancel.
-          simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale, reducedHeroA, heroA]
+          simp [reverseTransformedA, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale,
+            reducedHeroA, Proofs.HeroCase.reducedHeroAGeneric, heroA, Proofs.HeroCase.heroA]
           field_simp [one_add_X_pow_ne_zero k, one_add_X_pow_ne_zero (k + 1)]
           ring_nf
 
@@ -171,7 +180,8 @@ theorem reverseTransformB_all (k : Nat) :
     reverseTransformedB k = heroB k := by
   cases k with
   | zero =>
-      simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale, reducedHeroB, heroB]
+      simp [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reverseScale,
+        reducedHeroB, Proofs.HeroCase.reducedHeroBGeneric, heroB, Proofs.HeroCase.heroB]
   | succ k =>
       simpa [reverseTransformedB, retransformedHeroDataRat, equivalenceTransform, reducedHeroDataRat, reducedHeroB, heroB] using reverseScale_mul_denominator k
 
@@ -183,6 +193,10 @@ theorem retransformedHeroDataRat_eq :
     exact reverseTransformA_all k
   · funext k
     exact reverseTransformB_all k
+
+theorem equivalenceTransform_reducedHeroDataRat_eq :
+    equivalenceTransform reducedHeroDataRat reverseScale = heroDataRat := by
+  simpa [retransformedHeroDataRat] using retransformedHeroDataRat_eq
 
 lemma reverseScale_ne_zero : ∀ k : Nat, reverseScale k ≠ 0 := by
   intro k

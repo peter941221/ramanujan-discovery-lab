@@ -1,85 +1,9 @@
-import Mathlib
-import Proofs.GeneralizedCF
+import Proofs.HeroCaseObjects
 
 open Polynomial
 
 namespace Proofs
 namespace HeroCase
-
-abbrev ZPoly := Polynomial Int
-
-def heroTargetNumerator (n : Nat) (t : Int) : Int :=
-  t ^ n + t ^ (2 * n)
-
-def heroTargetDenominator (n : Nat) (t : Int) : Int :=
-  1 + t ^ n
-
-def heroInitialDenominator (_t : Int) : Int :=
-  1
-
-def rrDirectFirstNumerator (t : Int) : Int :=
-  t
-
-def cubicDirectSecondNumerator (t : Int) : Int :=
-  t ^ 4 - t ^ 3 + t ^ 2 - t
-
-def cubicOddInitialDenominator (t : Int) : Int :=
-  t ^ 2 + t + 1
-
-def cubicEvenFirstDenominator (t : Int) : Int :=
-  t ^ 4 + t ^ 2 + 1
-
-noncomputable section
-
-def heroTargetNumeratorPoly (n : Nat) : ZPoly :=
-  X ^ n + X ^ (2 * n)
-
-def heroTargetDenominatorPoly (n : Nat) : ZPoly :=
-  1 + X ^ n
-
-def heroInitialDenominatorPoly : ZPoly :=
-  1
-
-def rrDirectFirstNumeratorPoly : ZPoly :=
-  X
-
-def cubicDirectSecondNumeratorPoly : ZPoly :=
-  X ^ 4 - X ^ 3 + X ^ 2 - X
-
-def cubicOddInitialDenominatorPoly : ZPoly :=
-  X ^ 2 + X + 1
-
-def cubicEvenFirstDenominatorPoly : ZPoly :=
-  X ^ 4 + X ^ 2 + 1
-
-def heroData : GCFData ZPoly where
-  b0 := 1
-  a := fun k => heroTargetNumeratorPoly (k + 1)
-  b := fun k => heroTargetDenominatorPoly (k + 1)
-
-def reducedHeroA : Nat -> ZPoly
-  | 0 => X
-  | 1 => X ^ 2
-  | k + 2 => X ^ (k + 3) * (1 + X ^ (k + 1))
-
-def reducedHeroB : Nat -> ZPoly
-  | 0 => 1
-  | k + 1 => 1 + X ^ (k + 1)
-
-def reducedHeroData : GCFData ZPoly where
-  b0 := 1
-  a := reducedHeroA
-  b := reducedHeroB
-
-def rrReciprocalData : GCFData ZPoly where
-  b0 := 1
-  a := fun k => X ^ (k + 1)
-  b := fun _ => 1
-
-def cubicReciprocalData : GCFData ZPoly where
-  b0 := 1
-  a := fun k => X ^ (k + 1) + X ^ (2 * (k + 1))
-  b := fun _ => 1
 
 theorem heroTargetNumerator_one (t : Int) :
     heroTargetNumerator 1 t = t + t ^ 2 := by
@@ -92,15 +16,6 @@ theorem heroTargetNumerator_two (t : Int) :
 theorem heroTargetDenominator_one (t : Int) :
     heroTargetDenominator 1 t = 1 + t := by
   simp [heroTargetDenominator]
-
-theorem heroData_stage0_a :
-    heroData.a 0 = heroTargetNumeratorPoly 1 := rfl
-
-theorem heroData_stage1_a :
-    heroData.a 1 = heroTargetNumeratorPoly 2 := rfl
-
-theorem heroData_stage0_b :
-    heroData.b 0 = heroTargetDenominatorPoly 1 := rfl
 
 theorem heroFirstConvergentNumerator :
     continuantNum heroData 1 = 1 + 2 * X + X ^ 2 := by
@@ -121,12 +36,6 @@ theorem heroSecondConvergentDenominator :
   simp [continuantDen, heroData, heroTargetDenominatorPoly]
   simp [heroTargetNumeratorPoly]
   ring_nf
-
-theorem reducedHeroData_stage0_a :
-    reducedHeroData.a 0 = X := rfl
-
-theorem reducedHeroData_stage1_a :
-    reducedHeroData.a 1 = X ^ 2 := rfl
 
 theorem reducedHeroData_stage2_a :
     reducedHeroData.a 2 = X ^ 3 * (1 + X) := by
@@ -284,8 +193,6 @@ theorem noSimpleCubicOddContraction :
 theorem noSimpleCubicEvenContraction :
     cubicEvenFirstDenominatorPoly ≠ heroData.b 0 := by
   simpa [heroData] using cubicEvenFirstDenominatorPoly_mismatch
-
-end
 
 end HeroCase
 end Proofs

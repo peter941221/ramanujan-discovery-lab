@@ -87,14 +87,20 @@ Its current scope is intentionally narrow but no longer purely ad hoc:
 
 - `Proofs/GeneralizedCF.lean` formalizes finite-truncation continuants and the
   convergent recurrence
+- `Proofs/HeroCaseObjects.lean` centralizes the canonical hero-case objects,
+  nearby source objects, and generic reverse-scale definitions
 - `Proofs/HeroCaseLocal.lean` machine-checks exact local obstruction lemmas for
   `cb60fd71d1d7`, including polynomial-level no-match theorems and an exact
   convergent-factor reduction theorem
-- the current hero case also admits an explicit equivalence transformation from
-  that reduced fraction back to the original reciprocal object
-- `Proofs/RationalEquivalence.lean` is a first fraction-field testbed: it lifts
-  the reverse equivalence scales into `RatFunc Rat` and checks the first few
-  retransformed stages exactly
+- `Proofs/HeroCasePage43.lean` formalizes bounded page-43 family exclusions for
+  the current hero case in Laurent polynomials
+- `Proofs/HeroCaseSubsequence.lean` and `Proofs/HeroCaseBauerMuir.lean` mirror
+  the bounded subsequence and Bauer-Muir scans as computation-checked theorems
+- the current hero case also admits an explicit reverse equivalence
+  transformation from the reduced fraction back to the original reciprocal
+  object
+- `Proofs/RationalEquivalence.lean` now proves that reverse equivalence witness
+  over `RatFunc Rat` for all stages of the shared hero-case object
 - `formalize` and `research` now emit that exact reduction/equivalence witness
   explicitly; the reverse transform scales are rational functions, so the next
   formal step likely needs a fraction-field coefficient layer
