@@ -547,6 +547,34 @@ def test_arithmetic_subsequence_contraction_search_has_no_hit_for_hero_template(
     )
 
 
+def test_rr_subsequence_initial_obstruction_coefficients_stay_forced():
+    t = sp.Symbol("t")
+    b0, a_terms, b_terms = _template_reciprocal_coeffs(RR_TEMPLATE, q=t, depth=16)
+    convergents = continued_fraction_convergents(b0=b0, a_terms=a_terms, b_terms=b_terms)
+
+    for n, (numerator, denominator) in enumerate(convergents[1:], start=1):
+        initial_gap = sp.expand(numerator - denominator)
+        assert sp.expand(initial_gap).coeff(t, 1) == 1
+
+    for n, (numerator, denominator) in enumerate(convergents[2:], start=2):
+        first_step_gap = sp.expand(numerator - (1 + t) * denominator)
+        assert sp.expand(first_step_gap).coeff(t, 3) == -1
+
+
+def test_cubic_subsequence_initial_obstruction_coefficients_stay_forced():
+    t = sp.Symbol("t")
+    b0, a_terms, b_terms = _template_reciprocal_coeffs(CUBIC_TEMPLATE, q=t, depth=16)
+    convergents = continued_fraction_convergents(b0=b0, a_terms=a_terms, b_terms=b_terms)
+
+    for n, (numerator, denominator) in enumerate(convergents[1:], start=1):
+        initial_gap = sp.expand(numerator - denominator)
+        assert sp.expand(initial_gap).coeff(t, 1) == 1
+
+    for n, (numerator, denominator) in enumerate(convergents[2:], start=2):
+        first_step_gap = sp.expand(numerator - (1 + t) * denominator)
+        assert sp.expand(first_step_gap).coeff(t, 3) == -1
+
+
 def test_cli_research_writes_note(tmp_path: Path):
     verified = tmp_path / "verified.jsonl"
     output_path = tmp_path / "note.md"

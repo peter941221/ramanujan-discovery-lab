@@ -145,6 +145,11 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "description": "Detailed elimination log for direct, equivalence, contraction, and constrained Bauer-Muir paths.",
             },
             {
+                "title": "Hero Exact Subsequence Obstruction",
+                "href": _repo_markdown_url("CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md"),
+                "description": "A stronger human-written exact obstruction for RR and cubic arithmetic-subsequence origins, beyond the old bounded sample scan.",
+            },
+            {
                 "title": "Hero Identification",
                 "href": _repo_markdown_url("CB60FD71D1D7_IDENTIFICATION_NOTE.md"),
                 "description": "Small-degree algebraic relation guesses between the hero case and its nearest benchmark.",
@@ -158,6 +163,11 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "title": "Hero Novelty Gate",
                 "href": _repo_markdown_url("CB60FD71D1D7_NOVELTY_GATE.md"),
                 "description": "Explicit checklist for why cb60fd71d1d7 is still an unexplained candidate rather than a settled novelty claim.",
+            },
+            {
+                "title": "Hero Bibliography Matrix",
+                "href": _repo_markdown_url("CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md"),
+                "description": "Coverage map of which primary-source families have been checked and why the literature gate is still open.",
             },
             {
                 "title": "Hero Public Article",

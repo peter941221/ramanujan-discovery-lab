@@ -37,7 +37,8 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
 
 4. Exact or computation-checked elimination layers
    - bounded page-43 monomial-substitution exclusions
-   - bounded arithmetic-subsequence contraction exclusions
+   - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
+     stronger exact human-written obstruction for the RR and cubic source lanes
    - bounded 1/2/3-step Bauer-Muir exclusions
    - small-degree algebraic relation search against the nearest benchmark
 
@@ -128,3 +129,9 @@ At least one of the following two routes should be completed.
 2. Expand the literature log into a dated bibliography matrix by source family.
 3. Keep public wording at "unexplained candidate" until steps 1 and 2 are both
    materially stronger.
+
+## Companion Notes
+
+- `CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md`
+- `CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md`
+- `CB60FD71D1D7_LITERATURE_LOG.md`
