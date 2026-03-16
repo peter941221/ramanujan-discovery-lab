@@ -155,6 +155,11 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim.",
             },
             {
+                "title": "Hero Novelty Gate",
+                "href": _repo_markdown_url("CB60FD71D1D7_NOVELTY_GATE.md"),
+                "description": "Explicit checklist for why cb60fd71d1d7 is still an unexplained candidate rather than a settled novelty claim.",
+            },
+            {
                 "title": "Hero Public Article",
                 "href": _repo_markdown_url("CB60FD71D1D7_PUBLIC_ARTICLE.md"),
                 "description": "A publication-ready public article draft for the current hero case.",

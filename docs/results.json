@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-15 05:01:19 UTC",
+  "generated_at": "2026-03-16 00:38:03 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -699,6 +699,11 @@
       "title": "Hero Case Study",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_CASE_STUDY.md",
       "description": "Conservative narrative of the hero-case audit status and what would be needed for a publishable identity claim."
+    },
+    {
+      "title": "Hero Novelty Gate",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_NOVELTY_GATE.md",
+      "description": "Explicit checklist for why cb60fd71d1d7 is still an unexplained candidate rather than a settled novelty claim."
     },
     {
       "title": "Hero Public Article",

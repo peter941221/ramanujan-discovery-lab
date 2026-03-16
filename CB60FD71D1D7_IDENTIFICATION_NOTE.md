@@ -38,6 +38,6 @@ We also tried a small multivariate search that includes benchmark power substitu
 - `B2 = B1(t^2)`
 - `B3 = B1(t^3)`
 
-No nontrivial multivariate polynomial relation was found
+No candidate-dependent multivariate polynomial relation was found
 
 under `total degree <= 4` when checked modulo `t^90`.

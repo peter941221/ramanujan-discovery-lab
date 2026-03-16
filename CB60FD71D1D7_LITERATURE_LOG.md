@@ -127,3 +127,49 @@ invariant presentations.
   - contraction / even-odd part identities
   - longer or less rigid Bauer-Muir chains beyond the direct and tiny 3-step RR/cubic paths already ruled out
   - page-43 Ramanujan ratio families after nontrivial substitutions
+
+## 2026-03-16 Update: Novelty Gate Reminder
+
+This pass was not aimed at finding one more nearby family. It was aimed at
+checking whether the project is already in a position to upgrade the hero case
+from "best unexplained object" to "new discovery".
+
+Additional external sources checked:
+
+1. Berndt, Rebaka, 2025 survey
+   - arXiv: https://arxiv.org/abs/2512.19952
+   - Relevance:
+     - recent survey-level snapshot of Ramanujan-style continued fractions and
+       related identities
+     - strong reminder that the surrounding literature is still active and not
+       frozen at the older notebook / page-43 neighborhood
+   - Outcome:
+     - no direct exact-pattern hit for
+       `(q^(3n) + q^(6n)) / (1 + q^(3n))`
+     - but this source widens, rather than closes, the novelty burden
+
+2. McLaughlin, Monks, Reid, 2025
+   - INTEGERS article: https://doi.org/10.5281/zenodo.14580993
+   - Relevance:
+     - recent primary-source work deriving further Ramanujan-style continued
+       fraction identities in the Rogers-Ramanujan / Gollnitz-Gordon orbit
+     - confirms that "nearby known families" remain an actively developing
+       literature area rather than a closed historical list
+   - Outcome:
+     - no direct exact-pattern hit was recovered in this scan
+     - but the existence of recent identities means the project still needs a
+       broader bibliography pass before using novelty language
+
+Updated interpretation as of `2026-03-16`:
+
+- `cb60fd71d1d7` remains the strongest current unexplained candidate.
+- The exact pattern still has no source hit in the scanned nearby literature.
+- That is still **not** enough to call it a new discovery.
+- The honest threshold is now better stated as:
+  - either identify a final source identity
+  - or build a much stronger named-class exclusion plus a substantially wider
+    literature closure pass
+
+See also:
+
+- `CB60FD71D1D7_NOVELTY_GATE.md`
