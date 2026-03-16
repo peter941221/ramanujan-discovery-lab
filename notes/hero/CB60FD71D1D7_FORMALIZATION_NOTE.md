@@ -152,6 +152,17 @@ beta_n = 1 - a*t + b*m*t
 - For `f4/gcf2`, exact vanishing again forces `a = 0`, then `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
 - So the first nonzero `lambda`-shift nearest lanes already fail before any final `m^2` obstruction is needed.
 
+### Exact Unit-Shift `a` Page-43 Lanes
+
+- The same exact-equivalence layer now also covers the next nearby shift choice `a -> a*t` with zero `b`/`lambda` shifts.
+- For `f2/gcf3`, the `m^3` coefficient becomes `-a^2*t^6 - 2*a*b*t^4 - a*b*t^3 - b^2*t^2`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient becomes `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- The surviving `m^2` coefficient is then `t`, still nonzero.
+- For `f4/gcf2`, the constant coefficient `a*t^2` already forces `a = 0`.
+- After that, the `m^3` coefficient `-b^2*t^2` forces `b = 0`, and then the `m^1` coefficient `lambda*t - t` forces `lambda = 1`.
+- The surviving `m^2` coefficient is then `t`, still nonzero.
+- So the first nonzero `a`-shift nearest lanes also fail by an exact final obstruction.
+
 ## Bounded Exact Exclusion Results
 
 - Arithmetic subsequence contractions up to stride `4` with stage comparison depth `3`: RR hits `0`, cubic hits `0`.
@@ -165,7 +176,7 @@ beta_n = 1 - a*t + b*m*t
 1. Formalize generalized continued fractions and convergent recurrence for finite truncations.
 2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.
 3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.
-4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.
+4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift, unit-a-shift, and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.
 5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
 6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.
 7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.

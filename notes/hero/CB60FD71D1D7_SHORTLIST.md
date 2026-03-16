@@ -43,9 +43,10 @@ B1(t) = 1 + K_{n>=1} t^n / 1.
   hits through the same `RR/cubic/GG/S` prefix order.
 - The second-ring named source-family two-layer scan also reports `0` hits for
   prefixes ending at `cubic`, `GG`, and `S`.
-- The exact page-43 equivalence layer now rules out both the zero-shift and the
-  first unit-`lambda` nearest `f2/gcf3` and `f4/gcf2` lanes; the unit-shift
-  lanes already fail at the surviving `m^1` term `lambda*t^2 - t`.
+- The exact page-43 equivalence layer now rules out the zero-shift, the first
+  unit-`a`, and the first unit-`lambda` nearest `f2/gcf3` and `f4/gcf2` lanes;
+  the unit-`a` lanes still end with a surviving `m^2` term `t`, while the
+  unit-`lambda` lanes already fail at the surviving `m^1` term `lambda*t^2 - t`.
 
 ## Shortlist: Next Source Lanes To Deepen
 

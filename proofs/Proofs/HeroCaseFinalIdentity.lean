@@ -22,8 +22,12 @@ Current source-family-specific exact lane:
 
 - `Proofs/HeroCasePage43Equivalence.lean` now formalizes the zero-shift
   `f2/gcf3` and `f4/gcf2` `n`-dependent equivalence obstructions
-- the same module also now covers the first nearby unit-`lambda`-shift lanes,
-  where the forced `m^1` coefficient already has no constant-parameter solution
+- the same module also now covers the first nearby unit-`a`-shift and
+  unit-`lambda`-shift lanes
+- the unit-`a` shifts still end with the same surviving nonzero `m^2`
+  coefficient after the forced parameter specializations
+- the unit-`lambda` shifts fail earlier, where the forced `m^1` coefficient
+  already has no constant-parameter solution
 - the zero-shift lanes still end with a surviving nonzero `m^2` coefficient
   after the forced parameter specializations
 - so this scaffold should currently treat those lanes as exclusion theorems,
@@ -48,7 +52,7 @@ TODO (award track, endgame):
    (functional equation / modular equation / uniqueness lemma).
 3. Bridge the finite convergents (`heroConvergentRatFunc`) to the infinite object.
 4. Generalize the new page-43 equivalence obstruction layer beyond
-   the currently formalized zero-shift and unit-`lambda`-shift `f2/gcf3` /
+   the currently formalized zero-shift, unit-`a`-shift, and unit-`lambda`-shift `f2/gcf3` /
    `f4/gcf2` lanes if that remains the
    best route toward a final theorem.
 5. Prove the final identity in Lean and remove this placeholder.

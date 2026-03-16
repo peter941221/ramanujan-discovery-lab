@@ -26,8 +26,10 @@ from ramanujan_discovery.research import (
     direct_bauer_muir_obstruction,
     heine_cor2cf_a_zero_contraction_obstruction,
     page43_f2_zero_shift_equivalence_obstruction,
+    page43_f2_unit_a_shift_equivalence_obstruction,
     page43_f2_unit_lambda_shift_equivalence_obstruction,
     page43_f4_zero_shift_equivalence_obstruction,
+    page43_f4_unit_a_shift_equivalence_obstruction,
     page43_f4_unit_lambda_shift_equivalence_obstruction,
     page43_monomial_parameter_search,
     page43_rational_parameter_search,
@@ -72,6 +74,8 @@ class FormalizationContext:
     heine_cor2cf: HeineCor2CFContractionObstruction | None
     f2_equivalence: Page43F2EquivalenceObstruction | None
     f4_equivalence: Page43F4EquivalenceObstruction | None
+    f2_unit_a_shift_equivalence: Page43F2EquivalenceObstruction | None
+    f4_unit_a_shift_equivalence: Page43F4EquivalenceObstruction | None
     f2_unit_lambda_shift_equivalence: Page43F2UnitLambdaShiftEquivalenceObstruction | None
     f4_unit_lambda_shift_equivalence: Page43F4UnitLambdaShiftEquivalenceObstruction | None
     rr_subsequence_hits: list[SubsequenceContractionHit]
@@ -200,6 +204,8 @@ def _build_formalization_context(
             heine_cor2cf=None,
             f2_equivalence=None,
             f4_equivalence=None,
+            f2_unit_a_shift_equivalence=None,
+            f4_unit_a_shift_equivalence=None,
             f2_unit_lambda_shift_equivalence=None,
             f4_unit_lambda_shift_equivalence=None,
             rr_subsequence_hits=[],
@@ -259,6 +265,8 @@ def _build_formalization_context(
     heine_cor2cf = None
     f2_equivalence = None
     f4_equivalence = None
+    f2_unit_a_shift_equivalence = None
+    f4_unit_a_shift_equivalence = None
     f2_unit_lambda_shift_equivalence = None
     f4_unit_lambda_shift_equivalence = None
     if looks_like_hero:
@@ -271,6 +279,8 @@ def _build_formalization_context(
         )
         f2_equivalence = page43_f2_zero_shift_equivalence_obstruction(q=t)
         f4_equivalence = page43_f4_zero_shift_equivalence_obstruction(q=t)
+        f2_unit_a_shift_equivalence = page43_f2_unit_a_shift_equivalence_obstruction(q=t)
+        f4_unit_a_shift_equivalence = page43_f4_unit_a_shift_equivalence_obstruction(q=t)
         f2_unit_lambda_shift_equivalence = page43_f2_unit_lambda_shift_equivalence_obstruction(q=t)
         f4_unit_lambda_shift_equivalence = page43_f4_unit_lambda_shift_equivalence_obstruction(q=t)
 
@@ -346,6 +356,8 @@ def _build_formalization_context(
         heine_cor2cf=heine_cor2cf,
         f2_equivalence=f2_equivalence,
         f4_equivalence=f4_equivalence,
+        f2_unit_a_shift_equivalence=f2_unit_a_shift_equivalence,
+        f4_unit_a_shift_equivalence=f4_unit_a_shift_equivalence,
         f2_unit_lambda_shift_equivalence=f2_unit_lambda_shift_equivalence,
         f4_unit_lambda_shift_equivalence=f4_unit_lambda_shift_equivalence,
         rr_subsequence_hits=rr_subsequence_hits,
@@ -621,6 +633,47 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     "",
                 ]
             )
+        if (
+            context.f2_unit_a_shift_equivalence is not None
+            and context.f4_unit_a_shift_equivalence is not None
+        ):
+            lines.extend(
+                [
+                    "### Exact Unit-Shift `a` Page-43 Lanes",
+                    "",
+                    "- The same exact-equivalence layer now also covers the next nearby shift choice `a -> a*t` with zero `b`/`lambda` shifts.",
+                    (
+                        "- For `f2/gcf3`, the `m^3` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_a_shift_equivalence.m_coefficients[3])}`, "
+                        "and exact vanishing still forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_a_shift_equivalence.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- The surviving `m^2` coefficient is then "
+                        f"`{_format_expr(context.f2_unit_a_shift_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    (
+                        "- For `f4/gcf2`, the constant coefficient "
+                        f"`{_format_expr(context.f4_unit_a_shift_equivalence.m_coefficients[0])}` already forces `a = 0`."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient "
+                        f"`{_format_expr(sp.simplify(context.f4_unit_a_shift_equivalence.m_coefficients[3].subs(context.f4_unit_a_shift_equivalence.forced_a_solution)))}` "
+                        "forces `b = 0`, and then the `m^1` coefficient "
+                        f"`{_format_expr(context.f4_unit_a_shift_equivalence.reduced_m1_coefficient)}` forces `lambda = 1`."
+                    ),
+                    (
+                        "- The surviving `m^2` coefficient is then "
+                        f"`{_format_expr(context.f4_unit_a_shift_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    "- So the first nonzero `a`-shift nearest lanes also fail by an exact final obstruction.",
+                    "",
+                ]
+            )
         lines.extend(
             [
                 "## Bounded Exact Exclusion Results",
@@ -682,7 +735,7 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "1. Formalize generalized continued fractions and convergent recurrence for finite truncations.",
                 "2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.",
                 "3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.",
-                "4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.",
+                "4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift, unit-a-shift, and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.",
                 "5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
                 "6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.",
                 "7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
@@ -949,15 +1002,19 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 "These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.",
                 (
                     "Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2"
-                    " n-dependent equivalence, plus the unit-lambda-shift nearest lanes,"
+                    " n-dependent equivalence, plus the nearest unit-a-shift and unit-lambda-shift lanes,"
                     " formalized in Proofs/HeroCasePage43Equivalence.lean,"
                     f" with zero-shift final surviving obstruction coefficients {_format_expr(context.f2_equivalence.final_m2_coefficient)}"
-                    f" and {_format_expr(context.f4_equivalence.final_m2_coefficient)}, and shifted impossible"
+                    f" and {_format_expr(context.f4_equivalence.final_m2_coefficient)}, unit-a-shift final"
+                    f" surviving coefficients {_format_expr(context.f2_unit_a_shift_equivalence.final_m2_coefficient)}"
+                    f" and {_format_expr(context.f4_unit_a_shift_equivalence.final_m2_coefficient)}, and shifted impossible"
                     f" m1 coefficients {_format_expr(context.f2_unit_lambda_shift_equivalence.impossible_m1_coefficient)}"
                     f" and {_format_expr(context.f4_unit_lambda_shift_equivalence.impossible_m1_coefficient)}."
                     if (
                         context.f2_equivalence is not None
                         and context.f4_equivalence is not None
+                        and context.f2_unit_a_shift_equivalence is not None
+                        and context.f4_unit_a_shift_equivalence is not None
                         and context.f2_unit_lambda_shift_equivalence is not None
                         and context.f4_unit_lambda_shift_equivalence is not None
                     )
@@ -1001,7 +1058,7 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 "1. Lift the coefficient domain from polynomials to rational functions and",
                 "   formalize the reverse equivalence transform.",
                 "2. Extend the page-43 equivalence layer beyond the currently formalized",
-                "   zero-shift and unit-lambda-shift f2/gcf3 and f4/gcf2 obstruction theorems.",
+                "   zero-shift, unit-a-shift, and unit-lambda-shift f2/gcf3 and f4/gcf2 obstruction theorems.",
                 "3. Compare candidate convergents against nearby benchmark convergents.",
                 "4. Formalize the Bauer-Muir transform algebra itself instead of injecting only",
                 "   the recovered witnesses.",

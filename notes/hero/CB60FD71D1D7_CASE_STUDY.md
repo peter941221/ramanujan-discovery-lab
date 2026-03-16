@@ -94,6 +94,8 @@ their ratio objects:
    `n`-dependent equivalence lanes are ruled out exactly: in both cases the
    necessary residual polynomial forces `a = b = 0`, then `lambda = 1`, but
    still leaves a surviving `m^2` coefficient `t`. The first nearby
+   unit-`a`-shift lanes also fail exactly and end with the same surviving
+   `m^2` coefficient `t` after the forced parameter specializations. The first nearby
    unit-`lambda`-shift lanes fail even earlier: after the same forced
    specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`,
    so no constant `lambda` can make those lanes vanish identically.

@@ -22,7 +22,7 @@ Current scope:
   page-43 monomial-substitution families (`f2`, `f4`) in Laurent polynomials
 - `Proofs/HeroCasePage43Equivalence.lean` formalizes the zero-shift
   `n`-dependent equivalence obstructions for the page-43 `f2/gcf3` and
-  `f4/gcf2` lanes, plus the first nearby unit-`lambda`-shift variants
+  `f4/gcf2` lanes, plus the first nearby unit-`a`-shift and unit-`lambda`-shift variants
 - `Proofs/HeroCaseSubsequence.lean` mirrors the bounded arithmetic subsequence
   contraction scan (stride ≤ 4) as a computation-checked theorem over exact
   rational sample points
