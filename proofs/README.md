@@ -15,11 +15,19 @@ Current scope:
   the `n`th hero-case convergent numerator and denominator both contain the
   common factor `1 + t^n`, and the reduced convergents come from a second,
   simpler continued fraction
+- `Proofs/HeroCaseHeineCor2cf.lean` mirrors the decisive low-stage Heine `cor2cf`
+  obstruction formulas in the forced `a = 0` lane and proves exact odd/even
+  branch mismatches against the hero target
 - `Proofs/HeroCasePage43.lean` formalizes a stage-2 exclusion theorem for the
   page-43 monomial-substitution families (`f2`, `f4`) in Laurent polynomials
 - `Proofs/HeroCaseSubsequence.lean` mirrors the bounded arithmetic subsequence
   contraction scan (stride ≤ 4) as a computation-checked theorem over exact
   rational sample points
+- `Proofs/HeroCaseSubsequenceExact.lean` strengthens the subsequence exclusion
+  for the RR and cubic source lanes without a stride bound, by proving forced
+  low-degree coefficient gaps in the source convergents
+- `Proofs/HeroCaseFinalIdentity.lean` is the award-track target scaffold where the
+  final closed-form identity (once identified) will be stated and proved
 - `Proofs/HeroCaseBauerMuir.lean` mirrors the bounded 1/2/3-step Bauer–Muir scan
   (fixed low-complexity `wₙ` templates) as a computation-checked theorem over
   exact rational sample points
@@ -44,8 +52,11 @@ Primary file:
 - `Proofs/GeneralizedCF.lean`
 - `Proofs/HeroCaseObjects.lean`
 - `Proofs/HeroCaseLocal.lean`
+- `Proofs/HeroCaseHeineCor2cf.lean`
 - `Proofs/HeroCasePage43.lean`
 - `Proofs/HeroCaseSubsequence.lean`
+- `Proofs/HeroCaseSubsequenceExact.lean`
+- `Proofs/HeroCaseFinalIdentity.lean`
 - `Proofs/HeroCaseBauerMuir.lean`
 - `Proofs/RationalEquivalence.lean`
 - `Proofs/Generated/Cb60fd71d1d7.lean`

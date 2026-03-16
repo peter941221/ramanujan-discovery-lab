@@ -9,6 +9,7 @@
 - Depth: `40`
 - Series order request: `151`
 - Raw q-series computed order: `61`
+- Build profile: `full`
 
 ## Ratio Series
 
@@ -45,7 +46,16 @@ c_1..c_30:
 ### Structured Fit Attempts
 
 - Periodic Pochhammer fit (bounded |e_r|<=8, period<=12): `no fit`
+- Two-modulus Pochhammer fit (bounded |e_r|<=8, moduli<=12): `no fit`
 - Eta-quotient fit (bounded |e_d|<=8, level<=12): `no fit`
+
+### Closed-Form Drafts (Product Guesses)
+
+- These are *hypotheses* derived from the Euler-exponent signature of `Ratio(t)`.
+- Certificate rule: verify the predicted Euler exponents `c_1..c_52` exactly.
+- Closest-benchmark product (in reduced variable) is known: `(t; t^5)_inf * (t^4; t^5)_inf / ((t^2; t^5)_inf * (t^3; t^5)_inf)`
+- Current outcome: no periodic-Pochhammer, two-modulus Pochhammer, or eta-quotient fit was found in the bounded search box.
+
 
 ## Exact Convergent-Factor Reduction
 
@@ -100,6 +110,28 @@ a1_hcf2 = -a/2 - a/(2*b) + 1/2 + 1/(2*b)
 
 - But the target reciprocal for this candidate has `a1 = t + t^2`, so this specialization cannot match at the coefficient level.
 
+## Heine `cor2cf` Contraction Check (`a = 0` lane)
+
+- For the nearby `cor2cf` family, matching the target initial term `1` forces the relevant branch to the `a = 0` specialization:
+
+```text
+b0 = 1
+a1 = lambda*t
+b1 = 1
+a2 = b*t + lambda*t^2
+b2 = 1
+a3 = lambda*t^3
+b3 = 1
+a4 = b*t^2 + lambda*t^4
+b4 = 1
+```
+
+- Odd part: the initial term is `d0 = lambda*t + 1` instead of `1`.
+- Even part: the initial term stays `1`, but the first numerator is `lambda*t` instead of `t^2 + t`.
+- Odd-of-even branch: the new initial term is `(b*t + lambda*t^2 + lambda*t + 1)/(b*t + lambda*t^2 + 1)`, so this two-step branch also fails at stage 0.
+- Even-of-even branch: the initial term stays `1`, but the first numerator is `b*lambda*t^3 + lambda^2*t^5 + lambda^2*t^4 + lambda*t`; its `t^2` coefficient is `0`, so it cannot equal the target `t + t^2`.
+- So the relevant 1-step and 2-step odd/even contraction branches around `cor2cf` are ruled out exactly at low stage.
+
 ## Page-43 Monomial Substitution Check
 
 - Search shape: `a = alpha*t^A`, `b = beta*t^B`, `lambda = gamma*t^L` with integer shifts `A,B,L in [-3,3]`.
@@ -116,7 +148,7 @@ a1_hcf2 = -a/2 - a/(2*b) + 1/2 + 1/(2*b)
 
 ## Arithmetic Subsequence Contraction Scan
 
-- Search shape: every `stride`-th convergent subsequence with `stride in {2,3,4}` and all offsets.
+- Search shape: every `stride`-th convergent subsequence with `stride in {2, 3, 4}` and all offsets.
 - Matching rule: recover the induced contracted fraction and compare `b0, a1..a3, b1..b3` exactly against the reduced target.
 - RR source hits in this box: `0`
 - Cubic source hits in this box: `0`

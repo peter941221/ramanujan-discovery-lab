@@ -204,6 +204,10 @@ This note is backed by symbolic regression checks in:
 
 - `tests/test_research.py`
 
+It is also now backed by an exact Lean layer (for RR and cubic source lanes):
+
+- `proofs/Proofs/HeroCaseSubsequenceExact.lean`
+
 Current regression commands:
 
 ```powershell

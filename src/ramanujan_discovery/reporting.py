@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+import re
 
 from ramanujan_discovery.storage import read_candidates
 
@@ -13,6 +14,29 @@ def _generated_at() -> str:
 
 def _repo_markdown_url(path: str) -> str:
     return f"https://github.com/peter941221/ramanujan-discovery-lab/blob/main/{path}"
+
+
+def _award_track_final_identity_payload() -> dict[str, str]:
+    """Lightweight build-time introspection of the award-track Lean scaffold status."""
+    root = Path(__file__).resolve().parents[2]
+    lean_rel = Path("proofs") / "Proofs" / "HeroCaseFinalIdentity.lean"
+    lean_path = root / lean_rel
+    href = _repo_markdown_url(str(lean_rel).replace("\\", "/"))
+
+    status = "missing"
+    updated_at = ""
+    if lean_path.exists():
+        text = lean_path.read_text(encoding="utf-8")
+        match = re.search(r"AwardTrackStatus:\s*(\w+)", text)
+        status = match.group(1) if match else "unknown"
+        updated_at = datetime.fromtimestamp(lean_path.stat().st_mtime, timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+
+    return {
+        "status": status,
+        "href": href,
+        "updated_at": updated_at,
+        "path": str(lean_rel).replace("\\", "/"),
+    }
 
 
 def build_report(input_path: str, output_path: str) -> None:
@@ -74,6 +98,7 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
     directory = Path(output_dir)
     directory.mkdir(parents=True, exist_ok=True)
     generated_at = _generated_at()
+    final_identity = _award_track_final_identity_payload()
 
     public_records = []
     for record in records:
@@ -128,6 +153,10 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "detail": "Ship the same snapshot to GitHub Pages without claiming unexplained templates are new formulas.",
             },
         ],
+        "award_track": {
+            "hero_candidate_id": "cb60fd71d1d7",
+            "final_identity": final_identity,
+        },
         "audit_notes": [
             {
                 "title": "Review Audit",
@@ -148,6 +177,11 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "title": "Hero Exact Subsequence Obstruction",
                 "href": _repo_markdown_url("CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md"),
                 "description": "A stronger human-written exact obstruction for RR and cubic arithmetic-subsequence origins, beyond the old bounded sample scan.",
+            },
+            {
+                "title": "Hero Heine cor2cf Obstruction",
+                "href": _repo_markdown_url("CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md"),
+                "description": "Exact low-stage obstruction for the relevant Heine-derived cor2cf contraction branches around the hero case.",
             },
             {
                 "title": "Hero Identification",
@@ -173,6 +207,11 @@ def build_site(input_path: str, output_dir: str, title: str = "Ramanujan Discove
                 "title": "Hero Public Article",
                 "href": _repo_markdown_url("CB60FD71D1D7_PUBLIC_ARTICLE.md"),
                 "description": "A publication-ready public article draft for the current hero case.",
+            },
+            {
+                "title": "Hero Final Identity (Lean)",
+                "href": final_identity["href"],
+                "description": f"Award-track final-identity scaffold and progress marker (status: {final_identity['status']}).",
             },
             {
                 "title": "Hero Shortlist",
@@ -245,6 +284,7 @@ def _site_html(payload: dict[str, object]) -> str:
       <div class="meta">
         <span>Generated: {payload["generated_at"]}</span>
         <span>Records: {len(payload["records"])}</span>
+        <span id="final-identity"></span>
         <a href="review-audit.html">Review audit</a>
       </div>
     </section>
@@ -295,6 +335,7 @@ def _site_html(payload: dict[str, object]) -> str:
     const benchmarkFamilies = document.getElementById("benchmark-families");
     const pipelineList = document.getElementById("pipeline-list");
     const cards = document.getElementById("cards");
+    const finalIdentity = document.getElementById("final-identity");
 
     const renderCard = (record, className = "") => {{
       const card = document.createElement("article");
@@ -353,6 +394,13 @@ def _site_html(payload: dict[str, object]) -> str:
     payload.audit_notes.forEach((note) => {{
       auditNotes.appendChild(renderNote(note));
     }});
+
+    if (payload.award_track && payload.award_track.final_identity) {{
+      const item = payload.award_track.final_identity;
+      const status = item.status || "unknown";
+      const href = item.href || "#";
+      finalIdentity.innerHTML = `Final identity: <a href="${{href}}" target="_blank" rel="noreferrer">${{status}}</a>`;
+    }}
 
     payload.benchmark_families.forEach((family) => {{
       const item = document.createElement("article");

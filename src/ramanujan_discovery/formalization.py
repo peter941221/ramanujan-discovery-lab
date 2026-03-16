@@ -12,6 +12,7 @@ from ramanujan_discovery.research import (
     BauerMuirDirectObstruction,
     ContinuedFractionCoeffs,
     ConvergentFactorEquivalenceWitness,
+    HeineCor2CFContractionObstruction,
     Page43MonomialHit,
     SubsequenceContractionHit,
     _template_reciprocal_coeffs,
@@ -19,6 +20,7 @@ from ramanujan_discovery.research import (
     convergent_factor_equivalence_witness,
     continued_fraction_convergents,
     direct_bauer_muir_obstruction,
+    heine_cor2cf_a_zero_contraction_obstruction,
     page43_monomial_parameter_search,
     parity_contraction_coeffs,
     reduce_template_by_step,
@@ -56,6 +58,7 @@ class FormalizationContext:
     cubic_direct: BauerMuirDirectObstruction | None
     cubic_odd: ContinuedFractionCoeffs | None
     cubic_even: ContinuedFractionCoeffs | None
+    heine_cor2cf: HeineCor2CFContractionObstruction | None
     rr_subsequence_hits: list[SubsequenceContractionHit]
     cubic_subsequence_hits: list[SubsequenceContractionHit]
     f2_hits: list[Page43MonomialHit]
@@ -175,6 +178,7 @@ def _build_formalization_context(
             cubic_direct=None,
             cubic_odd=None,
             cubic_even=None,
+            heine_cor2cf=None,
             rr_subsequence_hits=[],
             cubic_subsequence_hits=[],
             f2_hits=[],
@@ -227,6 +231,15 @@ def _build_formalization_context(
         b_terms=cubic_b_terms,
         parity="even",
     )
+    heine_cor2cf = None
+    if looks_like_hero:
+        b_cor, lam_cor = sp.symbols("b lambda")
+        heine_cor2cf = heine_cor2cf_a_zero_contraction_obstruction(
+            b=b_cor,
+            lam=lam_cor,
+            q=t,
+            depth=12,
+        )
 
     rr_subsequence_hits = arithmetic_subsequence_contraction_search(
         source_label="RR reciprocal",
@@ -279,6 +292,7 @@ def _build_formalization_context(
         cubic_direct=cubic_direct,
         cubic_odd=cubic_odd,
         cubic_even=cubic_even,
+        heine_cor2cf=heine_cor2cf,
         rr_subsequence_hits=rr_subsequence_hits,
         cubic_subsequence_hits=cubic_subsequence_hits,
         f2_hits=f2_hits,
@@ -404,6 +418,39 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     f"`{_format_expr(context.target_b_terms[1])}`."
                 ),
                 "",
+            ]
+        )
+        if context.heine_cor2cf is not None:
+            lines.extend(
+                [
+                    "### Heine `cor2cf` Odd/Even Branch Obstructions",
+                    "",
+                    "- Lean mirror module: `proofs/Proofs/HeroCaseHeineCor2cf.lean`.",
+                    (
+                        f"- In the relevant `a = 0` lane, the odd part already has initial term "
+                        f"`{_format_expr(context.heine_cor2cf.odd_part.b0)}` instead of "
+                        f"`{_format_expr(context.target_b0)}`."
+                    ),
+                    (
+                        f"- The even part keeps initial term `{_format_expr(context.heine_cor2cf.even_part.b0)}`, "
+                        f"but its first numerator is `{_format_expr(context.heine_cor2cf.even_part.a_terms[1])}` "
+                        f"instead of `{_format_expr(context.target_a_terms[1])}`."
+                    ),
+                    (
+                        "- The odd-of-even branch changes the initial term to "
+                        f"`{_format_fraction_expr(context.heine_cor2cf.even_odd_part.b0)}`, "
+                        "so it fails before the first nontrivial numerator."
+                    ),
+                    (
+                        "- The even-of-even branch keeps initial term `1`, but its first numerator is "
+                        f"`{_format_expr(context.heine_cor2cf.even_even_part.a_terms[1])}`. "
+                        "That numerator has no `t^2` term, so it cannot equal the target `t + t^2`."
+                    ),
+                    "",
+                ]
+            )
+        lines.extend(
+            [
                 "## Bounded Exact Exclusion Results",
                 "",
                 (
@@ -442,7 +489,7 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.",
                 "3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.",
                 "4. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
-                "5. Formalize odd/even contraction reconstruction and the cubic denominator mismatch lemma.",
+                "5. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.",
                 "6. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
                 "7. Do not start a full Lean/Coq origin theorem until a unique source family or exact identity is identified.",
             ]
@@ -457,6 +504,18 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     "- The current exact lemmas only rule out nearby transforms and simple contraction sources.",
                     "- They do not prove what the candidate *is*.",
                     "- A full formal proof needs a final theorem statement of the form `C(t) = known_object(t)` or a uniquely characterizing theorem that has not been found yet.",
+                ]
+            )
+            award_target = "proofs/Proofs/HeroCaseFinalIdentity.lean"
+            lines.extend(
+                [
+                    "",
+                    "## Award-Track Endgame Hook",
+                    "",
+                    "- This candidate matches the current hero-case structural signature in reduced variable `t`.",
+                    f"- Award-track target module (Lean scaffold): `{award_target}`",
+                    "- Current state: the module compiles, but `finalIdentityStatement` is still a placeholder.",
+                    "- Only replace the placeholder after a concrete closed form is identified.",
                 ]
             )
 

@@ -1,6 +1,6 @@
 # `cb60fd71d1d7` Literature Log
 
-Audit date: `2026-03-13`
+Audit date: `2026-03-16`
 
 ## Goal
 
@@ -128,37 +128,87 @@ invariant presentations.
   - longer or less rigid Bauer-Muir chains beyond the direct and tiny 3-step RR/cubic paths already ruled out
   - page-43 Ramanujan ratio families after nontrivial substitutions
 
-## 2026-03-16 Update: Novelty Gate Reminder
+## 2026-03-16 Update: Verified Post-2020 RR Slice
 
-This pass was not aimed at finding one more nearby family. It was aimed at
-checking whether the project is already in a position to upgrade the hero case
-from "best unexplained object" to "new discovery".
+This pass was aimed at replacing vague "recent literature exists" language with
+exactly titled, link-verified primary sources. The point was not to inflate the
+novelty story; it was to make the novelty burden more honest.
 
-Additional external sources checked:
+Verified external sources checked this pass:
 
-1. Berndt, Rebaka, 2025 survey
+1. Aricheta, Guadalupe, 2024
+   - Title: "A Remark on Modularity of Certain Products of the Rogers-Ramanujan Continued Fraction"
+   - arXiv: https://arxiv.org/abs/2405.06678
+   - Relevance:
+     - recent modular-product work directly in the RR continued-fraction orbit
+     - increases the burden on any claim that a nearby product-style identity is new
+   - Outcome:
+     - no direct exact-pattern hit for
+       `(q^(3n) + q^(6n)) / (1 + q^(3n))`
+     - but this is exactly the kind of modern source that must be cleared before
+       prize-level novelty language is credible
+
+2. Aricheta, Guadalupe, 2024
+   - Title: "On Certain Order 10 Modular Functions Involving the Rogers-Ramanujan Continued Fraction"
+   - arXiv: https://arxiv.org/abs/2404.05756
+   - Relevance:
+     - recent modular-function identities and structure around the RR orbit
+   - Outcome:
+     - no exact coefficient-level source match extracted in this pass
+
+3. Akkarapakam, Morton, 2024
+   - Title: "A remark on modular equations involving the Rogers-Ramanujan continued fraction via 5-dissections"
+   - arXiv: https://arxiv.org/abs/2410.14149
+   - Relevance:
+     - modern modular-equation lane very close to the RR identity ecosystem
+   - Outcome:
+     - no direct hero-case source identity was recovered from the scanned formulas
+
+4. Yamamoto, 2024
+   - Title: "Proof and Generalization of Conjectures of Ramanujan Machine"
+   - arXiv: https://arxiv.org/abs/2403.09729
+   - Relevance:
+     - explicit machine-discovery / proof workflow on RR-adjacent identities
+     - reminder that discovery-style pipelines can and do land publishable identities in this neighborhood
+   - Outcome:
+     - no exact hit for the current hero pattern
+     - but it raises the standard for how strong the project's own novelty proof must be
+
+5. Baruah, Sarma, 2025
+   - Title: "Sign Patterns and Congruences for Certain Infinite Products involving the Rogers-Ramanujan Continued Fraction"
+   - arXiv: https://arxiv.org/abs/2503.08517
+   - Relevance:
+     - recent RR-adjacent product behavior and arithmetic structure
+   - Outcome:
+     - no direct source match
+     - confirms the RR-product side is actively developing
+
+6. Ghoshal, Jana, 2025
+   - Title: "Affirmation of Certain Conjectures on the Rogers-Ramanujan Continued Fraction"
+   - arXiv: https://arxiv.org/abs/2503.17950
+   - Relevance:
+     - recent RR continued-fraction conjecture follow-up
+   - Outcome:
+     - no direct source match
+     - again confirms the surrounding literature is current rather than closed
+
+7. Berndt, Rebaka, 2025 survey
+   - Title: "The Rogers-Ramanujan continued fraction"
    - arXiv: https://arxiv.org/abs/2512.19952
    - Relevance:
      - recent survey-level snapshot of Ramanujan-style continued fractions and
        related identities
-     - strong reminder that the surrounding literature is still active and not
-       frozen at the older notebook / page-43 neighborhood
    - Outcome:
-     - no direct exact-pattern hit for
-       `(q^(3n) + q^(6n)) / (1 + q^(3n))`
+     - no direct exact-pattern hit for the hero case
      - but this source widens, rather than closes, the novelty burden
 
-2. McLaughlin, Monks, Reid, 2025
-   - INTEGERS article: https://doi.org/10.5281/zenodo.14580993
-   - Relevance:
-     - recent primary-source work deriving further Ramanujan-style continued
-       fraction identities in the Rogers-Ramanujan / Gollnitz-Gordon orbit
-     - confirms that "nearby known families" remain an actively developing
-       literature area rather than a closed historical list
-   - Outcome:
-     - no direct exact-pattern hit was recovered in this scan
-     - but the existence of recent identities means the project still needs a
-       broader bibliography pass before using novelty language
+Bibliographic hygiene note:
+
+- A previously mentioned `2025` McLaughlin / Monks / Reid placeholder was not
+  kept in the verified set for this pass because its exact title normalization
+  was not confirmed from a primary source.
+- That lead may still matter later, but it should not be counted as a closed
+  citation until the exact paper metadata is pinned down.
 
 Updated interpretation as of `2026-03-16`:
 

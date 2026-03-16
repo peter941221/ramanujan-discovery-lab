@@ -1,6 +1,6 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-16 01:11:24 UTC",
+  "generated_at": "2026-03-16 08:05:28 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
@@ -674,6 +674,15 @@
       "detail": "Ship the same snapshot to GitHub Pages without claiming unexplained templates are new formulas."
     }
   ],
+  "award_track": {
+    "hero_candidate_id": "cb60fd71d1d7",
+    "final_identity": {
+      "status": "placeholder",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/proofs/Proofs/HeroCaseFinalIdentity.lean",
+      "updated_at": "2026-03-16 03:45:11 UTC",
+      "path": "proofs/Proofs/HeroCaseFinalIdentity.lean"
+    }
+  },
   "audit_notes": [
     {
       "title": "Review Audit",
@@ -694,6 +703,11 @@
       "title": "Hero Exact Subsequence Obstruction",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md",
       "description": "A stronger human-written exact obstruction for RR and cubic arithmetic-subsequence origins, beyond the old bounded sample scan."
+    },
+    {
+      "title": "Hero Heine cor2cf Obstruction",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md",
+      "description": "Exact low-stage obstruction for the relevant Heine-derived cor2cf contraction branches around the hero case."
     },
     {
       "title": "Hero Identification",
@@ -719,6 +733,11 @@
       "title": "Hero Public Article",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/CB60FD71D1D7_PUBLIC_ARTICLE.md",
       "description": "A publication-ready public article draft for the current hero case."
+    },
+    {
+      "title": "Hero Final Identity (Lean)",
+      "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/proofs/Proofs/HeroCaseFinalIdentity.lean",
+      "description": "Award-track final-identity scaffold and progress marker (status: placeholder)."
     },
     {
       "title": "Hero Shortlist",

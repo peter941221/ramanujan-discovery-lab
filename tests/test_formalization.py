@@ -61,6 +61,7 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "Build profile: `smoke`" in text
     assert "Current Theorem Status" in text
     assert "Exact Lemma Candidates" in text
+    assert "Heine `cor2cf` Odd/Even Branch Obstructions" in text
     assert "Bounded Exact Exclusion Results" in text
     assert "Exact Reduction And Equivalence Witness" in text
     assert "fraction-field coefficient layer" in text

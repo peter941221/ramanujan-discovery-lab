@@ -36,11 +36,13 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
    - `Proofs/RationalEquivalence.lean`
 
 4. Exact or computation-checked elimination layers
-   - bounded page-43 monomial-substitution exclusions
-   - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
-     stronger exact human-written obstruction for the RR and cubic source lanes
-   - bounded 1/2/3-step Bauer-Muir exclusions
-   - small-degree algebraic relation search against the nearest benchmark
+    - bounded page-43 monomial-substitution exclusions
+    - bounded arithmetic-subsequence contraction exclusions, now accompanied by a
+      stronger exact obstruction for the RR and cubic source lanes, plus a
+      machine-checked Lean proof layer:
+      - `Proofs/HeroCaseSubsequenceExact.lean`
+    - bounded 1/2/3-step Bauer-Muir exclusions
+    - small-degree algebraic relation search against the nearest benchmark
 
 5. Public audit posture
    - the repo already separates:
@@ -83,6 +85,11 @@ but they are still bounded by:
 
 That is excellent audit evidence, but it is not yet a theorem excluding the
 entire natural transform class.
+
+Note: for the two closest source lanes (reduced RR reciprocal and reduced cubic
+reciprocal), the arithmetic-subsequence obstruction is now exact and
+machine-checked in Lean. The remaining boundedness mostly concerns other source
+classes and the Bauer-Muir / transform neighborhoods.
 
 ### 3. There is no final source theorem
 
@@ -133,5 +140,6 @@ At least one of the following two routes should be completed.
 ## Companion Notes
 
 - `CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md`
+- `CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md`
 - `CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md`
 - `CB60FD71D1D7_LITERATURE_LOG.md`

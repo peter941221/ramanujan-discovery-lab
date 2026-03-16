@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
+import math
 from pathlib import Path
 from typing import Callable
 
@@ -238,6 +240,339 @@ def try_fit_eta_quotient(
     return None
 
 
+def _two_modulus_residue(n: int, modulus: int) -> int:
+    """Return the 1-indexed residue class used by the q-Pochhammer display helpers."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    if modulus <= 0:
+        raise ValueError("modulus must be positive")
+    return ((n - 1) % modulus) + 1
+
+
+def _choose_balancing_shift(*, left_values: list[int], right_values: list[int], max_abs: int) -> int | None:
+    """Choose a gauge shift that keeps both residue lists inside the bounded box."""
+    if max_abs < 0:
+        raise ValueError("max_abs must be non-negative")
+    lower = -max_abs
+    upper = max_abs
+    for value in left_values:
+        lower = max(lower, -max_abs - value)
+        upper = min(upper, max_abs - value)
+    for value in right_values:
+        lower = max(lower, value - max_abs)
+        upper = min(upper, value + max_abs)
+    if lower > upper:
+        return None
+
+    best_shift = lower
+    best_key: tuple[int, int, int] | None = None
+    for shift in range(lower, upper + 1):
+        shifted_left = [value + shift for value in left_values]
+        shifted_right = [value - shift for value in right_values]
+        key = (
+            max(abs(value) for value in shifted_left + shifted_right),
+            sum(abs(value) for value in shifted_left + shifted_right),
+            abs(shift),
+        )
+        if best_key is None or key < best_key:
+            best_key = key
+            best_shift = shift
+    return best_shift
+
+
+def _solve_two_modulus_pochhammer_fit(
+    *,
+    exponents: list[int],
+    first_modulus: int,
+    second_modulus: int,
+    max_abs: int,
+) -> TwoModulusPochhammerFit | None:
+    """Solve c_n = e^(m1)_{n mod m1} + e^(m2)_{n mod m2} over one full lcm period."""
+    period = math.lcm(first_modulus, second_modulus)
+    if len(exponents) < period:
+        return None
+
+    left_edges: dict[int, list[tuple[int, int]]] = {residue: [] for residue in range(1, first_modulus + 1)}
+    right_edges: dict[int, list[tuple[int, int]]] = {residue: [] for residue in range(1, second_modulus + 1)}
+    for n in range(1, period + 1):
+        left_residue = _two_modulus_residue(n, first_modulus)
+        right_residue = _two_modulus_residue(n, second_modulus)
+        weight = exponents[n - 1]
+        left_edges[left_residue].append((right_residue, weight))
+        right_edges[right_residue].append((left_residue, weight))
+
+    left_base: list[int | None] = [None] * (first_modulus + 1)
+    right_base: list[int | None] = [None] * (second_modulus + 1)
+    left_values = [0] * (first_modulus + 1)
+    right_values = [0] * (second_modulus + 1)
+
+    for start_residue in range(1, first_modulus + 1):
+        if left_base[start_residue] is not None:
+            continue
+
+        left_component: list[int] = []
+        right_component: list[int] = []
+        queue: list[tuple[str, int]] = [("left", start_residue)]
+        left_base[start_residue] = 0
+        left_component.append(start_residue)
+        index = 0
+        while index < len(queue):
+            side, residue = queue[index]
+            index += 1
+            if side == "left":
+                current = left_base[residue]
+                assert current is not None
+                for right_residue, weight in left_edges[residue]:
+                    candidate = weight - current
+                    existing = right_base[right_residue]
+                    if existing is None:
+                        right_base[right_residue] = candidate
+                        right_component.append(right_residue)
+                        queue.append(("right", right_residue))
+                    elif existing != candidate:
+                        return None
+            else:
+                current = right_base[residue]
+                assert current is not None
+                for left_residue, weight in right_edges[residue]:
+                    candidate = weight - current
+                    existing = left_base[left_residue]
+                    if existing is None:
+                        left_base[left_residue] = candidate
+                        left_component.append(left_residue)
+                        queue.append(("left", left_residue))
+                    elif existing != candidate:
+                        return None
+
+        shift = _choose_balancing_shift(
+            left_values=[left_base[residue] for residue in left_component if left_base[residue] is not None],
+            right_values=[right_base[residue] for residue in right_component if right_base[residue] is not None],
+            max_abs=max_abs,
+        )
+        if shift is None:
+            return None
+        for residue in left_component:
+            base_value = left_base[residue]
+            assert base_value is not None
+            left_values[residue] = base_value + shift
+        for residue in right_component:
+            base_value = right_base[residue]
+            assert base_value is not None
+            right_values[residue] = base_value - shift
+
+    return TwoModulusPochhammerFit(
+        first_modulus=first_modulus,
+        first_exponents=left_values[1:],
+        second_modulus=second_modulus,
+        second_exponents=right_values[1:],
+    )
+
+
+def try_fit_two_modulus_pochhammer(
+    exponents: list[sp.Expr],
+    max_modulus: int = 12,
+    max_abs: int = 8,
+) -> TwoModulusPochhammerFit | None:
+    """Attempt to fit Euler exponents as a product of two shifted q-Pochhammer blocks.
+
+    This solves
+
+        c_n = e^(m1)_{n mod m1} + e^(m2)_{n mod m2}
+
+    for bounded integer residue exponents at moduli `m1 < m2 <= max_modulus`.
+    It is aimed at mixed-modulus products whose combined period can exceed the
+    single-period search box, e.g. moduli `5` and `6` with lcm `30`.
+    """
+    if not exponents:
+        return None
+
+    integer_exponents: list[int] = []
+    for value in exponents:
+        value_simplified = sp.simplify(value)
+        if not value_simplified.is_integer:
+            return None
+        integer_exponents.append(int(value_simplified))
+
+    for first_modulus in range(1, max_modulus + 1):
+        for second_modulus in range(first_modulus + 1, max_modulus + 1):
+            period = math.lcm(first_modulus, second_modulus)
+            if period <= max(first_modulus, second_modulus):
+                continue
+            fit = _solve_two_modulus_pochhammer_fit(
+                exponents=integer_exponents,
+                first_modulus=first_modulus,
+                second_modulus=second_modulus,
+                max_abs=max_abs,
+            )
+            if fit is None:
+                continue
+            mismatches = _verify_two_modulus_pochhammer_fit(
+                euler_exponents=exponents,
+                fit=fit,
+                check_count=len(exponents),
+            )
+            if not mismatches:
+                return fit
+    return None
+
+
+def _pochhammer_inf_symbol(*, variable: str, shift: int, step: int) -> str:
+    """Return a compact ASCII representation of (variable^shift; variable^step)_inf."""
+    if shift <= 0 or step <= 0:
+        raise ValueError("shift and step must be positive")
+    base = variable if shift == 1 else f"{variable}^{shift}"
+    qstep = variable if step == 1 else f"{variable}^{step}"
+    return f"({base}; {qstep})_inf"
+
+
+def _format_periodic_pochhammer_closed_form(*, period: int, exponents: list[int], variable: str) -> str:
+    """Format Π_{r=1..period} (variable^r; variable^period)_inf^{e_r}, skipping zero powers."""
+    if period <= 0:
+        raise ValueError("period must be positive")
+    if len(exponents) != period:
+        raise ValueError("exponents length must equal period")
+    terms: list[str] = []
+    for residue, exponent in enumerate(exponents, start=1):
+        if exponent == 0:
+            continue
+        symbol = _pochhammer_inf_symbol(variable=variable, shift=residue, step=period)
+        if exponent == 1:
+            terms.append(symbol)
+        else:
+            terms.append(f"{symbol}^{exponent}")
+    return " * ".join(terms) if terms else "1"
+
+
+def _format_eta_quotient_closed_form(*, level: int, exponents_by_divisor: dict[int, int], variable: str) -> str:
+    """Format Π_{d|level} (variable^d; variable^d)_inf^{e_d}, skipping zero powers."""
+    if level <= 0:
+        raise ValueError("level must be positive")
+    terms: list[str] = []
+    for divisor in sorted(exponents_by_divisor):
+        exponent = exponents_by_divisor[divisor]
+        if exponent == 0:
+            continue
+        symbol = _pochhammer_inf_symbol(variable=variable, shift=divisor, step=divisor)
+        if exponent == 1:
+            terms.append(symbol)
+        else:
+            terms.append(f"{symbol}^{exponent}")
+    return " * ".join(terms) if terms else "1"
+
+
+def _format_two_modulus_pochhammer_closed_form(*, fit: TwoModulusPochhammerFit, variable: str) -> str:
+    """Format a product of two residue-class q-Pochhammer blocks."""
+    terms = [
+        _format_periodic_pochhammer_closed_form(
+            period=fit.first_modulus,
+            exponents=fit.first_exponents,
+            variable=variable,
+        ),
+        _format_periodic_pochhammer_closed_form(
+            period=fit.second_modulus,
+            exponents=fit.second_exponents,
+            variable=variable,
+        ),
+    ]
+    nontrivial_terms = [term for term in terms if term != "1"]
+    return " * ".join(nontrivial_terms) if nontrivial_terms else "1"
+
+
+def _verify_periodic_pochhammer_fit(
+    *,
+    euler_exponents: list[sp.Expr],
+    period: int,
+    residue_exponents: list[int],
+    check_count: int,
+) -> list[int]:
+    """Return the first mismatch indices n where c_n disagrees with the periodic rule."""
+    if check_count < 1:
+        raise ValueError("check_count must be positive")
+    check_count = min(check_count, len(euler_exponents))
+    mismatches: list[int] = []
+    for n in range(1, check_count + 1):
+        predicted = sp.Integer(residue_exponents[(n - 1) % period])
+        actual = sp.simplify(euler_exponents[n - 1])
+        if sp.simplify(actual - predicted) != 0:
+            mismatches.append(n)
+            if len(mismatches) >= 8:
+                break
+    return mismatches
+
+
+def _verify_eta_quotient_fit(
+    *,
+    euler_exponents: list[sp.Expr],
+    level: int,
+    exponents_by_divisor: dict[int, int],
+    check_count: int,
+) -> list[int]:
+    """Return the first mismatch indices n where c_n disagrees with the divisor-sum rule."""
+    if check_count < 1:
+        raise ValueError("check_count must be positive")
+    check_count = min(check_count, len(euler_exponents))
+    items = list(exponents_by_divisor.items())
+    mismatches: list[int] = []
+    for n in range(1, check_count + 1):
+        predicted = sp.Integer(0)
+        for divisor, exponent in items:
+            if n % divisor == 0:
+                predicted += sp.Integer(exponent)
+        actual = sp.simplify(euler_exponents[n - 1])
+        if sp.simplify(actual - predicted) != 0:
+            mismatches.append(n)
+            if len(mismatches) >= 8:
+                break
+    return mismatches
+
+
+def _verify_two_modulus_pochhammer_fit(
+    *,
+    euler_exponents: list[sp.Expr],
+    fit: TwoModulusPochhammerFit,
+    check_count: int,
+) -> list[int]:
+    """Return the first mismatch indices n where c_n disagrees with a two-modulus rule."""
+    if check_count < 1:
+        raise ValueError("check_count must be positive")
+    check_count = min(check_count, len(euler_exponents))
+    mismatches: list[int] = []
+    for n in range(1, check_count + 1):
+        predicted = sp.Integer(fit.first_exponents[(n - 1) % fit.first_modulus])
+        predicted += sp.Integer(fit.second_exponents[(n - 1) % fit.second_modulus])
+        actual = sp.simplify(euler_exponents[n - 1])
+        if sp.simplify(actual - predicted) != 0:
+            mismatches.append(n)
+            if len(mismatches) >= 8:
+                break
+    return mismatches
+
+
+def _benchmark_product_closed_form_in_reduced_variable(benchmark_name: str, variable: str) -> str | None:
+    """Return a closed-form product string for a known benchmark in the step-reduced variable.
+
+    This is intentionally a small, high-confidence mapping aligned with `benchmarks.py`:
+    the product is stated in the reduced variable (so q -> t) and avoids numeric evaluation.
+    """
+    if benchmark_name.startswith("rogers_ramanujan"):
+        # (t; t^5)_inf (t^4; t^5)_inf / ((t^2; t^5)_inf (t^3; t^5)_inf)
+        return (
+            f"{_pochhammer_inf_symbol(variable=variable, shift=1, step=5)}"
+            f" * {_pochhammer_inf_symbol(variable=variable, shift=4, step=5)}"
+            f" / ({_pochhammer_inf_symbol(variable=variable, shift=2, step=5)}"
+            f" * {_pochhammer_inf_symbol(variable=variable, shift=3, step=5)})"
+        )
+    if benchmark_name.startswith("ramanujan_cubic"):
+        # (t; t^6)_inf (t^5; t^6)_inf / (t^3; t^6)_inf^2
+        base = (
+            f"{_pochhammer_inf_symbol(variable=variable, shift=1, step=6)}"
+            f" * {_pochhammer_inf_symbol(variable=variable, shift=5, step=6)}"
+        )
+        denom = _pochhammer_inf_symbol(variable=variable, shift=3, step=6)
+        return f"{base} / ({denom}^2)"
+    return None
+
+
 @dataclass(frozen=True)
 class HeineHCF2Coeffs:
     b0: sp.Expr
@@ -306,6 +641,23 @@ class SubsequenceContractionHit:
     offset: int
 
 
+@dataclass(frozen=True)
+class HeineCor2CFContractionObstruction:
+    source_coeffs: ContinuedFractionCoeffs
+    odd_part: ContinuedFractionCoeffs
+    even_part: ContinuedFractionCoeffs
+    even_odd_part: ContinuedFractionCoeffs
+    even_even_part: ContinuedFractionCoeffs
+
+
+@dataclass(frozen=True)
+class TwoModulusPochhammerFit:
+    first_modulus: int
+    first_exponents: list[int]
+    second_modulus: int
+    second_exponents: list[int]
+
+
 def heine_hcf2_standardized_coeffs(
     *,
     a: sp.Expr,
@@ -345,6 +697,89 @@ def heine_hcf2_standardized_coeffs(
         b_terms.append(b_n)
 
     return HeineHCF2Coeffs(b0=b0, a_terms=a_terms, b_terms=b_terms)
+
+
+def heine_cor2cf_a_zero_specialized_coeffs(
+    *,
+    b: sp.Expr,
+    lam: sp.Expr,
+    q: sp.Symbol,
+    depth: int,
+) -> ContinuedFractionCoeffs:
+    """Return the `cor2cf` lane that remains after forcing the initial term to be `1`.
+
+    In the notation of the transform audit, this is the `a = 0` specialization
+
+        1 + (lam*q)/1 + (b*q + lam*q^2)/1 + (lam*q^3)/1 + (b*q^2 + lam*q^4)/1 + ...
+
+    which is the only nearby `cor2cf` branch compatible with the target initial term.
+    """
+    if depth < 1:
+        raise ValueError("depth must be at least 1")
+
+    a_terms = [sp.Integer(0)]
+    b_terms = [sp.Integer(0)]
+    for n in range(1, depth + 1):
+        if n % 2 == 1:
+            stage = (n + 1) // 2
+            a_n = lam * q ** (2 * stage - 1)
+        else:
+            stage = n // 2
+            a_n = b * q**stage + lam * q ** (2 * stage)
+        a_terms.append(sp.simplify(a_n))
+        b_terms.append(sp.Integer(1))
+
+    return ContinuedFractionCoeffs(
+        b0=sp.Integer(1),
+        a_terms=a_terms,
+        b_terms=b_terms,
+    )
+
+
+def heine_cor2cf_a_zero_contraction_obstruction(
+    *,
+    b: sp.Expr,
+    lam: sp.Expr,
+    q: sp.Symbol,
+    depth: int = 12,
+) -> HeineCor2CFContractionObstruction:
+    """Compute exact odd/even contraction data for the relevant `cor2cf` specialization."""
+    if depth < 8:
+        raise ValueError("depth must be at least 8 to recover the two-step contraction branches")
+
+    source = heine_cor2cf_a_zero_specialized_coeffs(b=b, lam=lam, q=q, depth=depth)
+    odd = parity_contraction_coeffs(
+        b0=source.b0,
+        a_terms=source.a_terms,
+        b_terms=source.b_terms,
+        parity="odd",
+    )
+    even = parity_contraction_coeffs(
+        b0=source.b0,
+        a_terms=source.a_terms,
+        b_terms=source.b_terms,
+        parity="even",
+    )
+    even_odd = parity_contraction_coeffs(
+        b0=even.b0,
+        a_terms=even.a_terms,
+        b_terms=even.b_terms,
+        parity="odd",
+    )
+    even_even = parity_contraction_coeffs(
+        b0=even.b0,
+        a_terms=even.a_terms,
+        b_terms=even.b_terms,
+        parity="even",
+    )
+
+    return HeineCor2CFContractionObstruction(
+        source_coeffs=source,
+        odd_part=odd,
+        even_part=even,
+        even_odd_part=even_odd,
+        even_even_part=even_even,
+    )
 
 
 def continued_fraction_convergents(
@@ -1107,8 +1542,18 @@ def build_candidate_research_note(
             ]
         )
 
-        periodic_fit = try_fit_periodic_pochhammer(euler_exponents[: profile.fit_order_cap], max_period=12, max_abs=8)
-        eta_fit = try_fit_eta_quotient(euler_exponents[: profile.fit_order_cap], max_level=12, max_abs=8)
+        fit_window = euler_exponents[: profile.fit_order_cap]
+        periodic_fit = try_fit_periodic_pochhammer(fit_window, max_period=12, max_abs=8)
+        two_modulus_fit = try_fit_two_modulus_pochhammer(fit_window, max_modulus=12, max_abs=8)
+        eta_fit = try_fit_eta_quotient(fit_window, max_level=12, max_abs=8)
+        two_modulus_summary = (
+            "no fit"
+            if two_modulus_fit is None
+            else (
+                f"(m1={two_modulus_fit.first_modulus}, e1={two_modulus_fit.first_exponents}, "
+                f"m2={two_modulus_fit.second_modulus}, e2={two_modulus_fit.second_exponents})"
+            )
+        )
         lines.extend(
             [
                 "",
@@ -1119,11 +1564,177 @@ def build_candidate_research_note(
                     f"`{periodic_fit if periodic_fit is not None else 'no fit'}`"
                 ),
                 (
+                    "- Two-modulus Pochhammer fit (bounded |e_r|<=8, moduli<=12): "
+                    f"`{two_modulus_summary}`"
+                ),
+                (
                     f"- Eta-quotient fit (bounded |e_d|<=8, level<=12): "
                     f"`{eta_fit if eta_fit is not None else 'no fit'}`"
                 ),
             ]
         )
+
+        benchmark_closed_form = _benchmark_product_closed_form_in_reduced_variable(
+            benchmark_name=record.closest_benchmark,
+            variable="t",
+        )
+
+        # Upgrade fits into "closed-form drafts" with explicit, checkable certificates.
+        # We *solve* using the early segment, but we *certify* against the full computed range.
+        fit_check_count = len(euler_exponents)
+        lines.extend(
+            [
+                "",
+                "### Closed-Form Drafts (Product Guesses)",
+                "",
+                "- These are *hypotheses* derived from the Euler-exponent signature of `Ratio(t)`.",
+                f"- Certificate rule: verify the predicted Euler exponents `c_1..c_{fit_check_count}` exactly.",
+                (
+                    "- Closest-benchmark product (in reduced variable) is known: "
+                    f"`{benchmark_closed_form}`"
+                    if benchmark_closed_form is not None
+                    else "- Closest-benchmark product (in reduced variable) is not in the small built-in mapping."
+                ),
+            ]
+        )
+
+        if periodic_fit is None and two_modulus_fit is None and eta_fit is None:
+            lines.extend(
+                [
+                    "- Current outcome: no periodic-Pochhammer, two-modulus Pochhammer, or eta-quotient fit was found in the bounded search box.",
+                    "",
+                ]
+            )
+        else:
+            lines.append("")
+
+        if periodic_fit is not None:
+            period, residue_exponents = periodic_fit
+            poch_symbolic = _format_periodic_pochhammer_closed_form(
+                period=period,
+                exponents=residue_exponents,
+                variable="t",
+            )
+            mismatches = _verify_periodic_pochhammer_fit(
+                euler_exponents=euler_exponents,
+                period=period,
+                residue_exponents=residue_exponents,
+                check_count=fit_check_count,
+            )
+            if not mismatches and benchmark_closed_form is not None:
+                lines.extend(
+                    [
+                        "- Candidate closed-form draft (if the fit persists beyond the checked order):",
+                        "  Candidate(t) = Benchmark(t) * Ratio(t)",
+                        f"  Benchmark(t) = {benchmark_closed_form}",
+                        f"  Ratio(t) = {poch_symbolic}",
+                    ]
+                )
+            periodic_cert = {
+                "object": "Ratio(t)",
+                "fit_type": "periodic_pochhammer",
+                "period": period,
+                "residue_exponents": {str(r): residue_exponents[r - 1] for r in range(1, period + 1)},
+                "checked_c_n": fit_check_count,
+                "mismatch_indices": mismatches,
+            }
+            lines.extend(
+                [
+                    f"- Periodic Pochhammer closed form: `{poch_symbolic}`",
+                    f"- Certificate: mismatches in c_1..c_{fit_check_count}: `{len(mismatches)}`",
+                    "",
+                    "```json",
+                    json.dumps(periodic_cert, indent=2, ensure_ascii=True),
+                    "```",
+                ]
+            )
+
+        if two_modulus_fit is not None:
+            two_modulus_symbolic = _format_two_modulus_pochhammer_closed_form(
+                fit=two_modulus_fit,
+                variable="t",
+            )
+            mismatches = _verify_two_modulus_pochhammer_fit(
+                euler_exponents=euler_exponents,
+                fit=two_modulus_fit,
+                check_count=fit_check_count,
+            )
+            if not mismatches and benchmark_closed_form is not None:
+                lines.extend(
+                    [
+                        "- Candidate closed-form draft (if the fit persists beyond the checked order):",
+                        "  Candidate(t) = Benchmark(t) * Ratio(t)",
+                        f"  Benchmark(t) = {benchmark_closed_form}",
+                        f"  Ratio(t) = {two_modulus_symbolic}",
+                    ]
+                )
+            two_modulus_cert = {
+                "object": "Ratio(t)",
+                "fit_type": "two_modulus_pochhammer",
+                "first_modulus": two_modulus_fit.first_modulus,
+                "first_residue_exponents": {
+                    str(r): two_modulus_fit.first_exponents[r - 1]
+                    for r in range(1, two_modulus_fit.first_modulus + 1)
+                },
+                "second_modulus": two_modulus_fit.second_modulus,
+                "second_residue_exponents": {
+                    str(r): two_modulus_fit.second_exponents[r - 1]
+                    for r in range(1, two_modulus_fit.second_modulus + 1)
+                },
+                "checked_c_n": fit_check_count,
+                "mismatch_indices": mismatches,
+            }
+            lines.extend(
+                [
+                    f"- Two-modulus Pochhammer closed form: `{two_modulus_symbolic}`",
+                    f"- Certificate: mismatches in c_1..c_{fit_check_count}: `{len(mismatches)}`",
+                    "",
+                    "```json",
+                    json.dumps(two_modulus_cert, indent=2, ensure_ascii=True),
+                    "```",
+                ]
+            )
+
+        if eta_fit is not None:
+            level, exponents_by_divisor = eta_fit
+            eta_symbolic = _format_eta_quotient_closed_form(
+                level=level,
+                exponents_by_divisor=exponents_by_divisor,
+                variable="t",
+            )
+            mismatches = _verify_eta_quotient_fit(
+                euler_exponents=euler_exponents,
+                level=level,
+                exponents_by_divisor=exponents_by_divisor,
+                check_count=fit_check_count,
+            )
+            if not mismatches and benchmark_closed_form is not None:
+                lines.extend(
+                    [
+                        "- Candidate closed-form draft (if the fit persists beyond the checked order):",
+                        "  Candidate(t) = Benchmark(t) * Ratio(t)",
+                        f"  Benchmark(t) = {benchmark_closed_form}",
+                        f"  Ratio(t) = {eta_symbolic}",
+                    ]
+                )
+            eta_cert = {
+                "object": "Ratio(t)",
+                "fit_type": "eta_quotient",
+                "level": level,
+                "exponents_by_divisor": {str(d): e for d, e in sorted(exponents_by_divisor.items())},
+                "checked_c_n": fit_check_count,
+                "mismatch_indices": mismatches,
+            }
+            lines.extend(
+                [
+                    f"- Eta-quotient closed form: `{eta_symbolic}`",
+                    f"- Certificate: mismatches in c_1..c_{fit_check_count}: `{len(mismatches)}`",
+                    "",
+                    "```json",
+                    json.dumps(eta_cert, indent=2, ensure_ascii=True),
+                    "```",
+                ]
+            )
 
         # Heine hcf2 c=bz=-1 coefficient check when the reduced reciprocal matches 1+K (t^n+t^(2n))/(1+t^n).
         b0_target, a_target, b_target = _template_reciprocal_coeffs(reduced_candidate, q=t, depth=4)
@@ -1263,6 +1874,55 @@ def build_candidate_research_note(
                     "```",
                     "",
                     "- But the target reciprocal for this candidate has `a1 = t + t^2`, so this specialization cannot match at the coefficient level.",
+                ]
+            )
+
+            b_cor, lam_cor = sp.symbols("b lambda")
+            cor2cf_obstruction = heine_cor2cf_a_zero_contraction_obstruction(
+                b=b_cor,
+                lam=lam_cor,
+                q=t,
+                depth=12,
+            )
+            lines.extend(
+                [
+                    "",
+                    "## Heine `cor2cf` Contraction Check (`a = 0` lane)",
+                    "",
+                    "- For the nearby `cor2cf` family, matching the target initial term `1` forces the relevant branch to the `a = 0` specialization:",
+                    "",
+                    "```text",
+                    f"b0 = {_format_expr(cor2cf_obstruction.source_coeffs.b0)}",
+                    f"a1 = {_format_expr(cor2cf_obstruction.source_coeffs.a_terms[1])}",
+                    f"b1 = {_format_expr(cor2cf_obstruction.source_coeffs.b_terms[1])}",
+                    f"a2 = {_format_expr(cor2cf_obstruction.source_coeffs.a_terms[2])}",
+                    f"b2 = {_format_expr(cor2cf_obstruction.source_coeffs.b_terms[2])}",
+                    f"a3 = {_format_expr(cor2cf_obstruction.source_coeffs.a_terms[3])}",
+                    f"b3 = {_format_expr(cor2cf_obstruction.source_coeffs.b_terms[3])}",
+                    f"a4 = {_format_expr(cor2cf_obstruction.source_coeffs.a_terms[4])}",
+                    f"b4 = {_format_expr(cor2cf_obstruction.source_coeffs.b_terms[4])}",
+                    "```",
+                    "",
+                    (
+                        f"- Odd part: the initial term is `d0 = {_format_expr(cor2cf_obstruction.odd_part.b0)}` "
+                        f"instead of `{_format_expr(b0_target)}`."
+                    ),
+                    (
+                        f"- Even part: the initial term stays `{_format_expr(cor2cf_obstruction.even_part.b0)}`, "
+                        f"but the first numerator is `{_format_expr(cor2cf_obstruction.even_part.a_terms[1])}` "
+                        f"instead of `{_format_expr(a_target[1])}`."
+                    ),
+                    (
+                        "- Odd-of-even branch: the new initial term is "
+                        f"`{_format_fraction_expr(cor2cf_obstruction.even_odd_part.b0)}`, "
+                        f"so this two-step branch also fails at stage 0."
+                    ),
+                    (
+                        "- Even-of-even branch: the initial term stays `1`, but the first numerator is "
+                        f"`{_format_expr(cor2cf_obstruction.even_even_part.a_terms[1])}`; "
+                        "its `t^2` coefficient is `0`, so it cannot equal the target `t + t^2`."
+                    ),
+                    "- So the relevant 1-step and 2-step odd/even contraction branches around `cor2cf` are ruled out exactly at low stage.",
                 ]
             )
 

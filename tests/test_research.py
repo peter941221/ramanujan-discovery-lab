@@ -15,10 +15,15 @@ from ramanujan_discovery.research import (
     convergent_common_factor_reduction,
     direct_bauer_muir_obstruction,
     euler_product_exponents,
+    heine_cor2cf_a_zero_contraction_obstruction,
+    heine_cor2cf_a_zero_specialized_coeffs,
     heine_hcf2_standardized_coeffs,
     parity_contraction_coeffs,
     page43_monomial_parameter_search,
     reduce_template_by_step,
+    try_fit_periodic_pochhammer,
+    try_fit_two_modulus_pochhammer,
+    _verify_two_modulus_pochhammer_fit,
     _template_reciprocal_coeffs,
 )
 from ramanujan_discovery.storage import write_candidates
@@ -39,6 +44,57 @@ def test_heine_hcf2_c_equals_bz_minus_one_has_constant_first_numerator():
     assert sp.simplify(coeffs.b0 - 1) == 0
     assert sp.simplify(coeffs.b_terms[1] - (1 + q)) == 0
     assert not coeffs.a_terms[1].has(q)
+
+
+def test_heine_cor2cf_a_zero_specialized_coeffs_match_expected_pattern():
+    q = sp.Symbol("q")
+    b, lam = sp.symbols("b lambda")
+    coeffs = heine_cor2cf_a_zero_specialized_coeffs(b=b, lam=lam, q=q, depth=6)
+    assert sp.simplify(coeffs.b0 - 1) == 0
+    assert sp.simplify(coeffs.a_terms[1] - lam * q) == 0
+    assert sp.simplify(coeffs.b_terms[1] - 1) == 0
+    assert sp.simplify(coeffs.a_terms[2] - (b * q + lam * q**2)) == 0
+    assert sp.simplify(coeffs.b_terms[2] - 1) == 0
+    assert sp.simplify(coeffs.a_terms[3] - lam * q**3) == 0
+    assert sp.simplify(coeffs.a_terms[4] - (b * q**2 + lam * q**4)) == 0
+
+
+def test_heine_cor2cf_a_zero_contraction_obstruction_has_exact_low_stage_mismatches():
+    q = sp.Symbol("q")
+    b, lam = sp.symbols("b lambda")
+    obstruction = heine_cor2cf_a_zero_contraction_obstruction(b=b, lam=lam, q=q, depth=12)
+
+    assert sp.simplify(obstruction.odd_part.b0 - (1 + lam * q)) == 0
+    assert sp.simplify(obstruction.even_part.b0 - 1) == 0
+    assert sp.simplify(obstruction.even_part.a_terms[1] - lam * q) == 0
+    assert sp.simplify(obstruction.even_part.b_terms[1] - (1 + b * q + lam * q**2)) == 0
+    assert sp.simplify(
+        obstruction.even_odd_part.b0 - ((1 + b * q + lam * q + lam * q**2) / (1 + b * q + lam * q**2))
+    ) == 0
+    assert sp.simplify(
+        obstruction.even_even_part.a_terms[1] - lam * q * (1 + b * q**2 + lam * q**3 + lam * q**4)
+    ) == 0
+    assert sp.expand(obstruction.even_even_part.a_terms[1]).coeff(q, 2) == 0
+
+
+def test_two_modulus_pochhammer_fit_recovers_mixed_moduli_beyond_single_period_box():
+    first_exponents = [1, 0, -1, 0, 0]
+    second_exponents = [0, 1, 0, -1, 0, 0]
+    exponents = [
+        sp.Integer(first_exponents[(n - 1) % 5] + second_exponents[(n - 1) % 6])
+        for n in range(1, 61)
+    ]
+
+    assert try_fit_periodic_pochhammer(exponents, max_period=12, max_abs=4) is None
+
+    fit = try_fit_two_modulus_pochhammer(exponents, max_modulus=12, max_abs=4)
+    assert fit is not None
+    assert (fit.first_modulus, fit.second_modulus) == (5, 6)
+    assert _verify_two_modulus_pochhammer_fit(
+        euler_exponents=exponents,
+        fit=fit,
+        check_count=len(exponents),
+    ) == []
 
 
 def test_reduce_template_by_step_divides_exponents():
@@ -635,7 +691,9 @@ def test_cli_research_writes_note(tmp_path: Path):
     assert "reverse equivalence transform" in text
     assert "Direct 1-Step Bauer-Muir Obstruction" in text
     assert "Page-43 Monomial Substitution Check" in text
+    assert "Heine `cor2cf` Contraction Check (`a = 0` lane)" in text
     assert "Cubic Odd/Even Contraction Check" in text
     assert "Arithmetic Subsequence Contraction Scan" in text
     assert "Constrained Bauer-Muir Search" in text
     assert "Heine hcf2 Specialization Check (c=bz=-1)" in text
+    assert "Two-modulus Pochhammer fit" in text
