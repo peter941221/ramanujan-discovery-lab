@@ -1,49 +1,197 @@
 # Ramanujan Discovery Lab
 
-`Ramanujan Discovery Lab` is a local-first research tool for rediscovering and stress-testing Ramanujan-style `q`-continued fractions.
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Lean](https://img.shields.io/badge/Lean-4.28.0-0B5CAD?style=for-the-badge)](https://lean-lang.org/)
+[![Pages](https://img.shields.io/website?style=for-the-badge&url=https%3A%2F%2Fpeter941221.github.io%2Framanujan-discovery-lab%2F&label=GitHub%20Pages)](https://peter941221.github.io/ramanujan-discovery-lab/)
+[![Workflow](https://img.shields.io/github/actions/workflow/status/peter941221/ramanujan-discovery-lab/research-pages.yml?style=for-the-badge&label=Research%20Pages)](https://github.com/peter941221/ramanujan-discovery-lab/actions/workflows/research-pages.yml)
+[![License](https://img.shields.io/github/license/peter941221/ramanujan-discovery-lab?style=for-the-badge)](LICENSE)
+
+```text
++----------------------------------------------------------------------------+
+|                         Ramanujan Discovery Lab                            |
+|                                                                            |
+|                 1                                                          |
+| F(q) = -----------------------     discover -> verify -> report -> site    |
+|               a1(q)                                                        |
+|        b0(q) + --------------     analyze -> research -> identify         |
+|                     a2(q)                                                  |
+|               b1(q) + -------- ... formalize -> Lean 4 -> public notes    |
+|                          ...                                               |
+|                                                                            |
+| A CLI-first research workspace for Ramanujan-style q-continued fractions.  |
++----------------------------------------------------------------------------+
+```
+
+*Mathematical beauty is treated as a clue, not as a proof.*
+
+*中文摘要：一个面向拉马努金风格 `q`-连分式的 CLI-first 研究工作台。*
 
 - Repository: `https://github.com/peter941221/ramanujan-discovery-lab`
-- Pages: `https://peter941221.github.io/ramanujan-discovery-lab/`
+- GitHub Pages: `https://peter941221.github.io/ramanujan-discovery-lab/`
+- Stack: `Python 3.11+`, `mpmath`, `sympy`, `Lean 4`
+- Automation: GitHub Actions reruns discovery, verification, reporting, and Pages deployment on `main`
+- Posture: conservative, reproducible, benchmark-backed, proof-aware
 
-The current release is intentionally narrow:
+```text
++==========================================================================+
+|                                Contents                                  |
++==========================================================================+
+```
 
-- CLI-first workflow
-- high-precision numerical evaluation with `mpmath`
-- benchmark verification against independent infinite-product formulas
-- GitHub Pages-friendly static site generation
-- GitHub Actions workflow that reruns discovery, verification, reporting, and Pages deployment on `main`
+- [Why This Repository Exists](#why-this-repository-exists)
+- [Research Posture](#research-posture)
+- [Project Shape](#project-shape)
+- [Pipeline](#pipeline)
+- [Quickstart](#quickstart)
+- [Current Mathematical Focus](#current-mathematical-focus)
+- [Lean Proof Layer](#lean-proof-layer)
+- [Benchmark Catalog](#benchmark-catalog)
+- [Repository Map](#repository-map)
+- [Status Semantics](#status-semantics)
+- [Current Limits](#current-limits)
+- [Public Artifacts](#public-artifacts)
 
-## What It Does
+```text
++==========================================================================+
+|                           Why This Repository Exists                     |
++==========================================================================+
+```
 
-The pipeline has four stages:
+## Why This Repository Exists
 
-1. `discover`
-   Search a constrained family of `q`-continued-fraction templates.
-2. `verify`
-   Recompute promising templates at higher precision and classify them.
-3. `report`
-   Emit a Markdown snapshot for research notes or release artifacts.
-4. `site`
-   Generate a static gallery suitable for GitHub Pages.
+```text
+Goal
+|-- rediscover classical Ramanujan-style q-continued fractions
+|-- surface stable unexplained candidates from a small interpretable search box
+|-- audit those candidates with symbolic, numerical, and formal tools
+`-- publish artifacts that stay honest about what is known and what is not
+```
 
-Optional research stage:
+This repository is a local-first research workspace for discovering and
+stress-testing Ramanujan-style `q`-continued-fraction templates. It is designed
+to do two things well at the same time:
 
-5. `analyze`
-   Write a focused Markdown note for one candidate, including structural deltas, symbolic `q`-series comparisons, and terminal-friendly formula output.
-6. `research`
-   Run heavier candidate probes (higher-order ratio series, Euler-product exponent extraction, and targeted literature coefficient checks).
-7. `formalize`
-   Write a formalization-prep note for one candidate, separating exact local lemmas from bounded search evidence.
-8. `identify`
-   Attempt small algebraic relation guesses between a candidate and its nearest benchmark (step-reduced if possible).
+1. recover classical benchmark identities from an independently checkable catalog
+2. investigate nearby unexplained candidates without prematurely calling them
+   “new identities”
 
-Current benchmark catalog:
+The current award-track direction is centered on a single hero case,
+`cb60fd71d1d7`, with the long-term goal of reaching:
 
-- Rogers-Ramanujan normalized continued fraction
-- Rogers-Ramanujan family benchmarks at `q^2`, `q^3`, and `q^4`
-- Ramanujan cubic continued fraction
-- Ramanujan cubic family benchmarks at `q^2` and `q^3`
-- Conservative review audit for numerically stable unexplained candidates
+```text
+unexplained candidate
+      |
+      +-- exact recognition / closed form
+      +-- theorem-grade proof
+      +-- Lean formalization
+      `-- literature closure
+  |
+             `--> only then: publishable novelty posture
+```
+
+```text
++==========================================================================+
+|                              Research Posture                            |
++==========================================================================+
+```
+
+## Research Posture
+
+```text
+candidate
+  |
+  +-- exact benchmark match ----------> known
+  |
+  +-- strong noncanonical benchmark --> known_variant
+  |
+  +-- internal regression control ----> fixture
+  |
+  `-- stable but unmatched -----------> review
+                                         |
+                                         `-- review != novelty claim
+```
+
+This repository is intentionally conservative:
+
+- `review` means “numerically stable and not matched by the current built-in
+  catalog”; it does **not** mean “new formula”
+- closed-world benchmark novelty is not the same as literature novelty
+- bounded transform scans are evidence, not final proofs
+- public-facing notes stay cautious until the theorem gate and literature gate
+  are both materially satisfied
+
+```text
++==========================================================================+
+|                               Project Shape                              |
++==========================================================================+
+```
+
+## Project Shape
+
+```text
+Ramanujan Discovery Lab
+|-- src/ramanujan_discovery/
+|   |-- discovery.py        search bounded template families
+|   |-- verification.py     high-precision rescoring and classification
+|   |-- reporting.py        markdown + GitHub Pages artifacts
+|   |-- analysis.py         focused candidate notes
+|   |-- research.py         heavier symbolic and transform probes
+|   |-- identification.py   bounded algebraic relation guesses
+|   `-- formalization.py    theorem-prep notes + Lean module generation
+|
+|-- tests/                  regression checks
+|-- proofs/                 Lean 4 workspace
+|-- results/                generated candidate snapshots
+|-- docs/                   static public site for GitHub Pages
+`-- *.md                    long-form audit notes and research artifacts
+```
+
+```text
++==========================================================================+
+|                                  Pipeline                                |
++==========================================================================+
+```
+
+## Pipeline
+
+```text
+discover ---> verify ---> report ---> site
+    |            |
+    |            +----> analyze ---> research ---> identify
+    |                                   |
+    |                                   `----------> formalize ---> Lean 4
+    |
+    `---- bounded, interpretable search over q-continued-fraction templates
+```
+
+### Core Stages
+
+- `discover`
+  Search a constrained family of `q`-continued-fraction templates.
+- `verify`
+  Recompute promising templates at higher precision and classify them.
+- `report`
+  Emit a Markdown research snapshot from verified candidates.
+- `site`
+  Render a static gallery for GitHub Pages.
+
+### Deep-Dive Stages
+
+- `analyze`
+  Produce a focused note for one candidate with symbolic `q`-series deltas.
+- `research`
+  Run heavier probes: ratio-series fits, Euler-product exponent extraction,
+  structured fit attempts, and transform audits.
+- `identify`
+  Attempt small algebraic relation guesses against the nearest benchmark.
+- `formalize`
+  Produce formalization-prep notes and optionally auto-generate Lean modules.
+
+```text
++==========================================================================+
+|                                 Quickstart                               |
++==========================================================================+
+```
 
 ## Quickstart
 
@@ -53,59 +201,113 @@ $env:PYTHONPATH='src'
 python -m ramanujan_discovery discover --depth 36 --precision 80 --budget-hours 0.1 --out results/candidates.jsonl
 python -m ramanujan_discovery verify --in results/candidates.jsonl --precision 160 --out results/verified.jsonl
 python -m ramanujan_discovery report --in results/verified.jsonl --out results/report.md
+python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
+```
+
+Then open `docs/index.html` locally or publish `docs/` with GitHub Pages.
+
+### Hero-Case Deep Dive
+
+```powershell
+$env:PYTHONPATH='src'
 python -m ramanujan_discovery analyze --in results/verified.jsonl --candidate-id cb60fd71d1d7 --stdout-format unicode --out HERO_CASE_CB60FD71D1D7.md
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 151 --out CB60FD71D1D7_RESEARCH_NOTE.md
 python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean
 python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out CB60FD71D1D7_IDENTIFICATION_NOTE.md
-python -m ramanujan_discovery site --in results/verified.jsonl --out-dir docs
 ```
 
-`analyze` stdout formats:
-
-- `unicode`: terminal-friendly pretty math via SymPy
-- `latex`: copyable LaTeX string for Markdown or papers
-- `plain`: ASCII fallback
-- `none`: suppress terminal summary
-
-Fast local validation:
+### Fast Smoke Validation
 
 ```powershell
+$env:PYTHONPATH='src'
 python -m ramanujan_discovery research --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 12 --series-order 61 --smoke --out tmp/research-smoke.md
 python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/formalize-smoke.md --lean-out tmp/formalize-smoke.lean
 python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --smoke --out tmp/identify-smoke.md
 ```
 
-`--smoke` keeps the same output sections but trims bounded symbolic searches so
-the command is suitable for quick regression checks.
+`--smoke` keeps the same output sections while reducing bounded symbolic search
+coverage for quicker local validation.
 
-Then open `docs/index.html` locally or publish the `docs/` folder with GitHub Pages.
+```text
++==========================================================================+
+|                         Current Mathematical Focus                       |
++==========================================================================+
+```
+
+## Current Mathematical Focus
+
+```text
+RR(q^3) neighborhood
+|
+|-- e2cc74240b6f   plain step branch
+`-- cb60fd71d1d7  hybrid branch / current hero case
+```
+
+The current hero case is `cb60fd71d1d7`.
+
+Current conservative read:
+
+- it tracks `RR(q^3)` through `q^9`
+- it first diverges at `q^12`
+- it appears structurally richer than the plain `RR(q^3)` step-branch candidate
+  `e2cc74240b6f`
+- it remains an **unexplained candidate**, not a settled novelty claim
+
+Key notes:
+
+- [Hero case summary](CB60FD71D1D7_PUBLIC_SUMMARY.md)
+- [Hero case study](CB60FD71D1D7_CASE_STUDY.md)
+- [Hero transform audit](CB60FD71D1D7_TRANSFORM_AUDIT.md)
+- [Hero exact subsequence obstruction](CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md)
+- [Hero Heine `cor2cf` obstruction](CB60FD71D1D7_HEINE_COR2CF_OBSTRUCTION.md)
+- [Hero identification note](CB60FD71D1D7_IDENTIFICATION_NOTE.md)
+- [Hero formalization note](CB60FD71D1D7_FORMALIZATION_NOTE.md)
+- [Hero novelty gate](CB60FD71D1D7_NOVELTY_GATE.md)
+- [Hero bibliography matrix](CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md)
+- [Hero literature log](CB60FD71D1D7_LITERATURE_LOG.md)
+- [Hero public article draft](CB60FD71D1D7_PUBLIC_ARTICLE.md)
+
+```text
++==========================================================================+
+|                              Lean Proof Layer                            |
++==========================================================================+
+```
 
 ## Lean Proof Layer
 
-The repository now includes an initial Lean 4 proof workspace under `proofs/`.
-Its current scope is intentionally narrow but no longer purely ad hoc:
+```text
+proofs/
+|-- Proofs/GeneralizedCF.lean
+|-- Proofs/HeroCaseObjects.lean
+|-- Proofs/HeroCaseLocal.lean
+|-- Proofs/HeroCasePage43.lean
+|-- Proofs/HeroCaseHeineCor2cf.lean
+|-- Proofs/HeroCaseSubsequence.lean
+|-- Proofs/HeroCaseSubsequenceExact.lean
+|-- Proofs/HeroCaseBauerMuir.lean
+|-- Proofs/RationalEquivalence.lean
+`-- Proofs/Generated/Cb60fd71d1d7.lean
+```
 
-- `Proofs/GeneralizedCF.lean` formalizes finite-truncation continuants and the
-  convergent recurrence
-- `Proofs/HeroCaseObjects.lean` centralizes the canonical hero-case objects,
-  nearby source objects, and generic reverse-scale definitions
-- `Proofs/HeroCaseLocal.lean` machine-checks exact local obstruction lemmas for
-  `cb60fd71d1d7`, including polynomial-level no-match theorems and an exact
-  convergent-factor reduction theorem
-- `Proofs/HeroCasePage43.lean` formalizes bounded page-43 family exclusions for
-  the current hero case in Laurent polynomials
-- `Proofs/HeroCaseSubsequence.lean` and `Proofs/HeroCaseBauerMuir.lean` mirror
-  the bounded subsequence and Bauer-Muir scans as computation-checked theorems
-- the current hero case also admits an explicit reverse equivalence
-  transformation from the reduced fraction back to the original reciprocal
-  object
-- `Proofs/RationalEquivalence.lean` now proves that reverse equivalence witness
-  over `RatFunc Rat` for all stages of the shared hero-case object
-- `formalize` and `research` now emit that exact reduction/equivalence witness
-  explicitly; the reverse transform scales are rational functions, so the next
-  formal step likely needs a fraction-field coefficient layer
-- `formalize --lean-out ...` can now auto-generate a candidate-specific Lean
-  proof module such as `proofs/Proofs/Generated/Cb60fd71d1d7.lean`
+The Lean workspace is still obstruction-first rather than final-identity-first,
+but it is already useful:
+
+- `Proofs/GeneralizedCF.lean`
+  formalizes finite-truncation continuants and convergent recurrences
+- `Proofs/HeroCaseLocal.lean`
+  proves exact local mismatch lemmas and convergent-factor reduction facts
+- `Proofs/HeroCasePage43.lean`
+  formalizes bounded page-43 family exclusions
+- `Proofs/HeroCaseSubsequence.lean` and `Proofs/HeroCaseSubsequenceExact.lean`
+  cover bounded and stronger exact subsequence obstructions
+- `Proofs/HeroCaseBauerMuir.lean`
+  mirrors the bounded Bauer-Muir search layer
+- `Proofs/RationalEquivalence.lean`
+  proves the reverse equivalence witness over `RatFunc Rat`
+- `formalize --lean-out ...`
+  can generate candidate-specific Lean modules
+
+Build the proof layer with:
 
 ```powershell
 Set-Location proofs
@@ -113,21 +315,141 @@ lake build
 lake env lean Proofs/Generated/Cb60fd71d1d7.lean
 ```
 
+```text
++==========================================================================+
+|                              Benchmark Catalog                           |
++==========================================================================+
+```
+
+## Benchmark Catalog
+
+```text
+benchmark catalog
+|-- Rogers-Ramanujan: q, q^2, q^3, q^4
+|-- Ramanujan cubic: q, q^2, q^3
+`-- internal fixtures: shifted / denominator-perturbed
+```
+
+Current built-in benchmark families:
+
+- Rogers-Ramanujan normalized continued fraction
+- Rogers-Ramanujan family benchmarks at `q^2`, `q^3`, and `q^4`
+- Ramanujan cubic continued fraction
+- Ramanujan cubic family benchmarks at `q^2` and `q^3`
+- two internal fixtures for regression control
+
+```text
++==========================================================================+
+|                               Repository Map                             |
++==========================================================================+
+```
+
+## Repository Map
+
+```text
+.
+|-- README.md
+|-- AGENTS.md
+|-- MEMORY.md
+|-- RUNBOOK.md
+|-- TECHNICAL_DESIGN.md
+|-- src/
+|   `-- ramanujan_discovery/
+|       |-- __main__.py
+|       |-- cli.py
+|       |-- discovery.py
+|       |-- verification.py
+|       |-- reporting.py
+|       |-- analysis.py
+|       |-- research.py
+|       |-- identification.py
+|       `-- formalization.py
+|-- tests/
+|-- proofs/
+|-- results/
+`-- docs/
+```
+
+Important entrypoints:
+
+- `src/ramanujan_discovery/cli.py`
+- `src/ramanujan_discovery/__main__.py`
+- `proofs/`
+- `tests/`
+- `docs/`
+
+```text
++==========================================================================+
+|                              Status Semantics                            |
++==========================================================================+
+```
+
 ## Status Semantics
 
-- `known`: exact canonical match to a classical benchmark
-- `known_variant`: strong numerical match to a classical benchmark but not canonical
-- `fixture`: internal regression target
-- `review`: stable unexplained candidate that does not strongly match the benchmark catalog
+- `known`
+  exact canonical match to a classical benchmark
+- `known_variant`
+  strong numerical match to a classical benchmark but not canonical
+- `fixture`
+  internal regression target
+- `review`
+  stable unexplained candidate that does not strongly match the current
+  benchmark catalog
 
 Review audit:
 
-- [REVIEW_AUDIT.md](REVIEW_AUDIT.md)
+- [Review audit note](REVIEW_AUDIT.md)
 - Pages view: `review-audit.html`
+
+```text
++==========================================================================+
+|                               Current Limits                             |
++==========================================================================+
+```
 
 ## Current Limits
 
+```text
+what this repo does not yet claim
+|-- full literature closure
+|-- final theorem for the hero identity
+|-- final Lean proof of the target source identity
+`-- broad open-ended search over all Ramanujan-style families
+```
+
+Current constraints:
+
 - novelty is only checked against the built-in benchmark catalog
-- there is not yet a full formal proof of a final continued-fraction identity
-- `formalize` now emits a theorem-prep note plus an optional Lean proof module, but the formal layer is still obstruction-first rather than a final source proof
-- the search family is still intentionally small and biased toward interpretable templates
+- the search family is intentionally small and biased toward interpretable
+  templates
+- `formalize` currently emits theorem-prep assets rather than a completed final
+  source proof
+- bounded scans and symbolic fits are valuable evidence, but they are not the
+  same thing as a theorem
+
+```text
++==========================================================================+
+|                              Public Artifacts                            |
++==========================================================================+
+```
+
+## Public Artifacts
+
+- GitHub Pages snapshot: `docs/` or
+  `https://peter941221.github.io/ramanujan-discovery-lab/`
+- candidate report: `results/report.md`
+- hero-case long-form notes:
+  `HERO_CASE_CB60FD71D1D7.md`,
+  `CB60FD71D1D7_RESEARCH_NOTE.md`,
+  `CB60FD71D1D7_FORMALIZATION_NOTE.md`
+
+---
+
+```text
+Beauty -> pattern
+pattern -> conjecture
+conjecture -> proof
+proof -> publication
+```
+
+This project tries to keep all four stages in one place.
