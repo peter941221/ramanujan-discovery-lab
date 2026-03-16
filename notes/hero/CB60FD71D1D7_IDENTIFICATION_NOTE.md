@@ -111,6 +111,28 @@ No source-family fractional-linear relation was found in any scanned prefix box.
 
 - No hit for source-family fractional-linear prefixes ending at `RR`, `cubic`, `GG`, `S`.
 
+## Ratio-Object Source-Family Two-Layer Fractional-Linear Scan
+
+We then expanded to a second-ring nonlinear box built from two single-basis factors drawn from the named source-family prefixes:
+
+```text
+F = ((1 + a0*(X1 - 1)) / (1 + b0*(Y1 - 1))) * ((1 + a1*(X2 - 1)) / (1 + b1*(Y2 - 1)))
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- The source-family bases are evaluated in the same variable view used above.
+- `RR = rogers_ramanujan_normalized`
+- `cubic = ramanujan_cubic_normalized`
+- `GG = gollnitz_gordon_normalized`
+- `S = hirschhorn_s_normalized`
+
+- Prefixes checked: `(RR, cubic)`, then `(RR, cubic, GG)`, and so on through the final listed source-family basis.
+- Each prefix scans low-complexity two-factor templates and verifies any candidate hit by exact series re-expansion.
+
+No source-family two-layer fractional-linear relation was found in any scanned prefix box.
+
+- No hit for source-family two-layer prefixes ending at `cubic`, `GG`, `S`.
+
 ## Ratio-Object RR-Tower Prefix Scan
 
 We also scanned the multiplicative correction object against prefixes of the benchmark tower:

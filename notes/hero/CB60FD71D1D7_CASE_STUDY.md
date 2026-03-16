@@ -86,7 +86,10 @@ their ratio objects:
    `F = prod_i S_i^(e_i)` still has no hit for the ratio
    `F = candidate / RR(q^3)`. The richer source-family fractional-linear box
    `F = (1 + sum a_i (S_i - 1)) / (1 + sum b_i (S_i - 1))` also has no hit in
-   the current prefix scan through `RR`, `cubic`, `GG`, and `S`.
+   the current prefix scan through `RR`, `cubic`, `GG`, and `S`. Even the
+   second-ring source-family two-layer box built from two single-basis
+   fractional-linear factors still has no hit through the prefixes ending at
+   `cubic`, `GG`, and `S`.
    On the page-43 side, the zero-shift `f2/gcf3` and `f4/gcf2`
    `n`-dependent equivalence lanes are ruled out exactly: in both cases the
    necessary residual polynomial forces `a = b = 0`, then `lambda = 1`, but

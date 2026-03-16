@@ -41,6 +41,8 @@ B1(t) = 1 + K_{n>=1} t^n / 1.
 - The richer named source-family fractional-linear scan
   `F = (1 + sum a_i (S_i - 1)) / (1 + sum b_i (S_i - 1))` also reports `0`
   hits through the same `RR/cubic/GG/S` prefix order.
+- The second-ring named source-family two-layer scan also reports `0` hits for
+  prefixes ending at `cubic`, `GG`, and `S`.
 - The exact page-43 equivalence layer now rules out both the zero-shift and the
   first unit-`lambda` nearest `f2/gcf3` and `f4/gcf2` lanes; the unit-shift
   lanes already fail at the surviving `m^1` term `lambda*t^2 - t`.

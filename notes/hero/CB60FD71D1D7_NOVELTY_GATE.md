@@ -64,6 +64,10 @@ C(t) = 1 + K_(n>=1) (t^n + t^(2n)) / (1 + t^n)
        - named source-family fractional-linear boxes for
          `F = candidate / RR(q^3)` built from the same `RR`, `cubic`, `GG`,
          and `S` basis order
+       - named source-family two-layer fractional-linear boxes for
+         `F = candidate / RR(q^3)` built from the same source-family prefix
+         order, still with `0` hits through prefixes ending at `cubic`, `GG`,
+         and `S`
 
 5. Public audit posture
    - the repo already separates:

@@ -110,6 +110,17 @@ class NamedFractionalLinearRelationScan:
 
 
 @dataclass(frozen=True)
+class NamedTwoLayerFractionalLinearRelationScan:
+    """Outcome for one prefix scan of named source-family two-layer templates."""
+
+    basis_labels: tuple[str, ...]
+    relations: tuple[TwoLayerFractionalLinearRelation, ...]
+    total_hits: int
+    tuples_checked: int
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class TwoLayerFractionalLinearRelation:
     """A product of two low-complexity fractional-linear factors."""
 
@@ -1106,6 +1117,86 @@ def scan_named_fractional_linear_prefixes(
     return scans
 
 
+def scan_named_two_layer_fractional_linear_prefixes(
+    *,
+    target_series: Series,
+    ordered_basis_series: tuple[tuple[str, Series], ...],
+    order: int,
+    solve_order: int | None = None,
+    max_reported_hits: int = 3,
+) -> list[NamedTwoLayerFractionalLinearRelationScan]:
+    if len(ordered_basis_series) < 2:
+        return []
+
+    if max_reported_hits < 1:
+        raise ValueError("max_reported_hits must be at least 1")
+
+    scans: list[NamedTwoLayerFractionalLinearRelationScan] = []
+    prefix: list[tuple[str, Series]] = []
+    for label, series in ordered_basis_series:
+        prefix.append((label, series))
+        if len(prefix) < 2:
+            continue
+
+        basis_series_by_variable = {name: basis for name, basis in prefix}
+        basis_names = tuple(basis_series_by_variable.keys())
+        hits: list[TwoLayerFractionalLinearRelation] = []
+        seen_signatures: set[str] = set()
+        total_hits = 0
+        tuples_checked = 0
+        try:
+            for numerator_variables in product(basis_names, repeat=2):
+                for denominator_variables in product(basis_names, repeat=2):
+                    factor_1 = (numerator_variables[0], denominator_variables[0])
+                    factor_2 = (numerator_variables[1], denominator_variables[1])
+                    if factor_1 > factor_2:
+                        continue
+                    tuples_checked += 1
+                    try:
+                        relation = search_two_layer_fractional_linear_relation(
+                            target_series=target_series,
+                            basis_series_by_variable=basis_series_by_variable,
+                            numerator_variables=numerator_variables,
+                            denominator_variables=denominator_variables,
+                            order=order,
+                            solve_order=solve_order,
+                        )
+                    except ValueError:
+                        continue
+                    if relation is None:
+                        continue
+                    signature = _format_two_layer_fractional_linear_relation(
+                        relation,
+                        target_variable="F",
+                    )
+                    if signature in seen_signatures:
+                        continue
+                    seen_signatures.add(signature)
+                    total_hits += 1
+                    if len(hits) < max_reported_hits:
+                        hits.append(relation)
+
+            scans.append(
+                NamedTwoLayerFractionalLinearRelationScan(
+                    basis_labels=tuple(name for name, _ in prefix),
+                    relations=tuple(hits),
+                    total_hits=total_hits,
+                    tuples_checked=tuples_checked,
+                )
+            )
+        except ValueError as exc:
+            scans.append(
+                NamedTwoLayerFractionalLinearRelationScan(
+                    basis_labels=tuple(name for name, _ in prefix),
+                    relations=(),
+                    total_hits=0,
+                    tuples_checked=tuples_checked,
+                    error=str(exc),
+                )
+            )
+    return scans
+
+
 def scan_ratio_benchmark_two_layer_fractional_linear_prefixes(
     *,
     ratio_series: Series,
@@ -1319,6 +1410,12 @@ def build_candidate_identification_note(
         target_series=ratio_series,
         ordered_basis_series=source_family_basis_series,
         order=profile_order,
+    )
+    source_family_two_layer_fractional_linear_scans = scan_named_two_layer_fractional_linear_prefixes(
+        target_series=ratio_series,
+        ordered_basis_series=source_family_basis_series,
+        order=profile_order,
+        solve_order=min(profile_order, 14 if smoke else 18),
     )
     power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
@@ -1709,6 +1806,86 @@ def build_candidate_identification_note(
                         "",
                         "```text",
                         _format_fractional_linear_relation(scan.relation, target_variable="F"),
+                        "```",
+                        "",
+                        f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                        "",
+                    ]
+                )
+
+    if source_family_two_layer_fractional_linear_scans:
+        lines.extend(
+            [
+                "",
+                "## Ratio-Object Source-Family Two-Layer Fractional-Linear Scan",
+                "",
+                "We then expanded to a second-ring nonlinear box built from two single-basis factors drawn from the named source-family prefixes:",
+                "",
+                "```text",
+                "F = ((1 + a0*(X1 - 1)) / (1 + b0*(Y1 - 1))) * ((1 + a1*(X2 - 1)) / (1 + b1*(Y2 - 1)))",
+                "```",
+                "",
+                f"- `F = candidate / {record.closest_benchmark}`",
+                "- The source-family bases are evaluated in the same variable view used above.",
+            ]
+        )
+        for label, benchmark_name in source_family_basis_catalog:
+            lines.append(f"- `{label} = {benchmark_name}`")
+        lines.extend(
+            [
+                "",
+                "- Prefixes checked: `(RR, cubic)`, then `(RR, cubic, GG)`, and so on through the final listed source-family basis.",
+                "- Each prefix scans low-complexity two-factor templates and verifies any candidate hit by exact series re-expansion.",
+                "",
+            ]
+        )
+
+        any_source_two_layer_hit = any(
+            scan.total_hits > 0 for scan in source_family_two_layer_fractional_linear_scans
+        )
+        if not any_source_two_layer_hit:
+            lines.append("No source-family two-layer fractional-linear relation was found in any scanned prefix box.")
+            lines.append("")
+
+        no_hit_labels = [
+            f"`{scan.basis_labels[-1]}`"
+            for scan in source_family_two_layer_fractional_linear_scans
+            if scan.error is None and scan.total_hits == 0
+        ]
+        if not any_source_two_layer_hit and no_hit_labels:
+            lines.append(
+                f"- No hit for source-family two-layer prefixes ending at {', '.join(no_hit_labels)}."
+            )
+
+        for scan in source_family_two_layer_fractional_linear_scans:
+            if scan.error is not None:
+                lines.append(
+                    f"- Source-family two-layer prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                )
+                continue
+            if scan.total_hits == 0:
+                continue
+            lines.append(
+                f"- Source-family two-layer prefix ending at `{scan.basis_labels[-1]}` found `{scan.total_hits}` exact hit(s) after checking `{scan.tuples_checked}` template(s):"
+            )
+            lines.append("")
+            basis_series_by_variable = {
+                label: series
+                for label, series in source_family_basis_series
+                if label in scan.basis_labels
+            }
+            for relation in scan.relations:
+                residual = _two_layer_fractional_linear_relation_residual_series(
+                    relation,
+                    target_series=ratio_series,
+                    basis_series_by_variable=basis_series_by_variable,
+                    order=profile_order,
+                )
+                residual_ok = all(sp.simplify(value) == 0 for value in residual)
+                lines.extend(
+                    [
+                        "```text",
+                        _format_two_layer_fractional_linear_relation(relation, target_variable="F"),
                         "```",
                         "",
                         f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",

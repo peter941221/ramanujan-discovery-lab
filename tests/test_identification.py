@@ -9,6 +9,7 @@ from ramanujan_discovery.identification import (
     scan_named_fractional_linear_prefixes,
     scan_benchmark_power_relation_prefixes,
     scan_named_multiplicative_prefixes,
+    scan_named_two_layer_fractional_linear_prefixes,
     scan_ratio_benchmark_fractional_linear_prefixes,
     scan_ratio_benchmark_multiplicative_prefixes,
     scan_ratio_benchmark_power_relation_prefixes,
@@ -413,6 +414,52 @@ def test_scan_ratio_benchmark_two_layer_fractional_linear_prefixes_finds_hit():
     )
 
 
+def test_scan_named_two_layer_fractional_linear_prefixes_finds_hit():
+    order = 14
+    rr = [sp.Integer(0) for _ in range(order)]
+    cubic = [sp.Integer(0) for _ in range(order)]
+    rr[0] = 1
+    rr[1] = 1
+    cubic[0] = 1
+    cubic[2] = 1
+
+    num_factor_1 = [sp.Integer(0) for _ in range(order)]
+    den_factor_1 = [sp.Integer(0) for _ in range(order)]
+    num_factor_2 = [sp.Integer(0) for _ in range(order)]
+    den_factor_2 = [sp.Integer(0) for _ in range(order)]
+    num_factor_1[0] = 1
+    den_factor_1[0] = 1
+    num_factor_2[0] = 1
+    den_factor_2[0] = 1
+    num_factor_1[1] = 2
+    den_factor_1[2] = -1
+    num_factor_2[2] = 3
+    den_factor_2[1] = 4
+
+    ratio = series_mul(
+        series_mul(num_factor_1, num_factor_2),
+        series_invert(series_mul(den_factor_1, den_factor_2)),
+    )
+
+    scans = scan_named_two_layer_fractional_linear_prefixes(
+        target_series=ratio,
+        ordered_basis_series=(("RR", rr), ("cubic", cubic)),
+        order=order,
+        solve_order=10,
+    )
+    assert scans
+    assert any(scan.total_hits > 0 for scan in scans)
+    first_hit = next(scan for scan in scans if scan.total_hits > 0)
+    assert first_hit.basis_labels == ("RR", "cubic")
+    assert first_hit.relations
+    assert first_hit.total_hits >= 1
+    assert all(
+        variable in {"RR", "cubic"}
+        for relation in first_hit.relations
+        for variable in relation.numerator_variables + relation.denominator_variables
+    )
+
+
 def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     verified = tmp_path / "verified.jsonl"
     output_path = tmp_path / "identify.md"
@@ -470,6 +517,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text
+    assert "Ratio-Object Source-Family Two-Layer Fractional-Linear Scan" in text
     assert "Ratio-Object RR-Tower Prefix Scan" in text
     assert "Ratio-Object Multiplicative RR-Tower Scan" in text
     assert "Ratio-Object Fractional-Linear RR-Tower Scan" in text
