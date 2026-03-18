@@ -132,6 +132,26 @@ class SelfFractionalLinearUniquenessScan:
 
 
 @dataclass(frozen=True)
+class SelfMahlerLinearHit:
+    """A bounded linear Mahler-style relation using deeper power substitutions."""
+
+    modulus: int
+    levels: int
+    max_t_degree: int
+    relation: PolynomialRelation
+
+
+@dataclass(frozen=True)
+class SelfMahlerLinearScan:
+    """Summary of bounded linear Mahler-style scans."""
+
+    moduli_checked: tuple[int, ...]
+    levels_checked: tuple[int, ...]
+    t_degree_values: tuple[int, ...]
+    hits: tuple[SelfMahlerLinearHit, ...]
+
+
+@dataclass(frozen=True)
 class SourceCorrectionSelfPolynomialHit:
     """A self-polynomial uniqueness hit after factoring source cores."""
 
@@ -966,6 +986,23 @@ def _one_minus_power_series(*, power: int, order: int) -> Series:
 
 
 @lru_cache(maxsize=None)
+def _one_plus_power_series_tuple(*, power: int, order: int) -> tuple[sp.Expr, ...]:
+    if power < 1:
+        raise ValueError("power must be positive")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    series: Series = [sp.Integer(0) for _ in range(order)]
+    series[0] = sp.Integer(1)
+    if power < order:
+        series[power] = sp.Integer(1)
+    return tuple(series)
+
+
+def _one_plus_power_series(*, power: int, order: int) -> Series:
+    return list(_one_plus_power_series_tuple(power=power, order=order))
+
+
+@lru_cache(maxsize=None)
 def _eta_pochhammer_series_tuple(*, divisor: int, order: int) -> tuple[sp.Expr, ...]:
     if divisor < 1:
         raise ValueError("divisor must be positive")
@@ -1210,6 +1247,94 @@ def scan_ratio_self_quotient_product_relations(
     for modulus in unique_moduli:
         try:
             relation = search_self_quotient_product_relation(
+                target_series=ratio_series,
+                modulus=modulus,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+            scans.append(SelfQuotientProductRelationScan(modulus=modulus, relation=relation))
+        except ValueError as exc:
+            scans.append(
+                SelfQuotientProductRelationScan(
+                    modulus=modulus,
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+    return scans
+
+
+def search_self_quotient_plus_product_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    order: int,
+    max_abs_exponent: int = 8,
+) -> SelfQuotientProductRelation | None:
+    """Search F(t) / F(t^m) = prod_{r=1}^{m-1} (1 + t^r)^e_r with bounded integer exponents."""
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a self-quotient plus-product search")
+
+    target_power_series = benchmark_power_substitution_series(target_series, power=modulus, order=order)
+    quotient_series = series_div(target_series[:order], target_power_series)
+    basis_series_by_variable = {
+        f"U{residue}": _one_plus_power_series(power=residue, order=order)
+        for residue in range(1, modulus)
+    }
+
+    relation = search_multiplicative_relation(
+        target_series=quotient_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+        max_abs_exponent=max_abs_exponent,
+    )
+    if relation is None:
+        return None
+
+    exponents_by_residue = {
+        int(name.removeprefix("U")): exponent
+        for name, exponent in relation.exponents.items()
+    }
+    if not exponents_by_residue:
+        return None
+
+    plus_relation = SelfQuotientProductRelation(
+        order_checked=order,
+        modulus=modulus,
+        exponents_by_residue=exponents_by_residue,
+    )
+    product_series: Series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for residue, exponent in sorted(exponents_by_residue.items()):
+        factor = _signed_series_pow(_one_plus_power_series(power=residue, order=order), exponent)
+        product_series = series_mul(product_series, factor)
+    residual = [sp.simplify(quotient_series[index] - product_series[index]) for index in range(order)]
+    if any(sp.simplify(value) != 0 for value in residual):
+        return None
+    return plus_relation
+
+
+def scan_ratio_self_plus_product_relations(
+    *,
+    ratio_series: Series,
+    moduli: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[SelfQuotientProductRelationScan]:
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    if not unique_moduli:
+        return []
+
+    scans: list[SelfQuotientProductRelationScan] = []
+    for modulus in unique_moduli:
+        try:
+            relation = search_self_quotient_plus_product_relation(
                 target_series=ratio_series,
                 modulus=modulus,
                 order=order,
@@ -2226,6 +2351,26 @@ def _format_self_quotient_product_relation(
     return f"{target_variable}({series_symbol}) / {target_variable}({series_symbol}^{relation.modulus}) = {rhs}"
 
 
+def _format_self_plus_product_relation(
+    relation: SelfQuotientProductRelation,
+    *,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    terms: list[str] = []
+    for residue in sorted(relation.exponents_by_residue):
+        exponent = relation.exponents_by_residue[residue]
+        if exponent == 0:
+            continue
+        base = f"(1 + {series_symbol})" if residue == 1 else f"(1 + {series_symbol}^{residue})"
+        if exponent == 1:
+            terms.append(base)
+        else:
+            terms.append(f"{base}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable}({series_symbol}) / {target_variable}({series_symbol}^{relation.modulus}) = {rhs}"
+
+
 def _format_eta_quotient_relation(
     relation: MultiplicativeRelation,
     *,
@@ -2817,6 +2962,117 @@ def scan_self_fractional_linear_uniqueness_relations(
 
     return SelfFractionalLinearUniquenessScan(
         moduli_checked=normalized_moduli,
+        t_degree_values=normalized_t_degrees,
+        hits=tuple(hits),
+    )
+
+
+def search_self_mahler_linear_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    levels: int,
+    order: int,
+    max_t_degree: int,
+) -> PolynomialRelation | None:
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if levels < 2:
+        raise ValueError("levels must be at least 2")
+    if max_t_degree < 0:
+        raise ValueError("max_t_degree must be non-negative")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+
+    variable_names = ["T", "F"]
+    series_by_variable: dict[str, Series] = {"T": _t_series(order=order), "F": target_series[:order]}
+    current_power = modulus
+    for _ in range(levels):
+        label = f"G{current_power}"
+        variable_names.append(label)
+        series_by_variable[label] = benchmark_power_substitution_series(
+            target_series,
+            power=current_power,
+            order=order,
+        )
+        current_power *= modulus
+
+    exponent_tuples: list[tuple[int, ...]] = []
+    num_variables = len(variable_names)
+    for t_degree in range(max_t_degree + 1):
+        exponent_tuples.append((t_degree,) + (0,) * (num_variables - 1))
+        for variable_index in range(1, num_variables):
+            exponents = [0] * num_variables
+            exponents[0] = t_degree
+            exponents[variable_index] = 1
+            exponent_tuples.append(tuple(exponents))
+
+    relation = _guess_polynomial_relation_from_exponent_tuples(
+        series_by_variable=series_by_variable,
+        order=order,
+        exponent_tuples=tuple(exponent_tuples),
+        required_variables=("F", variable_names[-1]),
+    )
+    if relation is None:
+        return None
+
+    residual = _relation_residual_series(
+        relation,
+        series_by_variable=series_by_variable,
+        order=order,
+    )
+    if any(sp.simplify(value) != 0 for value in residual):
+        return None
+    return relation
+
+
+def scan_self_mahler_linear_relations(
+    *,
+    target_series: Series,
+    moduli: tuple[int, ...],
+    levels_checked: tuple[int, ...] = (2,),
+    order: int,
+    t_degree_values: tuple[int, ...] = (1, 2),
+) -> SelfMahlerLinearScan:
+    normalized_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    normalized_levels = tuple(sorted({level for level in levels_checked if level >= 2}))
+    normalized_t_degrees = tuple(sorted({degree for degree in t_degree_values if degree >= 0}))
+    if not normalized_moduli or not normalized_levels or not normalized_t_degrees:
+        return SelfMahlerLinearScan(
+            moduli_checked=normalized_moduli,
+            levels_checked=normalized_levels,
+            t_degree_values=normalized_t_degrees,
+            hits=(),
+        )
+
+    hits: list[SelfMahlerLinearHit] = []
+    for modulus in normalized_moduli:
+        for levels in normalized_levels:
+            for t_degree in normalized_t_degrees:
+                try:
+                    relation = search_self_mahler_linear_relation(
+                        target_series=target_series,
+                        modulus=modulus,
+                        levels=levels,
+                        order=order,
+                        max_t_degree=t_degree,
+                    )
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                hits.append(
+                    SelfMahlerLinearHit(
+                        modulus=modulus,
+                        levels=levels,
+                        max_t_degree=t_degree,
+                        relation=relation,
+                    )
+                )
+
+    return SelfMahlerLinearScan(
+        moduli_checked=normalized_moduli,
+        levels_checked=normalized_levels,
         t_degree_values=normalized_t_degrees,
         hits=tuple(hits),
     )
@@ -4535,7 +4791,10 @@ def build_candidate_identification_note(
     reduced_object_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_ratio_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_ratio_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_object_mahler_scan = SelfMahlerLinearScan((), (), (), ())
+    reduced_ratio_mahler_scan = SelfMahlerLinearScan((), (), (), ())
     reduced_ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_ratio_self_plus_product_scans: list[SelfQuotientProductRelationScan] = []
     reduced_ratio_eta_quotient_scans: list[EtaQuotientRelationScan] = []
     try:
         reduced_reciprocal_witness, reduced_reciprocal_series = _reduced_reciprocal_bridge(
@@ -4558,6 +4817,13 @@ def build_candidate_identification_note(
             order=reduced_bridge_order,
             t_degree_values=(1, 2),
         )
+        reduced_object_mahler_scan = scan_self_mahler_linear_relations(
+            target_series=reduced_reciprocal_series,
+            moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 3),
+            levels_checked=(2,),
+            order=reduced_bridge_order,
+            t_degree_values=(1, 2),
+        )
         reduced_ratio_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
             target_series=reduced_ratio_series,
             moduli=reduced_bridge_moduli,
@@ -4571,7 +4837,20 @@ def build_candidate_identification_note(
             order=reduced_bridge_order,
             t_degree_values=(1, 2),
         )
+        reduced_ratio_mahler_scan = scan_self_mahler_linear_relations(
+            target_series=reduced_ratio_series,
+            moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 3),
+            levels_checked=(2,),
+            order=reduced_bridge_order,
+            t_degree_values=(1, 2),
+        )
         reduced_ratio_self_quotient_product_scans = scan_ratio_self_quotient_product_relations(
+            ratio_series=reduced_ratio_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+        reduced_ratio_self_plus_product_scans = scan_ratio_self_plus_product_relations(
             ratio_series=reduced_ratio_series,
             moduli=reduced_bridge_moduli,
             order=reduced_bridge_order,
@@ -5431,6 +5710,18 @@ def build_candidate_identification_note(
                 )
         lines.append("")
 
+        if not reduced_object_mahler_scan.hits:
+            lines.append("No reduced-object Mahler/transfer hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-object Mahler/transfer hits were found:")
+            for hit in reduced_object_mahler_scan.hits:
+                relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+                relation_expr = hit.relation.as_sympy(relation_symbols)
+                lines.append(
+                    f"- `R`, `m={hit.modulus}`, `levels={hit.levels}`, `deg_t <= {hit.max_t_degree}`: `{_format_expr(relation_expr)}`"
+                )
+        lines.append("")
+
         if not reduced_ratio_self_polynomial_scan.hits:
             lines.append("No reduced-ratio self-polynomial hit was found in the scanned box.")
         else:
@@ -5453,6 +5744,18 @@ def build_candidate_identification_note(
                 )
         lines.append("")
 
+        if not reduced_ratio_mahler_scan.hits:
+            lines.append("No reduced-ratio Mahler/transfer hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio Mahler/transfer hits were found:")
+            for hit in reduced_ratio_mahler_scan.hits:
+                relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+                relation_expr = hit.relation.as_sympy(relation_symbols)
+                lines.append(
+                    f"- `F_red`, `m={hit.modulus}`, `levels={hit.levels}`, `deg_t <= {hit.max_t_degree}`: `{_format_expr(relation_expr)}`"
+                )
+        lines.append("")
+
         reduced_ratio_self_product_hits = [scan for scan in reduced_ratio_self_quotient_product_scans if scan.relation is not None]
         if not reduced_ratio_self_product_hits:
             lines.append("No reduced-ratio self-quotient finite-product hit was found in the scanned box.")
@@ -5463,6 +5766,19 @@ def build_candidate_identification_note(
                     continue
                 lines.append(
                     f"- `{_format_self_quotient_product_relation(scan.relation, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        reduced_ratio_self_plus_hits = [scan for scan in reduced_ratio_self_plus_product_scans if scan.relation is not None]
+        if not reduced_ratio_self_plus_hits:
+            lines.append("No reduced-ratio self-quotient plus-product hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self-quotient plus-product hits were found:")
+            for scan in reduced_ratio_self_plus_product_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- `{_format_self_plus_product_relation(scan.relation, target_variable='F_red', series_symbol=series_symbol)}`"
                 )
         lines.append("")
 

@@ -50,6 +50,8 @@ One-core corrected RHS boxes: 0 hits
 Two-core corrected RHS boxes: 0 hits
 Reduced-object bridge boxes: 0 hits
 Reduced-ratio modular-unit boxes: 0 hits
+Reduced-object Mahler/transfer boxes: 0 hits
+Reduced-ratio plus-product boxes: 0 hits
 ```
 
 ## Why The Direction Is Still Correct
@@ -73,6 +75,9 @@ In award-track terms, this is still the correct trunk because:
 4. the new reduced-object bridge pass says even the exact convergent-factor
    reduction does not immediately drop the problem into a tiny self-polynomial,
    tiny self-fractional-linear, finite-product, or small eta-quotient box
+5. the next deeper source-informed passes also stay empty:
+   bounded multi-level Mahler/transfer boxes and bounded `(1+t^r)` self-quotient
+   product boxes both still give `0` hits on the reduced lanes
 
 ## What The New `0` Hits Actually Mean
 
@@ -89,6 +94,10 @@ They mean something more specific:
 - even after moving to the exact reduced reciprocal object suggested by the
   rational-equivalence proof layer, the reduced object and the reduced ratio
   still avoid the current small functional / modular-unit boxes
+- even after adding a more source-informed recursive lane (`Mahler/transfer`)
+  and a more source-informed modular-unit lane (products built from `1+t^r`,
+  matching the reverse-scale shape), the reduced lanes still avoid the current
+  bounded boxes
 
 So the current situation is closer to:
 
@@ -142,6 +151,9 @@ This round partially advanced all three:
 - the reduced coefficient profile / reverse scales are now surfaced directly in
   the identification note
 - the reduced ratio now also gets a bounded modular-unit lane
+- the reduced ratio now also gets a bounded plus-product lane based on
+  `1+t^r`, and both the reduced object and reduced ratio now get a bounded
+  multi-level Mahler/transfer lane
 
 But all three still return bounded `0` hits, so the next gain probably needs a
 more bespoke object than `F`, `F/S`, `F/(S1*S2)`, `R`, or `F_red` alone.

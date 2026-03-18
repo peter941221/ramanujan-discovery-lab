@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1874.17`
+- Build elapsed seconds before final render: `1934.61`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `73.86`
-- `source-family-scans`: `453.67`
-- `cross-family-functional-scans`: `876.04`
-- `explicit-gg-family-scans`: `395.08`
-- `benchmark-tower-scans`: `75.51`
-- `final-render`: `14.40`
+- `rhs-uniqueness-search`: `76.40`
+- `source-family-scans`: `464.12`
+- `cross-family-functional-scans`: `905.54`
+- `explicit-gg-family-scans`: `410.85`
+- `benchmark-tower-scans`: `77.70`
+- `final-render`: `15.78`
 
 ## Objects
 
@@ -144,11 +144,17 @@ No reduced-object self-polynomial hit was found in the scanned box.
 
 No reduced-object self-fractional-linear hit was found in the scanned box.
 
+No reduced-object Mahler/transfer hit was found in the scanned box.
+
 No reduced-ratio self-polynomial hit was found in the scanned box.
 
 No reduced-ratio self-fractional-linear hit was found in the scanned box.
 
+No reduced-ratio Mahler/transfer hit was found in the scanned box.
+
 No reduced-ratio self-quotient finite-product hit was found in the scanned box.
+
+No reduced-ratio self-quotient plus-product hit was found in the scanned box.
 
 No reduced-ratio eta-quotient hit was found in the scanned box.
 

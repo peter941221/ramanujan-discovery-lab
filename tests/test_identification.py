@@ -7,11 +7,13 @@ from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
+    scan_ratio_self_plus_product_relations,
     signed_argument_substitution_series,
     scan_explicit_source_family_eta_correction_templates,
     scan_quotient_core_source_family_eta_corrections,
     scan_source_family_eta_corrections,
     scan_gg_modular_equation_box,
+    scan_self_mahler_linear_relations,
     scan_self_fractional_linear_uniqueness_relations,
     scan_self_polynomial_uniqueness_relations,
     scan_source_correction_self_fractional_linear_uniqueness_relations,
@@ -39,7 +41,9 @@ from ramanujan_discovery.identification import (
     search_eta_quotient_relation,
     search_fractional_linear_relation,
     search_multiplicative_relation,
+    search_self_mahler_linear_relation,
     search_polynomial_relation,
+    search_self_quotient_plus_product_relation,
     search_self_polynomial_uniqueness_relation,
     search_self_quotient_product_relation,
     search_self_t_polynomial_fractional_linear_relation,
@@ -133,6 +137,28 @@ def _build_self_eta_target(*, modulus: int, eta_series, order: int):
     return target
 
 
+def _build_self_plus_product_target(*, modulus: int, exponents_by_residue: dict[int, int], order: int):
+    product_series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for residue, exponent in sorted(exponents_by_residue.items()):
+        factor = [sp.Integer(0) for _ in range(order)]
+        factor[0] = sp.Integer(1)
+        if residue < order:
+            factor[residue] = sp.Integer(1)
+        if exponent >= 0:
+            product_series = series_mul(product_series, series_pow(factor, exponent))
+        else:
+            product_series = series_mul(product_series, series_invert(series_pow(factor, -exponent)))
+
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    current = product_series
+    while any(sp.simplify(value) != 0 for value in current[1:]):
+        target = series_mul(target, current)
+        current = benchmark_power_substitution_series(current, power=modulus, order=order)
+    return target
+
+
 def _build_self_fractional_linear_eta_target(
     *,
     modulus: int,
@@ -150,6 +176,21 @@ def _build_self_fractional_linear_eta_target(
         if n % modulus == 0:
             value = sp.simplify(value + self_coeff * target[n // modulus])
         target[n] = value
+    return target
+
+
+def _build_mahler_three_level_target(*, modulus: int, order: int):
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    if order > 1:
+        target[1] = sp.Integer(1)
+    for n in range(2, order):
+        value = sp.Integer(0)
+        if n - 1 >= 0 and (n - 1) % modulus == 0:
+            value += target[(n - 1) // modulus]
+        if n - 2 >= 0 and (n - 2) % (modulus * modulus) == 0:
+            value += target[(n - 2) // (modulus * modulus)]
+        target[n] = sp.simplify(value)
     return target
 
 
@@ -495,6 +536,54 @@ def test_scan_source_correction_self_fractional_linear_uniqueness_relations_find
     )
     assert hit.relation.numerator_t_coefficients == (sp.Integer(1), sp.Integer(1))
     assert hit.relation.numerator_self_coefficients == (sp.Integer(2), sp.Integer(0))
+
+
+def test_search_self_mahler_linear_relation_finds_three_level_hit():
+    order = 24
+    target = _build_mahler_three_level_target(modulus=2, order=order)
+
+    relation = search_self_mahler_linear_relation(
+        target_series=target,
+        modulus=2,
+        levels=2,
+        order=order,
+        max_t_degree=2,
+    )
+    assert relation is not None
+    assert relation.variables == ("T", "F", "G2", "G4")
+
+    scan = scan_self_mahler_linear_relations(
+        target_series=target,
+        moduli=(2, 3),
+        levels_checked=(2,),
+        order=order,
+        t_degree_values=(1, 2),
+    )
+    assert scan.hits
+    hit = next(item for item in scan.hits if item.modulus == 2 and item.levels == 2)
+    assert hit.max_t_degree == 2
+
+
+def test_search_self_quotient_plus_product_relation_finds_periodic_plus_identity():
+    order = 20
+    expected = {1: 1, 2: -1}
+    ratio = _build_self_plus_product_target(modulus=3, exponents_by_residue=expected, order=order)
+
+    relation = search_self_quotient_plus_product_relation(
+        target_series=ratio,
+        modulus=3,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.modulus == 3
+    assert relation.exponents_by_residue == expected
+
+    scans = scan_ratio_self_plus_product_relations(
+        ratio_series=ratio,
+        moduli=(2, 3, 4),
+        order=order,
+    )
+    assert any(scan.relation is not None and scan.modulus == 3 for scan in scans)
 
 
 def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation():
@@ -1672,6 +1761,8 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Two-Source-Core Correction Objects" in text
     assert "Rational-Equivalence Reduced Object" in text
     assert ("F_red = B1 / R" in text) or ("Reduced-object bridge construction failed" in text)
+    assert "Mahler/transfer" in text
+    assert "plus-product" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text
