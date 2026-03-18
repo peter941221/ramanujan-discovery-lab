@@ -7,6 +7,7 @@ from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
+    detect_reduced_tail_transfer_equation,
     scan_ratio_self_plus_product_relations,
     scan_ratio_self_signed_eta_relations,
     scan_ratio_self_signed_product_relations,
@@ -54,6 +55,7 @@ from ramanujan_discovery.identification import (
     search_two_layer_fractional_linear_relation,
 )
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
+from ramanujan_discovery.research import ContinuedFractionCoeffs
 from ramanujan_discovery.series import (
     continued_fraction_series_coeffs,
     series_div,
@@ -1822,6 +1824,41 @@ def test_scan_parameterized_source_family_power_boxes_supports_family_specific_p
     assert labels == ("GG", "GG2", "GG3", "GG5", "GG7", "GG11")
 
 
+def test_detect_reduced_tail_transfer_equation_finds_stationary_hero_tail():
+    t = sp.Symbol("t")
+    reduced_coeffs = ContinuedFractionCoeffs(
+        b0=sp.Integer(1),
+        a_terms=[
+            sp.Integer(0),
+            t,
+            t**2,
+            t**3 + t**4,
+            t**4 + t**6,
+            t**5 + t**8,
+            t**6 + t**10,
+        ],
+        b_terms=[
+            sp.Integer(0),
+            sp.Integer(1),
+            1 + t,
+            1 + t**2,
+            1 + t**3,
+            1 + t**4,
+            1 + t**5,
+        ],
+    )
+
+    relation = detect_reduced_tail_transfer_equation(reduced_coeffs=reduced_coeffs, symbol=t)
+
+    assert relation is not None
+    assert relation.start_stage == 3
+    assert relation.stages_checked == 4
+    x = sp.Symbol("x")
+    assert sp.simplify(relation.denominator_expr - (1 + x)) == 0
+    assert sp.simplify(relation.numerator_expr - x * (t + x)) == 0
+    assert sp.simplify(relation.next_state_expr - t * x) == 0
+
+
 def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     verified = tmp_path / "verified.jsonl"
     output_path = tmp_path / "identify.md"
@@ -1887,6 +1924,8 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Two-Source-Core Correction Objects" in text
     assert "Rational-Equivalence Reduced Object" in text
     assert ("F_red = B1 / R" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("stationary tail family" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("T(x) = 1 + x + (x*(t + x))/T(t*x)" in text) or ("Reduced-object bridge construction failed" in text)
     assert "Mahler/transfer" in text
     assert "plus-product" in text
     assert "signed-product" in text

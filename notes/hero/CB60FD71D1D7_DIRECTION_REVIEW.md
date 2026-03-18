@@ -29,6 +29,9 @@ object side:
 4. rational-equivalence reduced-object uniqueness on
    the reduced reciprocal bridge object `R(t)` and the reduced ratio
    `F_red(t) = B1(t) / R(t)`
+5. exact reduced-coefficient transfer extraction on
+   the stationary tail family forced by the reduced coefficients from stage `3`
+   onward
 
 The bounded boxes now checked are:
 
@@ -48,12 +51,27 @@ Current result:
 Direct RHS boxes: 0 hits
 One-core corrected RHS boxes: 0 hits
 Two-core corrected RHS boxes: 0 hits
+Reduced-tail transfer law: exact hit
 Reduced-object bridge boxes: 0 hits
 Reduced-ratio modular-unit boxes: 0 hits
 Reduced-object Mahler/transfer boxes: 0 hits
 Reduced-ratio plus-product boxes: 0 hits
 Reduced-ratio signed-product boxes: 0 hits
 Reduced-ratio signed-eta transfer boxes: 0 hits
+```
+
+The new positive structural fact is:
+
+```text
+For n >= 3, let x_n = b_n_red - 1.
+Then b_n_red = 1 + x_n,
+     a_n_red = x_n*(t + x_n),
+     x_{n+1} = t*x_n.
+
+So the stationary tail family satisfies
+T(x) = 1 + x + x*(t + x)/T(t*x),
+equivalently
+T(x)*T(t*x) - (1 + x)*T(t*x) - x*(t + x) = 0.
 ```
 
 ## Why The Direction Is Still Correct
@@ -77,14 +95,19 @@ In award-track terms, this is still the correct trunk because:
 4. the new reduced-object bridge pass says even the exact convergent-factor
    reduction does not immediately drop the problem into a tiny self-polynomial,
    tiny self-fractional-linear, finite-product, or small eta-quotient box
-5. the next deeper source-informed passes also stay empty:
+5. the same reduced-object bridge now gives a positive exact gain:
+   from stage `3` onward, the coefficients collapse into a stationary tail
+   family with transfer law
+   `T(x) = 1 + x + x*(t + x)/T(t*x)`,
+   so the search is no longer “blind RHS guessing” on the reduced lane
+6. the next deeper source-informed passes still stay empty:
    bounded multi-level Mahler/transfer boxes and bounded `(1+t^r)` self-quotient
    product boxes both still give `0` hits on the reduced lanes
-6. even after mixing the two simplest modular-unit building blocks into one
+7. even after mixing the two simplest modular-unit building blocks into one
    bounded signed-product lane
    `prod (1-t^r)^{a_r} (1+t^r)^{b_r}`,
    the reduced ratio still gives `0` hits
-7. even after allowing the reduced ratio to carry its own shifted copy together
+8. even after allowing the reduced ratio to carry its own shifted copy together
    with signed modular-unit pieces and eta pieces in one bounded
    signed-eta transfer lane, the reduced ratio still gives `0` hits
 
@@ -103,6 +126,10 @@ They mean something more specific:
 - even after moving to the exact reduced reciprocal object suggested by the
   rational-equivalence proof layer, the reduced object and the reduced ratio
   still avoid the current small functional / modular-unit boxes
+- but the reduced coefficients are no longer shapeless:
+  they now point to a canonical stationary tail object `T(x)` with an exact
+  transfer equation, so we have a more natural “right-hand-side scaffold”
+  than raw `F_red` alone
 - even after adding a more source-informed recursive lane (`Mahler/transfer`)
   and a more source-informed modular-unit lane (products built from `1+t^r`,
   matching the reverse-scale shape), the reduced lanes still avoid the current
@@ -164,13 +191,17 @@ This round partially advanced all three:
 - the exact reduced bridge object is now inside `identify`
 - the reduced coefficient profile / reverse scales are now surfaced directly in
   the identification note
+- the reduced coefficient profile now also collapses into an exact stationary
+  tail-transfer law, giving a more canonical intermediate object than the raw
+  reduced ratio
 - the reduced ratio now also gets a bounded modular-unit lane
 - the reduced ratio now also gets a bounded plus-product lane based on
   `1+t^r`, and both the reduced object and reduced ratio now get a bounded
   multi-level Mahler/transfer lane
 
-But all three still return bounded `0` hits, so the next gain probably needs a
-more bespoke object than `F`, `F/S`, `F/(S1*S2)`, `R`, or `F_red` alone.
+So the next gain probably needs a more bespoke object than `F`, `F/S`,
+`F/(S1*S2)`, `R`, or `F_red` alone; the most natural next candidate is the
+tail family `T(x)` itself or a renormalization of `T(x)`.
 
 ## Current Verdict
 
@@ -181,4 +212,8 @@ RHS-first is still correct.
 Box verdict:
 the first low-complexity direct / one-core / two-core uniqueness boxes are now
 better viewed as ruled-out neighborhoods, not as the final destination.
+
+New structural verdict:
+the reduced lane now has a canonical exact tail-transfer equation, but that
+equation has not yet been converted into the final closed-form RHS.
 ```

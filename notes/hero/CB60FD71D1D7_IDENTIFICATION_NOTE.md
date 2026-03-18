@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1786.94`
+- Build elapsed seconds before final render: `1850.10`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `69.77`
-- `source-family-scans`: `422.71`
-- `cross-family-functional-scans`: `847.99`
-- `explicit-gg-family-scans`: `373.58`
-- `benchmark-tower-scans`: `72.90`
-- `final-render`: `13.15`
+- `rhs-uniqueness-search`: `73.22`
+- `source-family-scans`: `444.03`
+- `cross-family-functional-scans`: `865.56`
+- `explicit-gg-family-scans`: `392.13`
+- `benchmark-tower-scans`: `75.16`
+- `final-render`: `14.30`
 
 ## Objects
 
@@ -139,6 +139,15 @@ r3 = t^3/(t^2 + 1) + 1/(t^2 + 1)
 
 - This is the first source-informed RHS lane: it uses the exact reduction/equivalence bridge rather than a generic low-degree guess on the raw ratio object.
 - To keep this bridge tractable inside `identify`, the reduced-object lane is currently bounded at depth `12` and order `36`.
+
+- From stage `3` onward, the reduced coefficients collapse into one stationary tail family.
+
+```text
+For n >= 3, let x_n = b_n_red - 1.
+Then b_n_red = 1 + x_n, a_n_red = x_n*(t + x_n), x_{n+1} = t*x_n.
+T(x) = 1 + x + (x*(t + x))/T(t*x)
+T(x)*T(t*x) - (1 + x)*T(t*x) - x*(t + x) = 0
+```
 
 No reduced-object self-polynomial hit was found in the scanned box.
 

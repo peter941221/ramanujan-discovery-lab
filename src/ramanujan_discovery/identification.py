@@ -13,6 +13,7 @@ from ramanujan_discovery.analysis import _format_expr
 from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
 from ramanujan_discovery.research import (
+    ContinuedFractionCoeffs,
     _template_reciprocal_coeffs,
     convergent_common_factor_reduction,
     convergent_factor_equivalence_witness,
@@ -168,6 +169,18 @@ class SelfSignedEtaRelationScan:
     level: int
     relation: MultiplicativeRelation | None
     error: str | None = None
+
+
+@dataclass(frozen=True)
+class ReducedTailTransferEquation:
+    """Exact stationary tail law extracted from reduced continued-fraction coefficients."""
+
+    start_stage: int
+    stages_checked: int
+    state_variable: str
+    denominator_expr: sp.Expr
+    numerator_expr: sp.Expr
+    next_state_expr: sp.Expr
 
 
 @dataclass(frozen=True)
@@ -957,6 +970,48 @@ def _reduced_reciprocal_bridge(
         order=order,
     )
     return witness, reduced_series
+
+
+def detect_reduced_tail_transfer_equation(
+    *,
+    reduced_coeffs: ContinuedFractionCoeffs,
+    symbol: sp.Symbol,
+    start_stage: int = 3,
+    state_variable: str = "x",
+) -> ReducedTailTransferEquation | None:
+    """Detect an exact stationary tail law of the form b = 1 + x, a = x*(t + x), x' = t*x."""
+    if start_stage < 1:
+        raise ValueError("start_stage must be positive")
+    if len(reduced_coeffs.a_terms) != len(reduced_coeffs.b_terms):
+        raise ValueError("reduced coefficient lists must have the same length")
+    if len(reduced_coeffs.a_terms) <= start_stage:
+        return None
+
+    state = sp.Symbol(state_variable)
+    stages_checked = 0
+    for stage in range(start_stage, len(reduced_coeffs.a_terms)):
+        state_value = sp.simplify(reduced_coeffs.b_terms[stage] - 1)
+        if sp.simplify(reduced_coeffs.b_terms[stage] - (1 + state_value)) != 0:
+            return None
+        if sp.simplify(reduced_coeffs.a_terms[stage] - state_value * (symbol + state_value)) != 0:
+            return None
+        stages_checked += 1
+        if stage + 1 < len(reduced_coeffs.b_terms):
+            next_state_value = sp.simplify(reduced_coeffs.b_terms[stage + 1] - 1)
+            if sp.simplify(next_state_value - symbol * state_value) != 0:
+                return None
+
+    if stages_checked < 1:
+        return None
+
+    return ReducedTailTransferEquation(
+        start_stage=start_stage,
+        stages_checked=stages_checked,
+        state_variable=state_variable,
+        denominator_expr=1 + state,
+        numerator_expr=sp.expand(state * (symbol + state)),
+        next_state_expr=sp.expand(symbol * state),
+    )
 
 
 @lru_cache(maxsize=None)
@@ -2595,6 +2650,23 @@ def _format_self_signed_eta_relation(
         terms.append(name if exponent == 1 else f"{name}^{exponent}")
     rhs = " * ".join(terms) if terms else "1"
     return f"{target_variable} = {rhs}"
+
+
+def _format_reduced_tail_transfer_equation(
+    relation: ReducedTailTransferEquation,
+) -> tuple[str, str, str, str]:
+    state_variable = relation.state_variable
+    state_symbol = sp.Symbol(state_variable)
+    base_symbol = _format_expr(sp.simplify(relation.next_state_expr / state_symbol))
+    next_state = _format_expr(relation.next_state_expr)
+    state_n = f"{state_variable}_n"
+    next_state_n = f"{base_symbol}*{state_n}"
+    return (
+        f"For n >= {relation.start_stage}, let {state_variable}_n = b_n_red - 1.",
+        f"Then b_n_red = 1 + {state_n}, a_n_red = {state_n}*({base_symbol} + {state_n}), {state_variable}_{{n+1}} = {next_state_n}.",
+        f"T({state_variable}) = 1 + {state_variable} + ({state_variable}*({base_symbol} + {state_variable}))/T({next_state})",
+        f"T({state_variable})*T({next_state}) - (1 + {state_variable})*T({next_state}) - {state_variable}*({base_symbol} + {state_variable}) = 0",
+    )
 
 
 def _format_eta_quotient_relation(
@@ -5013,6 +5085,7 @@ def build_candidate_identification_note(
     reduced_reciprocal_witness = None
     reduced_reciprocal_series: Series | None = None
     reduced_ratio_series: Series | None = None
+    reduced_tail_transfer_equation: ReducedTailTransferEquation | None = None
     reduced_object_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_object_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_ratio_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
@@ -5030,6 +5103,10 @@ def build_candidate_identification_note(
             symbol=sp.Symbol(series_symbol),
             depth=reduced_bridge_depth,
             order=reduced_bridge_order,
+        )
+        reduced_tail_transfer_equation = detect_reduced_tail_transfer_equation(
+            reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+            symbol=sp.Symbol(series_symbol),
         )
         reduced_ratio_series = series_div(benchmark_recip[:reduced_bridge_order], reduced_reciprocal_series)
         reduced_object_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
@@ -5928,6 +6005,23 @@ def build_candidate_identification_note(
                 "",
             ]
         )
+        if reduced_tail_transfer_equation is not None:
+            tail_header, tail_coeffs, tail_functional, tail_polynomial = _format_reduced_tail_transfer_equation(
+                reduced_tail_transfer_equation
+            )
+            lines.extend(
+                [
+                    "- From stage `3` onward, the reduced coefficients collapse into one stationary tail family.",
+                    "",
+                    "```text",
+                    tail_header,
+                    tail_coeffs,
+                    tail_functional,
+                    tail_polynomial,
+                    "```",
+                    "",
+                ]
+            )
 
         if not reduced_object_self_polynomial_scan.hits:
             lines.append("No reduced-object self-polynomial hit was found in the scanned box.")
