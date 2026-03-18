@@ -108,6 +108,10 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
      - Vasuki, Srivatsa Kumar, *Certain identities for
        Ramanujan-Göllnitz-Gordon continued fraction*,
        DOI: https://doi.org/10.1016/j.cam.2005.03.038
+     - Chan, Huang, *On the Ramanujan-Göllnitz-Gordon continued fraction*,
+       https://mrc.sdu.edu.cn/ziliao/8.pdf
+     - Cho, Koo, Park, *Arithmetic of the Ramanujan-Göllnitz-Gordon continued fraction*,
+       DOI: https://doi.org/10.1016/j.jnt.2008.09.018
    - Goal: test whether the hero case can hide in a nontrivial powered /
      substituted `GG` presentation before moving to even larger transform boxes.
    - Current scan status: the explicit literature-motivated powers
@@ -115,6 +119,12 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
      still give `0` hits in the checked polynomial / multiplicative /
      fractional-linear / quotient-ladder / quotient-ladder two-layer /
      mixed quotient-basis / mixed quotient-basis two-layer boxes.
+     A newer source-faithful modular-equation box now also keeps
+     `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, `GG(t^4)`, `GG(t^5)`,
+     `GG(t^7)`, `GG(t^11)` and the quotient coordinates against `GG(t)`
+     explicit, and that lane still reports `0` hits in its exact-template,
+     polynomial, multiplicative, fractional-linear, two-layer, and
+     quotient-coordinate scans.
 
 6. Page-43 substitutions with explicit source-family meaning
    - Goal: move beyond the currently formalized zero-shift, single-parameter,
@@ -138,6 +148,10 @@ These are concrete expansions to the current tooling that would make a new
      covered too;
      the next jump should be richer transform templates for those same
      literature families before trying larger raw degree boxes.
+   - On the `GG` side specifically, the next best jump is no longer another
+     anonymous mixed-family box; it is an odd-prime modular-equation lane that
+     preserves `GG(t^p)` / `GG(t)` quotient meaning for the primes already
+     emphasized by the literature.
 
 2. Extend the source-family-specific exact lane
    - The zero-shift, first unit-`a`, first unit-`b`, first mixed unit-`a` /

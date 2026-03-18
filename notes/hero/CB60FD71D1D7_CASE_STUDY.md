@@ -123,9 +123,10 @@ their ratio objects:
    A newer literature-driven `GG` modular-equation lane also now keeps the
    sign and substitution structure explicit instead of flattening everything
    into anonymous basis elements: it scans the basis
-   `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, `GG(t^4)` together with the
-   quotient coordinates
-   `GG(-t)/GG(t)`, `GG(t^2)/GG(t)`, `GG(t^3)/GG(t)`, `GG(t^4)/GG(t)`.
+   `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, `GG(t^4)`, `GG(t^5)`,
+   `GG(t^7)`, `GG(t^11)` together with the quotient coordinates
+   `GG(-t)/GG(t)`, `GG(t^2)/GG(t)`, `GG(t^3)/GG(t)`, `GG(t^4)/GG(t)`,
+   `GG(t^5)/GG(t)`, `GG(t^7)/GG(t)`, `GG(t^11)/GG(t)`.
    That more source-faithful box still gives `0` hits in its exact template,
    low-degree polynomial, multiplicative, fractional-linear, two-layer
    fractional-linear, and quotient-coordinate scans.

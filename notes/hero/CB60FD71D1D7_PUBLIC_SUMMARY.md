@@ -39,7 +39,8 @@ The candidate looks like a structured Rogers-Ramanujan-adjacent hybrid perturbat
 has been found in the primary sources checked so far.
 - No source-faithful `GG` modular-equation hit has been found in the first
   explicit box built from `GG(q^3)`, `GG(-q^3)`, `GG(q^6)`, `GG(q^9)`,
-  `GG(q^12)` and the corresponding quotient coordinates against `GG(q^3)`.
+  `GG(q^12)`, `GG(q^15)`, `GG(q^21)`, `GG(q^33)` and the corresponding
+  quotient coordinates against `GG(q^3)`.
 
 ## What Has Not Been Claimed
 

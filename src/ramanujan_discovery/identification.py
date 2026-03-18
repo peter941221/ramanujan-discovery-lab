@@ -2770,6 +2770,7 @@ def scan_parameterized_source_family_power_boxes(
                     benchmark_power_substitution_series(base_series, power=power, order=order),
                 )
             )
+        ordered_basis_tuple = tuple(ordered_basis_series)
 
         quotient_basis_series: list[tuple[str, str, Series]] = []
         for label, basis_series in ordered_basis_series[1:]:
@@ -2781,18 +2782,22 @@ def scan_parameterized_source_family_power_boxes(
                     series_div(basis_series, base_series),
                 )
             )
+        quotient_basis_tuple = tuple(quotient_basis_series)
+        quotient_ordered_basis_tuple = tuple((label, series) for label, _, series in quotient_basis_tuple)
         mixed_quotient_basis_series = [(family_label, family_label, base_series)]
         mixed_quotient_basis_series.extend(quotient_basis_series)
+        mixed_quotient_basis_tuple = tuple(mixed_quotient_basis_series)
+        mixed_quotient_ordered_basis_tuple = tuple((label, series) for label, _, series in mixed_quotient_basis_tuple)
 
         scans.append(
             ParameterizedSourceFamilyScan(
                 family_label=family_label,
                 benchmark_name=benchmark_name,
-                ordered_basis_series=tuple(ordered_basis_series),
+                ordered_basis_series=ordered_basis_tuple,
                 polynomial_scans=tuple(
                     scan_named_polynomial_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(ordered_basis_series),
+                        ordered_basis_series=ordered_basis_tuple,
                         order=order,
                         degree_values=degree_values,
                     )
@@ -2800,7 +2805,7 @@ def scan_parameterized_source_family_power_boxes(
                 multiplicative_scans=tuple(
                     scan_named_multiplicative_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(ordered_basis_series),
+                        ordered_basis_series=ordered_basis_tuple,
                         order=order,
                         max_abs_exponent=max_abs_exponent,
                     )
@@ -2808,26 +2813,24 @@ def scan_parameterized_source_family_power_boxes(
                 fractional_linear_scans=tuple(
                     scan_named_fractional_linear_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(ordered_basis_series),
+                        ordered_basis_series=ordered_basis_tuple,
                         order=order,
                     )
                 ),
                 two_layer_fractional_linear_scans=tuple(
                     scan_named_two_layer_fractional_linear_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(ordered_basis_series),
+                        ordered_basis_series=ordered_basis_tuple,
                         order=order,
                         solve_order=solve_order,
                         max_reported_hits=max_reported_two_layer_hits,
                     )
                 ),
-                quotient_basis_series=tuple(quotient_basis_series),
+                quotient_basis_series=quotient_basis_tuple,
                 quotient_polynomial_scans=tuple(
                     scan_named_polynomial_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in quotient_basis_series
-                        ),
+                        ordered_basis_series=quotient_ordered_basis_tuple,
                         order=order,
                         degree_values=degree_values,
                     )
@@ -2835,9 +2838,7 @@ def scan_parameterized_source_family_power_boxes(
                 quotient_multiplicative_scans=tuple(
                     scan_named_multiplicative_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in quotient_basis_series
-                        ),
+                        ordered_basis_series=quotient_ordered_basis_tuple,
                         order=order,
                         max_abs_exponent=max_abs_exponent,
                     )
@@ -2845,30 +2846,24 @@ def scan_parameterized_source_family_power_boxes(
                 quotient_fractional_linear_scans=tuple(
                     scan_named_fractional_linear_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in quotient_basis_series
-                        ),
+                        ordered_basis_series=quotient_ordered_basis_tuple,
                         order=order,
                     )
                 ),
                 quotient_two_layer_fractional_linear_scans=tuple(
                     scan_named_two_layer_fractional_linear_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in quotient_basis_series
-                        ),
+                        ordered_basis_series=quotient_ordered_basis_tuple,
                         order=order,
                         solve_order=solve_order,
                         max_reported_hits=max_reported_two_layer_hits,
                     )
                 ),
-                mixed_quotient_basis_series=tuple(mixed_quotient_basis_series),
+                mixed_quotient_basis_series=mixed_quotient_basis_tuple,
                 mixed_quotient_polynomial_scans=tuple(
                     scan_named_polynomial_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in mixed_quotient_basis_series
-                        ),
+                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
                         order=order,
                         degree_values=degree_values,
                     )
@@ -2876,9 +2871,7 @@ def scan_parameterized_source_family_power_boxes(
                 mixed_quotient_multiplicative_scans=tuple(
                     scan_named_multiplicative_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in mixed_quotient_basis_series
-                        ),
+                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
                         order=order,
                         max_abs_exponent=max_abs_exponent,
                     )
@@ -2886,18 +2879,14 @@ def scan_parameterized_source_family_power_boxes(
                 mixed_quotient_fractional_linear_scans=tuple(
                     scan_named_fractional_linear_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in mixed_quotient_basis_series
-                        ),
+                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
                         order=order,
                     )
                 ),
                 mixed_quotient_two_layer_fractional_linear_scans=tuple(
                     scan_named_two_layer_fractional_linear_prefixes(
                         target_series=target_series,
-                        ordered_basis_series=tuple(
-                            (label, series) for label, _, series in mixed_quotient_basis_series
-                        ),
+                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
                         order=order,
                         solve_order=solve_order,
                         max_reported_hits=max_reported_two_layer_hits,
@@ -2933,14 +2922,24 @@ def _gg_modular_equation_ordered_basis_series(
     *,
     base_series: Series,
     order: int,
+    supplemental_powers: tuple[int, ...] = (),
 ) -> tuple[tuple[str, str, Series], ...]:
-    return (
+    entries: list[tuple[str, str, Series]] = [
         ("GG", "GG(t)", base_series),
         ("GGneg", "GG(-t)", signed_argument_substitution_series(base_series, order=order)),
         ("GG2", "GG(t^2)", benchmark_power_substitution_series(base_series, power=2, order=order)),
         ("GG3", "GG(t^3)", benchmark_power_substitution_series(base_series, power=3, order=order)),
         ("GG4", "GG(t^4)", benchmark_power_substitution_series(base_series, power=4, order=order)),
-    )
+    ]
+    for power in tuple(sorted({value for value in supplemental_powers if value >= 5})):
+        entries.append(
+            (
+                f"GG{power}",
+                f"GG(t^{power})",
+                benchmark_power_substitution_series(base_series, power=power, order=order),
+            )
+        )
+    return tuple(entries)
 
 
 def _explicit_source_family_template_series(
@@ -3075,10 +3074,12 @@ def scan_gg_modular_equation_box(
     degree_values: tuple[int, ...] = (1, 2),
     max_abs_exponent: int = 8,
     solve_order: int | None = None,
+    supplemental_powers: tuple[int, ...] = (),
 ) -> GGModularEquationScan:
     ordered_basis_entries = _gg_modular_equation_ordered_basis_series(
         base_series=gg_series,
         order=order,
+        supplemental_powers=supplemental_powers,
     )
     ordered_basis_series = tuple((label, series) for label, _, series in ordered_basis_entries)
     quotient_basis_series = _gg_modular_equation_quotient_basis_series(ordered_basis_entries)
@@ -3363,6 +3364,39 @@ def build_candidate_identification_note(
     ratio_series = series_div(candidate_series, benchmark_series)
     candidate_recip = series_invert(candidate_series)
     benchmark_recip = series_invert(benchmark_series)
+    output_file = Path(output_path)
+    source_family_scan_powers = _parameterized_source_family_powers(benchmark_powers, smoke=smoke)
+    supplemental_source_family_powers = _supplemental_source_family_powers(smoke=smoke)
+    eta_scan_levels = _eta_scan_levels(benchmark_powers)
+    progress_steps = [
+        "series-and-benchmark-setup",
+        "source-family-scans",
+        "cross-family-functional-scans",
+        "explicit-gg-family-scans",
+        "benchmark-tower-scans",
+        "final-render",
+    ]
+    progress_status = {step_name: "pending" for step_name in progress_steps}
+
+    def write_progress(*, current_step: str) -> None:
+        progress_lines = [
+            f"# Identification Note Build In Progress: `{record.id}`",
+            "",
+            f"- Status: `in_progress`",
+            f"- Current step: `{current_step}`",
+            f"- Output target: `{output_path}`",
+            "",
+            "## Progress",
+            "",
+        ]
+        for step_name in progress_steps:
+            progress_lines.append(f"- `{step_name}`: `{progress_status[step_name]}`")
+        progress_lines.append("")
+        output_file.write_text("\n".join(progress_lines), encoding="utf-8")
+
+    progress_status["series-and-benchmark-setup"] = "completed"
+    progress_status["source-family-scans"] = "in_progress"
+    write_progress(current_step="source-family-scans")
 
     relation: PolynomialRelation | None = None
     relation_error: str | None = None
@@ -3395,15 +3429,15 @@ def build_candidate_identification_note(
     )
     source_family_raw_basis_entries = _source_family_raw_basis_entries(
         ordered_base_families=source_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+        powers=source_family_scan_powers,
         order=profile_order,
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
     )
     source_family_quotient_basis_entries = _source_family_quotient_basis_entries(
         ordered_base_families=source_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+        powers=source_family_scan_powers,
         order=profile_order,
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
     )
     explicit_transform_family_base_series = tuple(
         item for item in source_family_base_series if item[0] in {"GG", "S"}
@@ -3439,32 +3473,35 @@ def build_candidate_identification_note(
     parameterized_source_family_scans = scan_parameterized_source_family_power_boxes(
         target_series=ratio_series,
         ordered_base_families=source_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+        powers=source_family_scan_powers,
         order=profile_order,
         degree_values=(1, 2),
         max_abs_exponent=4 if smoke else 6,
         solve_order=min(profile_order, 14 if smoke else 18),
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
     )
+    progress_status["source-family-scans"] = "completed"
+    progress_status["cross-family-functional-scans"] = "in_progress"
+    write_progress(current_step="cross-family-functional-scans")
     two_core_source_family_eta_correction_scan = scan_two_core_source_family_eta_corrections(
         target_series=ratio_series,
         ordered_base_families=source_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-        eta_levels=_eta_scan_levels(benchmark_powers),
+        powers=source_family_scan_powers,
+        eta_levels=eta_scan_levels,
         order=profile_order,
         max_abs_exponent=4 if smoke else 6,
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
         raw_basis_entries=source_family_raw_basis_entries,
     )
     quotient_core_source_family_eta_correction_scan = (
         scan_quotient_core_source_family_eta_corrections(
             target_series=ratio_series,
             ordered_base_families=source_family_base_series,
-            powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            eta_levels=_eta_scan_levels(benchmark_powers),
+            powers=source_family_scan_powers,
+            eta_levels=eta_scan_levels,
             order=profile_order,
             max_abs_exponent=4 if smoke else 6,
-            supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+            supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
@@ -3472,11 +3509,11 @@ def build_candidate_identification_note(
         scan_two_quotient_core_source_family_eta_corrections(
             target_series=ratio_series,
             ordered_base_families=source_family_base_series,
-            powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            eta_levels=_eta_scan_levels(benchmark_powers),
+            powers=source_family_scan_powers,
+            eta_levels=eta_scan_levels,
             order=profile_order,
             max_abs_exponent=4 if smoke else 6,
-            supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+            supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
@@ -3484,11 +3521,11 @@ def build_candidate_identification_note(
         scan_two_quotient_core_source_family_self_quotient_products(
             target_series=ratio_series,
             ordered_base_families=source_family_base_series,
-            powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            moduli=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+            powers=source_family_scan_powers,
+            moduli=source_family_scan_powers,
             order=profile_order,
             max_abs_exponent=4 if smoke else 6,
-            supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+            supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
@@ -3496,11 +3533,11 @@ def build_candidate_identification_note(
         scan_two_quotient_core_source_family_self_polynomial_relations(
             target_series=ratio_series,
             ordered_base_families=source_family_base_series,
-            powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            moduli=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+            powers=source_family_scan_powers,
+            moduli=source_family_scan_powers,
             order=profile_order,
             degree_values=(1, 2),
-            supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+            supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
@@ -3508,12 +3545,12 @@ def build_candidate_identification_note(
         scan_two_quotient_core_source_family_self_eta_corrections(
             target_series=ratio_series,
             ordered_base_families=source_family_base_series,
-            powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            moduli=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            eta_levels=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+            powers=source_family_scan_powers,
+            moduli=source_family_scan_powers,
+            eta_levels=source_family_scan_powers,
             order=profile_order,
             max_abs_exponent=4 if smoke else 6,
-            supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+            supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
@@ -3521,38 +3558,41 @@ def build_candidate_identification_note(
         scan_two_quotient_core_source_family_self_fractional_linear_relations(
             target_series=ratio_series,
             ordered_base_families=source_family_base_series,
-            powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            moduli=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-            eta_levels=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+            powers=source_family_scan_powers,
+            moduli=source_family_scan_powers,
+            eta_levels=source_family_scan_powers,
             order=profile_order,
-            supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+            supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
+    progress_status["cross-family-functional-scans"] = "completed"
+    progress_status["explicit-gg-family-scans"] = "in_progress"
+    write_progress(current_step="explicit-gg-family-scans")
     source_family_eta_correction_scans = scan_source_family_eta_corrections(
         target_series=ratio_series,
         ordered_base_families=source_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-        eta_levels=_eta_scan_levels(benchmark_powers),
+        powers=source_family_scan_powers,
+        eta_levels=eta_scan_levels,
         order=profile_order,
         max_abs_exponent=4 if smoke else 6,
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
     )
     explicit_source_family_transform_scans = scan_explicit_source_family_transform_templates(
         target_series=ratio_series,
         ordered_base_families=explicit_transform_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
+        powers=source_family_scan_powers,
         order=profile_order,
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
     )
     explicit_source_family_eta_correction_scans = scan_explicit_source_family_eta_correction_templates(
         target_series=ratio_series,
         ordered_base_families=explicit_transform_family_base_series,
-        powers=_parameterized_source_family_powers(benchmark_powers, smoke=smoke),
-        eta_levels=_eta_scan_levels(benchmark_powers),
+        powers=source_family_scan_powers,
+        eta_levels=eta_scan_levels,
         order=profile_order,
         max_abs_exponent=4 if smoke else 6,
-        supplemental_powers_by_family=_supplemental_source_family_powers(smoke=smoke),
+        supplemental_powers_by_family=supplemental_source_family_powers,
     )
     gg_modular_equation_scan = (
         None
@@ -3565,8 +3605,14 @@ def build_candidate_identification_note(
             degree_values=(1, 2),
             max_abs_exponent=4 if smoke else 6,
             solve_order=min(profile_order, 14 if smoke else 18),
+            supplemental_powers=()
+            if smoke
+            else supplemental_source_family_powers.get("GG", ()),
         )
     )
+    progress_status["explicit-gg-family-scans"] = "completed"
+    progress_status["benchmark-tower-scans"] = "in_progress"
+    write_progress(current_step="benchmark-tower-scans")
     power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
@@ -3646,6 +3692,9 @@ def build_candidate_identification_note(
             order=profile_order,
             solve_order=min(profile_order, 14 if smoke else 18),
         )
+    progress_status["benchmark-tower-scans"] = "completed"
+    progress_status["final-render"] = "in_progress"
+    write_progress(current_step="final-render")
 
     lines: list[str] = [
         f"# Identification Note: `{record.id}`",
@@ -5476,7 +5525,7 @@ def build_candidate_identification_note(
                 f"- `F = candidate / {record.closest_benchmark}`",
                 f"- Base benchmark: `{gg_modular_equation_scan.benchmark_name}`",
                 "- This lane keeps the sign and substitution objects explicit instead of flattening them into a larger anonymous basis box.",
-                "- The literature-motivated basis here is restricted to `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, and `GG(t^4)`.",
+                "- The literature-motivated basis here starts with `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, and `GG(t^4)`, and in the full profile it also includes the odd-prime descendants suggested by the GG modular-equation papers.",
             ]
         )
         basis_descriptions = [
@@ -6145,4 +6194,5 @@ def build_candidate_identification_note(
                     ]
                 )
 
-    Path(output_path).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    progress_status["final-render"] = "completed"
+    output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")

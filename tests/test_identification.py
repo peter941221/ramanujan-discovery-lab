@@ -1238,6 +1238,41 @@ def test_scan_gg_modular_equation_box_finds_signed_quotient_hit():
     assert scan.hit_templates == ("GG3 / GGneg",)
 
 
+def test_scan_gg_modular_equation_box_supports_odd_prime_descendants():
+    order = 16
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    scan = scan_gg_modular_equation_box(
+        target_series=gg,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        supplemental_powers=(5, 7, 11),
+    )
+
+    assert tuple(label for label, _, _ in scan.ordered_basis_series) == (
+        "GG",
+        "GGneg",
+        "GG2",
+        "GG3",
+        "GG4",
+        "GG5",
+        "GG7",
+        "GG11",
+    )
+    assert tuple(label for label, _, _ in scan.quotient_basis_series) == (
+        "Q_neg",
+        "Q_2",
+        "Q_3",
+        "Q_4",
+        "Q_5",
+        "Q_7",
+        "Q_11",
+    )
+
+
 def test_scan_parameterized_source_family_power_boxes_supports_family_specific_powers():
     order = 12
     gg = [sp.Integer(0) for _ in range(order)]
