@@ -6,21 +6,38 @@ import sympy as sp
 from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
+    signed_argument_substitution_series,
+    scan_explicit_source_family_eta_correction_templates,
+    scan_quotient_core_source_family_eta_corrections,
+    scan_source_family_eta_corrections,
+    scan_gg_modular_equation_box,
+    scan_two_quotient_core_source_family_self_fractional_linear_relations,
+    scan_two_quotient_core_source_family_self_eta_corrections,
+    scan_two_quotient_core_source_family_self_polynomial_relations,
+    scan_two_quotient_core_source_family_self_quotient_products,
+    scan_two_quotient_core_source_family_eta_corrections,
+    scan_two_core_source_family_eta_corrections,
     scan_named_fractional_linear_prefixes,
     scan_benchmark_power_relation_prefixes,
     scan_named_multiplicative_prefixes,
+    scan_explicit_source_family_transform_templates,
+    scan_parameterized_source_family_power_boxes,
     scan_named_two_layer_fractional_linear_prefixes,
     scan_ratio_benchmark_fractional_linear_prefixes,
     scan_ratio_benchmark_multiplicative_prefixes,
     scan_ratio_benchmark_power_relation_prefixes,
     scan_ratio_benchmark_two_layer_fractional_linear_prefixes,
+    scan_ratio_eta_quotient_relations,
+    scan_ratio_self_quotient_product_relations,
+    search_eta_quotient_relation,
     search_fractional_linear_relation,
     search_multiplicative_relation,
     search_polynomial_relation,
+    search_self_quotient_product_relation,
     search_two_layer_fractional_linear_relation,
 )
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
-from ramanujan_discovery.series import series_invert, series_mul, series_pow
+from ramanujan_discovery.series import series_div, series_invert, series_mul, series_pow
 from ramanujan_discovery.storage import write_candidates
 
 
@@ -40,6 +57,71 @@ def _eval_relation_series(relation, x_series, y_series, order: int):
                 continue
             residual[n] = sp.simplify(residual[n] + coeff * term[n])
     return residual
+
+
+def _one_minus_power_series(power: int, order: int):
+    factor = [sp.Integer(0) for _ in range(order)]
+    factor[0] = sp.Integer(1)
+    if power < order:
+        factor[power] = sp.Integer(-1)
+    return factor
+
+
+def _build_self_quotient_product_target(*, modulus: int, exponents_by_residue: dict[int, int], order: int):
+    product_series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for residue, exponent in sorted(exponents_by_residue.items()):
+        factor = _one_minus_power_series(residue, order)
+        if exponent >= 0:
+            product_series = series_mul(product_series, series_pow(factor, exponent))
+        else:
+            product_series = series_mul(product_series, series_invert(series_pow(factor, -exponent)))
+
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    current = product_series
+    while any(sp.simplify(value) != 0 for value in current[1:]):
+        target = series_mul(target, current)
+        current = benchmark_power_substitution_series(current, power=modulus, order=order)
+    return target
+
+
+def _build_self_eta_target(*, modulus: int, eta_series, order: int):
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    current = eta_series
+    while any(sp.simplify(value) != 0 for value in current[1:]):
+        target = series_mul(target, current)
+        current = benchmark_power_substitution_series(current, power=modulus, order=order)
+    return target
+
+
+def _build_self_fractional_linear_eta_target(
+    *,
+    modulus: int,
+    self_coeff: sp.Expr,
+    eta_coeff: sp.Expr,
+    eta_series,
+    order: int,
+):
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    eta_shifted = [sp.simplify(value) for value in eta_series]
+    eta_shifted[0] = sp.Integer(0)
+    for n in range(1, order):
+        value = sp.simplify(eta_coeff * eta_shifted[n])
+        if n % modulus == 0:
+            value = sp.simplify(value + self_coeff * target[n // modulus])
+        target[n] = value
+    return target
+
+
+def _eta_pochhammer_series(divisor: int, order: int):
+    series = [sp.Integer(0) for _ in range(order)]
+    series[0] = sp.Integer(1)
+    for power in range(divisor, order, divisor):
+        series = series_mul(series, _one_minus_power_series(power, order))
+    return series
 
 
 def test_search_bivariate_relation_finds_linear_identity():
@@ -270,6 +352,383 @@ def test_scan_ratio_benchmark_multiplicative_prefixes_finds_hit():
     assert first_hit.relation.exponents == {"B1": 2, "B2": -1}
 
 
+def test_search_self_quotient_product_relation_finds_periodic_product_identity():
+    order = 20
+    expected = {1: 1, 2: -1, 3: -1, 4: 1}
+    ratio = _build_self_quotient_product_target(modulus=5, exponents_by_residue=expected, order=order)
+
+    relation = search_self_quotient_product_relation(
+        target_series=ratio,
+        modulus=5,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.modulus == 5
+    assert relation.exponents_by_residue == expected
+
+
+def test_scan_ratio_self_quotient_product_relations_hits_matching_modulus():
+    order = 20
+    expected = {1: 1, 2: -1, 3: -1, 4: 1}
+    ratio = _build_self_quotient_product_target(modulus=5, exponents_by_residue=expected, order=order)
+
+    scans = scan_ratio_self_quotient_product_relations(
+        ratio_series=ratio,
+        moduli=(2, 5, 7),
+        order=order,
+    )
+    assert scans
+    hit = next(scan for scan in scans if scan.modulus == 5)
+    assert hit.relation is not None
+    assert hit.relation.exponents_by_residue == expected
+
+
+def test_search_eta_quotient_relation_finds_small_level_hit():
+    order = 18
+    e1 = _eta_pochhammer_series(1, order)
+    e2 = _eta_pochhammer_series(2, order)
+    ratio = series_mul(series_pow(e1, 2), series_invert(e2))
+
+    relation = search_eta_quotient_relation(
+        target_series=ratio,
+        level=2,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.basis_variables == ("E1", "E2")
+    assert relation.exponents == {"E1": 2, "E2": -1}
+
+
+def test_scan_ratio_eta_quotient_relations_hits_matching_level():
+    order = 18
+    e1 = _eta_pochhammer_series(1, order)
+    e2 = _eta_pochhammer_series(2, order)
+    ratio = series_mul(series_pow(e1, 2), series_invert(e2))
+
+    scans = scan_ratio_eta_quotient_relations(
+        ratio_series=ratio,
+        levels=(2, 3, 4),
+        order=order,
+    )
+    assert scans
+    hit = next(scan for scan in scans if scan.level == 2)
+    assert hit.relation is not None
+    assert hit.relation.exponents == {"E1": 2, "E2": -1}
+
+
+def test_scan_source_family_eta_corrections_finds_power_times_eta_hit():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    e1 = _eta_pochhammer_series(1, order)
+    e2 = _eta_pochhammer_series(2, order)
+    eta_ratio = series_mul(series_pow(e1, 2), series_invert(e2))
+    target = series_mul(gg2, eta_ratio)
+
+    scans = scan_source_family_eta_corrections(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        eta_levels=(2,),
+        order=order,
+    )
+    assert len(scans) == 1
+    family_scan = scans[0]
+    gg2_scan = next(scan for scan in family_scan.direct_basis_scans if scan.basis_label == "GG2")
+    level_2_hit = next(scan for scan in gg2_scan.eta_scans if scan.level == 2)
+    assert level_2_hit.relation is not None
+    assert level_2_hit.relation.exponents == {"E1": 2, "E2": -1}
+
+
+def test_scan_two_core_source_family_eta_corrections_finds_cross_family_hit():
+    order = 18
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    cubic2 = benchmark_power_substitution_series(cubic, power=2, order=order)
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    eta_ratio = series_mul(
+        series_pow(_eta_pochhammer_series(1, order), 2),
+        series_invert(_eta_pochhammer_series(2, order)),
+    )
+    target = series_mul(series_mul(cubic2, series_invert(gg2)), eta_ratio)
+
+    scan = scan_two_core_source_family_eta_corrections(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        eta_levels=(2,),
+        order=order,
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = scan.hits[0]
+    assert hit.basis_labels == ("cubic2", "GG2")
+    assert hit.level == 2
+    assert hit.relation.exponents == {"cubic2": 1, "GG2": -1, "E1": 2, "E2": -1}
+
+
+def test_scan_quotient_core_source_family_eta_corrections_finds_cross_family_hit():
+    order = 18
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    gg_q2 = series_div(gg2, gg)
+    eta_ratio = series_mul(
+        series_pow(_eta_pochhammer_series(1, order), 2),
+        series_invert(_eta_pochhammer_series(2, order)),
+    )
+    target = series_mul(series_mul(gg_q2, cubic), eta_ratio)
+
+    scan = scan_quotient_core_source_family_eta_corrections(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        eta_levels=(2,),
+        order=order,
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.quotient_label == "GG_Q2" and item.raw_label == "cubic"
+    )
+    assert hit.quotient_expression == "GG2 / GG"
+    assert hit.level == 2
+    assert hit.relation.exponents == {"GG_Q2": 1, "cubic": 1, "E1": 2, "E2": -1}
+
+
+def test_scan_two_quotient_core_source_family_eta_corrections_finds_cross_family_hit():
+    order = 18
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    cubic2 = benchmark_power_substitution_series(cubic, power=2, order=order)
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    cubic_q2 = series_div(cubic2, cubic)
+    gg_q2 = series_div(gg2, gg)
+    eta_ratio = series_mul(
+        series_pow(_eta_pochhammer_series(1, order), 2),
+        series_invert(_eta_pochhammer_series(2, order)),
+    )
+    target = series_mul(series_mul(cubic_q2, gg_q2), eta_ratio)
+
+    scan = scan_two_quotient_core_source_family_eta_corrections(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        eta_levels=(2,),
+        order=order,
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.quotient_labels == ("cubic_Q2", "GG_Q2")
+    )
+    assert hit.quotient_expressions == ("cubic2 / cubic", "GG2 / GG")
+    assert hit.level == 2
+    assert hit.relation.exponents == {"cubic_Q2": 1, "GG_Q2": 1, "E1": 2, "E2": -1}
+
+
+def test_scan_two_quotient_core_source_family_self_quotient_products_finds_cross_family_hit():
+    order = 20
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    cubic2 = benchmark_power_substitution_series(cubic, power=2, order=order)
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    cubic_q2 = series_div(cubic2, cubic)
+    gg_q2 = series_div(gg2, gg)
+    correction = _build_self_quotient_product_target(
+        modulus=2,
+        exponents_by_residue={1: 2},
+        order=order,
+    )
+    target = series_mul(series_mul(cubic_q2, gg_q2), correction)
+
+    scan = scan_two_quotient_core_source_family_self_quotient_products(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        moduli=(2, 3, 4),
+        order=order,
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.quotient_labels == ("cubic_Q2", "GG_Q2")
+    )
+    assert hit.modulus == 2
+    assert hit.relation.exponents_by_residue == {1: 2}
+
+
+def test_scan_two_quotient_core_source_family_self_polynomial_relations_finds_cross_family_hit():
+    order = 16
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    cubic2 = benchmark_power_substitution_series(cubic, power=2, order=order)
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    cubic_q2 = series_div(cubic2, cubic)
+    gg_q2 = series_div(gg2, gg)
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = 1
+    correction[1] = 1
+    target = series_mul(series_mul(cubic_q2, gg_q2), correction)
+
+    scan = scan_two_quotient_core_source_family_self_polynomial_relations(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        moduli=(2, 3),
+        order=order,
+        degree_values=(1, 2),
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.quotient_labels == ("cubic_Q2", "GG_Q2") and item.modulus == 2
+    )
+    assert hit.max_total_degree == 2
+    assert hit.relation.variables == ("G", "G2")
+    residual = _eval_relation_series(
+        hit.relation,
+        correction,
+        benchmark_power_substitution_series(correction, power=2, order=order),
+        order,
+    )
+    assert all(sp.simplify(value) == 0 for value in residual)
+
+
+def test_scan_two_quotient_core_source_family_self_eta_corrections_finds_cross_family_hit():
+    order = 20
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    cubic2 = benchmark_power_substitution_series(cubic, power=2, order=order)
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    cubic_q2 = series_div(cubic2, cubic)
+    gg_q2 = series_div(gg2, gg)
+    eta_ratio = series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order)))
+    correction = _build_self_eta_target(modulus=2, eta_series=eta_ratio, order=order)
+    target = series_mul(series_mul(cubic_q2, gg_q2), correction)
+
+    scan = scan_two_quotient_core_source_family_self_eta_corrections(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        moduli=(2, 3),
+        eta_levels=(2, 3),
+        order=order,
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.quotient_labels == ("cubic_Q2", "GG_Q2") and item.modulus == 2 and item.level == 2
+    )
+    assert hit.relation.exponents == {"G2": 1, "E1": 2, "E2": -1}
+
+
+def test_scan_two_quotient_core_source_family_self_fractional_linear_relations_finds_cross_family_hit():
+    order = 20
+    cubic = [sp.Integer(0) for _ in range(order)]
+    gg = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[1] = 1
+    gg[0] = 1
+    gg[2] = 1
+
+    cubic2 = benchmark_power_substitution_series(cubic, power=2, order=order)
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    cubic_q2 = series_div(cubic2, cubic)
+    gg_q2 = series_div(gg2, gg)
+    e1 = _eta_pochhammer_series(1, order)
+    correction = _build_self_fractional_linear_eta_target(
+        modulus=2,
+        self_coeff=sp.Integer(2),
+        eta_coeff=sp.Integer(3),
+        eta_series=e1,
+        order=order,
+    )
+    target = series_mul(series_mul(cubic_q2, gg_q2), correction)
+
+    scan = scan_two_quotient_core_source_family_self_fractional_linear_relations(
+        target_series=target,
+        ordered_base_families=(
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        powers=(2, 3),
+        moduli=(2, 3),
+        eta_levels=(1, 2),
+        order=order,
+    )
+    assert scan.total_basis_pairs_checked > 0
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.quotient_labels == ("cubic_Q2", "GG_Q2") and item.modulus == 2 and item.level == 1
+    )
+    assert hit.relation.numerator_coefficients == {"G2": sp.Integer(2), "E1": sp.Integer(3)}
+    assert hit.relation.denominator_coefficients == {}
+
+
 def test_scan_named_multiplicative_prefixes_finds_hit():
     order = 12
     rr = [sp.Integer(0) for _ in range(order)]
@@ -460,6 +919,344 @@ def test_scan_named_two_layer_fractional_linear_prefixes_finds_hit():
     )
 
 
+def test_scan_parameterized_source_family_power_boxes_finds_power_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    target = benchmark_power_substitution_series(gg, power=2, order=order)
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert family_scan.family_label == "GG"
+    assert family_scan.ordered_basis_series[1][0] == "GG2"
+    assert any(scan.relation is not None for scan in family_scan.polynomial_scans)
+    polynomial_hit = next(
+        scan
+        for scan in family_scan.polynomial_scans
+        if scan.relation is not None and scan.basis_labels[-1] == "GG2" and scan.max_total_degree == 1
+    )
+    assert polynomial_hit.basis_labels == ("GG", "GG2")
+    assert polynomial_hit.max_total_degree == 1
+    assert any(scan.relation is not None for scan in family_scan.multiplicative_scans)
+    multiplicative_hit = next(scan for scan in family_scan.multiplicative_scans if scan.relation is not None)
+    assert multiplicative_hit.basis_labels == ("GG", "GG2")
+    assert multiplicative_hit.relation.exponents == {"GG2": 1}
+    assert any(scan.relation is not None for scan in family_scan.fractional_linear_scans)
+    assert family_scan.two_layer_fractional_linear_scans
+
+
+def test_scan_parameterized_source_family_power_boxes_finds_two_layer_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    num_factor_1 = [sp.Integer(0) for _ in range(order)]
+    den_factor_1 = [sp.Integer(0) for _ in range(order)]
+    num_factor_2 = [sp.Integer(0) for _ in range(order)]
+    den_factor_2 = [sp.Integer(0) for _ in range(order)]
+    num_factor_1[0] = 1
+    den_factor_1[0] = 1
+    num_factor_2[0] = 1
+    den_factor_2[0] = 1
+    num_factor_1[1] = 2
+    den_factor_1[2] = -1
+    num_factor_2[2] = 3
+    den_factor_2[1] = 4
+
+    target = series_mul(
+        series_mul(num_factor_1, num_factor_2),
+        series_invert(series_mul(den_factor_1, den_factor_2)),
+    )
+
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+        solve_order=10,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert any(scan.total_hits > 0 for scan in family_scan.two_layer_fractional_linear_scans)
+    first_hit = next(
+        scan for scan in family_scan.two_layer_fractional_linear_scans if scan.total_hits > 0
+    )
+    assert first_hit.basis_labels == ("GG", "GG2")
+    assert first_hit.relations
+    assert first_hit.total_hits >= 1
+    assert all(
+        variable in {"GG", "GG2"}
+        for relation in first_hit.relations
+        for variable in relation.numerator_variables + relation.denominator_variables
+    )
+
+
+def test_scan_parameterized_source_family_power_boxes_finds_quotient_ladder_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    target = benchmark_power_substitution_series(gg, power=2, order=order)
+    target = series_div(target, gg)
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert tuple(label for label, _, _ in family_scan.quotient_basis_series) == ("Q2", "Q3")
+    assert family_scan.quotient_basis_series[0][1] == "GG2 / GG"
+    assert any(scan.relation is not None for scan in family_scan.quotient_polynomial_scans)
+    quotient_polynomial_hit = next(
+        scan
+        for scan in family_scan.quotient_polynomial_scans
+        if scan.relation is not None and scan.basis_labels[-1] == "Q2" and scan.max_total_degree == 1
+    )
+    assert quotient_polynomial_hit.basis_labels == ("Q2",)
+    assert any(scan.relation is not None for scan in family_scan.quotient_multiplicative_scans)
+    quotient_multiplicative_hit = next(
+        scan for scan in family_scan.quotient_multiplicative_scans if scan.relation is not None
+    )
+    assert quotient_multiplicative_hit.basis_labels == ("Q2",)
+    assert quotient_multiplicative_hit.relation.exponents == {"Q2": 1}
+    assert any(scan.relation is not None for scan in family_scan.quotient_fractional_linear_scans)
+    assert family_scan.quotient_two_layer_fractional_linear_scans
+
+
+def test_scan_parameterized_source_family_power_boxes_finds_quotient_ladder_two_layer_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = series_div(benchmark_power_substitution_series(gg, power=2, order=order), gg)
+    gg3 = series_div(benchmark_power_substitution_series(gg, power=3, order=order), gg)
+
+    num_factor_1 = [sp.Integer(1)] + [sp.simplify(2 * value) for value in gg2[1:]]
+    den_factor_1 = [sp.Integer(1)] + [sp.simplify(-value) for value in gg2[1:]]
+    num_factor_2 = [sp.Integer(1)] + [sp.simplify(3 * value) for value in gg3[1:]]
+    den_factor_2 = [sp.Integer(1)] + [sp.simplify(4 * value) for value in gg3[1:]]
+
+    target = series_mul(
+        series_mul(num_factor_1, num_factor_2),
+        series_invert(series_mul(den_factor_1, den_factor_2)),
+    )
+
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+        solve_order=10,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert any(scan.total_hits > 0 for scan in family_scan.quotient_two_layer_fractional_linear_scans)
+    first_hit = next(
+        scan
+        for scan in family_scan.quotient_two_layer_fractional_linear_scans
+        if scan.total_hits > 0
+    )
+    assert first_hit.basis_labels == ("Q2", "Q3")
+    assert first_hit.relations
+    assert first_hit.total_hits >= 1
+    assert all(
+        variable in {"Q2", "Q3"}
+        for relation in first_hit.relations
+        for variable in relation.numerator_variables + relation.denominator_variables
+    )
+
+
+def test_scan_parameterized_source_family_power_boxes_finds_mixed_quotient_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    target = series_div(benchmark_power_substitution_series(gg, power=2, order=order), gg)
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert tuple(label for label, _, _ in family_scan.mixed_quotient_basis_series) == ("GG", "Q2", "Q3")
+    assert any(scan.relation is not None for scan in family_scan.mixed_quotient_polynomial_scans)
+    mixed_polynomial_hit = next(
+        scan
+        for scan in family_scan.mixed_quotient_polynomial_scans
+        if scan.relation is not None and scan.basis_labels[-1] == "Q2" and scan.max_total_degree == 1
+    )
+    assert mixed_polynomial_hit.basis_labels == ("GG", "Q2")
+    assert any(scan.relation is not None for scan in family_scan.mixed_quotient_multiplicative_scans)
+    mixed_multiplicative_hit = next(
+        scan for scan in family_scan.mixed_quotient_multiplicative_scans if scan.relation is not None
+    )
+    assert mixed_multiplicative_hit.basis_labels == ("GG", "Q2")
+    assert mixed_multiplicative_hit.relation.exponents == {"Q2": 1}
+    assert any(scan.relation is not None for scan in family_scan.mixed_quotient_fractional_linear_scans)
+
+
+def test_scan_parameterized_source_family_power_boxes_finds_mixed_quotient_two_layer_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = series_div(benchmark_power_substitution_series(gg, power=2, order=order), gg)
+    gg3 = series_div(benchmark_power_substitution_series(gg, power=3, order=order), gg)
+
+    factor_num_1 = [sp.Integer(1)] + [sp.simplify(2 * value) for value in gg[1:]]
+    factor_den_1 = [sp.Integer(1)] + [sp.simplify(-value) for value in gg2[1:]]
+    factor_num_2 = [sp.Integer(1)] + [sp.simplify(3 * value) for value in gg3[1:]]
+    factor_den_2 = [sp.Integer(1)] + [sp.simplify(4 * value) for value in gg[1:]]
+
+    target = series_mul(
+        series_mul(factor_num_1, factor_num_2),
+        series_invert(series_mul(factor_den_1, factor_den_2)),
+    )
+
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+        solve_order=10,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert any(scan.total_hits > 0 for scan in family_scan.mixed_quotient_two_layer_fractional_linear_scans)
+    first_hit = next(
+        scan
+        for scan in family_scan.mixed_quotient_two_layer_fractional_linear_scans
+        if scan.total_hits > 0
+    )
+    assert first_hit.basis_labels == ("GG", "Q2", "Q3")
+    assert first_hit.relations
+    assert first_hit.total_hits >= 1
+    assert all(
+        variable in {"GG", "Q2", "Q3"}
+        for relation in first_hit.relations
+        for variable in relation.numerator_variables + relation.denominator_variables
+    )
+
+
+def test_scan_explicit_source_family_transform_templates_finds_quotient_hit():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    target = series_div(gg2, gg)
+    scans = scan_explicit_source_family_transform_templates(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert family_scan.family_label == "GG"
+    assert "GG2 / GG" in family_scan.checked_templates
+    assert family_scan.hit_templates == ("GG2 / GG",)
+
+
+def test_scan_explicit_source_family_eta_correction_templates_finds_quotient_times_eta_hit():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    eta_ratio = series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order)))
+    target = series_mul(series_div(gg2, gg), eta_ratio)
+
+    scans = scan_explicit_source_family_eta_correction_templates(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        eta_levels=(2,),
+        order=order,
+    )
+
+    assert len(scans) == 1
+    family_scan = scans[0]
+    assert "GG2 / GG" in family_scan.checked_templates
+    assert family_scan.hits
+    first_hit = family_scan.hits[0]
+    assert first_hit.template_label == "GG2 / GG"
+    assert first_hit.level == 2
+    assert first_hit.relation.exponents == {"E1": 2, "E2": -1}
+
+
+def test_scan_gg_modular_equation_box_finds_signed_quotient_hit():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    ggneg = signed_argument_substitution_series(gg, order=order)
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    target = series_div(gg3, ggneg)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        max_abs_exponent=4,
+        solve_order=14,
+    )
+
+    assert scan.benchmark_name == "gollnitz_gordon_normalized"
+    assert tuple(label for label, _, _ in scan.ordered_basis_series) == ("GG", "GGneg", "GG2", "GG3", "GG4")
+    assert tuple(label for label, _, _ in scan.quotient_basis_series) == ("Q_neg", "Q_2", "Q_3", "Q_4")
+    assert "GG3 / GGneg" in scan.checked_templates
+    assert scan.hit_templates == ("GG3 / GGneg",)
+
+
+def test_scan_parameterized_source_family_power_boxes_supports_family_specific_powers():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    scans = scan_parameterized_source_family_power_boxes(
+        target_series=gg,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        order=order,
+        supplemental_powers_by_family={"GG": (5, 7, 11)},
+    )
+
+    assert len(scans) == 1
+    labels = tuple(label for label, _ in scans[0].ordered_basis_series)
+    assert labels == ("GG", "GG2", "GG3", "GG5", "GG7", "GG11")
+
+
 def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     verified = tmp_path / "verified.jsonl"
     output_path = tmp_path / "identify.md"
@@ -518,7 +1315,38 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text
     assert "Ratio-Object Source-Family Two-Layer Fractional-Linear Scan" in text
+    assert "Ratio-Object Parameterized Source-Family Power Scan" in text
+    assert "Ratio-Object Source-Family Eta-Correction Scan" in text
+    assert "Ratio-Object Two-Core Source-Family Eta Scan" in text
+    assert "Ratio-Object Quotient-Core Source-Family Eta Scan" in text
+    assert "Ratio-Object Two-Quotient-Core Source-Family Eta Scan" in text
+    assert "Ratio-Object Two-Quotient-Core Self-Quotient Finite-Product Scan" in text
+    assert "Ratio-Object Two-Quotient-Core Self-Eta Functional Scan" in text
+    assert "Ratio-Object Two-Quotient-Core Self-Fractional-Linear Scan" in text
+    assert "Ratio-Object Two-Quotient-Core Self-Polynomial Functional Scan" in text
+    assert "Ratio-Object Explicit GG/S Template Eta-Correction Scan" in text
+    assert "Ratio-Object GG Modular-Equation Template Scan" in text
+    assert "`GGneg = GG(-t)`" in text
+    assert "Quotient basis: `Q_neg = GG(-t) / GG(t)`" in text
+    assert "Quotient-coordinate polynomial" in text
+    assert "Two-layer fractional-linear scan" in text
+    assert "Quotient ladder" in text
+    assert "Quotient-ladder polynomial" in text
+    assert "Quotient-ladder multiplicative scan" in text
+    assert "Quotient-ladder fractional-linear scan" in text
+    assert "Quotient-ladder two-layer fractional-linear scan" in text
+    assert "Mixed quotient basis" in text
+    assert "Mixed-quotient polynomial" in text
+    assert "Mixed-quotient multiplicative scan" in text
+    assert "Mixed-quotient fractional-linear scan" in text
+    assert "Mixed-quotient two-layer fractional-linear scan" in text
+    assert "Polynomial `total degree <= 1`" in text
+    assert "Ratio-Object Explicit GG/S Transform Template Scan" in text
+    assert "### `GG` Explicit Transform Box" in text
+    assert "### `GG` Family" in text
     assert "Ratio-Object RR-Tower Prefix Scan" in text
+    assert "Ratio-Object Self-Quotient Finite-Product Scan" in text
+    assert "Ratio-Object Eta-Quotient Scan" in text
     assert "Ratio-Object Multiplicative RR-Tower Scan" in text
     assert "Ratio-Object Fractional-Linear RR-Tower Scan" in text
     assert "Ratio-Object Two-Layer Fractional-Linear RR-Tower Scan" in text

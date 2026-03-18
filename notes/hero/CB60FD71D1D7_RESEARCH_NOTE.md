@@ -142,10 +142,35 @@ b4 = 1
 ## Page-43 Low-Complexity Rational Prefactor Check
 
 - Search shape: `a = alpha*phi_a(t)*t^A`, `b = beta*phi_b(t)*t^B`, `lambda = gamma*phi_lambda(t)*t^L`.
-- Prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active and integer shifts fixed to `A=B=L=0`.
-- Matching rule: solve exactly for scalar `alpha, beta, gamma` so the first `2` reciprocal stages match the reduced target.
+- Prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most `3` non-plain prefactors active and integer shifts ranging over `A,B,L in [-1,1]`.
+- Matching rule: solve exactly for scalar `alpha, beta, gamma` so the first `3` reciprocal stages match the reduced target.
 - `f2` / `gcf3` hits in this prefactor box: `0`
 - `f4` / `gcf2` hits in this prefactor box: `0`
+
+## Exact Zero-Shift Polynomial Single-Prefactor Page-43 Check
+
+- Inside the bounded prefactor box, the polynomial sub-box `phi in {1, 1+t}` with zero shifts and at most one non-plain prefactor active can now be upgraded to exact coefficient-level obstructions.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0`, `b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f2/gcf3`, `phi_a = 1 + t`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0`, `b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1 + t`, `phi_lambda = 1`: denominator matching forces `a = -1`, `b = 1`, but the remaining stage-1 numerator difference is `lambda*t + t^3 - t`.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1 + t`: denominator matching forces `a = 0`, `b = 1`, stage-1 numerator matching then forces `lambda = 1`, but the stage-2 numerator becomes `t^3 + t^2` instead of `t^4 + t^2`.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0`, `b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f4/gcf2`, `phi_a = 1 + t`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0`, `b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1 + t`, `phi_lambda = 1`: denominator matching is already incompatible.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1 + t`: denominator matching forces `a = 0`, `b = 1`, stage-1 numerator matching then forces `lambda = 1`, but the stage-2 numerator becomes `t^3 + t^2` instead of `t^4 + t^2`.
+- So the whole zero-shift polynomial single-prefactor sub-box is excluded exactly in both page-43 families.
+
+## Exact Zero-Shift Reciprocal Single-Prefactor Page-43 Check
+
+- The remaining zero-shift reciprocal sub-box `phi in {1/(1+t)}` can also be upgraded to exact cross-multiplied coefficient-level obstructions.
+- `f2/gcf3`, `phi_a = 1/(1+t)`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0`, `b = 1`, but the remaining cross-multiplied stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1/(1+t)`, `phi_lambda = 1`: cross-multiplied denominator matching is already incompatible.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1/(1+t)`: denominator matching forces `a = 0`, `b = 1`, but the remaining cross-multiplied stage-1 numerator difference is `lambda*t - t^3 - 2*t^2 - t`.
+- `f4/gcf2`, `phi_a = 1/(1+t)`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0`, `b = 1`, but the remaining cross-multiplied stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1/(1+t)`, `phi_lambda = 1`: cross-multiplied denominator matching is already incompatible.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1/(1+t)`: denominator matching forces `a = 0`, `b = 1`, but the remaining cross-multiplied stage-1 numerator difference is `lambda*t - t^3 - 2*t^2 - t`.
+- So the whole zero-shift reciprocal single-prefactor sub-box is also excluded exactly in both page-43 families.
+- Taken together, the current zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` is now fully exactified at theorem grade.
 
 ## Exact `f2` / `gcf3` n-Dependent Equivalence Check
 
@@ -212,6 +237,34 @@ beta_n = 1 - a*t + b*m*t
 - In `f4/gcf2`, exact vanishing again forces `a = 0`, then `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
 - So the first nonzero `lambda`-shift nearest lanes already fail before any final `m^2` obstruction is needed.
 
+## Exact Mixed Unit-Shift `a`/`lambda` Page-43 Equivalence Check
+
+- We then checked the first mixed nearby lane `a -> a*t`, `lambda -> lambda*t` while keeping the `b` shift at `0`.
+- In `f2/gcf3`, the new `m^3` coefficient is `-a^2*t^6 - 2*a*b*t^4 - a*b*t^3 - b^2*t^2`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` makes that polynomial vanish identically.
+- In `f4/gcf2`, the constant coefficient becomes `a*t^2`, so exact vanishing forces `a = 0` first; then the `m^3` coefficient forces `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first mixed unit-`a` / unit-`lambda` lanes already fail before any final `m^2` obstruction is needed.
+
+## Exact Mixed Unit-Shift `b`/`lambda` Page-43 Equivalence Check
+
+- We then checked the first mixed nearby lane `b -> b*t`, `lambda -> lambda*t` while keeping the `a` shift at `0`.
+- In `f2/gcf3`, the new `m^3` coefficient is `-a^2*t^4 - 2*a*b*t^4 - a*b*t^3 - b^2*t^4`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` makes that polynomial vanish identically.
+- In `f4/gcf2`, the constant coefficient remains `a*t`, so exact vanishing again forces `a = 0` first; then the `m^3` coefficient forces `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first mixed unit-`b` / unit-`lambda` lanes also fail before any final `m^2` obstruction is needed.
+
+## Exact Mixed Unit-Shift `a`/`b`/`lambda` Page-43 Equivalence Check
+
+- We then checked the first full nearby lane `a -> a*t`, `b -> b*t`, `lambda -> lambda*t`.
+- In `f2/gcf3`, the new `m^3` coefficient is `-a^2*t^6 - 2*a*b*t^5 - a*b*t^4 - b^2*t^4`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` makes that polynomial vanish identically.
+- In `f4/gcf2`, the constant coefficient becomes `a*t^2`, so exact vanishing again forces `a = 0` immediately.
+- After that, the `m^3` coefficient is `-b^2*t^4`, forcing `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first full three-parameter nearest lane also fails before any final `m^2` obstruction is needed.
+- Together with the zero-shift and the other seven nearest-shift cases, this closes the full `{0,1}^3` nearest-shift cube at the current page-43 exact-equivalence level.
+
 ## Exact Unit-Shift `a` Page-43 Equivalence Check
 
 - We also checked the next nearby shift choice `a -> a*t` while keeping the `b` and `lambda` shifts at `0`.
@@ -233,6 +286,17 @@ beta_n = 1 - a*t + b*m*t
 - After that, the `m^3` coefficient becomes `-b^2*t^4`, forcing `b = 0`, and then the `m^1` coefficient `lambda*t - t` forces `lambda = 1`.
 - The surviving `m^2` coefficient is then `t`, still nonzero.
 - So the first nonzero `b`-shift nearest lanes also fail by an exact final obstruction.
+
+## Exact Mixed Unit-Shift `a`/`b` Page-43 Equivalence Check
+
+- We then checked the first mixed nearby lane `a -> a*t`, `b -> b*t` while keeping the `lambda` shift at `0`.
+- In `f2/gcf3`, the new `m^3` coefficient is `-a^2*t^6 - 2*a*b*t^5 - a*b*t^4 - b^2*t^4`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient becomes `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- With `a = b = 0`, `lambda = 1`, the `m^2` coefficient becomes `t`, still nonzero.
+- In `f4/gcf2`, the constant coefficient becomes `a*t^2`, so exact vanishing again forces `a = 0` immediately.
+- After that, the `m^3` coefficient is `-b^2*t^4`, forcing `b = 0`, and then the `m^1` coefficient `lambda*t - t` forces `lambda = 1`.
+- The surviving `m^2` coefficient is then `t`, still nonzero.
+- So the first mixed unit-`a` / unit-`b` lane also fails by the same exact final obstruction pattern.
 
 ## Cubic Odd/Even Contraction Check
 

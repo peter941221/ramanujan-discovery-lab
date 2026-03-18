@@ -133,6 +133,386 @@ No source-family two-layer fractional-linear relation was found in any scanned p
 
 - No hit for source-family two-layer prefixes ending at `cubic`, `GG`, `S`.
 
+## Ratio-Object Parameterized Source-Family Power Scan
+
+We also scanned short power ladders inside each named source family so the family meaning stays explicit:
+
+```text
+P(F, T_i) = 0
+F = prod_i T_i^e_i
+F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
+F = prod_j (1 + a_j*(T_r(j) - 1)) / (1 + b_j*(T_s(j) - 1))
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Each family is scanned separately, using the base object together with powered substitutions in the same variable view.
+- This keeps the Gordon/Hirschhorn family labels explicit instead of collapsing them into one anonymous mixed basis.
+- The low-degree polynomial box is motivated by literature where `GG` / Hirschhorn-type objects can satisfy nontrivial power-substitution identities without reducing to a pure product or a simple quotient.
+- We now also include a family-preserving two-layer fractional-linear box, so simple nonlinear corrections stay inside one literature family instead of mixing labels.
+- We also scan a within-family quotient ladder `Qk = Tk / T1`, which is often a more natural coordinate for power-substitution identities than the raw powered objects themselves.
+- That quotient ladder now also gets its own two-layer fractional-linear pass, so the first nonlinear corrections can stay in quotient coordinates without crossing families.
+- We also scan a mixed quotient basis built from the family base object together with the quotient ladder, so relations of the form `T1 * correction(Q2, Q3, ...)` can surface without mixing literature families.
+- That mixed quotient basis now also gets its own two-layer fractional-linear pass, so the first nonlinear corrections can use both the base object and quotient coordinates while still staying in one family.
+- The exact powered labels are listed separately inside each family subsection, because the literature-motivated ladders are now family-specific.
+
+### `RR` Family
+
+- Base benchmark: `rogers_ramanujan_normalized`
+- Basis ladder: `RR = RR(t)`, `RR2 = RR(t^2)`, `RR3 = RR(t^3)`, `RR4 = RR(t^4)`
+- Polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Polynomial `total degree <= 1`: no hit for prefixes ending at `RR`, `RR2`, `RR3`, `RR4`.
+- Polynomial `total degree <= 2`: no hit for prefixes ending at `RR`, `RR2`, `RR3`, `RR4`.
+- Multiplicative scan: no hit for prefixes ending at `RR`, `RR2`, `RR3`, `RR4`.
+- Fractional-linear scan: no hit for prefixes ending at `RR`, `RR2`, `RR3`, `RR4`.
+- Two-layer fractional-linear scan: no hit for prefixes ending at `RR2`, `RR3`, `RR4`.
+- Quotient ladder: `Q2 = RR2 / RR`, `Q3 = RR3 / RR`, `Q4 = RR4 / RR`
+- Quotient-ladder polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Quotient-ladder polynomial `total degree <= 1`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder polynomial `total degree <= 2`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder multiplicative scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder two-layer fractional-linear scan: no hit for prefixes ending at `Q3`, `Q4`.
+- Mixed quotient basis: `RR = RR(t)`, `Q2 = RR2 / RR`, `Q3 = RR3 / RR`, `Q4 = RR4 / RR`
+- Mixed-quotient polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Mixed-quotient polynomial `total degree <= 1`: no hit for prefixes ending at `RR`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient polynomial `total degree <= 2`: no hit for prefixes ending at `RR`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient multiplicative scan: no hit for prefixes ending at `RR`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient fractional-linear scan: no hit for prefixes ending at `RR`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient two-layer fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+### `cubic` Family
+
+- Base benchmark: `ramanujan_cubic_normalized`
+- Basis ladder: `cubic = cubic(t)`, `cubic2 = cubic(t^2)`, `cubic3 = cubic(t^3)`, `cubic4 = cubic(t^4)`
+- Polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Polynomial `total degree <= 1`: no hit for prefixes ending at `cubic`, `cubic2`, `cubic3`, `cubic4`.
+- Polynomial `total degree <= 2`: no hit for prefixes ending at `cubic`, `cubic2`, `cubic3`, `cubic4`.
+- Multiplicative scan: no hit for prefixes ending at `cubic`, `cubic2`, `cubic3`, `cubic4`.
+- Fractional-linear scan: no hit for prefixes ending at `cubic`, `cubic2`, `cubic3`, `cubic4`.
+- Two-layer fractional-linear scan: no hit for prefixes ending at `cubic2`, `cubic3`, `cubic4`.
+- Quotient ladder: `Q2 = cubic2 / cubic`, `Q3 = cubic3 / cubic`, `Q4 = cubic4 / cubic`
+- Quotient-ladder polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Quotient-ladder polynomial `total degree <= 1`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder polynomial `total degree <= 2`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder multiplicative scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder two-layer fractional-linear scan: no hit for prefixes ending at `Q3`, `Q4`.
+- Mixed quotient basis: `cubic = cubic(t)`, `Q2 = cubic2 / cubic`, `Q3 = cubic3 / cubic`, `Q4 = cubic4 / cubic`
+- Mixed-quotient polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Mixed-quotient polynomial `total degree <= 1`: no hit for prefixes ending at `cubic`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient polynomial `total degree <= 2`: no hit for prefixes ending at `cubic`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient multiplicative scan: no hit for prefixes ending at `cubic`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient fractional-linear scan: no hit for prefixes ending at `cubic`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient two-layer fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+### `GG` Family
+
+- Base benchmark: `gollnitz_gordon_normalized`
+- Basis ladder: `GG = GG(t)`, `GG2 = GG(t^2)`, `GG3 = GG(t^3)`, `GG4 = GG(t^4)`, `GG5 = GG(t^5)`, `GG7 = GG(t^7)`, `GG11 = GG(t^11)`
+- Polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Polynomial `total degree <= 1`: no hit for prefixes ending at `GG`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
+- Polynomial `total degree <= 2`: no hit for prefixes ending at `GG`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
+- Multiplicative scan: no hit for prefixes ending at `GG`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
+- Fractional-linear scan: no hit for prefixes ending at `GG`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
+- Two-layer fractional-linear scan: no hit for prefixes ending at `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
+- Quotient ladder: `Q2 = GG2 / GG`, `Q3 = GG3 / GG`, `Q4 = GG4 / GG`, `Q5 = GG5 / GG`, `Q7 = GG7 / GG`, `Q11 = GG11 / GG`
+- Quotient-ladder polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Quotient-ladder polynomial `total degree <= 1`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Quotient-ladder polynomial `total degree <= 2`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Quotient-ladder multiplicative scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Quotient-ladder fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Quotient-ladder two-layer fractional-linear scan: no hit for prefixes ending at `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Mixed quotient basis: `GG = GG(t)`, `Q2 = GG2 / GG`, `Q3 = GG3 / GG`, `Q4 = GG4 / GG`, `Q5 = GG5 / GG`, `Q7 = GG7 / GG`, `Q11 = GG11 / GG`
+- Mixed-quotient polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Mixed-quotient polynomial `total degree <= 1`: no hit for prefixes ending at `GG`, `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Mixed-quotient polynomial `total degree <= 2`: no hit for prefixes ending at `GG`, `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Mixed-quotient multiplicative scan: no hit for prefixes ending at `GG`, `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Mixed-quotient fractional-linear scan: no hit for prefixes ending at `GG`, `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+- Mixed-quotient two-layer fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+### `S` Family
+
+- Base benchmark: `hirschhorn_s_normalized`
+- Basis ladder: `S = S(t)`, `S2 = S(t^2)`, `S3 = S(t^3)`, `S4 = S(t^4)`
+- Polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Polynomial `total degree <= 1`: no hit for prefixes ending at `S`, `S2`, `S3`, `S4`.
+- Polynomial `total degree <= 2`: no hit for prefixes ending at `S`, `S2`, `S3`, `S4`.
+- Multiplicative scan: no hit for prefixes ending at `S`, `S2`, `S3`, `S4`.
+- Fractional-linear scan: no hit for prefixes ending at `S`, `S2`, `S3`, `S4`.
+- Two-layer fractional-linear scan: no hit for prefixes ending at `S2`, `S3`, `S4`.
+- Quotient ladder: `Q2 = S2 / S`, `Q3 = S3 / S`, `Q4 = S4 / S`
+- Quotient-ladder polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Quotient-ladder polynomial `total degree <= 1`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder polynomial `total degree <= 2`: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder multiplicative scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+- Quotient-ladder two-layer fractional-linear scan: no hit for prefixes ending at `Q3`, `Q4`.
+- Mixed quotient basis: `S = S(t)`, `Q2 = S2 / S`, `Q3 = S3 / S`, `Q4 = S4 / S`
+- Mixed-quotient polynomial scan: no candidate-dependent hit was found in the checked low-degree boxes.
+- Mixed-quotient polynomial `total degree <= 1`: no hit for prefixes ending at `S`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient polynomial `total degree <= 2`: no hit for prefixes ending at `S`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient multiplicative scan: no hit for prefixes ending at `S`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient fractional-linear scan: no hit for prefixes ending at `S`, `Q2`, `Q3`, `Q4`.
+- Mixed-quotient two-layer fractional-linear scan: no hit for prefixes ending at `Q2`, `Q3`, `Q4`.
+
+## Ratio-Object Source-Family Eta-Correction Scan
+
+We also checked whether the ratio object can be written as one nearby source-family basis object times a small eta-quotient correction:
+
+```text
+F = T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a more direct closed-form recognition lane than the polynomial / fractional-linear boxes above.
+- Eta levels checked: `N=1`, `N=2`, `N=3`, `N=4`, `N=5`, `N=6`, `N=12`, `N=20`
+
+### `RR` Eta-Correction Box
+
+- Base benchmark: `rogers_ramanujan_normalized`
+- Raw basis choices: `RR`, `RR2`, `RR3`, `RR4`
+- Raw-basis eta-correction scan: no hit for basis choices `RR`, `RR2`, `RR3`, `RR4`.
+- Quotient basis choices: `Q2 = RR2 / RR`, `Q3 = RR3 / RR`, `Q4 = RR4 / RR`
+- Quotient-basis eta-correction scan: no hit for basis choices `Q2`, `Q3`, `Q4`.
+### `cubic` Eta-Correction Box
+
+- Base benchmark: `ramanujan_cubic_normalized`
+- Raw basis choices: `cubic`, `cubic2`, `cubic3`, `cubic4`
+- Raw-basis eta-correction scan: no hit for basis choices `cubic`, `cubic2`, `cubic3`, `cubic4`.
+- Quotient basis choices: `Q2 = cubic2 / cubic`, `Q3 = cubic3 / cubic`, `Q4 = cubic4 / cubic`
+- Quotient-basis eta-correction scan: no hit for basis choices `Q2`, `Q3`, `Q4`.
+### `GG` Eta-Correction Box
+
+- Base benchmark: `gollnitz_gordon_normalized`
+- Raw basis choices: `GG`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`
+- Raw-basis eta-correction scan: no hit for basis choices `GG`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
+- Quotient basis choices: `Q2 = GG2 / GG`, `Q3 = GG3 / GG`, `Q4 = GG4 / GG`, `Q5 = GG5 / GG`, `Q7 = GG7 / GG`, `Q11 = GG11 / GG`
+- Quotient-basis eta-correction scan: no hit for basis choices `Q2`, `Q3`, `Q4`, `Q5`, `Q7`, `Q11`.
+### `S` Eta-Correction Box
+
+- Base benchmark: `hirschhorn_s_normalized`
+- Raw basis choices: `S`, `S2`, `S3`, `S4`
+- Raw-basis eta-correction scan: no hit for basis choices `S`, `S2`, `S3`, `S4`.
+- Quotient basis choices: `Q2 = S2 / S`, `Q3 = S3 / S`, `Q4 = S4 / S`
+- Quotient-basis eta-correction scan: no hit for basis choices `Q2`, `Q3`, `Q4`.
+
+## Ratio-Object Two-Core Source-Family Eta Scan
+
+We also checked a low-complexity hybrid source box built from two raw basis objects from different nearby families together with a small eta tail:
+
+```text
+F = T1 * T2 * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Here `T1` and `T2` come from distinct named-family raw ladders, and each source-core exponent is restricted to `±1`.
+- Basis pairs checked: `132`
+- Total pair-level boxes checked: `1056`
+- Family-pair split: `GG×S` -> `28` pair(s), `RR×GG` -> `28` pair(s), `RR×S` -> `16` pair(s), `RR×cubic` -> `16` pair(s), `cubic×GG` -> `28` pair(s), `cubic×S` -> `16` pair(s)
+
+No cross-family two-core eta-correction hit was found in the scanned box.
+
+
+## Ratio-Object Quotient-Core Source-Family Eta Scan
+
+We also checked a hybrid source box where one nearby family contributes a quotient core and a second family contributes one raw basis object, again with a small eta tail:
+
+```text
+F = Q * T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Here `Q = T_k / T_1` comes from one named family, `T` comes from a different family's raw ladder, and both source-core exponents are restricted to `±1`.
+- Quotient/raw basis pairs checked: `207`
+- Total pair-level boxes checked: `1656`
+- Quotient/raw family split: `GG->RR` -> `24` pair(s), `GG->S` -> `24` pair(s), `GG->cubic` -> `24` pair(s), `RR->GG` -> `21` pair(s), `RR->S` -> `12` pair(s), `RR->cubic` -> `12` pair(s), `S->GG` -> `21` pair(s), `S->RR` -> `12` pair(s), `S->cubic` -> `12` pair(s), `cubic->GG` -> `21` pair(s), `cubic->RR` -> `12` pair(s), `cubic->S` -> `12` pair(s)
+
+No cross-family quotient-core eta-correction hit was found in the scanned box.
+
+
+## Ratio-Object Two-Quotient-Core Source-Family Eta Scan
+
+We also checked a quotient-only hybrid source box where two distinct nearby families each contribute one quotient core, again with a small eta tail:
+
+```text
+F = Q1 * Q2 * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Here `Q1 = T_i / T_1` and `Q2 = U_j / U_1` come from distinct named families, and both quotient-core exponents are restricted to `±1`.
+- Quotient-pair basis pairs checked: `81`
+- Total pair-level boxes checked: `648`
+- Quotient-pair family split: `GG×S` -> `18` pair(s), `RR×GG` -> `18` pair(s), `RR×S` -> `9` pair(s), `RR×cubic` -> `9` pair(s), `cubic×GG` -> `18` pair(s), `cubic×S` -> `9` pair(s)
+
+No cross-family two-quotient-core eta-correction hit was found in the scanned box.
+
+
+## Ratio-Object Two-Quotient-Core Self-Quotient Finite-Product Scan
+
+We also checked whether dividing by one quotient core from each of two distinct nearby families leaves a correction object with a compact finite-product self-quotient equation:
+
+```text
+G = F / (Q1 * Q2)
+G(t) / G(t^m) = prod_{r=1}^{m-1} (1 - t^r)^{e_r}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a source-aware Mahler-style lane: a hit would point to a recursive product correction after factoring out two nearby quotient cores.
+- Moduli checked: `m=2`, `m=3`, `m=4`
+- Quotient-pair basis pairs checked: `81`
+- Total pair-level boxes checked: `243`
+- Quotient-pair family split: `GG×S` -> `18` pair(s), `RR×GG` -> `18` pair(s), `RR×S` -> `9` pair(s), `RR×cubic` -> `9` pair(s), `cubic×GG` -> `18` pair(s), `cubic×S` -> `9` pair(s)
+
+No cross-family two-quotient-core finite-product self-quotient hit was found in the scanned box.
+
+
+## Ratio-Object Two-Quotient-Core Self-Eta Functional Scan
+
+We also checked whether dividing by one quotient core from each of two distinct nearby families leaves a correction object satisfying a low-complexity self-eta functional equation:
+
+```text
+G = F / (Q1 * Q2)
+G(t) = G(t^m)^a * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a product-theoretic theorem-facing lane: a hit would identify the residual correction through a recursive self-eta equation after factoring out two nearby quotient cores.
+- Moduli checked: `m=2`, `m=3`, `m=4`
+- Eta levels checked: `N=2`, `N=3`, `N=4`
+- Quotient-pair basis pairs checked: `81`
+- Total pair-level boxes checked: `729`
+- Quotient-pair family split: `GG×S` -> `18` pair(s), `RR×GG` -> `18` pair(s), `RR×S` -> `9` pair(s), `RR×cubic` -> `9` pair(s), `cubic×GG` -> `18` pair(s), `cubic×S` -> `9` pair(s)
+
+No cross-family two-quotient-core self-eta functional-equation hit was found in the scanned box.
+
+
+## Ratio-Object Two-Quotient-Core Self-Fractional-Linear Scan
+
+We also checked whether dividing by one quotient core from each of two distinct nearby families leaves a correction object satisfying a low-complexity self-fractional-linear equation with a small eta tail:
+
+```text
+G = F / (Q1 * Q2)
+G(t) = (1 + a*(G(t^m) - 1) + ... ) / (1 + b*(G(t^m) - 1) + ... )
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a theorem-facing nonlinear lane: a hit would give a compact recursive rational equation for the residual correction after factoring out two nearby quotient cores.
+- Moduli checked: `m=2`, `m=3`, `m=4`
+- Eta levels checked: `N=2`, `N=3`, `N=4`
+- Quotient-pair basis pairs checked: `81`
+- Total pair-level boxes checked: `729`
+- Quotient-pair family split: `GG×S` -> `18` pair(s), `RR×GG` -> `18` pair(s), `RR×S` -> `9` pair(s), `RR×cubic` -> `9` pair(s), `cubic×GG` -> `18` pair(s), `cubic×S` -> `9` pair(s)
+
+No cross-family two-quotient-core self-fractional-linear hit was found in the scanned box.
+
+
+## Ratio-Object Two-Quotient-Core Self-Polynomial Functional Scan
+
+We also checked whether dividing by one quotient core from each of two distinct nearby families leaves a correction object satisfying a low-degree algebraic self-functional equation:
+
+```text
+G = F / (Q1 * Q2)
+P(G(t), G(t^m)) = 0
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a theorem-facing lane: a hit would suggest a compact defining functional equation for the residual correction after factoring out two nearby quotient cores.
+- Moduli checked: `m=2`, `m=3`, `m=4`
+- Degrees checked: `total degree <= 1`, `total degree <= 2`
+- Quotient-pair basis pairs checked: `81`
+- Total pair-level boxes checked: `486`
+- Quotient-pair family split: `GG×S` -> `18` pair(s), `RR×GG` -> `18` pair(s), `RR×S` -> `9` pair(s), `RR×cubic` -> `9` pair(s), `cubic×GG` -> `18` pair(s), `cubic×S` -> `9` pair(s)
+
+No cross-family two-quotient-core self-polynomial functional-equation hit was found in the scanned box.
+
+
+## Ratio-Object Explicit GG/S Transform Template Scan
+
+We also checked a smaller family-meaning-preserving box tailored to the Gordon/Hirschhorn orbit:
+
+```text
+F = T
+F = 1 / T
+F = T_i / T_j
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Families checked here are the literature-family ladders `GG` and `S`.
+- This does not enlarge the algebraic search box much; it makes the reciprocal / quotient interpretations explicit in the note.
+
+### `GG` Explicit Transform Box
+
+- Base benchmark: `gollnitz_gordon_normalized`
+- Basis ladder: `GG = GG(t)`, `GG2 = GG(t^2)`, `GG3 = GG(t^3)`, `GG4 = GG(t^4)`, `GG5 = GG(t^5)`, `GG7 = GG(t^7)`, `GG11 = GG(t^11)`
+- Templates checked: `56` exact direct / reciprocal / quotient templates.
+- No exact direct / reciprocal / quotient template hit was found in this family.
+
+### `S` Explicit Transform Box
+
+- Base benchmark: `hirschhorn_s_normalized`
+- Basis ladder: `S = S(t)`, `S2 = S(t^2)`, `S3 = S(t^3)`, `S4 = S(t^4)`
+- Templates checked: `20` exact direct / reciprocal / quotient templates.
+- No exact direct / reciprocal / quotient template hit was found in this family.
+
+
+## Ratio-Object GG Modular-Equation Template Scan
+
+We also checked a narrower literature-driven `GG` box motivated by the modular-equation papers of Chan--Huang and Cho--Koo--Park:
+
+```text
+F = T
+F = 1 / T
+F = T_i / T_j
+P(F, T_i) = 0
+F = prod_i T_i^e_i
+F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Base benchmark: `gollnitz_gordon_normalized`
+- This lane keeps the sign and substitution objects explicit instead of flattening them into a larger anonymous basis box.
+- The literature-motivated basis here is restricted to `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, and `GG(t^4)`.
+- Basis ladder: `GG = GG(t)`, `GGneg = GG(-t)`, `GG2 = GG(t^2)`, `GG3 = GG(t^3)`, `GG4 = GG(t^4)`
+- Exact direct / reciprocal / quotient templates checked: `30`.
+- No exact direct / reciprocal / quotient template hit was found in this modular-equation box.
+
+- Polynomial scan: no candidate-dependent hit was found in the checked modular-equation prefixes.
+- Polynomial `total degree <= 1`: no hit for prefixes ending at `GG`, `GGneg`, `GG2`, `GG3`, `GG4`.
+- Polynomial `total degree <= 2`: no hit for prefixes ending at `GG`, `GGneg`, `GG2`, `GG3`, `GG4`.
+- Multiplicative scan: no hit for modular-equation prefixes ending at `GG`, `GGneg`, `GG2`, `GG3`, `GG4`.
+- Fractional-linear scan: no hit for modular-equation prefixes ending at `GG`, `GGneg`, `GG2`, `GG3`, `GG4`.
+- Two-layer fractional-linear scan: no hit for modular-equation prefixes ending at `GGneg`, `GG2`, `GG3`, `GG4`.
+- Quotient basis: `Q_neg = GG(-t) / GG(t)`, `Q_2 = GG(t^2) / GG(t)`, `Q_3 = GG(t^3) / GG(t)`, `Q_4 = GG(t^4) / GG(t)`
+- Quotient-coordinate polynomial scan: no candidate-dependent hit was found in the checked quotient prefixes.
+- Quotient-coordinate polynomial `total degree <= 1`: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`.
+- Quotient-coordinate polynomial `total degree <= 2`: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`.
+- Quotient-coordinate multiplicative scan: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`.
+- Quotient-coordinate fractional-linear scan: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`.
+- Quotient-coordinate two-layer fractional-linear scan: no hit for prefixes ending at `Q_2`, `Q_3`, `Q_4`.
+
+
+## Ratio-Object Explicit GG/S Template Eta-Correction Scan
+
+We also checked whether one explicit Gordon/Hirschhorn-orbit template times a small eta tail explains the ratio object:
+
+```text
+F = T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Here `T` ranges over the exact direct / reciprocal / quotient templates from the preceding GG/S transform box.
+- Eta levels checked: `N=1`, `N=2`, `N=3`, `N=4`, `N=5`, `N=6`, `N=12`, `N=20`
+
+### `GG` Explicit Eta-Correction Box
+
+- Base benchmark: `gollnitz_gordon_normalized`
+- Templates checked: `56` explicit direct / reciprocal / quotient templates.
+- No explicit-template eta-correction hit was found in this family.
+
+### `S` Explicit Eta-Correction Box
+
+- Base benchmark: `hirschhorn_s_normalized`
+- Templates checked: `20` explicit direct / reciprocal / quotient templates.
+- No explicit-template eta-correction hit was found in this family.
+
+
 ## Ratio-Object RR-Tower Prefix Scan
 
 We also scanned the multiplicative correction object against prefixes of the benchmark tower:
@@ -154,6 +534,36 @@ No candidate-dependent relation was found for the ratio object in any scanned pr
 
 - `total degree <= 1`: no hit for ratio-object prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
 - `total degree <= 2`: no hit for ratio-object prefixes ending at `B2`, `B3`, `B4`, `B5`, `B6`, `B12`, `B20`.
+
+## Ratio-Object Self-Quotient Finite-Product Scan
+
+We also checked a simple finite-product self-quotient box for the ratio object:
+
+```text
+F(t) / F(t^m) = prod_{r=1}^{m-1} (1 - t^r)^{e_r}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a Mahler-style finite-product functional equation: a hit would give a compact recursive product description, but a miss does not rule out general q-Pochhammer products.
+
+No finite-product self-quotient relation was found in any scanned modulus.
+
+- No hit for moduli `m=2`, `m=3`, `m=4`, `m=5`, `m=6`, `m=12`, `m=20`.
+
+## Ratio-Object Eta-Quotient Scan
+
+We also checked whether the ratio object itself is already a small-level eta-quotient:
+
+```text
+F = prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a direct closed-form recognition lane rather than another transform-elimination box.
+
+No eta-quotient relation was found in any scanned level.
+
+- No hit for eta levels `N=1`, `N=2`, `N=3`, `N=4`, `N=5`, `N=6`, `N=12`, `N=20`.
 
 ## Ratio-Object Multiplicative RR-Tower Scan
 

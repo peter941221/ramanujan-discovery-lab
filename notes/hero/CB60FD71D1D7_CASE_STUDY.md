@@ -53,6 +53,11 @@ The proof layer currently focuses on theorem-grade local statements:
    reduced-by-factor model can be expressed in a fraction-field coefficient layer.
 4. Local obstruction lemmas:
    several nearby transform/contraction origins are ruled out at the coefficient level.
+5. Award-track waypoint packaging:
+   the Lean scaffold `proofs/Proofs/HeroCaseFinalIdentity.lean` now packages
+   the current exact waypoint as named theorems and a reusable
+   `currentExactWaypointCertificate`, instead of acting as a purely
+   comment-only placeholder.
 
 The repository's Lean files reflect this scope (finite convergents and exact
 coefficient equalities), not a final analytic identity.
@@ -89,14 +94,29 @@ their ratio objects:
    the current prefix scan through `RR`, `cubic`, `GG`, and `S`. Even the
    second-ring source-family two-layer box built from two single-basis
    fractional-linear factors still has no hit through the prefixes ending at
-   `cubic`, `GG`, and `S`.
+   `cubic`, `GG`, and `S`. A new per-family powered-ladder pass also reports
+   `0` hits in low-degree polynomial, multiplicative, fractional-linear,
+   within-family quotient-ladder, quotient-ladder two-layer, mixed
+   quotient-basis, and mixed quotient-basis two-layer boxes for
+   `RR/RR2/RR3/RR4`, `cubic/cubic2/cubic3/cubic4`,
+   `GG/GG2/GG3/GG4/GG5/GG7/GG11`, and `S/S2/S3/S4`, so the
+   Gordon/Hirschhorn line still does not explain the hero ratio object even
+   before families are mixed together.
    On the page-43 side, the zero-shift `f2/gcf3` and `f4/gcf2`
    `n`-dependent equivalence lanes are ruled out exactly: in both cases the
    necessary residual polynomial forces `a = b = 0`, then `lambda = 1`, but
    still leaves a surviving `m^2` coefficient `t`. The first nearby
    unit-`a`-shift lanes also fail exactly and end with the same surviving
    `m^2` coefficient `t` after the forced parameter specializations. The first nearby
-   unit-`b`-shift lanes now fail in exactly the same way. The first nearby
+   unit-`b`-shift lanes now fail in exactly the same way. The first mixed
+   unit-`a` / unit-`b` nearby lanes also fail with that same final surviving
+   `m^2` coefficient `t`. The first mixed unit-`a` / unit-`lambda` and
+   unit-`b` / unit-`lambda` nearby lanes fail earlier, with the same surviving
+   `m^1` coefficient `lambda*t^2 - t`. The first full mixed
+   unit-`a` / unit-`b` / unit-`lambda` nearby lanes also fail at that same
+   surviving `m^1` coefficient. Taken together, these eight nearby exact cases
+   now close the full nearest-shift cube for the current page-43 equivalence
+   audit. The first nearby
    unit-`lambda`-shift lanes fail even earlier: after the same forced
    specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`,
    so no constant `lambda` can make those lanes vanish identically.

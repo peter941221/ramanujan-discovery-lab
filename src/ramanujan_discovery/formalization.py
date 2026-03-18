@@ -13,11 +13,12 @@ from ramanujan_discovery.research import (
     ContinuedFractionCoeffs,
     ConvergentFactorEquivalenceWitness,
     HeineCor2CFContractionObstruction,
-    Page43ParameterHit,
     Page43F2EquivalenceObstruction,
     Page43F2UnitLambdaShiftEquivalenceObstruction,
     Page43F4EquivalenceObstruction,
     Page43F4UnitLambdaShiftEquivalenceObstruction,
+    Page43ParameterHit,
+    Page43PolynomialSinglePrefactorObstruction,
     SubsequenceContractionHit,
     _template_reciprocal_coeffs,
     arithmetic_subsequence_contraction_search,
@@ -27,14 +28,24 @@ from ramanujan_discovery.research import (
     heine_cor2cf_a_zero_contraction_obstruction,
     page43_f2_zero_shift_equivalence_obstruction,
     page43_f2_unit_a_shift_equivalence_obstruction,
+    page43_f2_unit_ab_shift_equivalence_obstruction,
+    page43_f2_unit_ab_lambda_shift_equivalence_obstruction,
+    page43_f2_unit_a_lambda_shift_equivalence_obstruction,
     page43_f2_unit_b_shift_equivalence_obstruction,
+    page43_f2_unit_b_lambda_shift_equivalence_obstruction,
     page43_f2_unit_lambda_shift_equivalence_obstruction,
     page43_f4_zero_shift_equivalence_obstruction,
     page43_f4_unit_a_shift_equivalence_obstruction,
+    page43_f4_unit_ab_shift_equivalence_obstruction,
+    page43_f4_unit_ab_lambda_shift_equivalence_obstruction,
+    page43_f4_unit_a_lambda_shift_equivalence_obstruction,
     page43_f4_unit_b_shift_equivalence_obstruction,
+    page43_f4_unit_b_lambda_shift_equivalence_obstruction,
     page43_f4_unit_lambda_shift_equivalence_obstruction,
     page43_monomial_parameter_search,
     page43_rational_parameter_search,
+    page43_zero_shift_polynomial_single_prefactor_obstructions,
+    page43_zero_shift_reciprocal_single_prefactor_obstructions,
     parity_contraction_coeffs,
     reduce_template_by_step,
 )
@@ -48,6 +59,7 @@ class FormalizationBuildProfile:
     subsequence_stages: int
     max_page43_shift: int
     page43_stages: int
+    page43_rational_max_nontrivial_profiles: int
 
 
 @dataclass(frozen=True)
@@ -62,6 +74,7 @@ class FormalizationContext:
     page43_stages: int
     page43_rational_max_shift: int
     page43_rational_stages: int
+    page43_rational_max_nontrivial_profiles: int
     reduced_candidate: QCFTemplate | None
     reduced_benchmark: QCFTemplate | None
     target_b0: sp.Expr | None
@@ -80,8 +93,20 @@ class FormalizationContext:
     f4_unit_a_shift_equivalence: Page43F4EquivalenceObstruction | None
     f2_unit_b_shift_equivalence: Page43F2EquivalenceObstruction | None
     f4_unit_b_shift_equivalence: Page43F4EquivalenceObstruction | None
+    f2_unit_ab_shift_equivalence: Page43F2EquivalenceObstruction | None
+    f4_unit_ab_shift_equivalence: Page43F4EquivalenceObstruction | None
+    f2_unit_ab_lambda_shift_equivalence: Page43F2UnitLambdaShiftEquivalenceObstruction | None
+    f4_unit_ab_lambda_shift_equivalence: Page43F4UnitLambdaShiftEquivalenceObstruction | None
+    f2_unit_a_lambda_shift_equivalence: Page43F2UnitLambdaShiftEquivalenceObstruction | None
+    f4_unit_a_lambda_shift_equivalence: Page43F4UnitLambdaShiftEquivalenceObstruction | None
+    f2_unit_b_lambda_shift_equivalence: Page43F2UnitLambdaShiftEquivalenceObstruction | None
+    f4_unit_b_lambda_shift_equivalence: Page43F4UnitLambdaShiftEquivalenceObstruction | None
     f2_unit_lambda_shift_equivalence: Page43F2UnitLambdaShiftEquivalenceObstruction | None
     f4_unit_lambda_shift_equivalence: Page43F4UnitLambdaShiftEquivalenceObstruction | None
+    f2_polynomial_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction]
+    f4_polynomial_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction]
+    f2_reciprocal_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction]
+    f4_reciprocal_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction]
     rr_subsequence_hits: list[SubsequenceContractionHit]
     cubic_subsequence_hits: list[SubsequenceContractionHit]
     f2_hits: list[Page43ParameterHit]
@@ -106,6 +131,24 @@ def _format_fraction_expr(expr) -> str:
     return str(sp.cancel(expr)).replace("**", "^")
 
 
+def _format_symbolic_solution(
+    solution: dict[sp.Symbol, sp.Expr] | None,
+    *,
+    symbols: tuple[sp.Symbol, ...],
+) -> str:
+    if not solution:
+        return "no constant solution"
+    return ", ".join(f"{symbol} = {_format_expr(solution[symbol])}" for symbol in symbols if symbol in solution)
+
+
+def _format_prefactor_case_label(obstruction: Page43PolynomialSinglePrefactorObstruction) -> str:
+    return (
+        f"`phi_a = {obstruction.a_profile.replace(' / ', '/').replace(' + ', '+')}`, "
+        f"`phi_b = {obstruction.b_profile.replace(' / ', '/').replace(' + ', '+')}`, "
+        f"`phi_lambda = {obstruction.lambda_profile.replace(' / ', '/').replace(' + ', '+')}`"
+    )
+
+
 def _formalization_build_profile(*, smoke: bool) -> FormalizationBuildProfile:
     if smoke:
         return FormalizationBuildProfile(
@@ -114,6 +157,7 @@ def _formalization_build_profile(*, smoke: bool) -> FormalizationBuildProfile:
             subsequence_stages=2,
             max_page43_shift=1,
             page43_stages=2,
+            page43_rational_max_nontrivial_profiles=1,
         )
     return FormalizationBuildProfile(
         label="full",
@@ -121,7 +165,12 @@ def _formalization_build_profile(*, smoke: bool) -> FormalizationBuildProfile:
         subsequence_stages=3,
         max_page43_shift=3,
         page43_stages=3,
+        page43_rational_max_nontrivial_profiles=3,
     )
+
+
+def _page43_rational_prefactor_max_shift(*, smoke: bool) -> int:
+    return 1
 
 
 def _power_term(scale: int, shift: int, step: int, variable: str) -> str:
@@ -181,6 +230,7 @@ def _build_formalization_context(
 
     reduced_candidate = reduce_template_by_step(record.template.normalized(), step=step)
     reduced_benchmark = reduce_template_by_step(benchmark.canonical_template.normalized(), step=step)
+    page43_rational_max_shift = _page43_rational_prefactor_max_shift(smoke=smoke)
 
     if reduced_candidate is None or reduced_benchmark is None:
         return FormalizationContext(
@@ -192,8 +242,9 @@ def _build_formalization_context(
             subsequence_stages=profile.subsequence_stages,
             page43_max_shift=profile.max_page43_shift,
             page43_stages=profile.page43_stages,
-            page43_rational_max_shift=0,
-            page43_rational_stages=min(profile.page43_stages, 2),
+            page43_rational_max_shift=page43_rational_max_shift,
+            page43_rational_stages=profile.page43_stages,
+            page43_rational_max_nontrivial_profiles=profile.page43_rational_max_nontrivial_profiles,
             reduced_candidate=reduced_candidate,
             reduced_benchmark=reduced_benchmark,
             target_b0=None,
@@ -212,8 +263,20 @@ def _build_formalization_context(
             f4_unit_a_shift_equivalence=None,
             f2_unit_b_shift_equivalence=None,
             f4_unit_b_shift_equivalence=None,
+            f2_unit_ab_shift_equivalence=None,
+            f4_unit_ab_shift_equivalence=None,
+            f2_unit_ab_lambda_shift_equivalence=None,
+            f4_unit_ab_lambda_shift_equivalence=None,
+            f2_unit_a_lambda_shift_equivalence=None,
+            f4_unit_a_lambda_shift_equivalence=None,
+            f2_unit_b_lambda_shift_equivalence=None,
+            f4_unit_b_lambda_shift_equivalence=None,
             f2_unit_lambda_shift_equivalence=None,
             f4_unit_lambda_shift_equivalence=None,
+            f2_polynomial_prefactor_obstructions=[],
+            f4_polynomial_prefactor_obstructions=[],
+            f2_reciprocal_prefactor_obstructions=[],
+            f4_reciprocal_prefactor_obstructions=[],
             rr_subsequence_hits=[],
             cubic_subsequence_hits=[],
             f2_hits=[],
@@ -275,8 +338,20 @@ def _build_formalization_context(
     f4_unit_a_shift_equivalence = None
     f2_unit_b_shift_equivalence = None
     f4_unit_b_shift_equivalence = None
+    f2_unit_ab_shift_equivalence = None
+    f4_unit_ab_shift_equivalence = None
+    f2_unit_ab_lambda_shift_equivalence = None
+    f4_unit_ab_lambda_shift_equivalence = None
+    f2_unit_a_lambda_shift_equivalence = None
+    f4_unit_a_lambda_shift_equivalence = None
+    f2_unit_b_lambda_shift_equivalence = None
+    f4_unit_b_lambda_shift_equivalence = None
     f2_unit_lambda_shift_equivalence = None
     f4_unit_lambda_shift_equivalence = None
+    f2_polynomial_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction] = []
+    f4_polynomial_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction] = []
+    f2_reciprocal_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction] = []
+    f4_reciprocal_prefactor_obstructions: list[Page43PolynomialSinglePrefactorObstruction] = []
     if looks_like_hero:
         b_cor, lam_cor = sp.symbols("b lambda")
         heine_cor2cf = heine_cor2cf_a_zero_contraction_obstruction(
@@ -291,8 +366,32 @@ def _build_formalization_context(
         f4_unit_a_shift_equivalence = page43_f4_unit_a_shift_equivalence_obstruction(q=t)
         f2_unit_b_shift_equivalence = page43_f2_unit_b_shift_equivalence_obstruction(q=t)
         f4_unit_b_shift_equivalence = page43_f4_unit_b_shift_equivalence_obstruction(q=t)
+        f2_unit_ab_shift_equivalence = page43_f2_unit_ab_shift_equivalence_obstruction(q=t)
+        f4_unit_ab_shift_equivalence = page43_f4_unit_ab_shift_equivalence_obstruction(q=t)
+        f2_unit_ab_lambda_shift_equivalence = page43_f2_unit_ab_lambda_shift_equivalence_obstruction(q=t)
+        f4_unit_ab_lambda_shift_equivalence = page43_f4_unit_ab_lambda_shift_equivalence_obstruction(q=t)
+        f2_unit_a_lambda_shift_equivalence = page43_f2_unit_a_lambda_shift_equivalence_obstruction(q=t)
+        f4_unit_a_lambda_shift_equivalence = page43_f4_unit_a_lambda_shift_equivalence_obstruction(q=t)
+        f2_unit_b_lambda_shift_equivalence = page43_f2_unit_b_lambda_shift_equivalence_obstruction(q=t)
+        f4_unit_b_lambda_shift_equivalence = page43_f4_unit_b_lambda_shift_equivalence_obstruction(q=t)
         f2_unit_lambda_shift_equivalence = page43_f2_unit_lambda_shift_equivalence_obstruction(q=t)
         f4_unit_lambda_shift_equivalence = page43_f4_unit_lambda_shift_equivalence_obstruction(q=t)
+        f2_polynomial_prefactor_obstructions = page43_zero_shift_polynomial_single_prefactor_obstructions(
+            family="f2",
+            q=t,
+        )
+        f4_polynomial_prefactor_obstructions = page43_zero_shift_polynomial_single_prefactor_obstructions(
+            family="f4",
+            q=t,
+        )
+        f2_reciprocal_prefactor_obstructions = page43_zero_shift_reciprocal_single_prefactor_obstructions(
+            family="f2",
+            q=t,
+        )
+        f4_reciprocal_prefactor_obstructions = page43_zero_shift_reciprocal_single_prefactor_obstructions(
+            family="f4",
+            q=t,
+        )
 
     rr_subsequence_hits = arithmetic_subsequence_contraction_search(
         source_label="RR reciprocal",
@@ -324,14 +423,14 @@ def _build_formalization_context(
         max_shift=profile.max_page43_shift,
         stages=profile.page43_stages,
     )
-    page43_rational_max_shift = 0
-    page43_rational_stages = min(profile.page43_stages, 2)
+    page43_rational_stages = profile.page43_stages
     f2_rational_hits = page43_rational_parameter_search(
         family="f2",
         target_template=reduced_candidate,
         q=t,
         max_shift=page43_rational_max_shift,
         stages=page43_rational_stages,
+        max_nontrivial_profiles=profile.page43_rational_max_nontrivial_profiles,
     )
     f4_rational_hits = page43_rational_parameter_search(
         family="f4",
@@ -339,6 +438,7 @@ def _build_formalization_context(
         q=t,
         max_shift=page43_rational_max_shift,
         stages=page43_rational_stages,
+        max_nontrivial_profiles=profile.page43_rational_max_nontrivial_profiles,
     )
 
     return FormalizationContext(
@@ -352,6 +452,7 @@ def _build_formalization_context(
         page43_stages=profile.page43_stages,
         page43_rational_max_shift=page43_rational_max_shift,
         page43_rational_stages=page43_rational_stages,
+        page43_rational_max_nontrivial_profiles=profile.page43_rational_max_nontrivial_profiles,
         reduced_candidate=reduced_candidate,
         reduced_benchmark=reduced_benchmark,
         target_b0=target_b0,
@@ -370,8 +471,20 @@ def _build_formalization_context(
         f4_unit_a_shift_equivalence=f4_unit_a_shift_equivalence,
         f2_unit_b_shift_equivalence=f2_unit_b_shift_equivalence,
         f4_unit_b_shift_equivalence=f4_unit_b_shift_equivalence,
+        f2_unit_ab_shift_equivalence=f2_unit_ab_shift_equivalence,
+        f4_unit_ab_shift_equivalence=f4_unit_ab_shift_equivalence,
+        f2_unit_ab_lambda_shift_equivalence=f2_unit_ab_lambda_shift_equivalence,
+        f4_unit_ab_lambda_shift_equivalence=f4_unit_ab_lambda_shift_equivalence,
+        f2_unit_a_lambda_shift_equivalence=f2_unit_a_lambda_shift_equivalence,
+        f4_unit_a_lambda_shift_equivalence=f4_unit_a_lambda_shift_equivalence,
+        f2_unit_b_lambda_shift_equivalence=f2_unit_b_lambda_shift_equivalence,
+        f4_unit_b_lambda_shift_equivalence=f4_unit_b_lambda_shift_equivalence,
         f2_unit_lambda_shift_equivalence=f2_unit_lambda_shift_equivalence,
         f4_unit_lambda_shift_equivalence=f4_unit_lambda_shift_equivalence,
+        f2_polynomial_prefactor_obstructions=f2_polynomial_prefactor_obstructions,
+        f4_polynomial_prefactor_obstructions=f4_polynomial_prefactor_obstructions,
+        f2_reciprocal_prefactor_obstructions=f2_reciprocal_prefactor_obstructions,
+        f4_reciprocal_prefactor_obstructions=f4_reciprocal_prefactor_obstructions,
         rr_subsequence_hits=rr_subsequence_hits,
         cubic_subsequence_hits=cubic_subsequence_hits,
         f2_hits=f2_hits,
@@ -398,6 +511,7 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
         "",
         "- No complete source theorem is identified yet.",
         "- This candidate is therefore **not ready** for a full Lean/Coq formalization of a final identity.",
+        "- The award-track Lean scaffold now packages an exact intermediate waypoint: finite convergents agree with the reduced-by-factor model over the rational-function reverse-equivalence layer, the page-43 nearest-shift cube is ruled out as a source-family-specific exact lane family, the full zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active is also ruled out exactly in both page-43 families, the nearest RR/cubic arithmetic-subsequence source lanes are excluded exactly, and the direct RR/cubic plus Heine-`cor2cf` low-stage mismatch layers are packaged as named local obstructions.",
         "- The correct near-term target is to formalize exact local lemmas and keep bounded search evidence clearly separated from theorem-grade statements.",
     ]
 
@@ -469,7 +583,7 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 ],
                 "```",
                 "",
-                "- These reverse scales are rational functions in `t`, so a full formalization of this step likely needs a fraction-field coefficient layer in addition to the current polynomial one.",
+                "- These reverse scales are rational functions in `t`; the finite-stage reverse step now lives in Lean over `RatFunc Rat`, but a final identity still needs an infinite-object bridge and a fuller fraction-field coefficient layer beyond the current exact waypoint.",
                 "",
                 "## Exact Lemma Candidates",
                 "",
@@ -646,6 +760,107 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 ]
             )
         if (
+            context.f2_unit_a_lambda_shift_equivalence is not None
+            and context.f4_unit_a_lambda_shift_equivalence is not None
+        ):
+            lines.extend(
+                [
+                    "### Exact Mixed Unit-Shift `a`/`lambda` Page-43 Lanes",
+                    "",
+                    "- The same exact-equivalence layer now also covers the first mixed nearby shift choice `a -> a*t`, `lambda -> lambda*t` with zero `b` shift.",
+                    (
+                        "- For `f2/gcf3`, the `m^3` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_a_lambda_shift_equivalence.m_coefficients[3])}`, "
+                        "and exact vanishing still forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_a_lambda_shift_equivalence.impossible_m1_coefficient)}`; "
+                        "no constant `lambda` can make that polynomial vanish identically."
+                    ),
+                    (
+                        "- For `f4/gcf2`, the constant coefficient "
+                        f"`{_format_expr(context.f4_unit_a_lambda_shift_equivalence.m_coefficients[0])}` forces `a = 0`."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient "
+                        f"`{_format_expr(sp.simplify(context.f4_unit_a_lambda_shift_equivalence.m_coefficients[3].subs(context.f4_unit_a_lambda_shift_equivalence.forced_a_solution)))}` "
+                        "forces `b = 0`, and the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f4_unit_a_lambda_shift_equivalence.impossible_m1_coefficient)}`."
+                    ),
+                    "- So the first mixed unit-`a` / unit-`lambda` lanes already fail before any final `m^2` obstruction is needed.",
+                    "",
+                ]
+            )
+        if (
+            context.f2_unit_b_lambda_shift_equivalence is not None
+            and context.f4_unit_b_lambda_shift_equivalence is not None
+        ):
+            lines.extend(
+                [
+                    "### Exact Mixed Unit-Shift `b`/`lambda` Page-43 Lanes",
+                    "",
+                    "- The same exact-equivalence layer now also covers the first mixed nearby shift choice `b -> b*t`, `lambda -> lambda*t` with zero `a` shift.",
+                    (
+                        "- For `f2/gcf3`, the `m^3` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_b_lambda_shift_equivalence.m_coefficients[3])}`, "
+                        "and exact vanishing still forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_b_lambda_shift_equivalence.impossible_m1_coefficient)}`; "
+                        "no constant `lambda` can make that polynomial vanish identically."
+                    ),
+                    (
+                        "- For `f4/gcf2`, the constant coefficient "
+                        f"`{_format_expr(context.f4_unit_b_lambda_shift_equivalence.m_coefficients[0])}` still forces `a = 0`."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient "
+                        f"`{_format_expr(sp.simplify(context.f4_unit_b_lambda_shift_equivalence.m_coefficients[3].subs(context.f4_unit_b_lambda_shift_equivalence.forced_a_solution)))}` "
+                        "forces `b = 0`, and the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f4_unit_b_lambda_shift_equivalence.impossible_m1_coefficient)}`."
+                    ),
+                    "- So the first mixed unit-`b` / unit-`lambda` lanes also fail before any final `m^2` obstruction is needed.",
+                    "",
+                ]
+            )
+        if (
+            context.f2_unit_ab_lambda_shift_equivalence is not None
+            and context.f4_unit_ab_lambda_shift_equivalence is not None
+        ):
+            lines.extend(
+                [
+                    "### Exact Mixed Unit-Shift `a`/`b`/`lambda` Page-43 Lanes",
+                    "",
+                    "- The same exact-equivalence layer now also covers the first full nearby shift choice `a -> a*t`, `b -> b*t`, `lambda -> lambda*t`.",
+                    (
+                        "- For `f2/gcf3`, the `m^3` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_ab_lambda_shift_equivalence.m_coefficients[3])}`, "
+                        "and exact vanishing still forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_ab_lambda_shift_equivalence.impossible_m1_coefficient)}`; "
+                        "no constant `lambda` can make that polynomial vanish identically."
+                    ),
+                    (
+                        "- For `f4/gcf2`, the constant coefficient "
+                        f"`{_format_expr(context.f4_unit_ab_lambda_shift_equivalence.m_coefficients[0])}` forces `a = 0`."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient "
+                        f"`{_format_expr(sp.simplify(context.f4_unit_ab_lambda_shift_equivalence.m_coefficients[3].subs(context.f4_unit_ab_lambda_shift_equivalence.forced_a_solution)))}` "
+                        "forces `b = 0`, and the surviving `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f4_unit_ab_lambda_shift_equivalence.impossible_m1_coefficient)}`."
+                    ),
+                    "- So the first full three-parameter nearest lane also fails before any final `m^2` obstruction is needed.",
+                    "- Together with the zero-shift and the other seven nearest-shift cases, this closes the full `{0,1}^3` nearest-shift cube at the current page-43 exact-equivalence level.",
+                    "- Lean now exposes that cube not only as summary theorems, but also as Bool-parameterized theorems over the shift bits.",
+                    "",
+                ]
+            )
+        if (
             context.f2_unit_a_shift_equivalence is not None
             and context.f4_unit_a_shift_equivalence is not None
         ):
@@ -727,6 +942,150 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     "",
                 ]
             )
+        if (
+            context.f2_unit_ab_shift_equivalence is not None
+            and context.f4_unit_ab_shift_equivalence is not None
+        ):
+            lines.extend(
+                [
+                    "### Exact Mixed Unit-Shift `a`/`b` Page-43 Lanes",
+                    "",
+                    "- The same exact-equivalence layer now also covers the first mixed nearby shift choice `a -> a*t`, `b -> b*t` with zero `lambda` shift.",
+                    (
+                        "- For `f2/gcf3`, the `m^3` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_ab_shift_equivalence.m_coefficients[3])}`, "
+                        "and exact vanishing still forces `a = 0`, `b = 0`."
+                    ),
+                    (
+                        "- After that specialization, the `m^1` coefficient becomes "
+                        f"`{_format_expr(context.f2_unit_ab_shift_equivalence.reduced_m1_coefficient)}`; "
+                        "exact vanishing forces `lambda = 1`."
+                    ),
+                    (
+                        "- The surviving `m^2` coefficient is then "
+                        f"`{_format_expr(context.f2_unit_ab_shift_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    (
+                        "- For `f4/gcf2`, the constant coefficient "
+                        f"`{_format_expr(context.f4_unit_ab_shift_equivalence.m_coefficients[0])}` already forces `a = 0`."
+                    ),
+                    (
+                        "- After that, the `m^3` coefficient "
+                        f"`{_format_expr(sp.simplify(context.f4_unit_ab_shift_equivalence.m_coefficients[3].subs(context.f4_unit_ab_shift_equivalence.forced_a_solution)))}` "
+                        "forces `b = 0`, and then the `m^1` coefficient "
+                        f"`{_format_expr(context.f4_unit_ab_shift_equivalence.reduced_m1_coefficient)}` forces `lambda = 1`."
+                    ),
+                    (
+                        "- The surviving `m^2` coefficient is then "
+                        f"`{_format_expr(context.f4_unit_ab_shift_equivalence.final_m2_coefficient)}`, still nonzero."
+                    ),
+                    "- So the first mixed unit-`a` / unit-`b` lane also fails by an exact final obstruction.",
+                    "",
+                ]
+            )
+        if (
+            context.f2_polynomial_prefactor_obstructions
+            and context.f4_polynomial_prefactor_obstructions
+        ):
+            a_sym, b_sym, lam_sym = sp.symbols("a b lambda")
+            lines.extend(
+                [
+                    "### Exact Zero-Shift Polynomial Single-Prefactor Page-43 Lanes",
+                    "",
+                    "- Lean mirror module: `proofs/Proofs/HeroCasePage43Equivalence.lean`.",
+                    "- This exact layer now covers the whole polynomial sub-box `phi in {1, 1+t}` with zero shifts and at most one non-plain prefactor active.",
+                ]
+            )
+            for obstruction in context.f2_polynomial_prefactor_obstructions:
+                label = _format_prefactor_case_label(obstruction)
+                if obstruction.failure_stage == "denominator":
+                    lines.append(f"- `f2/gcf3`, {label}: denominator matching is already incompatible.")
+                elif obstruction.failure_stage == "stage1_numerator":
+                    lines.append(
+                        f"- `f2/gcf3`, {label}: denominator matching forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_ab_solution, symbols=(a_sym, b_sym))}`, "
+                        "but the remaining stage-1 numerator difference is "
+                        f"`{_format_expr(obstruction.reduced_a1_difference)}`."
+                    )
+                else:
+                    lines.append(
+                        f"- `f2/gcf3`, {label}: denominator matching forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_ab_solution, symbols=(a_sym, b_sym))}`, "
+                        "stage-1 numerator matching then forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_lambda_solution, symbols=(lam_sym,))}`, "
+                        "but the stage-2 numerator becomes "
+                        f"`{_format_expr(obstruction.final_stage2_a)}` instead of "
+                        f"`{_format_expr(obstruction.target_stage2_a)}`."
+                    )
+            for obstruction in context.f4_polynomial_prefactor_obstructions:
+                label = _format_prefactor_case_label(obstruction)
+                if obstruction.failure_stage == "denominator":
+                    lines.append(f"- `f4/gcf2`, {label}: denominator matching is already incompatible.")
+                elif obstruction.failure_stage == "stage1_numerator":
+                    lines.append(
+                        f"- `f4/gcf2`, {label}: denominator matching forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_ab_solution, symbols=(a_sym, b_sym))}`, "
+                        "but the remaining stage-1 numerator difference is "
+                        f"`{_format_expr(obstruction.reduced_a1_difference)}`."
+                    )
+                else:
+                    lines.append(
+                        f"- `f4/gcf2`, {label}: denominator matching forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_ab_solution, symbols=(a_sym, b_sym))}`, "
+                        "stage-1 numerator matching then forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_lambda_solution, symbols=(lam_sym,))}`, "
+                        "but the stage-2 numerator becomes "
+                        f"`{_format_expr(obstruction.final_stage2_a)}` instead of "
+                        f"`{_format_expr(obstruction.target_stage2_a)}`."
+                    )
+            lines.extend(
+                [
+                    "- So the whole zero-shift polynomial single-prefactor sub-box is excluded exactly in both page-43 families.",
+                    "",
+                ]
+            )
+        if (
+            context.f2_reciprocal_prefactor_obstructions
+            and context.f4_reciprocal_prefactor_obstructions
+        ):
+            a_sym, b_sym = sp.symbols("a b")
+            lines.extend(
+                [
+                    "### Exact Zero-Shift Reciprocal Single-Prefactor Page-43 Lanes",
+                    "",
+                    "- Lean mirror module: `proofs/Proofs/HeroCasePage43Equivalence.lean`.",
+                    "- This exact layer now also covers the reciprocal sub-box `phi in {1/(1+t)}` via cross-multiplied coefficient identities.",
+                ]
+            )
+            for obstruction in context.f2_reciprocal_prefactor_obstructions:
+                label = _format_prefactor_case_label(obstruction)
+                if obstruction.failure_stage == "denominator":
+                    lines.append(f"- `f2/gcf3`, {label}: cross-multiplied denominator matching is already incompatible.")
+                else:
+                    lines.append(
+                        f"- `f2/gcf3`, {label}: denominator matching forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_ab_solution, symbols=(a_sym, b_sym))}`, "
+                        "but the remaining cross-multiplied stage-1 numerator difference has numerator "
+                        f"`{_format_expr(sp.together(obstruction.reduced_a1_difference).as_numer_denom()[0])}`."
+                    )
+            for obstruction in context.f4_reciprocal_prefactor_obstructions:
+                label = _format_prefactor_case_label(obstruction)
+                if obstruction.failure_stage == "denominator":
+                    lines.append(f"- `f4/gcf2`, {label}: cross-multiplied denominator matching is already incompatible.")
+                else:
+                    lines.append(
+                        f"- `f4/gcf2`, {label}: denominator matching forces "
+                        f"`{_format_symbolic_solution(obstruction.forced_ab_solution, symbols=(a_sym, b_sym))}`, "
+                        "but the remaining cross-multiplied stage-1 numerator difference has numerator "
+                        f"`{_format_expr(sp.together(obstruction.reduced_a1_difference).as_numer_denom()[0])}`."
+                    )
+            lines.extend(
+                [
+                    "- So the whole zero-shift reciprocal single-prefactor sub-box is excluded exactly in both page-43 families.",
+                    "- Taken together, the current zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` is now fully exactified at theorem grade.",
+                    "",
+                ]
+            )
         lines.extend(
             [
                 "## Bounded Exact Exclusion Results",
@@ -745,7 +1104,9 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 ),
                 (
                     "- Page-43 low-complexity rational-prefactor box: "
-                    "`phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active, "
+                    f"`phi in {{1, 1+t, 1/(1+t)}}` with at most "
+                    f"`{context.page43_rational_max_nontrivial_profiles}` non-plain prefactor"
+                    f"{'' if context.page43_rational_max_nontrivial_profiles == 1 else 's'} active, "
                     f"shift box `[-{context.page43_rational_max_shift},{context.page43_rational_max_shift}]`, "
                     f"and `{context.page43_rational_stages}` matched stages: "
                     f"`f2/gcf3` hits `{len(context.f2_rational_hits)}`, "
@@ -754,6 +1115,15 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "- These are bounded symbolic searches, useful for narrowing the theorem statement but not substitutes for a full origin proof.",
             ]
         )
+        if (
+            context.f2_polynomial_prefactor_obstructions
+            and context.f4_polynomial_prefactor_obstructions
+            and context.f2_reciprocal_prefactor_obstructions
+            and context.f4_reciprocal_prefactor_obstructions
+        ):
+            lines.append(
+                "- Within that bounded prefactor box, the full zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active is now theorem-grade exact."
+            )
         if (
             context.rr_subsequence_hits
             or context.cubic_subsequence_hits
@@ -787,8 +1157,8 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                 "",
                 "1. Formalize generalized continued fractions and convergent recurrence for finite truncations.",
                 "2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.",
-                "3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.",
-                "4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift, unit-a-shift, unit-b-shift, and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.",
+                "3. Bridge the current rational-function reverse-equivalence layer from finite convergents to the infinite object.",
+                "4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized nearest-shift cube plus the exact zero-shift single-prefactor box, especially if shifted or multi-prefactor rational lanes become theorem-relevant.",
                 "5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.",
                 "6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.",
                 "7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.",
@@ -815,7 +1185,8 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     "",
                     "- This candidate matches the current hero-case structural signature in reduced variable `t`.",
                     f"- Award-track target module (Lean scaffold): `{award_target}`",
-                    "- Current state: the module compiles, but `finalIdentityStatement` is still a placeholder.",
+                    "- Current state: the module compiles, carries status marker `exclusion_waypoint`, and now exposes the current exact waypoint as a certificate object `currentExactWaypointCertificate`, whose two fields are proved by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then repackaged by `exactWaypointStatement_true`.",
+                    "- `finalIdentityStatement` is still a placeholder because no final closed form is identified yet.",
                     "- Only replace the placeholder after a concrete closed form is identified.",
                 ]
             )
@@ -1052,19 +1423,34 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 f"RR direct witness: w0 = {_format_expr(context.rr_direct.forced_w0)}, w1 = {_format_expr(context.rr_direct.forced_w1)}, transformed a1 = {_format_expr(context.rr_direct.transformed_a1)}, target a1 = {_format_expr(context.rr_direct.target_a1)}",
                 f"Cubic direct witness: w0 = {_format_expr(context.cubic_direct.forced_w0)}, w1 = {_format_expr(context.cubic_direct.forced_w1)}, w2 = {_format_expr(context.cubic_direct.forced_w2)}, transformed a2 = {_format_expr(context.cubic_direct.transformed_a2)}, target a2 = {_format_expr(context.cubic_direct.target_a2)}",
                 f"First reverse-equivalence scales: {', '.join(f'r{n} = {_format_fraction_expr(context.factor_witness.scale_terms[n])}' for n in range(1, min(5, len(context.factor_witness.scale_terms))))}",
-                "These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.",
+                "These scales are rational functions, and Proofs/RationalEquivalence.lean already formalizes the finite-stage reverse equivalence transform over RatFunc Rat; the remaining gap is a fuller fraction-field coefficient layer for the infinite-object bridge.",
+                "Proofs/HeroCaseFinalIdentity.lean packages that exact waypoint via the certificate object `currentExactWaypointCertificate`, whose two fields are established by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then bundled by `exactWaypointStatement_true`; the lower-level ingredients still include `heroConvergentRatFunc_eq_reducedHeroConvergentRatFunc`, `reverseEquivalenceRecoversHeroData`, `page43PolynomialPrefactorExcluded`, `page43ReciprocalPrefactorExcluded`, `nearestArithmeticSubsequenceSourcesExcluded`, `directLocalObstructions`, and `simpleCor2cfBranchesExcluded`.",
                 (
                     "Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2"
-                    " n-dependent equivalence, plus the nearest unit-a-shift, unit-b-shift, and unit-lambda-shift lanes,"
+                    " n-dependent equivalence, plus the nearest unit-a-shift, unit-b-shift, mixed unit-a/unit-b-shift, mixed unit-a/unit-lambda-shift, mixed unit-b/unit-lambda-shift, mixed unit-a/unit-b/unit-lambda-shift, and unit-lambda-shift lanes,"
                     " formalized in Proofs/HeroCasePage43Equivalence.lean,"
                     f" with zero-shift final surviving obstruction coefficients {_format_expr(context.f2_equivalence.final_m2_coefficient)}"
                     f" and {_format_expr(context.f4_equivalence.final_m2_coefficient)}, unit-a-shift final"
                     f" surviving coefficients {_format_expr(context.f2_unit_a_shift_equivalence.final_m2_coefficient)}"
                     f" and {_format_expr(context.f4_unit_a_shift_equivalence.final_m2_coefficient)}, unit-b-shift final"
                     f" surviving coefficients {_format_expr(context.f2_unit_b_shift_equivalence.final_m2_coefficient)}"
-                    f" and {_format_expr(context.f4_unit_b_shift_equivalence.final_m2_coefficient)}, and shifted impossible"
+                    f" and {_format_expr(context.f4_unit_b_shift_equivalence.final_m2_coefficient)}, mixed unit-a/unit-b-shift final"
+                    f" surviving coefficients {_format_expr(context.f2_unit_ab_shift_equivalence.final_m2_coefficient)}"
+                    f" and {_format_expr(context.f4_unit_ab_shift_equivalence.final_m2_coefficient)}, mixed unit-a/unit-lambda-shift impossible"
+                    f" m1 coefficients {_format_expr(context.f2_unit_a_lambda_shift_equivalence.impossible_m1_coefficient)}"
+                    f" and {_format_expr(context.f4_unit_a_lambda_shift_equivalence.impossible_m1_coefficient)}, mixed unit-b/unit-lambda-shift impossible"
+                    f" m1 coefficients {_format_expr(context.f2_unit_b_lambda_shift_equivalence.impossible_m1_coefficient)}"
+                    f" and {_format_expr(context.f4_unit_b_lambda_shift_equivalence.impossible_m1_coefficient)}, mixed unit-a/unit-b/unit-lambda-shift impossible"
+                    f" m1 coefficients {_format_expr(context.f2_unit_ab_lambda_shift_equivalence.impossible_m1_coefficient)}"
+                    f" and {_format_expr(context.f4_unit_ab_lambda_shift_equivalence.impossible_m1_coefficient)}, and shifted impossible"
                     f" m1 coefficients {_format_expr(context.f2_unit_lambda_shift_equivalence.impossible_m1_coefficient)}"
                     f" and {_format_expr(context.f4_unit_lambda_shift_equivalence.impossible_m1_coefficient)}."
+                    " These lanes are also packaged there as the nearest-shift cube summary theorems"
+                    " `noNearestShiftCubeF2ExactEquivalence`, `noNearestShiftCubeF4ExactEquivalence`, and"
+                    " `noNearestShiftCubeExactEquivalence`, together with the Bool-parameterized"
+                    " variants `noNearestShiftCubeF2ExactEquivalenceFor`,"
+                    " `noNearestShiftCubeF4ExactEquivalenceFor`, and"
+                    " `noNearestShiftCubeExactEquivalenceFor`."
                     if (
                         context.f2_equivalence is not None
                         and context.f4_equivalence is not None
@@ -1072,6 +1458,14 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                         and context.f4_unit_a_shift_equivalence is not None
                         and context.f2_unit_b_shift_equivalence is not None
                         and context.f4_unit_b_shift_equivalence is not None
+                        and context.f2_unit_ab_shift_equivalence is not None
+                        and context.f4_unit_ab_shift_equivalence is not None
+                        and context.f2_unit_a_lambda_shift_equivalence is not None
+                        and context.f4_unit_a_lambda_shift_equivalence is not None
+                        and context.f2_unit_b_lambda_shift_equivalence is not None
+                        and context.f4_unit_b_lambda_shift_equivalence is not None
+                        and context.f2_unit_ab_lambda_shift_equivalence is not None
+                        and context.f4_unit_ab_lambda_shift_equivalence is not None
                         and context.f2_unit_lambda_shift_equivalence is not None
                         and context.f4_unit_lambda_shift_equivalence is not None
                     )
@@ -1081,6 +1475,16 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                         if context.f2_equivalence is not None
                         else "No source-family-specific exact lane has been attached yet."
                     )
+                ),
+                (
+                    "The same module also now excludes the full zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active in both page-43 families, via the polynomial theorems `noZeroShiftPolynomialSinglePrefactorF2DirectMatches`, `noZeroShiftPolynomialSinglePrefactorF4DirectMatches`, `noZeroShiftPolynomialSinglePrefactorDirectMatches` and the reciprocal cross-multiplied theorems `noZeroShiftReciprocalSinglePrefactorF2CrossMatches`, `noZeroShiftReciprocalSinglePrefactorF4CrossMatches`, `noZeroShiftReciprocalSinglePrefactorCrossMatches`."
+                    if (
+                        context.f2_polynomial_prefactor_obstructions
+                        and context.f4_polynomial_prefactor_obstructions
+                        and context.f2_reciprocal_prefactor_obstructions
+                        and context.f4_reciprocal_prefactor_obstructions
+                    )
+                    else ""
                 ),
                 "-/",
                 "",
@@ -1112,10 +1516,11 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 "/-!",
                 "Suggested next theorem extensions:",
                 "",
-                "1. Lift the coefficient domain from polynomials to rational functions and",
-                "   formalize the reverse equivalence transform.",
-                "2. Extend the page-43 equivalence layer beyond the currently formalized",
-                "   zero-shift, unit-a-shift, unit-b-shift, and unit-lambda-shift f2/gcf3 and f4/gcf2 obstruction theorems.",
+                "1. Bridge the current rational-function reverse-equivalence layer from",
+                "   finite convergents to the infinite object.",
+                "2. Extend the page-43 exact layer beyond the currently formalized",
+                "   nearest-shift cube plus the exact zero-shift single-prefactor box,",
+                "   especially if shifted or multi-prefactor rational lanes matter later.",
                 "3. Compare candidate convergents against nearby benchmark convergents.",
                 "4. Formalize the Bauer-Muir transform algebra itself instead of injecting only",
                 "   the recovered witnesses.",

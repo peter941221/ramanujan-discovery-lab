@@ -19,19 +19,32 @@ from ramanujan_discovery.research import (
     heine_cor2cf_a_zero_specialized_coeffs,
     heine_hcf2_standardized_coeffs,
     parity_contraction_coeffs,
+    page43_f2_zero_shift_plus_lambda_prefactor_obstruction,
     page43_f2_zero_shift_equivalence_obstruction,
     page43_f2_unit_a_shift_equivalence_obstruction,
+    page43_f2_unit_ab_shift_equivalence_obstruction,
+    page43_f2_unit_ab_lambda_shift_equivalence_obstruction,
+    page43_f2_unit_a_lambda_shift_equivalence_obstruction,
     page43_f2_unit_b_shift_equivalence_obstruction,
+    page43_f2_unit_b_lambda_shift_equivalence_obstruction,
     page43_f2_unit_lambda_shift_equivalence_obstruction,
+    page43_f4_zero_shift_plus_lambda_prefactor_obstruction,
     page43_f4_zero_shift_equivalence_obstruction,
     page43_f4_unit_a_shift_equivalence_obstruction,
+    page43_f4_unit_ab_shift_equivalence_obstruction,
+    page43_f4_unit_ab_lambda_shift_equivalence_obstruction,
+    page43_f4_unit_a_lambda_shift_equivalence_obstruction,
     page43_f4_unit_b_shift_equivalence_obstruction,
+    page43_f4_unit_b_lambda_shift_equivalence_obstruction,
     page43_f4_unit_lambda_shift_equivalence_obstruction,
     page43_monomial_parameter_search,
     page43_rational_parameter_search,
+    page43_zero_shift_polynomial_single_prefactor_obstructions,
+    page43_zero_shift_reciprocal_single_prefactor_obstructions,
     reduce_template_by_step,
     try_fit_periodic_pochhammer,
     try_fit_two_modulus_pochhammer,
+    _research_build_profile,
     _verify_two_modulus_pochhammer_fit,
     _template_reciprocal_coeffs,
 )
@@ -114,6 +127,145 @@ def test_page43_f4_zero_shift_equivalence_obstruction_has_forced_parameter_failu
     assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
 
 
+def test_page43_f2_zero_shift_plus_lambda_prefactor_obstruction_has_stage2_mismatch():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_zero_shift_plus_lambda_prefactor_obstruction(q=q)
+
+    assert sp.simplify(obstruction.source_b1 - (a * q**2 + b * q + 1)) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(
+        obstruction.source_a1.subs(obstruction.forced_ab_solution) - (lam * q**2 + lam * q)
+    ) == 0
+    assert obstruction.forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstruction.final_stage2_a - (q**2 + q**3)) == 0
+    assert sp.simplify(obstruction.target_stage2_a - (q**2 + q**4)) == 0
+
+
+def test_page43_f4_zero_shift_plus_lambda_prefactor_obstruction_has_stage2_mismatch():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_zero_shift_plus_lambda_prefactor_obstruction(q=q)
+
+    assert sp.simplify(obstruction.source_b1 - (-a * q + b * q + 1)) == 0
+    assert sp.simplify(obstruction.source_b2 - (-a * q + b * q**2 + 1)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert obstruction.forced_b_solution == {b: 1}
+    assert sp.simplify(
+        obstruction.source_a1.subs(obstruction.forced_a_solution).subs(obstruction.forced_b_solution)
+        - (lam * q**2 + lam * q)
+    ) == 0
+    assert obstruction.forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstruction.final_stage2_a - (q**2 + q**3)) == 0
+    assert sp.simplify(obstruction.target_stage2_a - (q**2 + q**4)) == 0
+
+
+def test_page43_zero_shift_polynomial_single_prefactor_obstructions_cover_expected_f2_box():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstructions = page43_zero_shift_polynomial_single_prefactor_obstructions(family="f2", q=q)
+
+    assert [(obs.a_profile, obs.b_profile, obs.lambda_profile) for obs in obstructions] == [
+        ("1", "1", "1"),
+        ("1 + q", "1", "1"),
+        ("1", "1 + q", "1"),
+        ("1", "1", "1 + q"),
+    ]
+    assert [obs.failure_stage for obs in obstructions] == [
+        "stage1_numerator",
+        "stage1_numerator",
+        "stage1_numerator",
+        "stage2_numerator",
+    ]
+    assert obstructions[0].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[0].reduced_a1_difference - (lam * q - q**2 - q)) == 0
+    assert obstructions[1].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[1].reduced_a1_difference - (lam * q - q**2 - q)) == 0
+    assert obstructions[2].forced_ab_solution == {a: -1, b: 1}
+    assert sp.simplify(obstructions[2].reduced_a1_difference - (lam * q + q**3 - q)) == 0
+    assert obstructions[3].forced_ab_solution == {a: 0, b: 1}
+    assert obstructions[3].forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstructions[3].final_stage2_a - (q**2 + q**3)) == 0
+
+
+def test_page43_zero_shift_polynomial_single_prefactor_obstructions_cover_expected_f4_box():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstructions = page43_zero_shift_polynomial_single_prefactor_obstructions(family="f4", q=q)
+
+    assert [(obs.a_profile, obs.b_profile, obs.lambda_profile) for obs in obstructions] == [
+        ("1", "1", "1"),
+        ("1 + q", "1", "1"),
+        ("1", "1 + q", "1"),
+        ("1", "1", "1 + q"),
+    ]
+    assert [obs.failure_stage for obs in obstructions] == [
+        "stage1_numerator",
+        "stage1_numerator",
+        "denominator",
+        "stage2_numerator",
+    ]
+    assert obstructions[0].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[0].reduced_a1_difference - (lam * q - q**2 - q)) == 0
+    assert obstructions[1].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[1].reduced_a1_difference - (lam * q - q**2 - q)) == 0
+    assert obstructions[2].forced_ab_solution is None
+    assert obstructions[2].reduced_a1_difference is None
+    assert obstructions[3].forced_ab_solution == {a: 0, b: 1}
+    assert obstructions[3].forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstructions[3].final_stage2_a - (q**2 + q**3)) == 0
+
+
+def test_page43_zero_shift_reciprocal_single_prefactor_obstructions_cover_expected_f2_box():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstructions = page43_zero_shift_reciprocal_single_prefactor_obstructions(family="f2", q=q)
+
+    assert [(obs.a_profile, obs.b_profile, obs.lambda_profile) for obs in obstructions] == [
+        ("1 / (1 + q)", "1", "1"),
+        ("1", "1 / (1 + q)", "1"),
+        ("1", "1", "1 / (1 + q)"),
+    ]
+    assert [obs.failure_stage for obs in obstructions] == [
+        "stage1_numerator",
+        "denominator",
+        "stage1_numerator",
+    ]
+    assert obstructions[0].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[0].reduced_a1_difference - (q * (lam - q - 1))) == 0
+    assert sp.together(obstructions[0].reduced_a1_difference).as_numer_denom()[0] == q * (lam - q - 1)
+    assert obstructions[1].forced_ab_solution is None
+    assert obstructions[1].reduced_a1_difference is None
+    assert obstructions[2].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[2].reduced_a1_difference - (q * (lam - (q + 1) ** 2) / (q + 1))) == 0
+    assert sp.together(obstructions[2].reduced_a1_difference).as_numer_denom()[0] == q * (lam - (q + 1) ** 2)
+
+
+def test_page43_zero_shift_reciprocal_single_prefactor_obstructions_cover_expected_f4_box():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstructions = page43_zero_shift_reciprocal_single_prefactor_obstructions(family="f4", q=q)
+
+    assert [(obs.a_profile, obs.b_profile, obs.lambda_profile) for obs in obstructions] == [
+        ("1 / (1 + q)", "1", "1"),
+        ("1", "1 / (1 + q)", "1"),
+        ("1", "1", "1 / (1 + q)"),
+    ]
+    assert [obs.failure_stage for obs in obstructions] == [
+        "stage1_numerator",
+        "denominator",
+        "stage1_numerator",
+    ]
+    assert obstructions[0].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[0].reduced_a1_difference - (q * (lam - q - 1))) == 0
+    assert sp.together(obstructions[0].reduced_a1_difference).as_numer_denom()[0] == q * (lam - q - 1)
+    assert obstructions[1].forced_ab_solution is None
+    assert obstructions[1].reduced_a1_difference is None
+    assert obstructions[2].forced_ab_solution == {a: 0, b: 1}
+    assert sp.simplify(obstructions[2].reduced_a1_difference - (q * (lam - (q + 1) ** 2) / (q + 1))) == 0
+    assert sp.together(obstructions[2].reduced_a1_difference).as_numer_denom()[0] == q * (lam - (q + 1) ** 2)
+
+
 def test_page43_f2_unit_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
     q = sp.Symbol("q")
     a, b, lam = sp.symbols("a b lambda")
@@ -154,6 +306,56 @@ def test_page43_f2_unit_b_shift_equivalence_obstruction_has_final_m2_failure():
     assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
 
 
+def test_page43_f2_unit_ab_shift_equivalence_obstruction_has_final_m2_failure():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_unit_ab_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(
+        obstruction.m_coefficients[3] - (-a**2 * q**6 - 2 * a * b * q**5 - a * b * q**4 - b**2 * q**4)
+    ) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 0}
+    assert sp.simplify(obstruction.reduced_m1_coefficient - (lam * q - q)) == 0
+    assert obstruction.forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
+
+
+def test_page43_f2_unit_a_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_unit_a_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(
+        obstruction.m_coefficients[3] - (-a**2 * q**6 - 2 * a * b * q**4 - a * b * q**3 - b**2 * q**2)
+    ) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
+
+
+def test_page43_f2_unit_b_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_unit_b_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(
+        obstruction.m_coefficients[3] - (-a**2 * q**4 - 2 * a * b * q**4 - a * b * q**3 - b**2 * q**4)
+    ) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
+
+
+def test_page43_f2_unit_ab_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f2_unit_ab_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(
+        obstruction.m_coefficients[3] - (-a**2 * q**6 - 2 * a * b * q**5 - a * b * q**4 - b**2 * q**4)
+    ) == 0
+    assert obstruction.forced_ab_solution == {a: 0, b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
+
+
 def test_page43_f4_unit_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
     q = sp.Symbol("q")
     a, b, lam = sp.symbols("a b lambda")
@@ -192,6 +394,56 @@ def test_page43_f4_unit_b_shift_equivalence_obstruction_has_final_m2_failure():
     assert sp.simplify(obstruction.reduced_m1_coefficient - (lam * q - q)) == 0
     assert obstruction.forced_lambda_solution == {lam: 1}
     assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
+
+
+def test_page43_f4_unit_ab_shift_equivalence_obstruction_has_final_m2_failure():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_unit_ab_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(obstruction.m_coefficients[0] - (a * q**2)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert sp.simplify(obstruction.m_coefficients[3].subs(obstruction.forced_a_solution) - (-b**2 * q**4)) == 0
+    assert obstruction.forced_b_solution == {b: 0}
+    assert sp.simplify(obstruction.reduced_m1_coefficient - (lam * q - q)) == 0
+    assert obstruction.forced_lambda_solution == {lam: 1}
+    assert sp.simplify(obstruction.final_m2_coefficient - q) == 0
+
+
+def test_page43_f4_unit_a_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_unit_a_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(obstruction.m_coefficients[0] - (a * q**2)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert sp.simplify(obstruction.m_coefficients[3].subs(obstruction.forced_a_solution) - (-b**2 * q**2)) == 0
+    assert obstruction.forced_b_solution == {b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
+
+
+def test_page43_f4_unit_b_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_unit_b_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(obstruction.m_coefficients[0] - (a * q)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert sp.simplify(obstruction.m_coefficients[3].subs(obstruction.forced_a_solution) - (-b**2 * q**4)) == 0
+    assert obstruction.forced_b_solution == {b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
+
+
+def test_page43_f4_unit_ab_lambda_shift_equivalence_obstruction_has_no_constant_lambda_solution():
+    q = sp.Symbol("q")
+    a, b, lam = sp.symbols("a b lambda")
+    obstruction = page43_f4_unit_ab_lambda_shift_equivalence_obstruction(q=q)
+
+    assert sp.simplify(obstruction.m_coefficients[0] - (a * q**2)) == 0
+    assert obstruction.forced_a_solution == {a: 0}
+    assert sp.simplify(obstruction.m_coefficients[3].subs(obstruction.forced_a_solution) - (-b**2 * q**4)) == 0
+    assert obstruction.forced_b_solution == {b: 0}
+    assert sp.simplify(obstruction.impossible_m1_coefficient - (lam * q**2 - q)) == 0
 
 
 def test_two_modulus_pochhammer_fit_recovers_mixed_moduli_beyond_single_period_box():
@@ -750,6 +1002,16 @@ def test_page43_rational_search_has_no_hit_for_hero_template():
     )
 
 
+def test_research_build_profile_uses_stronger_full_rational_prefactor_box():
+    smoke = _research_build_profile(smoke=True)
+    full = _research_build_profile(smoke=False)
+
+    assert smoke.page43_rational_max_nontrivial_profiles == 1
+    assert smoke.page43_stages == 2
+    assert full.page43_rational_max_nontrivial_profiles == 3
+    assert full.page43_stages == 3
+
+
 def test_arithmetic_subsequence_contraction_search_has_no_hit_for_hero_template():
     t = sp.Symbol("t")
     target = QCFTemplate(
@@ -877,10 +1139,22 @@ def test_cli_research_writes_note(tmp_path: Path):
     assert "Direct 1-Step Bauer-Muir Obstruction" in text
     assert "Page-43 Monomial Substitution Check" in text
     assert "Page-43 Low-Complexity Rational Prefactor Check" in text
+    assert "A,B,L in [-1,1]" in text
+    assert "`f2` / `gcf3` hits in this prefactor box: `0`" in text
+    assert "`f4` / `gcf2` hits in this prefactor box: `0`" in text
+    assert "Exact Zero-Shift Polynomial Single-Prefactor Page-43 Check" in text
+    assert "Exact Zero-Shift Reciprocal Single-Prefactor Page-43 Check" in text
+    assert "cross-multiplied coefficient-level obstructions" in text
+    assert "fully exactified at theorem grade" in text
     assert "Exact `f2` / `gcf3` n-Dependent Equivalence Check" in text
     assert "Exact `f4` / `gcf2` n-Dependent Equivalence Check" in text
     assert "Exact Unit-Shift `a` Page-43 Equivalence Check" in text
     assert "Exact Unit-Shift `b` Page-43 Equivalence Check" in text
+    assert "Exact Mixed Unit-Shift `a`/`b` Page-43 Equivalence Check" in text
+    assert "Exact Mixed Unit-Shift `a`/`lambda` Page-43 Equivalence Check" in text
+    assert "Exact Mixed Unit-Shift `b`/`lambda` Page-43 Equivalence Check" in text
+    assert "Exact Mixed Unit-Shift `a`/`b`/`lambda` Page-43 Equivalence Check" in text
+    assert "nearest-shift cube" in text
     assert "Heine `cor2cf` Contraction Check (`a = 0` lane)" in text
     assert "Cubic Odd/Even Contraction Check" in text
     assert "Arithmetic Subsequence Contraction Scan" in text

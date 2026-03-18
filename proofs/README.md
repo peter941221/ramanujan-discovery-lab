@@ -22,7 +22,10 @@ Current scope:
   page-43 monomial-substitution families (`f2`, `f4`) in Laurent polynomials
 - `Proofs/HeroCasePage43Equivalence.lean` formalizes the zero-shift
   `n`-dependent equivalence obstructions for the page-43 `f2/gcf3` and
-  `f4/gcf2` lanes, plus the first nearby unit-`a`-shift, unit-`b`-shift, and unit-`lambda`-shift variants
+  `f4/gcf2` lanes, the full zero-shift single-prefactor box
+  `phi in {1, 1+t, 1/(1+t)}` (with the reciprocal slice handled by
+  cross-multiplied coefficient identities), plus the full nearest-shift cube
+  and its Bool-parameterized theorem family over the shift bits
 - `Proofs/HeroCaseSubsequence.lean` mirrors the bounded arithmetic subsequence
   contraction scan (stride ≤ 4) as a computation-checked theorem over exact
   rational sample points
@@ -30,7 +33,12 @@ Current scope:
   for the RR and cubic source lanes without a stride bound, by proving forced
   low-degree coefficient gaps in the source convergents
 - `Proofs/HeroCaseFinalIdentity.lean` is the award-track target scaffold where the
-  final closed-form identity (once identified) will be stated and proved
+  final closed-form identity (once identified) will be stated and proved; it
+  now also packages the current exact waypoint as a finite-convergent reduction
+  layer plus a known-source-orbit exclusion layer, covering rational-equivalence,
+  page-43 nearest-shift-cube exclusions, exact RR/cubic arithmetic-subsequence
+  obstructions, and the current direct / `cor2cf` local mismatch layer; the
+  current handoff is exposed there as `currentExactWaypointCertificate`
 - `Proofs/HeroCaseBauerMuir.lean` mirrors the bounded 1/2/3-step Bauer–Muir scan
   (fixed low-complexity `wₙ` templates) as a computation-checked theorem over
   exact rational sample points

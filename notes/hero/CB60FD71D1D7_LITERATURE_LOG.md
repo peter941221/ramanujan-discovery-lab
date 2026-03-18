@@ -1,6 +1,6 @@
 # `cb60fd71d1d7` Literature Log
 
-Audit date: `2026-03-16`
+Audit date: `2026-03-17`
 
 ## Goal
 
@@ -259,8 +259,224 @@ Updated interpretation as of `2026-03-16`:
   - or build a much stronger named-class exclusion plus a substantially wider
     literature closure pass
 
+## 2026-03-17 Update: Classical Citation Hygiene + Parameterized Family Pass
+
+This pass did three things at once:
+
+1. It pinned the classical Gordon / Hirschhorn citation spine more explicitly in
+   the project notes:
+   - Basil Gordon, *Some continued fractions of the Rogers-Ramanujan type*,
+     Duke Mathematical Journal 32 (1965), 741-748
+   - The Gordon paper now also has a verified DOI-backed landing page:
+     https://doi.org/10.1215/S0012-7094-65-03278-3
+   - M. D. Hirschhorn, *A continued fraction*,
+     Duke Mathematical Journal 41 (1974), 27-33
+   - M. D. Hirschhorn, *A continued fraction of Ramanujan*,
+     Journal of the Australian Mathematical Society Series A 29 (1980), 80-86
+   - The 1974 paper now has a verified DOI-backed landing page:
+     https://doi.org/10.1215/S0012-7094-74-04104-0
+   - The 1980 paper now also has a verified Cambridge/DOI landing page:
+     https://doi.org/10.1017/S1446788700020954
+
+2. It upgraded the source-family recognition tooling from only mixed-family
+   boxes to explicit per-family powered ladders:
+   - `RR`, `RR2`, `RR3`, `RR4`
+   - `cubic`, `cubic2`, `cubic3`, `cubic4`
+   - `GG`, `GG2`, `GG3`, `GG4`
+   - `S`, `S2`, `S3`, `S4`
+
+3. It paired that recognition pass with a wider theorem-grade page-43
+   exclusion layer:
+   - the first mixed unit-`a` / unit-`b` exact equivalence lanes for
+     `f2/gcf3` and `f4/gcf2` are now ruled out, and both end with the same
+     surviving `m^2` coefficient `t` after the forced parameter
+     specializations
+   - the first mixed unit-`a` / unit-`lambda`, mixed unit-`b` /
+     unit-`lambda`, and full mixed unit-`a` / unit-`b` / unit-`lambda`
+     exact-equivalence lanes are also now ruled out; all three fail earlier at
+     the same surviving `m^1` coefficient `lambda*t^2 - t`
+
+Outcome of this pass:
+
+- The older Gordon / Hirschhorn citation spine is now less vague.
+- The project now has DOI-backed landing pages for Gordon 1965, Hirschhorn
+  1974, and Hirschhorn 1980, so the classical citation spine is less fragile
+  than before.
+- The new per-family powered ladders still give `0` hits in both the
+  multiplicative and fractional-linear boxes for the `GG` and `S` orbits, so
+  the Gordon/Hirschhorn line remains unexplained rather than identified.
+- A new explicit direct / reciprocal / quotient template pass inside the same
+  `GG/GG2/GG3/GG4` and `S/S2/S3/S4` ladders also gives `0` exact hits, so the
+  Gordon/Hirschhorn line still does not collapse to the most obvious quotient
+  or reciprocation interpretations either.
+- The Weber / class-invariant side remains open as a transform-recognition
+  target rather than a recognized source identity.
+- The exact page-43 nearest-shift cube is now wider, but it still does **not**
+  amount to a full all-parameter theorem for that neighborhood.
+
+## 2026-03-17 Update: Hirschhorn / GG / Notebook Deepening
+
+This pass widened the literature map on the specific orbit that still feels
+closest to the hero case: the `GG` / `S` / Ramanujan-notebook neighborhood.
+
+1. Bhatnagar, Ismail, 2019
+   - Title: "Orthogonal polynomials associated with a continued fraction of Hirschhorn"
+   - arXiv: https://arxiv.org/abs/1901.09985
+   - Relevance:
+     - treats Hirschhorn's continued fraction as a structural object, not only
+       as a product identity
+     - includes convergents, generating functions, orthogonality, and the
+       Stieltjes transform
+     - explicitly notes RR and Ramanujan-generalization special cases
+   - Outcome:
+     - no exact hero-pattern source identity extracted
+     - but this confirms the Hirschhorn orbit has richer analytic
+       presentations than the current benchmark/product scans alone
+
+2. Vasuki, Srivatsa Kumar, 2006
+   - Title: "Certain identities for Ramanujan-Göllnitz-Gordon continued fraction"
+   - DOI: https://doi.org/10.1016/j.cam.2005.03.038
+   - Relevance:
+     - gives explicit identities relating `H(q)` to `H(q^3)`, `H(q^5)`,
+       `H(q^7)`, and `H(q^11)`
+     - directly widens the transform/power neighborhood around the encoded
+       `GG(q)` benchmark
+   - Outcome:
+     - no exact coefficient-level hero match extracted
+     - but it shows the GG orbit contains nontrivial power/substitution
+       identities beyond the simple direct / reciprocal / quotient templates
+       already scanned locally
+
+3. Bhatnagar, 2022
+   - Title: "Ramanujan's `q`-continued fractions"
+   - arXiv: https://arxiv.org/abs/2208.12656
+   - Relevance:
+     - reorganizes the notebook `q`-continued-fraction landscape rather than
+       viewing entries only in notebook order
+     - useful as a literature-closure source, not merely as a single-family
+       identity paper
+   - Outcome:
+     - no exact hero-pattern source identity extracted in this pass
+     - but it widens the burden for any future novelty claim because the
+       notebook-level `q`-continued-fraction literature is broader than the
+       currently encoded benchmark families
+
+Updated interpretation after this pass:
+
+- The project's literature map is materially better on the Hirschhorn / GG /
+  Ramanujan-notebook side.
+- The hero case still does **not** collapse to an obvious `GG` / `S` /
+  Hirschhorn power relation or notebook entry.
+- The identification note now also includes a per-family low-degree polynomial
+  scan over the same powered `RR`, `cubic`, `GG`, and `S` ladders; for
+  `cb60fd71d1d7`, those family-preserving polynomial boxes still show `0` hits
+  through the checked prefixes.
+- The same identification note now also includes a within-family quotient
+  ladder `Qk = Tk / T1` over those same powered `RR`, `cubic`, `GG`, and `S`
+  ladders; for `cb60fd71d1d7`, those quotient-ladder polynomial /
+  multiplicative / fractional-linear boxes still show `0` hits through the
+  checked prefixes.
+- The same identification note now also includes quotient-ladder two-layer
+  fractional-linear boxes over those same powered `RR`, `cubic`, `GG`, and `S`
+  ladders; for `cb60fd71d1d7`, those quotient-coordinate nonlinear correction
+  boxes also still show `0` hits through the checked prefixes.
+- The same identification note now also includes mixed quotient-basis boxes
+  that combine the family base object with the quotient ladder over those same
+  powered `RR`, `cubic`, `GG`, and `S` ladders; for `cb60fd71d1d7`, those
+  mixed quotient-basis polynomial / multiplicative / fractional-linear boxes
+  also still show `0` hits through the checked prefixes.
+- The same identification note now also includes mixed quotient-basis two-layer
+  fractional-linear boxes over those same powered `RR`, `cubic`, `GG`, and `S`
+  ladders; for `cb60fd71d1d7`, those stronger base-plus-quotient nonlinear
+  correction boxes also still show `0` hits through the checked prefixes.
+- On the `GG` side, the family-preserving ladder now explicitly includes the
+  literature-motivated powers `GG5`, `GG7`, and `GG11` suggested by the
+  Vasuki--Srivatsa Kumar identity paper, and those still give `0` hits in the
+  checked polynomial / multiplicative / fractional-linear boxes.
+- The Gordon / Hirschhorn citation spine is now slightly less fragile because
+  the Gordon 1965, Hirschhorn 1974, and Hirschhorn 1980 papers all now have
+  verified DOI-backed landing pages in the notes.
+- That is still not literature closure, only a stronger reason to keep the
+  public label at "unexplained candidate."
+
 See also:
 
 - `CB60FD71D1D7_EXACT_SUBSEQUENCE_OBSTRUCTION.md`
 - `CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md`
 - `CB60FD71D1D7_NOVELTY_GATE.md`
+
+## 2026-03-18 Update: GG Modular-Equation Deep Research
+
+This pass was narrower than the previous bibliography broadening.
+
+The goal here was not to add more rows for their own sake, but to answer one
+practical question:
+
+```text
+What should the next local recognition lane be?
+```
+
+### Sources checked in this pass
+
+1. Chan, Huang, 1997
+   - Title: "On the Ramanujan-Göllnitz-Gordon continued fraction"
+   - Link: https://mrc.sdu.edu.cn/ziliao/8.pdf
+   - Relevance:
+     - treats `H(q)` as more than a product identity
+     - derives exact identities tying `H(q)` to `H(-q)` and `H(q^2)`
+     - explains how modular equations generate relations between `H(q)` and
+       `H(q^n)`, with explicit attention to the `q^3` and `q^4` lanes
+   - Outcome:
+     - no final hero identity extracted directly
+     - but this is the clearest source-level evidence so far that the current
+       local `GG` scans are still missing an important **structured** lane
+
+2. Cho, Koo, Park, 2009
+   - Title: "Arithmetic of the Ramanujan-Göllnitz-Gordon continued fraction"
+   - DOI: https://doi.org/10.1016/j.jnt.2008.09.018
+   - Relevance:
+     - extends the modular-equation story to all odd primes
+     - treats the GG object as a modular unit with arithmetic structure
+     - suggests that low-complexity source-faithful modular relations may exist
+       far beyond the current direct / reciprocal / quotient boxes
+   - Outcome:
+     - no exact hero-pattern source identity extracted in this pass
+     - but this pushes the next implementation target toward a
+       modular-equation-aware `GG` lane rather than another anonymous basis
+       expansion
+
+3. Yuttanan, 2012
+   - Title: "New properties for the Ramanujan-Göllnitz-Gordon continued fraction"
+   - Link: https://eudml.org/doc/278973
+   - Relevance:
+     - adds later exact structural properties around the same GG object
+     - confirms that the orbit still carries nontrivial coefficient and
+       evaluation structure beyond the earlier identity papers
+   - Outcome:
+     - no direct hero identification extracted in this pass
+     - but it weakens any temptation to treat the GG orbit as "already
+       exhausted" by the current product / quotient / ladder scans
+
+### Updated interpretation after this pass
+
+- The strongest next local move is now clearer:
+  build a literature-driven modular-equation recognition lane for the `GG`
+  orbit.
+- That lane should preserve source meaning explicitly:
+  `GG(q)`, `GG(-q)`, `GG(q^2)`, `GG(q^3)`, `GG(q^4)`, and then odd-prime
+  descendants only if needed.
+- The current negative `GG` results are still valuable, but they now look more
+  like a statement about the **limitations of the current boxes** than about
+  the full exhaustion of the Gordon / Hirschhorn orbit.
+- The Weber / class-invariant side remains open, but the first implementation
+  priority is now the `GG` modular-equation lane because the literature there is
+  more explicit and more immediately codable.
+
+### Practical next action
+
+The next implementation pass should **not** start by widening the generic basis
+catalog again.
+
+It should start by encoding a small source-faithful modular template family
+whose variables are drawn directly from the Chan--Huang / Cho--Koo--Park
+objects.

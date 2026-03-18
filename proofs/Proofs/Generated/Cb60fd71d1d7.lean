@@ -76,8 +76,10 @@ Python formalization pipeline.
 RR direct witness: w0 = 0, w1 = t, transformed a1 = t, target a1 = t^2 + t
 Cubic direct witness: w0 = 0, w1 = t, w2 = t^2, transformed a2 = t^4 - t^3 + t^2 - t, target a2 = t^4 + t^2
 First reverse-equivalence scales: r1 = t + 1, r2 = (t^2 + 1)/(t + 1), r3 = (t^3 + 1)/(t^2 + 1), r4 = (t^4 + 1)/(t^3 + 1)
-These scales are rational functions, so formalizing this reverse step will likely require a fraction-field coefficient layer.
-Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2 n-dependent equivalence, plus the nearest unit-a-shift, unit-b-shift, and unit-lambda-shift lanes, formalized in Proofs/HeroCasePage43Equivalence.lean, with zero-shift final surviving obstruction coefficients t and t, unit-a-shift final surviving coefficients t and t, unit-b-shift final surviving coefficients t and t, and shifted impossible m1 coefficients lambda*t^2 - t and lambda*t^2 - t.
+These scales are rational functions, and Proofs/RationalEquivalence.lean already formalizes the finite-stage reverse equivalence transform over RatFunc Rat; the remaining gap is a fuller fraction-field coefficient layer for the infinite-object bridge.
+Proofs/HeroCaseFinalIdentity.lean packages that exact waypoint via the certificate object `currentExactWaypointCertificate`, whose two fields are established by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then bundled by `exactWaypointStatement_true`; the lower-level ingredients still include `heroConvergentRatFunc_eq_reducedHeroConvergentRatFunc`, `reverseEquivalenceRecoversHeroData`, `page43PolynomialPrefactorExcluded`, `page43ReciprocalPrefactorExcluded`, `nearestArithmeticSubsequenceSourcesExcluded`, `directLocalObstructions`, and `simpleCor2cfBranchesExcluded`.
+Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2 n-dependent equivalence, plus the nearest unit-a-shift, unit-b-shift, mixed unit-a/unit-b-shift, mixed unit-a/unit-lambda-shift, mixed unit-b/unit-lambda-shift, mixed unit-a/unit-b/unit-lambda-shift, and unit-lambda-shift lanes, formalized in Proofs/HeroCasePage43Equivalence.lean, with zero-shift final surviving obstruction coefficients t and t, unit-a-shift final surviving coefficients t and t, unit-b-shift final surviving coefficients t and t, mixed unit-a/unit-b-shift final surviving coefficients t and t, mixed unit-a/unit-lambda-shift impossible m1 coefficients lambda*t^2 - t and lambda*t^2 - t, mixed unit-b/unit-lambda-shift impossible m1 coefficients lambda*t^2 - t and lambda*t^2 - t, mixed unit-a/unit-b/unit-lambda-shift impossible m1 coefficients lambda*t^2 - t and lambda*t^2 - t, and shifted impossible m1 coefficients lambda*t^2 - t and lambda*t^2 - t. These lanes are also packaged there as the nearest-shift cube summary theorems `noNearestShiftCubeF2ExactEquivalence`, `noNearestShiftCubeF4ExactEquivalence`, and `noNearestShiftCubeExactEquivalence`, together with the Bool-parameterized variants `noNearestShiftCubeF2ExactEquivalenceFor`, `noNearestShiftCubeF4ExactEquivalenceFor`, and `noNearestShiftCubeExactEquivalenceFor`.
+The same module also now excludes the full zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active in both page-43 families, via the polynomial theorems `noZeroShiftPolynomialSinglePrefactorF2DirectMatches`, `noZeroShiftPolynomialSinglePrefactorF4DirectMatches`, `noZeroShiftPolynomialSinglePrefactorDirectMatches` and the reciprocal cross-multiplied theorems `noZeroShiftReciprocalSinglePrefactorF2CrossMatches`, `noZeroShiftReciprocalSinglePrefactorF4CrossMatches`, `noZeroShiftReciprocalSinglePrefactorCrossMatches`.
 -/
 
 
@@ -108,10 +110,11 @@ theorem even_contraction_obstruction :
 /-!
 Suggested next theorem extensions:
 
-1. Lift the coefficient domain from polynomials to rational functions and
-   formalize the reverse equivalence transform.
-2. Extend the page-43 equivalence layer beyond the currently formalized
-   zero-shift, unit-a-shift, unit-b-shift, and unit-lambda-shift f2/gcf3 and f4/gcf2 obstruction theorems.
+1. Bridge the current rational-function reverse-equivalence layer from
+   finite convergents to the infinite object.
+2. Extend the page-43 exact layer beyond the currently formalized
+   nearest-shift cube plus the exact zero-shift single-prefactor box,
+   especially if shifted or multi-prefactor rational lanes matter later.
 3. Compare candidate convergents against nearby benchmark convergents.
 4. Formalize the Bauer-Muir transform algebra itself instead of injecting only
    the recovered witnesses.

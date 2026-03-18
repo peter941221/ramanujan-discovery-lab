@@ -12,6 +12,7 @@
 
 - No complete source theorem is identified yet.
 - This candidate is therefore **not ready** for a full Lean/Coq formalization of a final identity.
+- The award-track Lean scaffold now packages an exact intermediate waypoint: finite convergents agree with the reduced-by-factor model over the rational-function reverse-equivalence layer, the page-43 nearest-shift cube is ruled out as a source-family-specific exact lane family, the full zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active is also ruled out exactly in both page-43 families, the nearest RR/cubic arithmetic-subsequence source lanes are excluded exactly, and the direct RR/cubic plus Heine-`cor2cf` low-stage mismatch layers are packaged as named local obstructions.
 - The correct near-term target is to formalize exact local lemmas and keep bounded search evidence clearly separated from theorem-grade statements.
 
 ## Exact Objects To Formalize
@@ -70,7 +71,7 @@ r3 = (t^3 + 1)/(t^2 + 1)
 r4 = (t^4 + 1)/(t^3 + 1)
 ```
 
-- These reverse scales are rational functions in `t`, so a full formalization of this step likely needs a fraction-field coefficient layer in addition to the current polynomial one.
+- These reverse scales are rational functions in `t`; the finite-stage reverse step now lives in Lean over `RatFunc Rat`, but a final identity still needs an infinite-object bridge and a fuller fraction-field coefficient layer beyond the current exact waypoint.
 
 ## Exact Lemma Candidates
 
@@ -152,6 +153,35 @@ beta_n = 1 - a*t + b*m*t
 - For `f4/gcf2`, exact vanishing again forces `a = 0`, then `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
 - So the first nonzero `lambda`-shift nearest lanes already fail before any final `m^2` obstruction is needed.
 
+### Exact Mixed Unit-Shift `a`/`lambda` Page-43 Lanes
+
+- The same exact-equivalence layer now also covers the first mixed nearby shift choice `a -> a*t`, `lambda -> lambda*t` with zero `b` shift.
+- For `f2/gcf3`, the `m^3` coefficient becomes `-a^2*t^6 - 2*a*b*t^4 - a*b*t^3 - b^2*t^2`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` can make that polynomial vanish identically.
+- For `f4/gcf2`, the constant coefficient `a*t^2` forces `a = 0`.
+- After that, the `m^3` coefficient `-b^2*t^2` forces `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first mixed unit-`a` / unit-`lambda` lanes already fail before any final `m^2` obstruction is needed.
+
+### Exact Mixed Unit-Shift `b`/`lambda` Page-43 Lanes
+
+- The same exact-equivalence layer now also covers the first mixed nearby shift choice `b -> b*t`, `lambda -> lambda*t` with zero `a` shift.
+- For `f2/gcf3`, the `m^3` coefficient becomes `-a^2*t^4 - 2*a*b*t^4 - a*b*t^3 - b^2*t^4`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` can make that polynomial vanish identically.
+- For `f4/gcf2`, the constant coefficient `a*t` still forces `a = 0`.
+- After that, the `m^3` coefficient `-b^2*t^4` forces `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first mixed unit-`b` / unit-`lambda` lanes also fail before any final `m^2` obstruction is needed.
+
+### Exact Mixed Unit-Shift `a`/`b`/`lambda` Page-43 Lanes
+
+- The same exact-equivalence layer now also covers the first full nearby shift choice `a -> a*t`, `b -> b*t`, `lambda -> lambda*t`.
+- For `f2/gcf3`, the `m^3` coefficient becomes `-a^2*t^6 - 2*a*b*t^5 - a*b*t^4 - b^2*t^4`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the surviving `m^1` coefficient becomes `lambda*t^2 - t`; no constant `lambda` can make that polynomial vanish identically.
+- For `f4/gcf2`, the constant coefficient `a*t^2` forces `a = 0`.
+- After that, the `m^3` coefficient `-b^2*t^4` forces `b = 0`, and the surviving `m^1` coefficient becomes `lambda*t^2 - t`.
+- So the first full three-parameter nearest lane also fails before any final `m^2` obstruction is needed.
+- Together with the zero-shift and the other seven nearest-shift cases, this closes the full `{0,1}^3` nearest-shift cube at the current page-43 exact-equivalence level.
+- Lean now exposes that cube not only as summary theorems, but also as Bool-parameterized theorems over the shift bits.
+
 ### Exact Unit-Shift `a` Page-43 Lanes
 
 - The same exact-equivalence layer now also covers the next nearby shift choice `a -> a*t` with zero `b`/`lambda` shifts.
@@ -174,20 +204,59 @@ beta_n = 1 - a*t + b*m*t
 - The surviving `m^2` coefficient is then `t`, still nonzero.
 - So the first nonzero `b`-shift nearest lanes also fail by an exact final obstruction.
 
+### Exact Mixed Unit-Shift `a`/`b` Page-43 Lanes
+
+- The same exact-equivalence layer now also covers the first mixed nearby shift choice `a -> a*t`, `b -> b*t` with zero `lambda` shift.
+- For `f2/gcf3`, the `m^3` coefficient becomes `-a^2*t^6 - 2*a*b*t^5 - a*b*t^4 - b^2*t^4`, and exact vanishing still forces `a = 0`, `b = 0`.
+- After that specialization, the `m^1` coefficient becomes `lambda*t - t`; exact vanishing forces `lambda = 1`.
+- The surviving `m^2` coefficient is then `t`, still nonzero.
+- For `f4/gcf2`, the constant coefficient `a*t^2` already forces `a = 0`.
+- After that, the `m^3` coefficient `-b^2*t^4` forces `b = 0`, and then the `m^1` coefficient `lambda*t - t` forces `lambda = 1`.
+- The surviving `m^2` coefficient is then `t`, still nonzero.
+- So the first mixed unit-`a` / unit-`b` lane also fails by an exact final obstruction.
+
+### Exact Zero-Shift Polynomial Single-Prefactor Page-43 Lanes
+
+- Lean mirror module: `proofs/Proofs/HeroCasePage43Equivalence.lean`.
+- This exact layer now covers the whole polynomial sub-box `phi in {1, 1+t}` with zero shifts and at most one non-plain prefactor active.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0, b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f2/gcf3`, `phi_a = 1+t`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0, b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1+t`, `phi_lambda = 1`: denominator matching forces `a = -1, b = 1`, but the remaining stage-1 numerator difference is `lambda*t + t^3 - t`.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1+t`: denominator matching forces `a = 0, b = 1`, stage-1 numerator matching then forces `lambda = 1`, but the stage-2 numerator becomes `t^3 + t^2` instead of `t^4 + t^2`.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0, b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f4/gcf2`, `phi_a = 1+t`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0, b = 1`, but the remaining stage-1 numerator difference is `lambda*t - t^2 - t`.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1+t`, `phi_lambda = 1`: denominator matching is already incompatible.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1+t`: denominator matching forces `a = 0, b = 1`, stage-1 numerator matching then forces `lambda = 1`, but the stage-2 numerator becomes `t^3 + t^2` instead of `t^4 + t^2`.
+- So the whole zero-shift polynomial single-prefactor sub-box is excluded exactly in both page-43 families.
+
+### Exact Zero-Shift Reciprocal Single-Prefactor Page-43 Lanes
+
+- Lean mirror module: `proofs/Proofs/HeroCasePage43Equivalence.lean`.
+- This exact layer now also covers the reciprocal sub-box `phi in {1/(1+t)}` via cross-multiplied coefficient identities.
+- `f2/gcf3`, `phi_a = 1/(1+t)`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0, b = 1`, but the remaining cross-multiplied stage-1 numerator difference has numerator `lambda*t - t^2 - t`.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1/(1+t)`, `phi_lambda = 1`: cross-multiplied denominator matching is already incompatible.
+- `f2/gcf3`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1/(1+t)`: denominator matching forces `a = 0, b = 1`, but the remaining cross-multiplied stage-1 numerator difference has numerator `lambda*t - t^3 - 2*t^2 - t`.
+- `f4/gcf2`, `phi_a = 1/(1+t)`, `phi_b = 1`, `phi_lambda = 1`: denominator matching forces `a = 0, b = 1`, but the remaining cross-multiplied stage-1 numerator difference has numerator `lambda*t - t^2 - t`.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1/(1+t)`, `phi_lambda = 1`: cross-multiplied denominator matching is already incompatible.
+- `f4/gcf2`, `phi_a = 1`, `phi_b = 1`, `phi_lambda = 1/(1+t)`: denominator matching forces `a = 0, b = 1`, but the remaining cross-multiplied stage-1 numerator difference has numerator `lambda*t - t^3 - 2*t^2 - t`.
+- So the whole zero-shift reciprocal single-prefactor sub-box is excluded exactly in both page-43 families.
+- Taken together, the current zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` is now fully exactified at theorem grade.
+
 ## Bounded Exact Exclusion Results
 
 - Arithmetic subsequence contractions up to stride `4` with stage comparison depth `3`: RR hits `0`, cubic hits `0`.
 - These are exact statements for the bounded class being checked, but they do not identify a final source theorem.
 - Page-43 monomial substitutions in the current `[-3,3]` shift box with `3` matched stages: `f2/gcf3` hits `0`, `f4/gcf2` hits `0`.
-- Page-43 low-complexity rational-prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active, shift box `[-0,0]`, and `2` matched stages: `f2/gcf3` hits `0`, `f4/gcf2` hits `0`.
+- Page-43 low-complexity rational-prefactor box: `phi in {1, 1+t, 1/(1+t)}` with at most `3` non-plain prefactors active, shift box `[-1,1]`, and `3` matched stages: `f2/gcf3` hits `0`, `f4/gcf2` hits `0`.
 - These are bounded symbolic searches, useful for narrowing the theorem statement but not substitutes for a full origin proof.
+- Within that bounded prefactor box, the full zero-shift single-prefactor box `phi in {1, 1+t, 1/(1+t)}` with at most one non-plain prefactor active is now theorem-grade exact.
 
 ## Formalization Order
 
 1. Formalize generalized continued fractions and convergent recurrence for finite truncations.
 2. Reuse the exact convergent-factor reduction theorem for the candidate-side local model.
-3. Add a rational-function or fraction-field coefficient layer for the reverse equivalence transform.
-4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized zero-shift, unit-a-shift, unit-b-shift, and unit-lambda-shift nearest `f2/gcf3` and `f4/gcf2` lanes.
+3. Bridge the current rational-function reverse-equivalence layer from finite convergents to the infinite object.
+4. Extend `Proofs/HeroCasePage43Equivalence.lean` beyond the currently formalized nearest-shift cube plus the exact zero-shift single-prefactor box, especially if shifted or multi-prefactor rational lanes become theorem-relevant.
 5. Formalize the direct 1-step Bauer-Muir obstruction lemmas against the reduced target.
 6. Formalize odd/even contraction reconstruction together with the cubic and Heine-`cor2cf` low-stage mismatch lemmas.
 7. Defer the bounded search exclusions until a final theorem statement makes them clearly necessary.
@@ -203,5 +272,6 @@ beta_n = 1 - a*t + b*m*t
 
 - This candidate matches the current hero-case structural signature in reduced variable `t`.
 - Award-track target module (Lean scaffold): `proofs/Proofs/HeroCaseFinalIdentity.lean`
-- Current state: the module compiles, but `finalIdentityStatement` is still a placeholder.
+- Current state: the module compiles, carries status marker `exclusion_waypoint`, and now exposes the current exact waypoint as a certificate object `currentExactWaypointCertificate`, whose two fields are proved by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then repackaged by `exactWaypointStatement_true`.
+- `finalIdentityStatement` is still a placeholder because no final closed form is identified yet.
 - Only replace the placeholder after a concrete closed form is identified.

@@ -1,12 +1,14 @@
 {
   "title": "Ramanujan Discovery Lab",
-  "generated_at": "2026-03-16 09:27:52 UTC",
+  "generated_at": "2026-03-17 10:20:12 UTC",
   "records": [
     {
       "id": "d9b5fd674333",
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 2,
         "numerator_q_step": 1,
@@ -49,6 +51,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 1,
         "numerator_q_step": 1,
@@ -91,6 +95,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 4,
         "numerator_q_step": 4,
@@ -133,6 +139,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 1,
         "numerator_q_step": 1,
@@ -175,6 +183,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 3,
         "numerator_q_step": 3,
@@ -217,6 +227,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 2,
         "numerator_q_step": 2,
@@ -259,6 +271,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 1,
         "numerator_q_step": 1,
@@ -301,6 +315,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 3,
         "numerator_q_step": 3,
@@ -343,6 +359,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 2,
         "numerator_q_step": 2,
@@ -385,6 +403,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 4,
         "numerator_q_step": 3,
@@ -427,6 +447,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 3,
         "numerator_q_step": 3,
@@ -469,6 +491,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 4,
         "numerator_q_step": 2,
@@ -511,6 +535,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 2,
         "numerator_q_step": 2,
@@ -553,6 +579,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 4,
         "numerator_q_step": 1,
@@ -595,6 +623,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 3,
         "numerator_q_step": 4,
@@ -677,9 +707,9 @@
   "award_track": {
     "hero_candidate_id": "cb60fd71d1d7",
     "final_identity": {
-      "status": "placeholder",
+      "status": "exclusion_waypoint",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/proofs/Proofs/HeroCaseFinalIdentity.lean",
-      "updated_at": "2026-03-16 03:45:11 UTC",
+      "updated_at": "2026-03-17 08:20:12 UTC",
       "path": "proofs/Proofs/HeroCaseFinalIdentity.lean"
     }
   },
@@ -737,7 +767,7 @@
     {
       "title": "Hero Final Identity (Lean)",
       "href": "https://github.com/peter941221/ramanujan-discovery-lab/blob/main/proofs/Proofs/HeroCaseFinalIdentity.lean",
-      "description": "Award-track final-identity scaffold and progress marker (status: placeholder)."
+      "description": "Award-track final-identity scaffold and progress marker (status: exclusion_waypoint)."
     },
     {
       "title": "Hero Shortlist",
@@ -771,6 +801,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 3,
         "numerator_q_step": 3,
@@ -813,6 +845,8 @@
       "template": {
         "top_constant": 1,
         "base_denominator": 1,
+        "base_denominator_q_scale": 0,
+        "base_denominator_q_shift": 1,
         "numerator_scale": 1,
         "numerator_q_shift": 2,
         "numerator_q_step": 2,

@@ -43,11 +43,25 @@ B1(t) = 1 + K_{n>=1} t^n / 1.
   hits through the same `RR/cubic/GG/S` prefix order.
 - The second-ring named source-family two-layer scan also reports `0` hits for
   prefixes ending at `cubic`, `GG`, and `S`.
+- A new per-family powered-ladder pass also reports `0` hits in low-degree
+  polynomial, multiplicative, fractional-linear, quotient-ladder, and
+  quotient-ladder two-layer, mixed quotient-basis, and mixed quotient-basis
+  two-layer boxes for
+  `RR/RR2/RR3/RR4`, `cubic/cubic2/cubic3/cubic4`,
+  `GG/GG2/GG3/GG4/GG5/GG7/GG11`, and `S/S2/S3/S4`.
+- A new explicit `GG` / `S` transform-template pass also reports `0` exact hits
+  for direct objects, reciprocals, and pairwise quotients inside the same
+  `GG/GG2/GG3/GG4` and `S/S2/S3/S4` ladders.
 - The exact page-43 equivalence layer now rules out the zero-shift, the first
   unit-`a`, the first unit-`b`, and the first unit-`lambda` nearest
-  `f2/gcf3` and `f4/gcf2` lanes; the unit-`a` and unit-`b` lanes still end
-  with a surviving `m^2` term `t`, while the unit-`lambda` lanes already fail
-  at the surviving `m^1` term `lambda*t^2 - t`.
+  `f2/gcf3` and `f4/gcf2` lanes; the unit-`a`, unit-`b`, and first mixed
+  unit-`a` / unit-`b` lanes still end with a surviving `m^2` term `t`, while
+  the unit-`lambda`, mixed unit-`a` / unit-`lambda`, and mixed unit-`b` /
+  unit-`lambda`, and mixed unit-`a` / unit-`b` / unit-`lambda` lanes already
+  fail at the surviving `m^1` term
+  `lambda*t^2 - t`.
+- Taken together, those eight nearby exact lanes now close the full
+  nearest-shift cube for the current page-43 equivalence audit.
 
 ## Shortlist: Next Source Lanes To Deepen
 
@@ -58,6 +72,7 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
    - Exact citation:
      *Some continued fractions of the Rogers-Ramanujan type*,
      Duke Mathematical Journal 32 (1965), 741-748.
+   - DOI: https://doi.org/10.1215/S0012-7094-65-03278-3
    - Current state: the nearby Gordon/Hirschhorn orbit is now partially encoded
      in the benchmark layer through `GG(q)` and `S(q)`.
    - Goal: revisit Gordon-style variants, reciprocal forms, and transform
@@ -70,11 +85,15 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
        Duke Mathematical Journal 41 (1974), 27-33.
      - M. D. Hirschhorn, *A continued fraction of Ramanujan*,
        Journal of the Australian Mathematical Society Series A 29 (1980), 80-86.
+     - Bhatnagar, Ismail, *Orthogonal polynomials associated with a continued
+       fraction of Hirschhorn*, arXiv: https://arxiv.org/abs/1901.09985
    - Current state: `S(q)` is now a verified normalized project benchmark, and
      the hero ratio object still has no simple multiplicative scan hit against
      the `RR/cubic/GG/S` basis.
    - Goal: look for shifted, reciprocated, or equivalence-transformed
-     Hirschhorn-family presentations that could still hide the hero pattern.
+     Hirschhorn-family presentations that could still hide the hero pattern,
+     especially analytic / orthogonal-polynomial presentations that are not
+     obvious from the product formulas alone.
 
 3. Berndt (Ramanujan notebooks) and Slater-style catalogs
    - Goal: search for continued fraction entries indexed by modulus `3` or
@@ -84,10 +103,24 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
    - Goal: check whether `C(t)` can be expressed as a rational function of a
      known Weber/Ramanujan continued fraction (even if not an eta-quotient itself).
 
-5. Page-43 substitutions with explicit source-family meaning
-   - Goal: move beyond the current zero-shift and unit-`lambda` nearest lanes
-     and test the next low-complexity parameter shifts or transform templates
-     that still preserve interpretable `f2/gcf3` or `f4/gcf2` provenance.
+5. GG power-relation papers
+   - Exact citation:
+     - Vasuki, Srivatsa Kumar, *Certain identities for
+       Ramanujan-Göllnitz-Gordon continued fraction*,
+       DOI: https://doi.org/10.1016/j.cam.2005.03.038
+   - Goal: test whether the hero case can hide in a nontrivial powered /
+     substituted `GG` presentation before moving to even larger transform boxes.
+   - Current scan status: the explicit literature-motivated powers
+     `q^5`, `q^7`, and `q^11` are now in the family-preserving `GG` ladder, and
+     still give `0` hits in the checked polynomial / multiplicative /
+     fractional-linear / quotient-ladder / quotient-ladder two-layer /
+     mixed quotient-basis / mixed quotient-basis two-layer boxes.
+
+6. Page-43 substitutions with explicit source-family meaning
+   - Goal: move beyond the currently formalized zero-shift, single-parameter,
+     and mixed two-parameter nearest lanes and test the next low-complexity
+     parameter shifts or transform templates that still preserve interpretable
+     `f2/gcf3` or `f4/gcf2` provenance.
 
 ## Automation Targets (If A Source Family Looks Promising)
 
@@ -97,16 +130,25 @@ These are concrete expansions to the current tooling that would make a new
 1. Broaden the RR-tower relation search
    - Keep the current reciprocal, ratio-object polynomial, ratio-object
      multiplicative, ratio-object fractional-linear, two-layer single-basis
-     nonlinear, and named source-family multiplicative scans.
-   - The next jump should be parameterized source-family relation templates
-     before trying larger raw degree boxes.
+     nonlinear, named source-family scans, and the new per-family powered
+     source-family scans.
+   - The direct / reciprocal / quotient `GG` / `S` template box is now covered;
+     the low-degree per-family polynomial box, the within-family quotient
+     ladder, the mixed quotient-basis box, and its two-layer follow-up are now
+     covered too;
+     the next jump should be richer transform templates for those same
+     literature families before trying larger raw degree boxes.
 
 2. Extend the source-family-specific exact lane
-   - The zero-shift and first unit-`lambda` nearest `f2/gcf3` and `f4/gcf2`
-     `n`-dependent equivalence obstructions are now executable and formalized
-     in Lean.
+   - The zero-shift, first unit-`a`, first unit-`b`, first mixed unit-`a` /
+     unit-`b`, first mixed unit-`a` / unit-`lambda`, first mixed unit-`b` /
+     unit-`lambda`, first mixed unit-`a` / unit-`b` / unit-`lambda`, and first
+     unit-`lambda` nearest `f2/gcf3` and `f4/gcf2` `n`-dependent equivalence
+     obstructions are now executable and formalized in Lean.
    - The next proof-facing step is to widen that exact page-43 layer beyond the
-     currently formalized nearest lanes rather than re-formalizing the same case.
+     currently formalized nearest lanes, ideally by proving an all-parameter
+     theorem for a natural page-43 neighborhood instead of just one more
+     bounded nearby specialization.
 
 3. Add a second-ring Bauer--Muir chain search
    - Current scan uses a tiny fixed modifier family; if a literature family is
