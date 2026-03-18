@@ -12,6 +12,8 @@ from ramanujan_discovery.identification import (
     scan_quotient_core_source_family_eta_corrections,
     scan_source_family_eta_corrections,
     scan_gg_modular_equation_box,
+    scan_self_fractional_linear_uniqueness_relations,
+    scan_self_polynomial_uniqueness_relations,
     scan_two_quotient_core_source_family_self_fractional_linear_relations,
     scan_two_quotient_core_source_family_self_eta_corrections,
     scan_two_quotient_core_source_family_self_polynomial_relations,
@@ -36,7 +38,9 @@ from ramanujan_discovery.identification import (
     search_fractional_linear_relation,
     search_multiplicative_relation,
     search_polynomial_relation,
+    search_self_polynomial_uniqueness_relation,
     search_self_quotient_product_relation,
+    search_self_t_polynomial_fractional_linear_relation,
     search_two_layer_fractional_linear_relation,
 )
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
@@ -61,6 +65,28 @@ def _eval_relation_series(relation, x_series, y_series, order: int):
     residual = [sp.Integer(0) for _ in range(order)]
     for (i, j), coeff in relation.coefficients.items():
         term = series_mul(x_pows[i], y_pows[j])
+        for n in range(order):
+            if term[n] == 0:
+                continue
+            residual[n] = sp.simplify(residual[n] + coeff * term[n])
+    return residual
+
+
+def _eval_three_variable_relation_series(relation, t_series, f_series, g_series, order: int):
+    t_series = t_series[:order]
+    f_series = f_series[:order]
+    g_series = g_series[:order]
+    max_t_degree = max(exponents[0] for exponents in relation.coefficients)
+    max_f_degree = max(exponents[1] for exponents in relation.coefficients)
+    max_g_degree = max(exponents[2] for exponents in relation.coefficients)
+
+    t_pows = [series_pow(t_series, i) for i in range(max_t_degree + 1)]
+    f_pows = [series_pow(f_series, i) for i in range(max_f_degree + 1)]
+    g_pows = [series_pow(g_series, i) for i in range(max_g_degree + 1)]
+
+    residual = [sp.Integer(0) for _ in range(order)]
+    for (t_degree, f_degree, g_degree), coeff in relation.coefficients.items():
+        term = series_mul(series_mul(t_pows[t_degree], f_pows[f_degree]), g_pows[g_degree])
         for n in range(order):
             if term[n] == 0:
                 continue
@@ -288,6 +314,104 @@ def test_search_fractional_linear_relation_finds_structured_ratio():
     assert relation.basis_variables == ("B1", "B2")
     assert relation.numerator_coefficients == {"B1": sp.Integer(2)}
     assert relation.denominator_coefficients == {"B2": sp.Integer(-1)}
+
+
+def test_search_self_polynomial_uniqueness_relation_finds_tfg_relation():
+    order = 16
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = 1
+    for exponent in (1, 2, 4, 8):
+        target[exponent] = 1
+
+    relation = search_self_polynomial_uniqueness_relation(
+        target_series=target,
+        modulus=2,
+        order=order,
+        max_fg_total_degree=1,
+        max_t_degree=1,
+    )
+    assert relation is not None
+    assert relation.variables == ("T", "F", "G2")
+
+    t_series = [sp.Integer(0) for _ in range(order)]
+    t_series[1] = 1
+    residual = _eval_three_variable_relation_series(
+        relation,
+        t_series,
+        target,
+        benchmark_power_substitution_series(target, power=2, order=order),
+        order,
+    )
+    assert all(sp.simplify(value) == 0 for value in residual)
+
+
+def test_search_self_t_polynomial_fractional_linear_relation_finds_rhs_equation():
+    order = 20
+    eta = [sp.Integer(0) for _ in range(order)]
+    eta[0] = 1
+    eta[1] = 1
+    target = _build_self_fractional_linear_eta_target(
+        modulus=2,
+        self_coeff=sp.Integer(2),
+        eta_coeff=sp.Integer(1),
+        eta_series=eta,
+        order=order,
+    )
+
+    relation = search_self_t_polynomial_fractional_linear_relation(
+        target_series=target,
+        modulus=2,
+        order=order,
+        max_t_degree=1,
+    )
+    assert relation is not None
+    assert relation.numerator_t_coefficients == (sp.Integer(1), sp.Integer(1))
+    assert relation.numerator_self_coefficients == (sp.Integer(2), sp.Integer(0))
+    assert relation.denominator_t_coefficients == (sp.Integer(1), sp.Integer(0))
+    assert relation.denominator_self_coefficients == (sp.Integer(0), sp.Integer(0))
+
+
+def test_rhs_uniqueness_searches_skip_degenerate_non_self_relations():
+    order = 12
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = 1
+    target[2] = 1
+
+    assert (
+        search_self_polynomial_uniqueness_relation(
+            target_series=target,
+            modulus=2,
+            order=order,
+            max_fg_total_degree=1,
+            max_t_degree=1,
+        )
+        is None
+    )
+    assert (
+        search_self_t_polynomial_fractional_linear_relation(
+            target_series=target,
+            modulus=2,
+            order=order,
+            max_t_degree=1,
+        )
+        is None
+    )
+
+    polynomial_scan = scan_self_polynomial_uniqueness_relations(
+        target_series=target,
+        moduli=(2, 3, 4),
+        order=order,
+        fg_degree_values=(1,),
+        t_degree_values=(1,),
+    )
+    fractional_scan = scan_self_fractional_linear_uniqueness_relations(
+        target_series=target,
+        moduli=(2, 3, 4),
+        order=order,
+        t_degree_values=(1,),
+    )
+    assert polynomial_scan.hits == ()
+    assert fractional_scan.hits == ()
 
 
 def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation():
@@ -1454,9 +1578,13 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     text = output_path.read_text(encoding="utf-8")
     assert "Identification Note: `hero`" in text
     assert "## Build Timing" in text
+    assert "- `rhs-uniqueness-search`:" in text
     assert "- `source-family-scans`:" in text
     assert "- `final-render`:" in text
     assert "Extra Multivariate Search" in text
+    assert "## RHS Uniqueness Search" in text
+    assert "Polynomial Functional Box" in text
+    assert "Fractional-Linear Functional Box" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text

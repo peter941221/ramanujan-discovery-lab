@@ -76,6 +76,56 @@ class FractionalLinearRelationScan:
 
 
 @dataclass(frozen=True)
+class SelfPolynomialUniquenessHit:
+    """A theorem-facing self-polynomial candidate P(T, F, G) = 0."""
+
+    modulus: int
+    max_fg_total_degree: int
+    max_t_degree: int
+    relation: PolynomialRelation
+
+
+@dataclass(frozen=True)
+class SelfPolynomialUniquenessScan:
+    """Summary of low-degree self-polynomial uniqueness scans."""
+
+    moduli_checked: tuple[int, ...]
+    fg_degree_values: tuple[int, ...]
+    t_degree_values: tuple[int, ...]
+    hits: tuple[SelfPolynomialUniquenessHit, ...]
+
+
+@dataclass(frozen=True)
+class SelfTPolynomialFractionalLinearRelation:
+    """A relation F = (A(T) + B(T)*(G-1)) / (C(T) + D(T)*(G-1))."""
+
+    order_checked: int
+    max_t_degree: int
+    numerator_t_coefficients: tuple[sp.Expr, ...]
+    numerator_self_coefficients: tuple[sp.Expr, ...]
+    denominator_t_coefficients: tuple[sp.Expr, ...]
+    denominator_self_coefficients: tuple[sp.Expr, ...]
+
+
+@dataclass(frozen=True)
+class SelfFractionalLinearUniquenessHit:
+    """A theorem-facing low-degree self-fractional-linear candidate."""
+
+    modulus: int
+    max_t_degree: int
+    relation: SelfTPolynomialFractionalLinearRelation
+
+
+@dataclass(frozen=True)
+class SelfFractionalLinearUniquenessScan:
+    """Summary of low-degree self-fractional-linear uniqueness scans."""
+
+    moduli_checked: tuple[int, ...]
+    t_degree_values: tuple[int, ...]
+    hits: tuple[SelfFractionalLinearUniquenessHit, ...]
+
+
+@dataclass(frozen=True)
 class MultiplicativeRelation:
     """A structured relation F = prod_i B_i^e_i with small integer exponents."""
 
@@ -471,6 +521,135 @@ def _series_active_exponents(template: QCFTemplate) -> list[int]:
     return [value for value in parts if value != 0]
 
 
+def _guess_polynomial_relation_from_exponent_tuples(
+    *,
+    series_by_variable: dict[str, Series],
+    order: int,
+    exponent_tuples: tuple[tuple[int, ...], ...],
+    required_variables: tuple[str, ...] = (),
+) -> PolynomialRelation | None:
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(series_by_variable) < 2:
+        raise ValueError("need at least two variables for a relation search")
+    if any(len(series) < order for series in series_by_variable.values()):
+        raise ValueError("series are shorter than requested order")
+    if not exponent_tuples:
+        raise ValueError("need at least one monomial for a relation search")
+
+    variables = tuple(series_by_variable.keys())
+    if any(required not in series_by_variable for required in required_variables):
+        raise ValueError("required_variables must be series variable names")
+    if any(len(exponents) != len(variables) for exponents in exponent_tuples):
+        raise ValueError("exponent tuple arity must match the number of variables")
+    if any(any(exp < 0 for exp in exponents) for exponents in exponent_tuples):
+        raise ValueError("exponents must be non-negative")
+
+    num_monomials = len(exponent_tuples)
+    if num_monomials > order:
+        raise ValueError(
+            "underdetermined polynomial relation search: "
+            f"{num_monomials} monomials > {order} constraints "
+            "(increase order, lower the search box, or reduce variables)"
+        )
+
+    series_list = [series_by_variable[name][:order] for name in variables]
+    max_exponents_by_variable = [0 for _ in variables]
+    for exponents in exponent_tuples:
+        for index, exponent in enumerate(exponents):
+            max_exponents_by_variable[index] = max(max_exponents_by_variable[index], exponent)
+
+    one = [sp.Integer(0) for _ in range(order)]
+    one[0] = sp.Integer(1)
+    powers: list[list[Series]] = []
+    for series, max_exponent in zip(series_list, max_exponents_by_variable):
+        variable_powers: list[Series] = [one]
+        for _ in range(max_exponent):
+            variable_powers.append(series_mul(variable_powers[-1], series))
+        powers.append(variable_powers)
+
+    columns: list[Series] = []
+    for exponents in exponent_tuples:
+        term = one
+        for variable_index, exponent in enumerate(exponents):
+            if exponent == 0:
+                continue
+            term = series_mul(term, powers[variable_index][exponent])
+        columns.append(term)
+
+    matrix = sp.Matrix([[columns[col][row] for col in range(len(columns))] for row in range(order)])
+    nullspace = matrix.nullspace()
+    if not nullspace:
+        return None
+
+    candidate_vecs = nullspace
+    for required_variable in required_variables:
+        required_index = variables.index(required_variable)
+        required_columns = [
+            index
+            for index, exponents in enumerate(exponent_tuples)
+            if exponents[required_index] > 0
+        ]
+        candidate_vecs = [
+            vec
+            for vec in candidate_vecs
+            if any(vec[column_index] != 0 for column_index in required_columns)
+        ]
+        if not candidate_vecs:
+            return None
+
+    basis_vec = min(candidate_vecs, key=lambda vec: sum(1 for item in vec if item != 0))
+    den_lcm = 1
+    nums: list[sp.Integer] = []
+    dens: list[int] = []
+    for entry in basis_vec:
+        num, den = sp.together(entry).as_numer_denom()
+        if not (num.is_Integer and den.is_Integer):
+            return None
+        num_i = int(num)
+        den_i = int(den)
+        nums.append(sp.Integer(num_i))
+        dens.append(abs(den_i))
+        den_lcm = _lcm(den_lcm, abs(den_i))
+
+    scaled = [sp.Integer(den_lcm) * num // sp.Integer(den) for num, den in zip(nums, dens)]
+    if all(value == 0 for value in scaled):
+        return None
+
+    int_scaled = [int(value) for value in scaled]
+    overall_gcd = 0
+    for value in int_scaled:
+        overall_gcd = gcd(overall_gcd, abs(value))
+    if overall_gcd > 1:
+        scaled = [sp.Integer(int(value) // overall_gcd) for value in scaled]
+
+    for value in scaled:
+        if value != 0:
+            if value < 0:
+                scaled = [-value for value in scaled]
+            break
+
+    coeff_map: dict[tuple[int, ...], sp.Integer] = {}
+    max_total_degree = 0
+    for exponents, coeff in zip(exponent_tuples, scaled):
+        coeff_s = sp.simplify(coeff)
+        if coeff_s == 0:
+            continue
+        normalized_exponents = tuple(int(exponent) for exponent in exponents)
+        coeff_map[normalized_exponents] = sp.Integer(int(coeff_s))
+        max_total_degree = max(max_total_degree, sum(normalized_exponents))
+
+    if not coeff_map:
+        return None
+
+    return PolynomialRelation(
+        order_checked=order,
+        variables=variables,
+        max_total_degree=max_total_degree,
+        coefficients=coeff_map,
+    )
+
+
 def guess_polynomial_relation(
     *,
     series_by_variable: dict[str, Series],
@@ -494,41 +673,12 @@ def guess_polynomial_relation(
     if required_variable is not None and required_variable not in series_by_variable:
         raise ValueError("required_variable must be one of the series variable names")
 
-    num_monomials = _monomial_count(len(series_by_variable), max_total_degree)
-    if num_monomials > order:
-        raise ValueError(
-            "underdetermined polynomial relation search: "
-            f"{num_monomials} monomials > {order} constraints "
-            "(increase order, lower max_total_degree, or reduce variables)"
-        )
-
     variables = tuple(series_by_variable.keys())
-    series_list = [series_by_variable[name][:order] for name in variables]
-
-    # Precompute powers up to max_total_degree for each variable.
-    one = [sp.Integer(0) for _ in range(order)]
-    one[0] = sp.Integer(1)
-    powers: list[list[Series]] = []
-    for series in series_list:
-        var_pows: list[Series] = [one]
-        for _ in range(max_total_degree):
-            var_pows.append(series_mul(var_pows[-1], series))
-        powers.append(var_pows)
-
-    # Enumerate exponent tuples with total degree <= max_total_degree.
     exponent_tuples: list[tuple[int, ...]] = []
-    columns: list[Series] = []
 
     def _recurse(idx: int, remaining: int, current: list[int]) -> None:
         if idx == len(variables):
             exponent_tuples.append(tuple(current))
-            # Multiply the precomputed powers for this monomial.
-            term = one
-            for var_idx, exp in enumerate(current):
-                if exp == 0:
-                    continue
-                term = series_mul(term, powers[var_idx][exp])
-            columns.append(term)
             return
         for exp in range(remaining + 1):
             current.append(exp)
@@ -536,72 +686,11 @@ def guess_polynomial_relation(
             current.pop()
 
     _recurse(0, max_total_degree, [])
-
-    matrix = sp.Matrix([[columns[col][row] for col in range(len(columns))] for row in range(order)])
-    nullspace = matrix.nullspace()
-    if not nullspace:
-        return None
-
-    # Pick a small-ish basis vector and scale it to integer coefficients.
-    candidate_vecs = nullspace
-    if required_variable is not None:
-        required_index = variables.index(required_variable)
-        required_columns = [idx for idx, exps in enumerate(exponent_tuples) if exps[required_index] > 0]
-        candidate_vecs = [
-            vec
-            for vec in nullspace
-            if any(vec[col] != 0 for col in required_columns)
-        ]
-        if not candidate_vecs:
-            return None
-
-    basis_vec = min(candidate_vecs, key=lambda v: sum(1 for item in v if item != 0))
-    den_lcm = 1
-    nums: list[sp.Integer] = []
-    dens: list[int] = []
-    for entry in basis_vec:
-        num, den = sp.together(entry).as_numer_denom()
-        if not (num.is_Integer and den.is_Integer):
-            return None
-        num_i = int(num)
-        den_i = int(den)
-        nums.append(sp.Integer(num_i))
-        dens.append(abs(den_i))
-        den_lcm = _lcm(den_lcm, abs(den_i))
-
-    scaled = [sp.Integer(den_lcm) * num // sp.Integer(den) for num, den in zip(nums, dens)]
-    if all(value == 0 for value in scaled):
-        return None
-
-    # Normalize by gcd and sign.
-    int_scaled = [int(value) for value in scaled]
-    overall_gcd = 0
-    for value in int_scaled:
-        overall_gcd = gcd(overall_gcd, abs(value))
-    if overall_gcd > 1:
-        scaled = [sp.Integer(int(value) // overall_gcd) for value in scaled]
-
-    for value in scaled:
-        if value != 0:
-            if value < 0:
-                scaled = [-v for v in scaled]
-            break
-
-    coeff_map: dict[tuple[int, ...], sp.Integer] = {}
-    for exponents, coeff in zip(exponent_tuples, scaled):
-        coeff_s = sp.simplify(coeff)
-        if coeff_s == 0:
-            continue
-        coeff_map[exponents] = sp.Integer(int(coeff_s))
-
-    if not coeff_map:
-        return None
-
-    return PolynomialRelation(
-        order_checked=order,
-        variables=variables,
-        max_total_degree=max_total_degree,
-        coefficients=coeff_map,
+    return _guess_polynomial_relation_from_exponent_tuples(
+        series_by_variable=series_by_variable,
+        order=order,
+        exponent_tuples=tuple(exponent_tuples),
+        required_variables=() if required_variable is None else (required_variable,),
     )
 
 
@@ -1031,6 +1120,113 @@ def scan_ratio_self_quotient_product_relations(
                 )
             )
     return scans
+
+
+def _t_series(*, order: int) -> Series:
+    series = [sp.Integer(0) for _ in range(order)]
+    if order > 1:
+        series[1] = sp.Integer(1)
+    return series
+
+
+def search_self_polynomial_uniqueness_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    order: int,
+    max_fg_total_degree: int,
+    max_t_degree: int,
+) -> PolynomialRelation | None:
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if max_fg_total_degree < 1:
+        raise ValueError("max_fg_total_degree must be at least 1")
+    if max_t_degree < 0:
+        raise ValueError("max_t_degree must be non-negative")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+
+    g_label = f"G{modulus}"
+    series_by_variable = {
+        "T": _t_series(order=order),
+        "F": target_series[:order],
+        g_label: benchmark_power_substitution_series(target_series, power=modulus, order=order),
+    }
+    exponent_tuples: list[tuple[int, int, int]] = []
+    for t_degree in range(max_t_degree + 1):
+        for f_degree in range(max_fg_total_degree + 1):
+            for g_degree in range(max_fg_total_degree - f_degree + 1):
+                exponent_tuples.append((t_degree, f_degree, g_degree))
+
+    relation = _guess_polynomial_relation_from_exponent_tuples(
+        series_by_variable=series_by_variable,
+        order=order,
+        exponent_tuples=tuple(exponent_tuples),
+        required_variables=("F", g_label),
+    )
+    if relation is None:
+        return None
+
+    residual = _relation_residual_series(
+        relation,
+        series_by_variable=series_by_variable,
+        order=order,
+    )
+    if any(sp.simplify(value) != 0 for value in residual):
+        return None
+    return relation
+
+
+def scan_self_polynomial_uniqueness_relations(
+    *,
+    target_series: Series,
+    moduli: tuple[int, ...],
+    order: int,
+    fg_degree_values: tuple[int, ...] = (1, 2),
+    t_degree_values: tuple[int, ...] = (1, 2),
+) -> SelfPolynomialUniquenessScan:
+    normalized_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    normalized_fg_degrees = tuple(sorted({degree for degree in fg_degree_values if degree >= 1}))
+    normalized_t_degrees = tuple(sorted({degree for degree in t_degree_values if degree >= 0}))
+    if not normalized_moduli or not normalized_fg_degrees or not normalized_t_degrees:
+        return SelfPolynomialUniquenessScan(
+            moduli_checked=normalized_moduli,
+            fg_degree_values=normalized_fg_degrees,
+            t_degree_values=normalized_t_degrees,
+            hits=(),
+        )
+
+    hits: list[SelfPolynomialUniquenessHit] = []
+    for modulus in normalized_moduli:
+        for fg_degree in normalized_fg_degrees:
+            for t_degree in normalized_t_degrees:
+                try:
+                    relation = search_self_polynomial_uniqueness_relation(
+                        target_series=target_series,
+                        modulus=modulus,
+                        order=order,
+                        max_fg_total_degree=fg_degree,
+                        max_t_degree=t_degree,
+                    )
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                hits.append(
+                    SelfPolynomialUniquenessHit(
+                        modulus=modulus,
+                        max_fg_total_degree=fg_degree,
+                        max_t_degree=t_degree,
+                        relation=relation,
+                    )
+                )
+
+    return SelfPolynomialUniquenessScan(
+        moduli_checked=normalized_moduli,
+        fg_degree_values=normalized_fg_degrees,
+        t_degree_values=normalized_t_degrees,
+        hits=tuple(hits),
+    )
 
 
 def search_eta_quotient_relation(
@@ -2211,6 +2407,116 @@ def search_fractional_linear_relation(
     )
 
 
+def search_self_t_polynomial_fractional_linear_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    order: int,
+    max_t_degree: int,
+) -> SelfTPolynomialFractionalLinearRelation | None:
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if max_t_degree < 0:
+        raise ValueError("max_t_degree must be non-negative")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1")
+
+    g_series = benchmark_power_substitution_series(target_series, power=modulus, order=order)
+    g_shifted = _series_subtract_one(g_series)
+    t_series = _t_series(order=order)
+    t_powers = [series_pow(t_series, degree) for degree in range(max_t_degree + 1)]
+
+    rhs_vector = sp.Matrix([sp.simplify(-target_series[n]) for n in range(1, order)])
+    columns: list[list[sp.Expr]] = []
+
+    for degree in range(1, max_t_degree + 1):
+        columns.append([sp.simplify(-t_powers[degree][n]) for n in range(1, order)])
+    for degree in range(max_t_degree + 1):
+        numer_self_term = series_mul(t_powers[degree], g_shifted)
+        columns.append([sp.simplify(-numer_self_term[n]) for n in range(1, order)])
+    for degree in range(1, max_t_degree + 1):
+        denom_t_term = series_mul(target_series[:order], t_powers[degree])
+        columns.append([sp.simplify(denom_t_term[n]) for n in range(1, order)])
+    for degree in range(max_t_degree + 1):
+        denom_self_term = series_mul(series_mul(target_series[:order], t_powers[degree]), g_shifted)
+        columns.append([sp.simplify(denom_self_term[n]) for n in range(1, order)])
+
+    num_unknowns = len(columns)
+    num_constraints = order - 1
+    if num_unknowns > num_constraints:
+        raise ValueError(
+            "underdetermined self-fractional-linear relation search: "
+            f"{num_unknowns} coefficients > {num_constraints} constraints "
+            "(increase order or reduce max_t_degree)"
+        )
+
+    matrix = sp.Matrix(
+        [[column[row_index] for column in columns] for row_index in range(num_constraints)]
+    )
+    rank = matrix.rank()
+    augmented_rank = matrix.row_join(rhs_vector).rank()
+    if augmented_rank > rank:
+        return None
+    if rank < num_unknowns:
+        raise ValueError(
+            "underdetermined self-fractional-linear relation search: "
+            f"rank {rank} < {num_unknowns} coefficients "
+            "(increase order or reduce max_t_degree)"
+        )
+
+    unknowns = sp.symbols(f"a1:{max_t_degree + 1} b0:{max_t_degree + 1} c1:{max_t_degree + 1} d0:{max_t_degree + 1}")
+    solution_set = sp.linsolve((matrix, rhs_vector), unknowns)
+    if not solution_set:
+        return None
+    solution = next(iter(solution_set))
+    if any(value.free_symbols for value in solution):
+        raise ValueError("self-fractional-linear relation search returned a parametric solution")
+
+    index = 0
+    numerator_t_coefficients = [sp.Integer(1)]
+    for _ in range(1, max_t_degree + 1):
+        numerator_t_coefficients.append(sp.simplify(solution[index]))
+        index += 1
+    numerator_self_coefficients: list[sp.Expr] = []
+    for _ in range(max_t_degree + 1):
+        numerator_self_coefficients.append(sp.simplify(solution[index]))
+        index += 1
+    denominator_t_coefficients = [sp.Integer(1)]
+    for _ in range(1, max_t_degree + 1):
+        denominator_t_coefficients.append(sp.simplify(solution[index]))
+        index += 1
+    denominator_self_coefficients: list[sp.Expr] = []
+    for _ in range(max_t_degree + 1):
+        denominator_self_coefficients.append(sp.simplify(solution[index]))
+        index += 1
+
+    if all(value == 0 for value in numerator_self_coefficients + denominator_self_coefficients):
+        return None
+
+    relation = SelfTPolynomialFractionalLinearRelation(
+        order_checked=order,
+        max_t_degree=max_t_degree,
+        numerator_t_coefficients=tuple(numerator_t_coefficients),
+        numerator_self_coefficients=tuple(numerator_self_coefficients),
+        denominator_t_coefficients=tuple(denominator_t_coefficients),
+        denominator_self_coefficients=tuple(denominator_self_coefficients),
+    )
+
+    residual = _self_t_polynomial_fractional_linear_relation_residual_series(
+        relation,
+        target_series=target_series,
+        modulus=modulus,
+        order=order,
+    )
+    if any(sp.simplify(value) != 0 for value in residual):
+        return None
+    return relation
+
+
 def _format_fractional_linear_relation(relation: FractionalLinearRelation, *, target_variable: str) -> str:
     def _side(coefficients: dict[str, sp.Expr]) -> str:
         terms = ["1"]
@@ -2223,6 +2529,44 @@ def _format_fractional_linear_relation(relation: FractionalLinearRelation, *, ta
         return " + ".join(terms)
 
     return f"{target_variable} = ({_side(relation.numerator_coefficients)}) / ({_side(relation.denominator_coefficients)})"
+
+
+def _format_self_t_polynomial_fractional_linear_relation(
+    relation: SelfTPolynomialFractionalLinearRelation,
+    *,
+    modulus: int,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    def _polynomial(coefficients: tuple[sp.Expr, ...]) -> str:
+        terms: list[str] = []
+        for degree, coefficient in enumerate(coefficients):
+            coefficient_s = sp.simplify(coefficient)
+            if coefficient_s == 0:
+                continue
+            coefficient_str = _format_expr(coefficient_s)
+            if degree == 0:
+                terms.append(coefficient_str)
+                continue
+            power = series_symbol if degree == 1 else f"{series_symbol}^{degree}"
+            if coefficient_s == 1:
+                terms.append(power)
+            elif coefficient_s == -1:
+                terms.append(f"-{power}")
+            else:
+                terms.append(f"{coefficient_str}*{power}")
+        return " + ".join(terms) if terms else "0"
+
+    g_term = f"{target_variable}({series_symbol}^{modulus}) - 1"
+    numerator = _polynomial(relation.numerator_t_coefficients)
+    numerator_self = _polynomial(relation.numerator_self_coefficients)
+    denominator = _polynomial(relation.denominator_t_coefficients)
+    denominator_self = _polynomial(relation.denominator_self_coefficients)
+    return (
+        f"{target_variable} = "
+        f"(({numerator}) + ({numerator_self})*({g_term})) / "
+        f"(({denominator}) + ({denominator_self})*({g_term}))"
+    )
 
 
 def _fractional_linear_relation_residual_series(
@@ -2261,6 +2605,97 @@ def _fractional_linear_relation_residual_series(
 
     lhs = series_mul(target_series[:order], denominator)
     return [sp.simplify(lhs[idx] - numerator[idx]) for idx in range(order)]
+
+
+def _self_t_polynomial_fractional_linear_relation_residual_series(
+    relation: SelfTPolynomialFractionalLinearRelation,
+    *,
+    target_series: Series,
+    modulus: int,
+    order: int,
+) -> Series:
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+
+    g_series = benchmark_power_substitution_series(target_series, power=modulus, order=order)
+    g_shifted = _series_subtract_one(g_series)
+    t_series = _t_series(order=order)
+    t_powers = [series_pow(t_series, degree) for degree in range(relation.max_t_degree + 1)]
+
+    numerator: Series = [sp.Integer(0) for _ in range(order)]
+    denominator: Series = [sp.Integer(0) for _ in range(order)]
+    for degree, coefficient in enumerate(relation.numerator_t_coefficients):
+        term = t_powers[degree]
+        for index, value in enumerate(term):
+            if value == 0:
+                continue
+            numerator[index] = sp.simplify(numerator[index] + coefficient * value)
+    for degree, coefficient in enumerate(relation.denominator_t_coefficients):
+        term = t_powers[degree]
+        for index, value in enumerate(term):
+            if value == 0:
+                continue
+            denominator[index] = sp.simplify(denominator[index] + coefficient * value)
+    for degree, coefficient in enumerate(relation.numerator_self_coefficients):
+        term = series_mul(t_powers[degree], g_shifted)
+        for index, value in enumerate(term):
+            if value == 0:
+                continue
+            numerator[index] = sp.simplify(numerator[index] + coefficient * value)
+    for degree, coefficient in enumerate(relation.denominator_self_coefficients):
+        term = series_mul(t_powers[degree], g_shifted)
+        for index, value in enumerate(term):
+            if value == 0:
+                continue
+            denominator[index] = sp.simplify(denominator[index] + coefficient * value)
+
+    lhs = series_mul(target_series[:order], denominator)
+    return [sp.simplify(lhs[index] - numerator[index]) for index in range(order)]
+
+
+def scan_self_fractional_linear_uniqueness_relations(
+    *,
+    target_series: Series,
+    moduli: tuple[int, ...],
+    order: int,
+    t_degree_values: tuple[int, ...] = (1, 2),
+) -> SelfFractionalLinearUniquenessScan:
+    normalized_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    normalized_t_degrees = tuple(sorted({degree for degree in t_degree_values if degree >= 0}))
+    if not normalized_moduli or not normalized_t_degrees:
+        return SelfFractionalLinearUniquenessScan(
+            moduli_checked=normalized_moduli,
+            t_degree_values=normalized_t_degrees,
+            hits=(),
+        )
+
+    hits: list[SelfFractionalLinearUniquenessHit] = []
+    for modulus in normalized_moduli:
+        for t_degree in normalized_t_degrees:
+            try:
+                relation = search_self_t_polynomial_fractional_linear_relation(
+                    target_series=target_series,
+                    modulus=modulus,
+                    order=order,
+                    max_t_degree=t_degree,
+                )
+            except ValueError:
+                continue
+            if relation is None:
+                continue
+            hits.append(
+                SelfFractionalLinearUniquenessHit(
+                    modulus=modulus,
+                    max_t_degree=t_degree,
+                    relation=relation,
+                )
+            )
+
+    return SelfFractionalLinearUniquenessScan(
+        moduli_checked=normalized_moduli,
+        t_degree_values=normalized_t_degrees,
+        hits=tuple(hits),
+    )
 
 
 def search_two_layer_fractional_linear_relation(
@@ -3646,6 +4081,11 @@ def _eta_scan_levels(levels: tuple[int, ...]) -> tuple[int, ...]:
     return tuple(sorted(normalized))
 
 
+def _rhs_uniqueness_moduli(levels: tuple[int, ...]) -> tuple[int, ...]:
+    preferred = tuple(sorted({level for level in levels if 2 <= level <= 4}))
+    return preferred if preferred else (2, 3, 4)
+
+
 def build_candidate_identification_note(
     *,
     input_path: str,
@@ -3709,8 +4149,10 @@ def build_candidate_identification_note(
     source_family_scan_powers = _parameterized_source_family_powers(benchmark_powers, smoke=smoke)
     supplemental_source_family_powers = _supplemental_source_family_powers(smoke=smoke)
     eta_scan_levels = _eta_scan_levels(benchmark_powers)
+    rhs_uniqueness_moduli = _rhs_uniqueness_moduli(benchmark_powers)
     progress_steps = [
         "series-and-benchmark-setup",
+        "rhs-uniqueness-search",
         "source-family-scans",
         "cross-family-functional-scans",
         "explicit-gg-family-scans",
@@ -3761,9 +4203,9 @@ def build_candidate_identification_note(
 
     stage_elapsed_seconds["series-and-benchmark-setup"] = perf_counter() - build_started_at
     progress_status["series-and-benchmark-setup"] = "completed"
-    progress_status["source-family-scans"] = "in_progress"
+    progress_status["rhs-uniqueness-search"] = "in_progress"
     current_stage_start = perf_counter()
-    write_progress(current_step="source-family-scans")
+    write_progress(current_step="rhs-uniqueness-search")
 
     relation: PolynomialRelation | None = None
     relation_error: str | None = None
@@ -3781,6 +4223,23 @@ def build_candidate_identification_note(
     extra_relation_error: str | None = None
     benchmark_power_series: dict[int, Series] = {}
     extra_search_degree = min(profile_degree, 3 if smoke else profile_degree)
+    rhs_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+        target_series=ratio_series,
+        moduli=rhs_uniqueness_moduli,
+        order=profile_order,
+        fg_degree_values=(1, 2),
+        t_degree_values=(1, 2),
+    )
+    rhs_self_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+        target_series=ratio_series,
+        moduli=rhs_uniqueness_moduli,
+        order=profile_order,
+        t_degree_values=(1, 2),
+    )
+    advance_progress(
+        completed_step="rhs-uniqueness-search",
+        current_step="source-family-scans",
+    )
     source_family_basis_catalog = _source_family_basis_catalog(record.closest_benchmark)
     source_family_base_series = tuple(
         (
@@ -4214,6 +4673,108 @@ def build_candidate_identification_note(
                     f"- Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
                 ]
             )
+
+    lines.extend(
+        [
+            "",
+            "## RHS Uniqueness Search",
+            "",
+            "We also ran a theorem-facing search directly on the ratio object, looking for a compact right-hand-side defining equation for:",
+            "",
+            f"- `F = candidate / {record.closest_benchmark}`",
+            f"- Moduli checked: {', '.join(f'`m={modulus}`' for modulus in rhs_self_polynomial_scan.moduli_checked)}",
+            f"- Self-polynomial boxes: {', '.join(f'`deg_(F,G) <= {degree}`' for degree in rhs_self_polynomial_scan.fg_degree_values)}",
+            f"- `t`-degree boxes: {', '.join(f'`deg_t <= {degree}`' for degree in rhs_self_polynomial_scan.t_degree_values)}",
+            f"- Self-fractional-linear `t`-degree boxes: {', '.join(f'`deg_t <= {degree}`' for degree in rhs_self_fractional_linear_scan.t_degree_values)}",
+            "",
+            "### Polynomial Functional Box",
+            "",
+            "```text",
+            "P(t, F(t), F(t^m)) = 0",
+            "```",
+            "",
+        ]
+    )
+    if not rhs_self_polynomial_scan.hits:
+        lines.extend(
+            [
+                "No candidate-dependent self-polynomial uniqueness relation was found in the scanned box.",
+                "",
+            ]
+        )
+    for hit in rhs_self_polynomial_scan.hits:
+        relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+        relation_expr = hit.relation.as_sympy(relation_symbols)
+        relation_series_by_variable = {
+            "T": _t_series(order=profile_order),
+            "F": ratio_series,
+            f"G{hit.modulus}": benchmark_power_substitution_series(
+                ratio_series,
+                power=hit.modulus,
+                order=profile_order,
+            ),
+        }
+        residual = _relation_residual_series(
+            hit.relation,
+            series_by_variable=relation_series_by_variable,
+            order=profile_order,
+        )
+        residual_ok = all(sp.simplify(value) == 0 for value in residual)
+        lines.extend(
+            [
+                f"- Modulus `m={hit.modulus}`, `deg_(F,G) <= {hit.max_fg_total_degree}`, `deg_t <= {hit.max_t_degree}` produced:",
+                "",
+                "```text",
+                _format_expr(relation_expr),
+                "```",
+                "",
+                f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "### Fractional-Linear Functional Box",
+            "",
+            "```text",
+            "F(t) = (A(t) + B(t)*(F(t^m) - 1)) / (C(t) + D(t)*(F(t^m) - 1))",
+            "```",
+            "",
+        ]
+    )
+    if not rhs_self_fractional_linear_scan.hits:
+        lines.extend(
+            [
+                "No candidate-dependent self-fractional-linear uniqueness relation was found in the scanned box.",
+                "",
+            ]
+        )
+    for hit in rhs_self_fractional_linear_scan.hits:
+        residual = _self_t_polynomial_fractional_linear_relation_residual_series(
+            hit.relation,
+            target_series=ratio_series,
+            modulus=hit.modulus,
+            order=profile_order,
+        )
+        residual_ok = all(sp.simplify(value) == 0 for value in residual)
+        lines.extend(
+            [
+                f"- Modulus `m={hit.modulus}`, `deg_t <= {hit.max_t_degree}` produced:",
+                "",
+                "```text",
+                _format_self_t_polynomial_fractional_linear_relation(
+                    hit.relation,
+                    modulus=hit.modulus,
+                    target_variable="F",
+                    series_symbol=series_symbol,
+                ),
+                "```",
+                "",
+                f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                "",
+            ]
+        )
 
     if power_tower_scans:
         lines.extend(

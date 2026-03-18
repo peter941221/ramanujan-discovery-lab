@@ -8,16 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1801.19`
+- Build elapsed seconds before final render: `1806.57`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `source-family-scans`: `366.56`
-- `cross-family-functional-scans`: `927.59`
-- `explicit-gg-family-scans`: `429.41`
-- `benchmark-tower-scans`: `77.63`
-- `final-render`: `14.84`
+- `rhs-uniqueness-search`: `13.47`
+- `source-family-scans`: `332.89`
+- `cross-family-functional-scans`: `946.32`
+- `explicit-gg-family-scans`: `430.19`
+- `benchmark-tower-scans`: `83.69`
+- `final-render`: `15.15`
 
 ## Objects
 
@@ -56,8 +57,35 @@ We also tried a small multivariate search that includes benchmark power substitu
 Skipped multivariate relation search:
 
 ```text
-underdetermined polynomial relation search: 715 monomials > 90 constraints (increase order, lower max_total_degree, or reduce variables)
+underdetermined polynomial relation search: 715 monomials > 90 constraints (increase order, lower the search box, or reduce variables)
 ```
+
+## RHS Uniqueness Search
+
+We also ran a theorem-facing search directly on the ratio object, looking for a compact right-hand-side defining equation for:
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- Moduli checked: `m=2`, `m=3`, `m=4`
+- Self-polynomial boxes: `deg_(F,G) <= 1`, `deg_(F,G) <= 2`
+- `t`-degree boxes: `deg_t <= 1`, `deg_t <= 2`
+- Self-fractional-linear `t`-degree boxes: `deg_t <= 1`, `deg_t <= 2`
+
+### Polynomial Functional Box
+
+```text
+P(t, F(t), F(t^m)) = 0
+```
+
+No candidate-dependent self-polynomial uniqueness relation was found in the scanned box.
+
+### Fractional-Linear Functional Box
+
+```text
+F(t) = (A(t) + B(t)*(F(t^m) - 1)) / (C(t) + D(t)*(F(t^m) - 1))
+```
+
+No candidate-dependent self-fractional-linear uniqueness relation was found in the scanned box.
+
 
 ## Benchmark Power-Tower Prefix Scan
 
