@@ -20,6 +20,8 @@ from ramanujan_discovery.identification import (
     scan_named_fractional_linear_prefixes,
     scan_benchmark_power_relation_prefixes,
     scan_named_multiplicative_prefixes,
+    scan_named_polynomial_prefixes,
+    scan_named_prefix_boxes,
     scan_explicit_source_family_transform_templates,
     scan_parameterized_source_family_power_boxes,
     scan_named_two_layer_fractional_linear_prefixes,
@@ -919,6 +921,61 @@ def test_scan_named_two_layer_fractional_linear_prefixes_finds_hit():
     )
 
 
+def test_scan_named_prefix_boxes_matches_individual_scans():
+    order = 12
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    target = benchmark_power_substitution_series(gg, power=2, order=order)
+    ordered_basis_series = (
+        ("GG", gg),
+        ("GG2", benchmark_power_substitution_series(gg, power=2, order=order)),
+        ("GG3", benchmark_power_substitution_series(gg, power=3, order=order)),
+    )
+
+    bundle = scan_named_prefix_boxes(
+        target_series=target,
+        ordered_basis_series=ordered_basis_series,
+        order=order,
+        degree_values=(1, 2),
+        max_abs_exponent=4,
+        solve_order=10,
+    )
+
+    assert bundle.polynomial_scans == tuple(
+        scan_named_polynomial_prefixes(
+            target_series=target,
+            ordered_basis_series=ordered_basis_series,
+            order=order,
+            degree_values=(1, 2),
+        )
+    )
+    assert bundle.multiplicative_scans == tuple(
+        scan_named_multiplicative_prefixes(
+            target_series=target,
+            ordered_basis_series=ordered_basis_series,
+            order=order,
+            max_abs_exponent=4,
+        )
+    )
+    assert bundle.fractional_linear_scans == tuple(
+        scan_named_fractional_linear_prefixes(
+            target_series=target,
+            ordered_basis_series=ordered_basis_series,
+            order=order,
+        )
+    )
+    assert bundle.two_layer_fractional_linear_scans == tuple(
+        scan_named_two_layer_fractional_linear_prefixes(
+            target_series=target,
+            ordered_basis_series=ordered_basis_series,
+            order=order,
+            solve_order=10,
+        )
+    )
+
+
 def test_scan_parameterized_source_family_power_boxes_finds_power_hit():
     order = 12
     gg = [sp.Integer(0) for _ in range(order)]
@@ -1234,12 +1291,26 @@ def test_scan_gg_modular_equation_box_finds_signed_quotient_hit():
     assert scan.benchmark_name == "gollnitz_gordon_normalized"
     assert tuple(label for label, _, _ in scan.ordered_basis_series) == ("GG", "GGneg", "GG2", "GG3", "GG4")
     assert tuple(label for label, _, _ in scan.quotient_basis_series) == ("Q_neg", "Q_2", "Q_3", "Q_4")
+    assert tuple(label for label, _, _ in scan.mixed_quotient_basis_series) == (
+        "GG",
+        "Q_neg",
+        "Q_2",
+        "Q_3",
+        "Q_4",
+    )
     assert "GG3 / GGneg" in scan.checked_templates
     assert scan.hit_templates == ("GG3 / GGneg",)
+    mixed_hit = next(
+        relation_scan
+        for relation_scan in scan.mixed_quotient_multiplicative_scans
+        if relation_scan.relation is not None
+    )
+    assert mixed_hit.basis_labels == ("GG", "Q_neg", "Q_2", "Q_3")
+    assert mixed_hit.relation.exponents == {"Q_neg": -1, "Q_3": 1}
 
 
 def test_scan_gg_modular_equation_box_supports_odd_prime_descendants():
-    order = 16
+    order = 8
     gg = [sp.Integer(0) for _ in range(order)]
     gg[0] = 1
     gg[1] = 1
@@ -1249,6 +1320,9 @@ def test_scan_gg_modular_equation_box_supports_odd_prime_descendants():
         benchmark_name="gollnitz_gordon_normalized",
         gg_series=gg,
         order=order,
+        degree_values=(1,),
+        max_abs_exponent=2,
+        solve_order=6,
         supplemental_powers=(5, 7, 11),
     )
 

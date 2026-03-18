@@ -126,10 +126,12 @@ their ratio objects:
    `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, `GG(t^4)`, `GG(t^5)`,
    `GG(t^7)`, `GG(t^11)` together with the quotient coordinates
    `GG(-t)/GG(t)`, `GG(t^2)/GG(t)`, `GG(t^3)/GG(t)`, `GG(t^4)/GG(t)`,
-   `GG(t^5)/GG(t)`, `GG(t^7)/GG(t)`, `GG(t^11)/GG(t)`.
+   `GG(t^5)/GG(t)`, `GG(t^7)/GG(t)`, `GG(t^11)/GG(t)`, and the mixed
+   quotient-coordinate prefixes that keep `GG(t)` explicit while allowing
+   corrections in those quotient variables.
    That more source-faithful box still gives `0` hits in its exact template,
    low-degree polynomial, multiplicative, fractional-linear, two-layer
-   fractional-linear, and quotient-coordinate scans.
+   fractional-linear, quotient-coordinate, and mixed quotient-coordinate scans.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.

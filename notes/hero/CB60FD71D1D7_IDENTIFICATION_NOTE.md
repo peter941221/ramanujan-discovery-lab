@@ -469,6 +469,7 @@ F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
 - Base benchmark: `gollnitz_gordon_normalized`
 - This lane keeps the sign and substitution objects explicit instead of flattening them into a larger anonymous basis box.
 - The literature-motivated basis here starts with `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, and `GG(t^4)`, and in the full profile it also includes the odd-prime descendants suggested by the GG modular-equation papers.
+- We also run a mixed quotient-coordinate pass that keeps `GG(t)` explicit while letting the correction move in quotient coordinates such as `GG(-t)/GG(t)` and `GG(t^p)/GG(t)`.
 - Basis ladder: `GG = GG(t)`, `GGneg = GG(-t)`, `GG2 = GG(t^2)`, `GG3 = GG(t^3)`, `GG4 = GG(t^4)`, `GG5 = GG(t^5)`, `GG7 = GG(t^7)`, `GG11 = GG(t^11)`
 - Exact direct / reciprocal / quotient templates checked: `72`.
 - No exact direct / reciprocal / quotient template hit was found in this modular-equation box.
@@ -486,6 +487,13 @@ F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
 - Quotient-coordinate multiplicative scan: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
 - Quotient-coordinate fractional-linear scan: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
 - Quotient-coordinate two-layer fractional-linear scan: no hit for prefixes ending at `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
+- Mixed quotient basis: `GG = GG(t)`, `Q_neg = GG(-t) / GG(t)`, `Q_2 = GG(t^2) / GG(t)`, `Q_3 = GG(t^3) / GG(t)`, `Q_4 = GG(t^4) / GG(t)`, `Q_5 = GG(t^5) / GG(t)`, `Q_7 = GG(t^7) / GG(t)`, `Q_11 = GG(t^11) / GG(t)`
+- Mixed quotient-coordinate polynomial scan: no candidate-dependent hit was found in the checked prefixes.
+- Mixed quotient-coordinate polynomial `total degree <= 1`: no hit for prefixes ending at `GG`, `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
+- Mixed quotient-coordinate polynomial `total degree <= 2`: no hit for prefixes ending at `GG`, `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
+- Mixed quotient-coordinate multiplicative scan: no hit for prefixes ending at `GG`, `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
+- Mixed quotient-coordinate fractional-linear scan: no hit for prefixes ending at `GG`, `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
+- Mixed quotient-coordinate two-layer fractional-linear scan: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
 
 
 ## Ratio-Object Explicit GG/S Template Eta-Correction Scan

@@ -334,6 +334,16 @@ class NamedTwoLayerFractionalLinearRelationScan:
 
 
 @dataclass(frozen=True)
+class NamedPrefixBoxScans:
+    """Bundled prefix scans over one ordered named basis ladder."""
+
+    polynomial_scans: tuple[NamedPolynomialRelationScan, ...] = ()
+    multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...] = ()
+    fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...] = ()
+    two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...] = ()
+
+
+@dataclass(frozen=True)
 class ParameterizedSourceFamilyScan:
     """Per-family powered-basis scans that keep the source-family label explicit."""
 
@@ -404,6 +414,11 @@ class GGModularEquationScan:
     quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
     quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
     quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...]
+    mixed_quotient_basis_series: tuple[tuple[str, str, Series], ...]
+    mixed_quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...]
+    mixed_quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
+    mixed_quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
+    mixed_quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...]
 
 
 @dataclass(frozen=True)
@@ -2737,6 +2752,179 @@ def scan_named_polynomial_prefixes(
     return scans
 
 
+def scan_named_prefix_boxes(
+    *,
+    target_series: Series,
+    ordered_basis_series: tuple[tuple[str, Series], ...],
+    order: int,
+    degree_values: tuple[int, ...] = (),
+    required_variable: str | None = "F",
+    max_abs_exponent: int = 8,
+    solve_order: int | None = None,
+    max_reported_two_layer_hits: int = 3,
+    include_polynomial: bool = True,
+    include_multiplicative: bool = True,
+    include_fractional_linear: bool = True,
+    include_two_layer: bool = True,
+) -> NamedPrefixBoxScans:
+    if not ordered_basis_series:
+        return NamedPrefixBoxScans()
+
+    if include_two_layer and max_reported_two_layer_hits < 1:
+        raise ValueError("max_reported_two_layer_hits must be at least 1")
+
+    polynomial_scans: list[NamedPolynomialRelationScan] = []
+    multiplicative_scans: list[NamedMultiplicativeRelationScan] = []
+    fractional_linear_scans: list[NamedFractionalLinearRelationScan] = []
+    two_layer_fractional_linear_scans: list[NamedTwoLayerFractionalLinearRelationScan] = []
+    prefix: list[tuple[str, Series]] = []
+    degrees = tuple(sorted({degree for degree in degree_values if degree >= 1}))
+
+    for label, basis_series in ordered_basis_series:
+        prefix.append((label, basis_series))
+        basis_labels = tuple(name for name, _ in prefix)
+        basis_series_by_variable = {name: series for name, series in prefix}
+
+        if include_polynomial:
+            variables = {"F": target_series}
+            variables.update(basis_series_by_variable)
+            for degree in degrees:
+                try:
+                    relation = search_polynomial_relation(
+                        series_by_variable=variables,
+                        order=order,
+                        max_total_degree=degree,
+                        required_variable=required_variable,
+                    )
+                    polynomial_scans.append(
+                        NamedPolynomialRelationScan(
+                            basis_labels=basis_labels,
+                            max_total_degree=degree,
+                            relation=relation,
+                        )
+                    )
+                except ValueError as exc:
+                    polynomial_scans.append(
+                        NamedPolynomialRelationScan(
+                            basis_labels=basis_labels,
+                            max_total_degree=degree,
+                            relation=None,
+                            error=str(exc),
+                        )
+                    )
+
+        if include_multiplicative:
+            try:
+                relation = search_multiplicative_relation(
+                    target_series=target_series,
+                    basis_series_by_variable=basis_series_by_variable,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+                multiplicative_scans.append(
+                    NamedMultiplicativeRelationScan(
+                        basis_labels=basis_labels,
+                        relation=relation,
+                    )
+                )
+            except ValueError as exc:
+                multiplicative_scans.append(
+                    NamedMultiplicativeRelationScan(
+                        basis_labels=basis_labels,
+                        relation=None,
+                        error=str(exc),
+                    )
+                )
+
+        if include_fractional_linear:
+            try:
+                relation = search_fractional_linear_relation(
+                    target_series=target_series,
+                    basis_series_by_variable=basis_series_by_variable,
+                    order=order,
+                )
+                fractional_linear_scans.append(
+                    NamedFractionalLinearRelationScan(
+                        basis_labels=basis_labels,
+                        relation=relation,
+                    )
+                )
+            except ValueError as exc:
+                fractional_linear_scans.append(
+                    NamedFractionalLinearRelationScan(
+                        basis_labels=basis_labels,
+                        relation=None,
+                        error=str(exc),
+                    )
+                )
+
+        if not include_two_layer or len(prefix) < 2:
+            continue
+
+        basis_names = tuple(basis_series_by_variable.keys())
+        hits: list[TwoLayerFractionalLinearRelation] = []
+        seen_signatures: set[str] = set()
+        total_hits = 0
+        tuples_checked = 0
+        try:
+            for numerator_variables in product(basis_names, repeat=2):
+                for denominator_variables in product(basis_names, repeat=2):
+                    factor_1 = (numerator_variables[0], denominator_variables[0])
+                    factor_2 = (numerator_variables[1], denominator_variables[1])
+                    if factor_1 > factor_2:
+                        continue
+                    tuples_checked += 1
+                    try:
+                        relation = search_two_layer_fractional_linear_relation(
+                            target_series=target_series,
+                            basis_series_by_variable=basis_series_by_variable,
+                            numerator_variables=numerator_variables,
+                            denominator_variables=denominator_variables,
+                            order=order,
+                            solve_order=solve_order,
+                        )
+                    except ValueError:
+                        continue
+                    if relation is None:
+                        continue
+                    signature = _format_two_layer_fractional_linear_relation(
+                        relation,
+                        target_variable="F",
+                    )
+                    if signature in seen_signatures:
+                        continue
+                    seen_signatures.add(signature)
+                    total_hits += 1
+                    if len(hits) < max_reported_two_layer_hits:
+                        hits.append(relation)
+
+            two_layer_fractional_linear_scans.append(
+                NamedTwoLayerFractionalLinearRelationScan(
+                    basis_labels=basis_labels,
+                    relations=tuple(hits),
+                    total_hits=total_hits,
+                    tuples_checked=tuples_checked,
+                )
+            )
+        except ValueError as exc:
+            two_layer_fractional_linear_scans.append(
+                NamedTwoLayerFractionalLinearRelationScan(
+                    basis_labels=basis_labels,
+                    relations=(),
+                    total_hits=0,
+                    tuples_checked=tuples_checked,
+                    error=str(exc),
+                )
+            )
+
+    return NamedPrefixBoxScans(
+        polynomial_scans=tuple(polynomial_scans),
+        multiplicative_scans=tuple(multiplicative_scans),
+        fractional_linear_scans=tuple(fractional_linear_scans),
+        two_layer_fractional_linear_scans=tuple(two_layer_fractional_linear_scans),
+    )
+
+
 def scan_parameterized_source_family_power_boxes(
     *,
     target_series: Series,
@@ -2788,110 +2976,53 @@ def scan_parameterized_source_family_power_boxes(
         mixed_quotient_basis_series.extend(quotient_basis_series)
         mixed_quotient_basis_tuple = tuple(mixed_quotient_basis_series)
         mixed_quotient_ordered_basis_tuple = tuple((label, series) for label, _, series in mixed_quotient_basis_tuple)
+        direct_scans = scan_named_prefix_boxes(
+            target_series=target_series,
+            ordered_basis_series=ordered_basis_tuple,
+            order=order,
+            degree_values=degree_values,
+            max_abs_exponent=max_abs_exponent,
+            solve_order=solve_order,
+            max_reported_two_layer_hits=max_reported_two_layer_hits,
+        )
+        quotient_scans = scan_named_prefix_boxes(
+            target_series=target_series,
+            ordered_basis_series=quotient_ordered_basis_tuple,
+            order=order,
+            degree_values=degree_values,
+            max_abs_exponent=max_abs_exponent,
+            solve_order=solve_order,
+            max_reported_two_layer_hits=max_reported_two_layer_hits,
+        )
+        mixed_quotient_scans = scan_named_prefix_boxes(
+            target_series=target_series,
+            ordered_basis_series=mixed_quotient_ordered_basis_tuple,
+            order=order,
+            degree_values=degree_values,
+            max_abs_exponent=max_abs_exponent,
+            solve_order=solve_order,
+            max_reported_two_layer_hits=max_reported_two_layer_hits,
+        )
 
         scans.append(
             ParameterizedSourceFamilyScan(
                 family_label=family_label,
                 benchmark_name=benchmark_name,
                 ordered_basis_series=ordered_basis_tuple,
-                polynomial_scans=tuple(
-                    scan_named_polynomial_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=ordered_basis_tuple,
-                        order=order,
-                        degree_values=degree_values,
-                    )
-                ),
-                multiplicative_scans=tuple(
-                    scan_named_multiplicative_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=ordered_basis_tuple,
-                        order=order,
-                        max_abs_exponent=max_abs_exponent,
-                    )
-                ),
-                fractional_linear_scans=tuple(
-                    scan_named_fractional_linear_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=ordered_basis_tuple,
-                        order=order,
-                    )
-                ),
-                two_layer_fractional_linear_scans=tuple(
-                    scan_named_two_layer_fractional_linear_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=ordered_basis_tuple,
-                        order=order,
-                        solve_order=solve_order,
-                        max_reported_hits=max_reported_two_layer_hits,
-                    )
-                ),
+                polynomial_scans=direct_scans.polynomial_scans,
+                multiplicative_scans=direct_scans.multiplicative_scans,
+                fractional_linear_scans=direct_scans.fractional_linear_scans,
+                two_layer_fractional_linear_scans=direct_scans.two_layer_fractional_linear_scans,
                 quotient_basis_series=quotient_basis_tuple,
-                quotient_polynomial_scans=tuple(
-                    scan_named_polynomial_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=quotient_ordered_basis_tuple,
-                        order=order,
-                        degree_values=degree_values,
-                    )
-                ),
-                quotient_multiplicative_scans=tuple(
-                    scan_named_multiplicative_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=quotient_ordered_basis_tuple,
-                        order=order,
-                        max_abs_exponent=max_abs_exponent,
-                    )
-                ),
-                quotient_fractional_linear_scans=tuple(
-                    scan_named_fractional_linear_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=quotient_ordered_basis_tuple,
-                        order=order,
-                    )
-                ),
-                quotient_two_layer_fractional_linear_scans=tuple(
-                    scan_named_two_layer_fractional_linear_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=quotient_ordered_basis_tuple,
-                        order=order,
-                        solve_order=solve_order,
-                        max_reported_hits=max_reported_two_layer_hits,
-                    )
-                ),
+                quotient_polynomial_scans=quotient_scans.polynomial_scans,
+                quotient_multiplicative_scans=quotient_scans.multiplicative_scans,
+                quotient_fractional_linear_scans=quotient_scans.fractional_linear_scans,
+                quotient_two_layer_fractional_linear_scans=quotient_scans.two_layer_fractional_linear_scans,
                 mixed_quotient_basis_series=mixed_quotient_basis_tuple,
-                mixed_quotient_polynomial_scans=tuple(
-                    scan_named_polynomial_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
-                        order=order,
-                        degree_values=degree_values,
-                    )
-                ),
-                mixed_quotient_multiplicative_scans=tuple(
-                    scan_named_multiplicative_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
-                        order=order,
-                        max_abs_exponent=max_abs_exponent,
-                    )
-                ),
-                mixed_quotient_fractional_linear_scans=tuple(
-                    scan_named_fractional_linear_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
-                        order=order,
-                    )
-                ),
-                mixed_quotient_two_layer_fractional_linear_scans=tuple(
-                    scan_named_two_layer_fractional_linear_prefixes(
-                        target_series=target_series,
-                        ordered_basis_series=mixed_quotient_ordered_basis_tuple,
-                        order=order,
-                        solve_order=solve_order,
-                        max_reported_hits=max_reported_two_layer_hits,
-                    )
-                ),
+                mixed_quotient_polynomial_scans=mixed_quotient_scans.polynomial_scans,
+                mixed_quotient_multiplicative_scans=mixed_quotient_scans.multiplicative_scans,
+                mixed_quotient_fractional_linear_scans=mixed_quotient_scans.fractional_linear_scans,
+                mixed_quotient_two_layer_fractional_linear_scans=mixed_quotient_scans.two_layer_fractional_linear_scans,
             )
         )
     return scans
@@ -3084,8 +3215,40 @@ def scan_gg_modular_equation_box(
     ordered_basis_series = tuple((label, series) for label, _, series in ordered_basis_entries)
     quotient_basis_series = _gg_modular_equation_quotient_basis_series(ordered_basis_entries)
     quotient_ordered_basis_series = tuple((label, series) for label, _, series in quotient_basis_series)
-    quotient_basis_series = _gg_modular_equation_quotient_basis_series(ordered_basis_entries)
-    quotient_ordered_basis_series = tuple((label, series) for label, _, series in quotient_basis_series)
+    mixed_quotient_basis_series = (
+        ((ordered_basis_entries[0][0], ordered_basis_entries[0][1], ordered_basis_entries[0][2]),)
+        + quotient_basis_series
+    )
+    mixed_quotient_ordered_basis_series = tuple(
+        (label, series) for label, _, series in mixed_quotient_basis_series
+    )
+    direct_scans = scan_named_prefix_boxes(
+        target_series=target_series,
+        ordered_basis_series=ordered_basis_series,
+        order=order,
+        degree_values=degree_values,
+        required_variable="F",
+        max_abs_exponent=max_abs_exponent,
+        solve_order=solve_order,
+    )
+    quotient_scans = scan_named_prefix_boxes(
+        target_series=target_series,
+        ordered_basis_series=quotient_ordered_basis_series,
+        order=order,
+        degree_values=degree_values,
+        required_variable="F",
+        max_abs_exponent=max_abs_exponent,
+        solve_order=solve_order,
+    )
+    mixed_quotient_scans = scan_named_prefix_boxes(
+        target_series=target_series,
+        ordered_basis_series=mixed_quotient_ordered_basis_series,
+        order=order,
+        degree_values=degree_values,
+        required_variable="F",
+        max_abs_exponent=max_abs_exponent,
+        solve_order=solve_order,
+    )
 
     checked_templates: list[str] = []
     hit_templates: list[str] = []
@@ -3099,71 +3262,20 @@ def scan_gg_modular_equation_box(
         ordered_basis_series=ordered_basis_entries,
         checked_templates=tuple(checked_templates),
         hit_templates=tuple(hit_templates),
-        polynomial_scans=tuple(
-            scan_named_polynomial_prefixes(
-                target_series=target_series,
-                ordered_basis_series=ordered_basis_series,
-                order=order,
-                degree_values=degree_values,
-                required_variable="F",
-            )
-        ),
-        multiplicative_scans=tuple(
-            scan_named_multiplicative_prefixes(
-                target_series=target_series,
-                ordered_basis_series=ordered_basis_series,
-                order=order,
-                max_abs_exponent=max_abs_exponent,
-            )
-        ),
-        fractional_linear_scans=tuple(
-            scan_named_fractional_linear_prefixes(
-                target_series=target_series,
-                ordered_basis_series=ordered_basis_series,
-                order=order,
-            )
-        ),
-        two_layer_fractional_linear_scans=tuple(
-            scan_named_two_layer_fractional_linear_prefixes(
-                target_series=target_series,
-                ordered_basis_series=ordered_basis_series,
-                order=order,
-                solve_order=solve_order,
-            )
-        ),
+        polynomial_scans=direct_scans.polynomial_scans,
+        multiplicative_scans=direct_scans.multiplicative_scans,
+        fractional_linear_scans=direct_scans.fractional_linear_scans,
+        two_layer_fractional_linear_scans=direct_scans.two_layer_fractional_linear_scans,
         quotient_basis_series=quotient_basis_series,
-        quotient_polynomial_scans=tuple(
-            scan_named_polynomial_prefixes(
-                target_series=target_series,
-                ordered_basis_series=quotient_ordered_basis_series,
-                order=order,
-                degree_values=degree_values,
-                required_variable="F",
-            )
-        ),
-        quotient_multiplicative_scans=tuple(
-            scan_named_multiplicative_prefixes(
-                target_series=target_series,
-                ordered_basis_series=quotient_ordered_basis_series,
-                order=order,
-                max_abs_exponent=max_abs_exponent,
-            )
-        ),
-        quotient_fractional_linear_scans=tuple(
-            scan_named_fractional_linear_prefixes(
-                target_series=target_series,
-                ordered_basis_series=quotient_ordered_basis_series,
-                order=order,
-            )
-        ),
-        quotient_two_layer_fractional_linear_scans=tuple(
-            scan_named_two_layer_fractional_linear_prefixes(
-                target_series=target_series,
-                ordered_basis_series=quotient_ordered_basis_series,
-                order=order,
-                solve_order=solve_order,
-            )
-        ),
+        quotient_polynomial_scans=quotient_scans.polynomial_scans,
+        quotient_multiplicative_scans=quotient_scans.multiplicative_scans,
+        quotient_fractional_linear_scans=quotient_scans.fractional_linear_scans,
+        quotient_two_layer_fractional_linear_scans=quotient_scans.two_layer_fractional_linear_scans,
+        mixed_quotient_basis_series=mixed_quotient_basis_series,
+        mixed_quotient_polynomial_scans=mixed_quotient_scans.polynomial_scans,
+        mixed_quotient_multiplicative_scans=mixed_quotient_scans.multiplicative_scans,
+        mixed_quotient_fractional_linear_scans=mixed_quotient_scans.fractional_linear_scans,
+        mixed_quotient_two_layer_fractional_linear_scans=mixed_quotient_scans.two_layer_fractional_linear_scans,
     )
 
 
@@ -3453,22 +3565,19 @@ def build_candidate_identification_note(
         )
         for label, _, series in source_family_base_series
     )
-    source_family_multiplicative_scans = scan_named_multiplicative_prefixes(
+    source_family_prefix_scans = scan_named_prefix_boxes(
         target_series=ratio_series,
         ordered_basis_series=source_family_basis_series,
         order=profile_order,
+        degree_values=(),
+        include_polynomial=False,
         max_abs_exponent=4 if smoke else 6,
-    )
-    source_family_fractional_linear_scans = scan_named_fractional_linear_prefixes(
-        target_series=ratio_series,
-        ordered_basis_series=source_family_basis_series,
-        order=profile_order,
-    )
-    source_family_two_layer_fractional_linear_scans = scan_named_two_layer_fractional_linear_prefixes(
-        target_series=ratio_series,
-        ordered_basis_series=source_family_basis_series,
-        order=profile_order,
         solve_order=min(profile_order, 14 if smoke else 18),
+    )
+    source_family_multiplicative_scans = source_family_prefix_scans.multiplicative_scans
+    source_family_fractional_linear_scans = source_family_prefix_scans.fractional_linear_scans
+    source_family_two_layer_fractional_linear_scans = (
+        source_family_prefix_scans.two_layer_fractional_linear_scans
     )
     parameterized_source_family_scans = scan_parameterized_source_family_power_boxes(
         target_series=ratio_series,
@@ -5526,6 +5635,7 @@ def build_candidate_identification_note(
                 f"- Base benchmark: `{gg_modular_equation_scan.benchmark_name}`",
                 "- This lane keeps the sign and substitution objects explicit instead of flattening them into a larger anonymous basis box.",
                 "- The literature-motivated basis here starts with `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, and `GG(t^4)`, and in the full profile it also includes the odd-prime descendants suggested by the GG modular-equation papers.",
+                "- We also run a mixed quotient-coordinate pass that keeps `GG(t)` explicit while letting the correction move in quotient coordinates such as `GG(-t)/GG(t)` and `GG(t^p)/GG(t)`.",
             ]
         )
         basis_descriptions = [
@@ -5700,6 +5810,87 @@ def build_candidate_identification_note(
                 if scan.error is not None:
                     lines.append(
                         f"- Quotient-coordinate two-layer fractional-linear prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                    )
+            mixed_descriptions = [
+                f"`{label} = {expression}`"
+                for label, expression, _ in gg_modular_equation_scan.mixed_quotient_basis_series
+            ]
+            lines.append(f"- Mixed quotient basis: {', '.join(mixed_descriptions)}")
+
+            grouped_gg_mixed_polynomial_scans: dict[int, list[NamedPolynomialRelationScan]] = {}
+            for scan in gg_modular_equation_scan.mixed_quotient_polynomial_scans:
+                grouped_gg_mixed_polynomial_scans.setdefault(scan.max_total_degree, []).append(scan)
+
+            any_gg_mixed_polynomial_hit = any(
+                scan.relation is not None for scan in gg_modular_equation_scan.mixed_quotient_polynomial_scans
+            )
+            if not any_gg_mixed_polynomial_hit:
+                lines.append("- Mixed quotient-coordinate polynomial scan: no candidate-dependent hit was found in the checked prefixes.")
+            for degree in sorted(grouped_gg_mixed_polynomial_scans):
+                scans = grouped_gg_mixed_polynomial_scans[degree]
+                prefix_labels = [f"`{scan.basis_labels[-1]}`" for scan in scans if scan.error is None]
+                if not any_gg_mixed_polynomial_hit and prefix_labels:
+                    lines.append(
+                        f"- Mixed quotient-coordinate polynomial `total degree <= {degree}`: no hit for prefixes ending at {', '.join(prefix_labels)}."
+                    )
+                for scan in scans:
+                    if scan.error is not None:
+                        lines.append(
+                            f"- Mixed quotient-coordinate polynomial `total degree <= {degree}` prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                        )
+
+            any_gg_mixed_multiplicative_hit = any(
+                scan.relation is not None for scan in gg_modular_equation_scan.mixed_quotient_multiplicative_scans
+            )
+            no_hit_labels = [
+                f"`{scan.basis_labels[-1]}`"
+                for scan in gg_modular_equation_scan.mixed_quotient_multiplicative_scans
+                if scan.error is None and scan.relation is None
+            ]
+            if not any_gg_mixed_multiplicative_hit and no_hit_labels:
+                lines.append(
+                    f"- Mixed quotient-coordinate multiplicative scan: no hit for prefixes ending at {', '.join(no_hit_labels)}."
+                )
+            for scan in gg_modular_equation_scan.mixed_quotient_multiplicative_scans:
+                if scan.error is not None:
+                    lines.append(
+                        f"- Mixed quotient-coordinate multiplicative prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                    )
+
+            any_gg_mixed_fractional_hit = any(
+                scan.relation is not None for scan in gg_modular_equation_scan.mixed_quotient_fractional_linear_scans
+            )
+            no_hit_labels = [
+                f"`{scan.basis_labels[-1]}`"
+                for scan in gg_modular_equation_scan.mixed_quotient_fractional_linear_scans
+                if scan.error is None and scan.relation is None
+            ]
+            if not any_gg_mixed_fractional_hit and no_hit_labels:
+                lines.append(
+                    f"- Mixed quotient-coordinate fractional-linear scan: no hit for prefixes ending at {', '.join(no_hit_labels)}."
+                )
+            for scan in gg_modular_equation_scan.mixed_quotient_fractional_linear_scans:
+                if scan.error is not None:
+                    lines.append(
+                        f"- Mixed quotient-coordinate fractional-linear prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
+                    )
+
+            any_gg_mixed_two_layer_hit = any(
+                scan.total_hits > 0 for scan in gg_modular_equation_scan.mixed_quotient_two_layer_fractional_linear_scans
+            )
+            no_hit_labels = [
+                f"`{scan.basis_labels[-1]}`"
+                for scan in gg_modular_equation_scan.mixed_quotient_two_layer_fractional_linear_scans
+                if scan.error is None and scan.total_hits == 0
+            ]
+            if not any_gg_mixed_two_layer_hit and no_hit_labels:
+                lines.append(
+                    f"- Mixed quotient-coordinate two-layer fractional-linear scan: no hit for prefixes ending at {', '.join(no_hit_labels)}."
+                )
+            for scan in gg_modular_equation_scan.mixed_quotient_two_layer_fractional_linear_scans:
+                if scan.error is not None:
+                    lines.append(
+                        f"- Mixed quotient-coordinate two-layer fractional-linear prefix ending at `{scan.basis_labels[-1]}` skipped: {scan.error}"
                     )
         lines.append("")
 

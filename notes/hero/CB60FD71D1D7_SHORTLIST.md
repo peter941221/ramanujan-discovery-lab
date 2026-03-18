@@ -123,8 +123,8 @@ of a `1 + q^n`-denominator continued fraction with a two-term numerator pattern.
      `GG(t)`, `GG(-t)`, `GG(t^2)`, `GG(t^3)`, `GG(t^4)`, `GG(t^5)`,
      `GG(t^7)`, `GG(t^11)` and the quotient coordinates against `GG(t)`
      explicit, and that lane still reports `0` hits in its exact-template,
-     polynomial, multiplicative, fractional-linear, two-layer, and
-     quotient-coordinate scans.
+     polynomial, multiplicative, fractional-linear, two-layer,
+     quotient-coordinate, and mixed quotient-coordinate scans.
 
 6. Page-43 substitutions with explicit source-family meaning
    - Goal: move beyond the currently formalized zero-shift, single-parameter,
@@ -149,9 +149,11 @@ These are concrete expansions to the current tooling that would make a new
      the next jump should be richer transform templates for those same
      literature families before trying larger raw degree boxes.
    - On the `GG` side specifically, the next best jump is no longer another
-     anonymous mixed-family box; it is an odd-prime modular-equation lane that
-     preserves `GG(t^p)` / `GG(t)` quotient meaning for the primes already
-     emphasized by the literature.
+     anonymous mixed-family box; the odd-prime modular-equation lane and the
+     first mixed quotient-coordinate follow-up are now covered, so the next
+     best jump is a literature-specific higher-arity modular-equation template
+     that still preserves `GG(t^p)` / `GG(t)` quotient meaning for the primes
+     already emphasized by the literature.
 
 2. Extend the source-family-specific exact lane
    - The zero-shift, first unit-`a`, first unit-`b`, first mixed unit-`a` /
