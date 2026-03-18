@@ -405,11 +405,15 @@ class GGModularEquationScan:
     ordered_basis_series: tuple[tuple[str, str, Series], ...]
     checked_templates: tuple[str, ...]
     hit_templates: tuple[str, ...]
+    exact_polynomial_template_labels: tuple[str, ...]
+    exact_polynomial_template_hits: tuple[str, ...]
     polynomial_scans: tuple[NamedPolynomialRelationScan, ...]
     multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
     fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
     two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...]
     quotient_basis_series: tuple[tuple[str, str, Series], ...]
+    quotient_exact_polynomial_template_labels: tuple[str, ...]
+    quotient_exact_polynomial_template_hits: tuple[str, ...]
     quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...]
     quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
     quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
@@ -647,6 +651,47 @@ def _relation_residual_series(
                 continue
             residual[n] = sp.simplify(residual[n] + coeff * term[n])
     return residual
+
+
+def _polynomial_relation_from_sympy_expr(
+    *,
+    expr: sp.Expr,
+    variables: tuple[str, ...],
+    order: int,
+) -> PolynomialRelation:
+    symbols = tuple(sp.Symbol(name) for name in variables)
+    poly = sp.Poly(sp.expand(expr), *symbols)
+    coeff_map: dict[tuple[int, ...], sp.Integer] = {}
+    max_total_degree = 0
+    for exponents, coeff in poly.terms():
+        coeff_s = sp.simplify(coeff)
+        if coeff_s == 0:
+            continue
+        normalized_exponents = tuple(int(value) for value in exponents)
+        coeff_map[normalized_exponents] = sp.Integer(coeff_s)
+        max_total_degree = max(max_total_degree, sum(normalized_exponents))
+    if not coeff_map:
+        raise ValueError("polynomial expression was identically zero")
+    return PolynomialRelation(
+        order_checked=order,
+        variables=variables,
+        max_total_degree=max_total_degree,
+        coefficients=coeff_map,
+    )
+
+
+@lru_cache(maxsize=None)
+def _two_layer_factor_index_pairs(
+    basis_size: int,
+) -> tuple[tuple[tuple[int, int], tuple[int, int]], ...]:
+    if basis_size < 1:
+        return ()
+    factor_indices = tuple(product(range(basis_size), repeat=2))
+    pairs: list[tuple[tuple[int, int], tuple[int, int]]] = []
+    for index, factor_1 in enumerate(factor_indices):
+        for factor_2 in factor_indices[index:]:
+            pairs.append((factor_1, factor_2))
+    return tuple(pairs)
 
 
 def benchmark_power_substitution_series(base_series: Series, *, power: int, order: int) -> Series:
@@ -1473,6 +1518,39 @@ def scan_two_quotient_core_source_family_eta_corrections(
     )
 
 
+def _two_quotient_core_correction_entries(
+    *,
+    target_series: Series,
+    quotient_basis_entries: tuple[tuple[str, str, str, str, Series], ...],
+) -> tuple[
+    tuple[tuple[str, int], ...],
+    tuple[tuple[str, str, str, str, str, str, Series], ...],
+]:
+    family_pair_counts: dict[str, int] = {}
+    entries: list[tuple[str, str, str, str, str, str, Series]] = []
+    for left_index, left_entry in enumerate(quotient_basis_entries):
+        left_family, _, left_label, left_expression, left_series = left_entry
+        for right_entry in quotient_basis_entries[left_index + 1 :]:
+            right_family, _, right_label, right_expression, right_series = right_entry
+            if left_family == right_family:
+                continue
+            pair_label = f"{left_family}×{right_family}"
+            family_pair_counts[pair_label] = family_pair_counts.get(pair_label, 0) + 1
+            correction_series = series_div(target_series, series_mul(left_series, right_series))
+            entries.append(
+                (
+                    left_family,
+                    right_family,
+                    left_label,
+                    right_label,
+                    left_expression,
+                    right_expression,
+                    correction_series,
+                )
+            )
+    return tuple(sorted(family_pair_counts.items())), tuple(entries)
+
+
 def scan_two_quotient_core_source_family_self_quotient_products(
     *,
     target_series: Series,
@@ -1483,6 +1561,7 @@ def scan_two_quotient_core_source_family_self_quotient_products(
     max_abs_exponent: int = 8,
     supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
     quotient_basis_entries: tuple[tuple[str, str, str, str, Series], ...] | None = None,
+    correction_entries: tuple[tuple[str, str, str, str, str, str, Series], ...] | None = None,
 ) -> TwoQuotientCoreSourceFamilySelfQuotientProductScan:
     if quotient_basis_entries is None:
         quotient_basis_entries = _source_family_quotient_basis_entries(
@@ -1501,47 +1580,46 @@ def scan_two_quotient_core_source_family_self_quotient_products(
             hits=(),
         )
 
-    family_pair_counts: dict[str, int] = {}
-    hits: list[TwoQuotientCoreSourceFamilySelfQuotientProductHit] = []
-    total_basis_pairs_checked = 0
-    for left_index, left_entry in enumerate(quotient_basis_entries):
-        left_family, _, left_label, left_expression, left_series = left_entry
-        for right_entry in quotient_basis_entries[left_index + 1 :]:
-            right_family, _, right_label, right_expression, right_series = right_entry
-            if left_family == right_family:
-                continue
+    family_pair_basis_counts: tuple[tuple[str, int], ...]
+    if correction_entries is None:
+        family_pair_basis_counts, correction_entries = _two_quotient_core_correction_entries(
+            target_series=target_series,
+            quotient_basis_entries=quotient_basis_entries,
+        )
+    else:
+        family_pair_counts: dict[str, int] = {}
+        for left_family, right_family, *_ in correction_entries:
             pair_label = f"{left_family}×{right_family}"
             family_pair_counts[pair_label] = family_pair_counts.get(pair_label, 0) + 1
-            total_basis_pairs_checked += 1
-
-            pair_series = series_mul(left_series, right_series)
-            correction_series = series_div(target_series, pair_series)
-            for modulus in normalized_moduli:
-                try:
-                    relation = search_self_quotient_product_relation(
-                        target_series=correction_series,
-                        modulus=modulus,
-                        order=order,
-                        max_abs_exponent=max_abs_exponent,
-                    )
-                except ValueError:
-                    continue
-                if relation is None:
-                    continue
-                hits.append(
-                    TwoQuotientCoreSourceFamilySelfQuotientProductHit(
-                        quotient_labels=(left_label, right_label),
-                        quotient_expressions=(left_expression, right_expression),
-                        modulus=modulus,
-                        relation=relation,
-                    )
+        family_pair_basis_counts = tuple(sorted(family_pair_counts.items()))
+    hits: list[TwoQuotientCoreSourceFamilySelfQuotientProductHit] = []
+    for _, _, left_label, right_label, left_expression, right_expression, correction_series in correction_entries:
+        for modulus in normalized_moduli:
+            try:
+                relation = search_self_quotient_product_relation(
+                    target_series=correction_series,
+                    modulus=modulus,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
                 )
+            except ValueError:
+                continue
+            if relation is None:
+                continue
+            hits.append(
+                TwoQuotientCoreSourceFamilySelfQuotientProductHit(
+                    quotient_labels=(left_label, right_label),
+                    quotient_expressions=(left_expression, right_expression),
+                    modulus=modulus,
+                    relation=relation,
+                )
+            )
 
     return TwoQuotientCoreSourceFamilySelfQuotientProductScan(
         moduli_checked=normalized_moduli,
-        family_pair_basis_counts=tuple(sorted(family_pair_counts.items())),
-        total_basis_pairs_checked=total_basis_pairs_checked,
-        total_boxes_checked=total_basis_pairs_checked * len(normalized_moduli),
+        family_pair_basis_counts=family_pair_basis_counts,
+        total_basis_pairs_checked=len(correction_entries),
+        total_boxes_checked=len(correction_entries) * len(normalized_moduli),
         hits=tuple(hits),
     )
 
@@ -1556,6 +1634,7 @@ def scan_two_quotient_core_source_family_self_polynomial_relations(
     degree_values: tuple[int, ...] = (1, 2),
     supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
     quotient_basis_entries: tuple[tuple[str, str, str, str, Series], ...] | None = None,
+    correction_entries: tuple[tuple[str, str, str, str, str, str, Series], ...] | None = None,
 ) -> TwoQuotientCoreSourceFamilySelfPolynomialScan:
     if quotient_basis_entries is None:
         quotient_basis_entries = _source_family_quotient_basis_entries(
@@ -1576,58 +1655,58 @@ def scan_two_quotient_core_source_family_self_polynomial_relations(
             hits=(),
         )
 
-    family_pair_counts: dict[str, int] = {}
-    hits: list[TwoQuotientCoreSourceFamilySelfPolynomialHit] = []
-    total_basis_pairs_checked = 0
-    for left_index, left_entry in enumerate(quotient_basis_entries):
-        left_family, _, left_label, left_expression, left_series = left_entry
-        for right_entry in quotient_basis_entries[left_index + 1 :]:
-            right_family, _, right_label, right_expression, right_series = right_entry
-            if left_family == right_family:
-                continue
+    family_pair_basis_counts: tuple[tuple[str, int], ...]
+    if correction_entries is None:
+        family_pair_basis_counts, correction_entries = _two_quotient_core_correction_entries(
+            target_series=target_series,
+            quotient_basis_entries=quotient_basis_entries,
+        )
+    else:
+        family_pair_counts: dict[str, int] = {}
+        for left_family, right_family, *_ in correction_entries:
             pair_label = f"{left_family}×{right_family}"
             family_pair_counts[pair_label] = family_pair_counts.get(pair_label, 0) + 1
-            total_basis_pairs_checked += 1
-
-            correction_series = series_div(target_series, series_mul(left_series, right_series))
-            for modulus in normalized_moduli:
-                powered_correction = benchmark_power_substitution_series(
-                    correction_series,
-                    power=modulus,
-                    order=order,
-                )
-                series_by_variable = {
-                    "G": correction_series,
-                    f"G{modulus}": powered_correction,
-                }
-                for degree in normalized_degrees:
-                    try:
-                        relation = search_polynomial_relation(
-                            series_by_variable=series_by_variable,
-                            order=order,
-                            max_total_degree=degree,
-                            required_variable="G",
-                        )
-                    except ValueError:
-                        continue
-                    if relation is None:
-                        continue
-                    hits.append(
-                        TwoQuotientCoreSourceFamilySelfPolynomialHit(
-                            quotient_labels=(left_label, right_label),
-                            quotient_expressions=(left_expression, right_expression),
-                            modulus=modulus,
-                            max_total_degree=degree,
-                            relation=relation,
-                        )
+        family_pair_basis_counts = tuple(sorted(family_pair_counts.items()))
+    hits: list[TwoQuotientCoreSourceFamilySelfPolynomialHit] = []
+    for _, _, left_label, right_label, left_expression, right_expression, correction_series in correction_entries:
+        for modulus in normalized_moduli:
+            powered_correction = benchmark_power_substitution_series(
+                correction_series,
+                power=modulus,
+                order=order,
+            )
+            series_by_variable = {
+                "G": correction_series,
+                f"G{modulus}": powered_correction,
+            }
+            for degree in normalized_degrees:
+                try:
+                    relation = search_polynomial_relation(
+                        series_by_variable=series_by_variable,
+                        order=order,
+                        max_total_degree=degree,
+                        required_variable="G",
                     )
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                hits.append(
+                    TwoQuotientCoreSourceFamilySelfPolynomialHit(
+                        quotient_labels=(left_label, right_label),
+                        quotient_expressions=(left_expression, right_expression),
+                        modulus=modulus,
+                        max_total_degree=degree,
+                        relation=relation,
+                    )
+                )
 
     return TwoQuotientCoreSourceFamilySelfPolynomialScan(
         moduli_checked=normalized_moduli,
         degree_values=normalized_degrees,
-        family_pair_basis_counts=tuple(sorted(family_pair_counts.items())),
-        total_basis_pairs_checked=total_basis_pairs_checked,
-        total_boxes_checked=total_basis_pairs_checked * len(normalized_moduli) * len(normalized_degrees),
+        family_pair_basis_counts=family_pair_basis_counts,
+        total_basis_pairs_checked=len(correction_entries),
+        total_boxes_checked=len(correction_entries) * len(normalized_moduli) * len(normalized_degrees),
         hits=tuple(hits),
     )
 
@@ -1643,6 +1722,7 @@ def scan_two_quotient_core_source_family_self_eta_corrections(
     max_abs_exponent: int = 8,
     supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
     quotient_basis_entries: tuple[tuple[str, str, str, str, Series], ...] | None = None,
+    correction_entries: tuple[tuple[str, str, str, str, str, str, Series], ...] | None = None,
 ) -> TwoQuotientCoreSourceFamilySelfEtaCorrectionScan:
     if quotient_basis_entries is None:
         quotient_basis_entries = _source_family_quotient_basis_entries(
@@ -1667,62 +1747,62 @@ def scan_two_quotient_core_source_family_self_eta_corrections(
         level: _eta_quotient_basis_series(level=level, order=order)
         for level in normalized_levels
     }
-    family_pair_counts: dict[str, int] = {}
-    hits: list[TwoQuotientCoreSourceFamilySelfEtaCorrectionHit] = []
-    total_basis_pairs_checked = 0
-    for left_index, left_entry in enumerate(quotient_basis_entries):
-        left_family, _, left_label, left_expression, left_series = left_entry
-        for right_entry in quotient_basis_entries[left_index + 1 :]:
-            right_family, _, right_label, right_expression, right_series = right_entry
-            if left_family == right_family:
-                continue
+    family_pair_basis_counts: tuple[tuple[str, int], ...]
+    if correction_entries is None:
+        family_pair_basis_counts, correction_entries = _two_quotient_core_correction_entries(
+            target_series=target_series,
+            quotient_basis_entries=quotient_basis_entries,
+        )
+    else:
+        family_pair_counts: dict[str, int] = {}
+        for left_family, right_family, *_ in correction_entries:
             pair_label = f"{left_family}×{right_family}"
             family_pair_counts[pair_label] = family_pair_counts.get(pair_label, 0) + 1
-            total_basis_pairs_checked += 1
-
-            correction_series = series_div(target_series, series_mul(left_series, right_series))
-            for modulus in normalized_moduli:
-                powered_correction = benchmark_power_substitution_series(
-                    correction_series,
-                    power=modulus,
-                    order=order,
-                )
-                for level, eta_basis in eta_basis_by_level.items():
-                    g_power_label = f"G{modulus}"
-                    basis_series_by_variable = {
-                        g_power_label: powered_correction,
-                        **eta_basis,
-                    }
-                    try:
-                        relation = search_multiplicative_relation(
-                            target_series=correction_series,
-                            basis_series_by_variable=basis_series_by_variable,
-                            order=order,
-                            max_abs_exponent=max_abs_exponent,
-                        )
-                    except ValueError:
-                        continue
-                    if relation is None:
-                        continue
-                    g_power_exponent = relation.exponents.get(g_power_label)
-                    if g_power_exponent not in {-1, 1}:
-                        continue
-                    hits.append(
-                        TwoQuotientCoreSourceFamilySelfEtaCorrectionHit(
-                            quotient_labels=(left_label, right_label),
-                            quotient_expressions=(left_expression, right_expression),
-                            modulus=modulus,
-                            level=level,
-                            relation=relation,
-                        )
+        family_pair_basis_counts = tuple(sorted(family_pair_counts.items()))
+    hits: list[TwoQuotientCoreSourceFamilySelfEtaCorrectionHit] = []
+    for _, _, left_label, right_label, left_expression, right_expression, correction_series in correction_entries:
+        for modulus in normalized_moduli:
+            powered_correction = benchmark_power_substitution_series(
+                correction_series,
+                power=modulus,
+                order=order,
+            )
+            for level, eta_basis in eta_basis_by_level.items():
+                g_power_label = f"G{modulus}"
+                basis_series_by_variable = {
+                    g_power_label: powered_correction,
+                    **eta_basis,
+                }
+                try:
+                    relation = search_multiplicative_relation(
+                        target_series=correction_series,
+                        basis_series_by_variable=basis_series_by_variable,
+                        order=order,
+                        max_abs_exponent=max_abs_exponent,
                     )
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                g_power_exponent = relation.exponents.get(g_power_label)
+                if g_power_exponent not in {-1, 1}:
+                    continue
+                hits.append(
+                    TwoQuotientCoreSourceFamilySelfEtaCorrectionHit(
+                        quotient_labels=(left_label, right_label),
+                        quotient_expressions=(left_expression, right_expression),
+                        modulus=modulus,
+                        level=level,
+                        relation=relation,
+                    )
+                )
 
     return TwoQuotientCoreSourceFamilySelfEtaCorrectionScan(
         moduli_checked=normalized_moduli,
         levels_checked=normalized_levels,
-        family_pair_basis_counts=tuple(sorted(family_pair_counts.items())),
-        total_basis_pairs_checked=total_basis_pairs_checked,
-        total_boxes_checked=total_basis_pairs_checked * len(normalized_moduli) * len(normalized_levels),
+        family_pair_basis_counts=family_pair_basis_counts,
+        total_basis_pairs_checked=len(correction_entries),
+        total_boxes_checked=len(correction_entries) * len(normalized_moduli) * len(normalized_levels),
         hits=tuple(hits),
     )
 
@@ -1737,6 +1817,7 @@ def scan_two_quotient_core_source_family_self_fractional_linear_relations(
     order: int,
     supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
     quotient_basis_entries: tuple[tuple[str, str, str, str, Series], ...] | None = None,
+    correction_entries: tuple[tuple[str, str, str, str, str, str, Series], ...] | None = None,
 ) -> TwoQuotientCoreSourceFamilySelfFractionalLinearScan:
     if quotient_basis_entries is None:
         quotient_basis_entries = _source_family_quotient_basis_entries(
@@ -1761,64 +1842,64 @@ def scan_two_quotient_core_source_family_self_fractional_linear_relations(
         level: _eta_quotient_basis_series(level=level, order=order)
         for level in normalized_levels
     }
-    family_pair_counts: dict[str, int] = {}
-    hits: list[TwoQuotientCoreSourceFamilySelfFractionalLinearHit] = []
-    total_basis_pairs_checked = 0
-    for left_index, left_entry in enumerate(quotient_basis_entries):
-        left_family, _, left_label, left_expression, left_series = left_entry
-        for right_entry in quotient_basis_entries[left_index + 1 :]:
-            right_family, _, right_label, right_expression, right_series = right_entry
-            if left_family == right_family:
-                continue
+    family_pair_basis_counts: tuple[tuple[str, int], ...]
+    if correction_entries is None:
+        family_pair_basis_counts, correction_entries = _two_quotient_core_correction_entries(
+            target_series=target_series,
+            quotient_basis_entries=quotient_basis_entries,
+        )
+    else:
+        family_pair_counts: dict[str, int] = {}
+        for left_family, right_family, *_ in correction_entries:
             pair_label = f"{left_family}×{right_family}"
             family_pair_counts[pair_label] = family_pair_counts.get(pair_label, 0) + 1
-            total_basis_pairs_checked += 1
-
-            correction_series = series_div(target_series, series_mul(left_series, right_series))
-            for modulus in normalized_moduli:
-                powered_correction = benchmark_power_substitution_series(
-                    correction_series,
-                    power=modulus,
-                    order=order,
+        family_pair_basis_counts = tuple(sorted(family_pair_counts.items()))
+    hits: list[TwoQuotientCoreSourceFamilySelfFractionalLinearHit] = []
+    for _, _, left_label, right_label, left_expression, right_expression, correction_series in correction_entries:
+        for modulus in normalized_moduli:
+            powered_correction = benchmark_power_substitution_series(
+                correction_series,
+                power=modulus,
+                order=order,
+            )
+            g_power_label = f"G{modulus}"
+            for level, eta_basis in eta_basis_by_level.items():
+                basis_series_by_variable = {
+                    g_power_label: powered_correction,
+                    **eta_basis,
+                }
+                try:
+                    relation = search_fractional_linear_relation(
+                        target_series=correction_series,
+                        basis_series_by_variable=basis_series_by_variable,
+                        order=order,
+                    )
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                uses_g_power = (
+                    relation.numerator_coefficients.get(g_power_label) is not None
+                    or relation.denominator_coefficients.get(g_power_label) is not None
                 )
-                g_power_label = f"G{modulus}"
-                for level, eta_basis in eta_basis_by_level.items():
-                    basis_series_by_variable = {
-                        g_power_label: powered_correction,
-                        **eta_basis,
-                    }
-                    try:
-                        relation = search_fractional_linear_relation(
-                            target_series=correction_series,
-                            basis_series_by_variable=basis_series_by_variable,
-                            order=order,
-                        )
-                    except ValueError:
-                        continue
-                    if relation is None:
-                        continue
-                    uses_g_power = (
-                        relation.numerator_coefficients.get(g_power_label) is not None
-                        or relation.denominator_coefficients.get(g_power_label) is not None
+                if not uses_g_power:
+                    continue
+                hits.append(
+                    TwoQuotientCoreSourceFamilySelfFractionalLinearHit(
+                        quotient_labels=(left_label, right_label),
+                        quotient_expressions=(left_expression, right_expression),
+                        modulus=modulus,
+                        level=level,
+                        relation=relation,
                     )
-                    if not uses_g_power:
-                        continue
-                    hits.append(
-                        TwoQuotientCoreSourceFamilySelfFractionalLinearHit(
-                            quotient_labels=(left_label, right_label),
-                            quotient_expressions=(left_expression, right_expression),
-                            modulus=modulus,
-                            level=level,
-                            relation=relation,
-                        )
-                    )
+                )
 
     return TwoQuotientCoreSourceFamilySelfFractionalLinearScan(
         moduli_checked=normalized_moduli,
         levels_checked=normalized_levels,
-        family_pair_basis_counts=tuple(sorted(family_pair_counts.items())),
-        total_basis_pairs_checked=total_basis_pairs_checked,
-        total_boxes_checked=total_basis_pairs_checked * len(normalized_moduli) * len(normalized_levels),
+        family_pair_basis_counts=family_pair_basis_counts,
+        total_basis_pairs_checked=len(correction_entries),
+        total_boxes_checked=len(correction_entries) * len(normalized_moduli) * len(normalized_levels),
         hits=tuple(hits),
     )
 
@@ -2653,38 +2734,41 @@ def scan_named_two_layer_fractional_linear_prefixes(
         hits: list[TwoLayerFractionalLinearRelation] = []
         seen_signatures: set[str] = set()
         total_hits = 0
-        tuples_checked = 0
+        factor_pairs = _two_layer_factor_index_pairs(len(basis_names))
+        tuples_checked = len(factor_pairs)
         try:
-            for numerator_variables in product(basis_names, repeat=2):
-                for denominator_variables in product(basis_names, repeat=2):
-                    factor_1 = (numerator_variables[0], denominator_variables[0])
-                    factor_2 = (numerator_variables[1], denominator_variables[1])
-                    if factor_1 > factor_2:
-                        continue
-                    tuples_checked += 1
-                    try:
-                        relation = search_two_layer_fractional_linear_relation(
-                            target_series=target_series,
-                            basis_series_by_variable=basis_series_by_variable,
-                            numerator_variables=numerator_variables,
-                            denominator_variables=denominator_variables,
-                            order=order,
-                            solve_order=solve_order,
-                        )
-                    except ValueError:
-                        continue
-                    if relation is None:
-                        continue
-                    signature = _format_two_layer_fractional_linear_relation(
-                        relation,
-                        target_variable="F",
+            for factor_1, factor_2 in factor_pairs:
+                numerator_variables = (
+                    basis_names[factor_1[0]],
+                    basis_names[factor_2[0]],
+                )
+                denominator_variables = (
+                    basis_names[factor_1[1]],
+                    basis_names[factor_2[1]],
+                )
+                try:
+                    relation = search_two_layer_fractional_linear_relation(
+                        target_series=target_series,
+                        basis_series_by_variable=basis_series_by_variable,
+                        numerator_variables=numerator_variables,
+                        denominator_variables=denominator_variables,
+                        order=order,
+                        solve_order=solve_order,
                     )
-                    if signature in seen_signatures:
-                        continue
-                    seen_signatures.add(signature)
-                    total_hits += 1
-                    if len(hits) < max_reported_hits:
-                        hits.append(relation)
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                signature = _format_two_layer_fractional_linear_relation(
+                    relation,
+                    target_variable="F",
+                )
+                if signature in seen_signatures:
+                    continue
+                seen_signatures.add(signature)
+                total_hits += 1
+                if len(hits) < max_reported_hits:
+                    hits.append(relation)
 
             scans.append(
                 NamedTwoLayerFractionalLinearRelationScan(
@@ -2865,38 +2949,41 @@ def scan_named_prefix_boxes(
         hits: list[TwoLayerFractionalLinearRelation] = []
         seen_signatures: set[str] = set()
         total_hits = 0
-        tuples_checked = 0
+        factor_pairs = _two_layer_factor_index_pairs(len(basis_names))
+        tuples_checked = len(factor_pairs)
         try:
-            for numerator_variables in product(basis_names, repeat=2):
-                for denominator_variables in product(basis_names, repeat=2):
-                    factor_1 = (numerator_variables[0], denominator_variables[0])
-                    factor_2 = (numerator_variables[1], denominator_variables[1])
-                    if factor_1 > factor_2:
-                        continue
-                    tuples_checked += 1
-                    try:
-                        relation = search_two_layer_fractional_linear_relation(
-                            target_series=target_series,
-                            basis_series_by_variable=basis_series_by_variable,
-                            numerator_variables=numerator_variables,
-                            denominator_variables=denominator_variables,
-                            order=order,
-                            solve_order=solve_order,
-                        )
-                    except ValueError:
-                        continue
-                    if relation is None:
-                        continue
-                    signature = _format_two_layer_fractional_linear_relation(
-                        relation,
-                        target_variable="F",
+            for factor_1, factor_2 in factor_pairs:
+                numerator_variables = (
+                    basis_names[factor_1[0]],
+                    basis_names[factor_2[0]],
+                )
+                denominator_variables = (
+                    basis_names[factor_1[1]],
+                    basis_names[factor_2[1]],
+                )
+                try:
+                    relation = search_two_layer_fractional_linear_relation(
+                        target_series=target_series,
+                        basis_series_by_variable=basis_series_by_variable,
+                        numerator_variables=numerator_variables,
+                        denominator_variables=denominator_variables,
+                        order=order,
+                        solve_order=solve_order,
                     )
-                    if signature in seen_signatures:
-                        continue
-                    seen_signatures.add(signature)
-                    total_hits += 1
-                    if len(hits) < max_reported_two_layer_hits:
-                        hits.append(relation)
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                signature = _format_two_layer_fractional_linear_relation(
+                    relation,
+                    target_variable="F",
+                )
+                if signature in seen_signatures:
+                    continue
+                seen_signatures.add(signature)
+                total_hits += 1
+                if len(hits) < max_reported_two_layer_hits:
+                    hits.append(relation)
 
             two_layer_fractional_linear_scans.append(
                 NamedTwoLayerFractionalLinearRelationScan(
@@ -3071,6 +3158,129 @@ def _gg_modular_equation_ordered_basis_series(
             )
         )
     return tuple(entries)
+
+
+@lru_cache(maxsize=None)
+def _gg_exact_modular_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
+    u, v, t = sp.symbols("F G T")
+    direct_level_3_expr = (
+        u**4 * v**3 * t**5
+        - 3 * u**3 * v**2 * t**3
+        + u**3
+        - 3 * u**2 * v**3 * t**4
+        + 3 * u**2 * v * t
+        - u * v**4 * t**5
+        + 3 * u * v**2 * t**2
+        - v
+    )
+    direct_level_3 = _polynomial_relation_from_sympy_expr(
+        expr=direct_level_3_expr,
+        variables=("F", "G", "T"),
+        order=order,
+    )
+    w = sp.Symbol("G")
+    direct_level_4_expr = (
+        u**4 * w**3 * t**6
+        + u**4 * w**2 * t**4
+        + u**4 * w * t**2
+        + u**4
+        - 4 * u**2 * w**3 * t**5
+        + 4 * u**2 * w * t
+        + w**4 * t**6
+        - w**3 * t**4
+        + w**2 * t**2
+        - w
+    )
+    direct_level_4 = _polynomial_relation_from_sympy_expr(
+        expr=direct_level_4_expr,
+        variables=("F", "G", "T"),
+        order=order,
+    )
+    q = sp.Symbol("Q")
+    quotient_level_3 = _polynomial_relation_from_sympy_expr(
+        expr=sp.expand(direct_level_3_expr.subs(v, u * q)),
+        variables=("F", "Q", "T"),
+        order=order,
+    )
+    quotient_level_4 = _polynomial_relation_from_sympy_expr(
+        expr=sp.expand(direct_level_4_expr.subs(w, u * q)),
+        variables=("F", "Q", "T"),
+        order=order,
+    )
+    return (
+        ("Chan--Huang Cor. 3.2(i) on (F, G3)", direct_level_3),
+        ("Chan--Huang Cor. 3.2(ii) on (F, G4)", direct_level_4),
+        ("Chan--Huang Cor. 3.2(i) on (F, Q_3)", quotient_level_3),
+        ("Chan--Huang Cor. 3.2(ii) on (F, Q_4)", quotient_level_4),
+    )
+
+
+def _gg_exact_modular_template_hits(
+    *,
+    target_series: Series,
+    ordered_basis_entries: tuple[tuple[str, str, Series], ...],
+    quotient_basis_entries: tuple[tuple[str, str, Series], ...],
+    order: int,
+) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
+    basis_by_label = {label: series for label, _, series in ordered_basis_entries}
+    quotient_by_label = {label: series for label, _, series in quotient_basis_entries}
+    relation_map = dict(_gg_exact_modular_relations(order))
+    variable_series = [sp.Integer(0) for _ in range(order)]
+    if order > 1:
+        variable_series[1] = sp.Integer(1)
+
+    exact_labels: list[str] = []
+    exact_hits: list[str] = []
+    if "GG3" in basis_by_label:
+        label = "Chan--Huang Cor. 3.2(i) on (F, GG3)"
+        exact_labels.append(label)
+        residual = _relation_residual_series(
+            relation_map["Chan--Huang Cor. 3.2(i) on (F, G3)"],
+            series_by_variable={"F": target_series, "G": basis_by_label["GG3"], "T": variable_series},
+            order=order,
+        )
+        if all(sp.simplify(value) == 0 for value in residual):
+            exact_hits.append(label)
+    if "GG4" in basis_by_label:
+        label = "Chan--Huang Cor. 3.2(ii) on (F, GG4)"
+        exact_labels.append(label)
+        residual = _relation_residual_series(
+            relation_map["Chan--Huang Cor. 3.2(ii) on (F, G4)"],
+            series_by_variable={"F": target_series, "G": basis_by_label["GG4"], "T": variable_series},
+            order=order,
+        )
+        if all(sp.simplify(value) == 0 for value in residual):
+            exact_hits.append(label)
+
+    quotient_labels: list[str] = []
+    quotient_hits: list[str] = []
+    if "Q_3" in quotient_by_label:
+        label = "Chan--Huang Cor. 3.2(i) on (F, Q_3)"
+        quotient_labels.append(label)
+        residual = _relation_residual_series(
+            relation_map["Chan--Huang Cor. 3.2(i) on (F, Q_3)"],
+            series_by_variable={"F": target_series, "Q": quotient_by_label["Q_3"], "T": variable_series},
+            order=order,
+        )
+        if all(sp.simplify(value) == 0 for value in residual):
+            quotient_hits.append(label)
+    if "Q_4" in quotient_by_label:
+        label = "Chan--Huang Cor. 3.2(ii) on (F, Q_4)"
+        quotient_labels.append(label)
+        residual = _relation_residual_series(
+            relation_map["Chan--Huang Cor. 3.2(ii) on (F, Q_4)"],
+            series_by_variable={"F": target_series, "Q": quotient_by_label["Q_4"], "T": variable_series},
+            order=order,
+        )
+        if all(sp.simplify(value) == 0 for value in residual):
+            quotient_hits.append(label)
+
+    return (
+        tuple(exact_labels),
+        tuple(exact_hits),
+        tuple(quotient_labels),
+        tuple(quotient_hits),
+    )
 
 
 def _explicit_source_family_template_series(
@@ -3249,6 +3459,17 @@ def scan_gg_modular_equation_box(
         max_abs_exponent=max_abs_exponent,
         solve_order=solve_order,
     )
+    (
+        exact_polynomial_template_labels,
+        exact_polynomial_template_hits,
+        quotient_exact_polynomial_template_labels,
+        quotient_exact_polynomial_template_hits,
+    ) = _gg_exact_modular_template_hits(
+        target_series=target_series,
+        ordered_basis_entries=ordered_basis_entries,
+        quotient_basis_entries=quotient_basis_series,
+        order=order,
+    )
 
     checked_templates: list[str] = []
     hit_templates: list[str] = []
@@ -3262,11 +3483,15 @@ def scan_gg_modular_equation_box(
         ordered_basis_series=ordered_basis_entries,
         checked_templates=tuple(checked_templates),
         hit_templates=tuple(hit_templates),
+        exact_polynomial_template_labels=exact_polynomial_template_labels,
+        exact_polynomial_template_hits=exact_polynomial_template_hits,
         polynomial_scans=direct_scans.polynomial_scans,
         multiplicative_scans=direct_scans.multiplicative_scans,
         fractional_linear_scans=direct_scans.fractional_linear_scans,
         two_layer_fractional_linear_scans=direct_scans.two_layer_fractional_linear_scans,
         quotient_basis_series=quotient_basis_series,
+        quotient_exact_polynomial_template_labels=quotient_exact_polynomial_template_labels,
+        quotient_exact_polynomial_template_hits=quotient_exact_polynomial_template_hits,
         quotient_polynomial_scans=quotient_scans.polynomial_scans,
         quotient_multiplicative_scans=quotient_scans.multiplicative_scans,
         quotient_fractional_linear_scans=quotient_scans.fractional_linear_scans,
@@ -3312,38 +3537,41 @@ def scan_ratio_benchmark_two_layer_fractional_linear_prefixes(
         hits: list[TwoLayerFractionalLinearRelation] = []
         seen_signatures: set[str] = set()
         total_hits = 0
-        tuples_checked = 0
+        factor_pairs = _two_layer_factor_index_pairs(len(basis_names))
+        tuples_checked = len(factor_pairs)
         try:
-            for numerator_variables in product(basis_names, repeat=2):
-                for denominator_variables in product(basis_names, repeat=2):
-                    factor_1 = (numerator_variables[0], denominator_variables[0])
-                    factor_2 = (numerator_variables[1], denominator_variables[1])
-                    if factor_1 > factor_2:
-                        continue
-                    tuples_checked += 1
-                    try:
-                        relation = search_two_layer_fractional_linear_relation(
-                            target_series=ratio_series,
-                            basis_series_by_variable=variables,
-                            numerator_variables=numerator_variables,
-                            denominator_variables=denominator_variables,
-                            order=order,
-                            solve_order=solve_order,
-                        )
-                    except ValueError:
-                        continue
-                    if relation is None:
-                        continue
-                    signature = _format_two_layer_fractional_linear_relation(
-                        relation,
-                        target_variable="F",
+            for factor_1, factor_2 in factor_pairs:
+                numerator_variables = (
+                    basis_names[factor_1[0]],
+                    basis_names[factor_2[0]],
+                )
+                denominator_variables = (
+                    basis_names[factor_1[1]],
+                    basis_names[factor_2[1]],
+                )
+                try:
+                    relation = search_two_layer_fractional_linear_relation(
+                        target_series=ratio_series,
+                        basis_series_by_variable=variables,
+                        numerator_variables=numerator_variables,
+                        denominator_variables=denominator_variables,
+                        order=order,
+                        solve_order=solve_order,
                     )
-                    if signature in seen_signatures:
-                        continue
-                    seen_signatures.add(signature)
-                    total_hits += 1
-                    if len(hits) < max_reported_hits:
-                        hits.append(relation)
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                signature = _format_two_layer_fractional_linear_relation(
+                    relation,
+                    target_variable="F",
+                )
+                if signature in seen_signatures:
+                    continue
+                seen_signatures.add(signature)
+                total_hits += 1
+                if len(hits) < max_reported_hits:
+                    hits.append(relation)
 
             scans.append(
                 TwoLayerFractionalLinearRelationScan(
@@ -3614,6 +3842,10 @@ def build_candidate_identification_note(
             quotient_basis_entries=source_family_quotient_basis_entries,
         )
     )
+    two_quotient_core_correction_entries = _two_quotient_core_correction_entries(
+        target_series=ratio_series,
+        quotient_basis_entries=source_family_quotient_basis_entries,
+    )[1]
     two_quotient_core_source_family_eta_correction_scan = (
         scan_two_quotient_core_source_family_eta_corrections(
             target_series=ratio_series,
@@ -3636,6 +3868,7 @@ def build_candidate_identification_note(
             max_abs_exponent=4 if smoke else 6,
             supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
+            correction_entries=two_quotient_core_correction_entries,
         )
     )
     two_quotient_core_source_family_self_polynomial_scan = (
@@ -3648,6 +3881,7 @@ def build_candidate_identification_note(
             degree_values=(1, 2),
             supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
+            correction_entries=two_quotient_core_correction_entries,
         )
     )
     two_quotient_core_source_family_self_eta_scan = (
@@ -3661,6 +3895,7 @@ def build_candidate_identification_note(
             max_abs_exponent=4 if smoke else 6,
             supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
+            correction_entries=two_quotient_core_correction_entries,
         )
     )
     two_quotient_core_source_family_self_fractional_linear_scan = (
@@ -3673,6 +3908,7 @@ def build_candidate_identification_note(
             order=profile_order,
             supplemental_powers_by_family=supplemental_source_family_powers,
             quotient_basis_entries=source_family_quotient_basis_entries,
+            correction_entries=two_quotient_core_correction_entries,
         )
     )
     progress_status["cross-family-functional-scans"] = "completed"
@@ -5652,6 +5888,20 @@ def build_candidate_identification_note(
             )
         else:
             lines.append("- No exact direct / reciprocal / quotient template hit was found in this modular-equation box.")
+        if gg_modular_equation_scan.exact_polynomial_template_labels:
+            lines.append(
+                "- Exact literature polynomial templates checked: "
+                + ", ".join(f"`{label}`" for label in gg_modular_equation_scan.exact_polynomial_template_labels)
+                + "."
+            )
+            if gg_modular_equation_scan.exact_polynomial_template_hits:
+                lines.append(
+                    "- Exact literature polynomial hit(s): "
+                    + ", ".join(f"`{label}`" for label in gg_modular_equation_scan.exact_polynomial_template_hits)
+                    + "."
+                )
+            else:
+                lines.append("- No exact Chan--Huang direct modular-equation polynomial hit was found.")
         lines.append("")
 
         grouped_gg_polynomial_scans: dict[int, list[NamedPolynomialRelationScan]] = {}
@@ -5735,6 +5985,28 @@ def build_candidate_identification_note(
                 for label, expression, _ in gg_modular_equation_scan.quotient_basis_series
             ]
             lines.append(f"- Quotient basis: {', '.join(quotient_descriptions)}")
+            if gg_modular_equation_scan.quotient_exact_polynomial_template_labels:
+                lines.append(
+                    "- Exact quotient-coordinate literature templates checked: "
+                    + ", ".join(
+                        f"`{label}`"
+                        for label in gg_modular_equation_scan.quotient_exact_polynomial_template_labels
+                    )
+                    + "."
+                )
+                if gg_modular_equation_scan.quotient_exact_polynomial_template_hits:
+                    lines.append(
+                        "- Exact quotient-coordinate literature hit(s): "
+                        + ", ".join(
+                            f"`{label}`"
+                            for label in gg_modular_equation_scan.quotient_exact_polynomial_template_hits
+                        )
+                        + "."
+                    )
+                else:
+                    lines.append(
+                        "- No exact Chan--Huang quotient-coordinate modular-equation polynomial hit was found."
+                    )
 
             grouped_gg_quotient_polynomial_scans: dict[int, list[NamedPolynomialRelationScan]] = {}
             for scan in gg_modular_equation_scan.quotient_polynomial_scans:

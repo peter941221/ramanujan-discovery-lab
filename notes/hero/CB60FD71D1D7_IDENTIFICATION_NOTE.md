@@ -473,6 +473,8 @@ F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
 - Basis ladder: `GG = GG(t)`, `GGneg = GG(-t)`, `GG2 = GG(t^2)`, `GG3 = GG(t^3)`, `GG4 = GG(t^4)`, `GG5 = GG(t^5)`, `GG7 = GG(t^7)`, `GG11 = GG(t^11)`
 - Exact direct / reciprocal / quotient templates checked: `72`.
 - No exact direct / reciprocal / quotient template hit was found in this modular-equation box.
+- Exact literature polynomial templates checked: `Chan--Huang Cor. 3.2(i) on (F, GG3)`, `Chan--Huang Cor. 3.2(ii) on (F, GG4)`.
+- No exact Chan--Huang direct modular-equation polynomial hit was found.
 
 - Polynomial scan: no candidate-dependent hit was found in the checked modular-equation prefixes.
 - Polynomial `total degree <= 1`: no hit for prefixes ending at `GG`, `GGneg`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
@@ -481,6 +483,8 @@ F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
 - Fractional-linear scan: no hit for modular-equation prefixes ending at `GG`, `GGneg`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
 - Two-layer fractional-linear scan: no hit for modular-equation prefixes ending at `GGneg`, `GG2`, `GG3`, `GG4`, `GG5`, `GG7`, `GG11`.
 - Quotient basis: `Q_neg = GG(-t) / GG(t)`, `Q_2 = GG(t^2) / GG(t)`, `Q_3 = GG(t^3) / GG(t)`, `Q_4 = GG(t^4) / GG(t)`, `Q_5 = GG(t^5) / GG(t)`, `Q_7 = GG(t^7) / GG(t)`, `Q_11 = GG(t^11) / GG(t)`
+- Exact quotient-coordinate literature templates checked: `Chan--Huang Cor. 3.2(i) on (F, Q_3)`, `Chan--Huang Cor. 3.2(ii) on (F, Q_4)`.
+- No exact Chan--Huang quotient-coordinate modular-equation polynomial hit was found.
 - Quotient-coordinate polynomial scan: no candidate-dependent hit was found in the checked quotient prefixes.
 - Quotient-coordinate polynomial `total degree <= 1`: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
 - Quotient-coordinate polynomial `total degree <= 2`: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.

@@ -43,6 +43,10 @@ has been found in the primary sources checked so far.
   quotient coordinates against `GG(q^3)`, even after adding the mixed
   quotient-coordinate pass that keeps `GG(q^3)` explicit while scanning
   low-degree corrections in `GG(-q^3)/GG(q^3)` and `GG(q^{3p})/GG(q^3)`.
+- The first exact Chan--Huang modular-equation polynomials in the `q^3` and
+  `q^4` lanes also still give `0` hits, both in the direct
+  `F` vs. `GG(q^{3m})` form and in the quotient-coordinate
+  `F` vs. `GG(q^{3m})/GG(q^3)` form.
 
 ## What Has Not Been Claimed
 
@@ -62,3 +66,4 @@ candidate = RR(q^3) * (1 - q^12 + 2 q^15 - q^18) + O(q^31)
 
 - Bowman, Mc Laughlin, Wyshinski, 2006: https://arxiv.org/abs/1901.00584
 - Lee, Mc Laughlin, Sohn, 2020: https://arxiv.org/abs/1906.11991
+- Chan, Huang, 1997: https://mrc.sdu.edu.cn/ziliao/8.pdf

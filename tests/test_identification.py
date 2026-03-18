@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 import sympy as sp
 
+from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
@@ -39,7 +40,13 @@ from ramanujan_discovery.identification import (
     search_two_layer_fractional_linear_relation,
 )
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
-from ramanujan_discovery.series import series_div, series_invert, series_mul, series_pow
+from ramanujan_discovery.series import (
+    continued_fraction_series_coeffs,
+    series_div,
+    series_invert,
+    series_mul,
+    series_pow,
+)
 from ramanujan_discovery.storage import write_candidates
 
 
@@ -1345,6 +1352,33 @@ def test_scan_gg_modular_equation_box_supports_odd_prime_descendants():
         "Q_7",
         "Q_11",
     )
+
+
+def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
+    order = 24
+    gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
+    gg = continued_fraction_series_coeffs(gg_template, depth=24, order=order)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=gg,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=10,
+    )
+
+    assert scan.exact_polynomial_template_labels == (
+        "Chan--Huang Cor. 3.2(i) on (F, GG3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, GG4)",
+    )
+    assert scan.exact_polynomial_template_hits == scan.exact_polynomial_template_labels
+    assert scan.quotient_exact_polynomial_template_labels == (
+        "Chan--Huang Cor. 3.2(i) on (F, Q_3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, Q_4)",
+    )
+    assert scan.quotient_exact_polynomial_template_hits == scan.quotient_exact_polynomial_template_labels
 
 
 def test_scan_parameterized_source_family_power_boxes_supports_family_specific_powers():

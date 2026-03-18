@@ -129,9 +129,14 @@ their ratio objects:
    `GG(t^5)/GG(t)`, `GG(t^7)/GG(t)`, `GG(t^11)/GG(t)`, and the mixed
    quotient-coordinate prefixes that keep `GG(t)` explicit while allowing
    corrections in those quotient variables.
+   That same lane now also checks the first exact Chan--Huang
+   modular-equation polynomials in the `q^3` and `q^4` lanes, both in direct
+   form against `GG(t^3)`, `GG(t^4)` and in quotient-coordinate form against
+   `GG(t^3)/GG(t)`, `GG(t^4)/GG(t)`.
    That more source-faithful box still gives `0` hits in its exact template,
    low-degree polynomial, multiplicative, fractional-linear, two-layer
-   fractional-linear, quotient-coordinate, and mixed quotient-coordinate scans.
+   fractional-linear, quotient-coordinate, mixed quotient-coordinate, and
+   exact Chan--Huang direct / quotient polynomial scans.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.
