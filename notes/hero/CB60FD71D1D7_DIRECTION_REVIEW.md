@@ -53,6 +53,7 @@ Reduced-ratio modular-unit boxes: 0 hits
 Reduced-object Mahler/transfer boxes: 0 hits
 Reduced-ratio plus-product boxes: 0 hits
 Reduced-ratio signed-product boxes: 0 hits
+Reduced-ratio signed-eta transfer boxes: 0 hits
 ```
 
 ## Why The Direction Is Still Correct
@@ -83,6 +84,9 @@ In award-track terms, this is still the correct trunk because:
    bounded signed-product lane
    `prod (1-t^r)^{a_r} (1+t^r)^{b_r}`,
    the reduced ratio still gives `0` hits
+7. even after allowing the reduced ratio to carry its own shifted copy together
+   with signed modular-unit pieces and eta pieces in one bounded
+   signed-eta transfer lane, the reduced ratio still gives `0` hits
 
 ## What The New `0` Hits Actually Mean
 
@@ -105,6 +109,9 @@ They mean something more specific:
   bounded boxes
 - even after letting the reduced ratio mix the `1-t^r` and `1+t^r` building
   blocks in one signed modular-unit box, the bounded lane still stays empty
+- even after combining that signed modular-unit box with the simplest self-copy
+  lane `F_red(t^m)` and small eta pieces, the bounded transfer lane still stays
+  empty
 
 So the current situation is closer to:
 

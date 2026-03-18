@@ -8,6 +8,7 @@ from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
     scan_ratio_self_plus_product_relations,
+    scan_ratio_self_signed_eta_relations,
     scan_ratio_self_signed_product_relations,
     signed_argument_substitution_series,
     scan_explicit_source_family_eta_correction_templates,
@@ -45,6 +46,7 @@ from ramanujan_discovery.identification import (
     search_self_mahler_linear_relation,
     search_polynomial_relation,
     search_self_quotient_plus_product_relation,
+    search_self_signed_eta_relation,
     search_self_quotient_signed_product_relation,
     search_self_polynomial_uniqueness_relation,
     search_self_quotient_product_relation,
@@ -228,6 +230,38 @@ def _build_mahler_three_level_target(*, modulus: int, order: int):
             value += target[(n - 2) // (modulus * modulus)]
         target[n] = sp.simplify(value)
     return target
+
+
+def _build_self_signed_eta_target(
+    *,
+    modulus: int,
+    minus_exponents_by_residue: dict[int, int],
+    plus_exponents_by_residue: dict[int, int],
+    eta_series,
+    order: int,
+):
+    signed_quotient = [sp.Integer(0) for _ in range(order)]
+    signed_quotient[0] = sp.Integer(1)
+    for residue, exponent in sorted(minus_exponents_by_residue.items()):
+        factor = _one_minus_power_series(residue, order)
+        if exponent >= 0:
+            signed_quotient = series_mul(signed_quotient, series_pow(factor, exponent))
+        else:
+            signed_quotient = series_mul(signed_quotient, series_invert(series_pow(factor, -exponent)))
+    for residue, exponent in sorted(plus_exponents_by_residue.items()):
+        factor = [sp.Integer(0) for _ in range(order)]
+        factor[0] = sp.Integer(1)
+        if residue < order:
+            factor[residue] = sp.Integer(1)
+        if exponent >= 0:
+            signed_quotient = series_mul(signed_quotient, series_pow(factor, exponent))
+        else:
+            signed_quotient = series_mul(signed_quotient, series_invert(series_pow(factor, -exponent)))
+    return _build_self_eta_target(
+        modulus=modulus,
+        eta_series=series_mul(signed_quotient, eta_series),
+        order=order,
+    )
 
 
 def _eta_pochhammer_series(divisor: int, order: int):
@@ -647,6 +681,35 @@ def test_search_self_quotient_signed_product_relation_finds_mixed_identity():
         order=order,
     )
     assert any(scan.relation is not None and scan.modulus == 2 for scan in scans)
+
+
+def test_search_self_signed_eta_relation_finds_mixed_transfer_identity():
+    order = 20
+    eta_basis = series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order)))
+    target = _build_self_signed_eta_target(
+        modulus=2,
+        minus_exponents_by_residue={1: 1},
+        plus_exponents_by_residue={1: -1},
+        eta_series=eta_basis,
+        order=order,
+    )
+
+    relation = search_self_signed_eta_relation(
+        target_series=target,
+        modulus=2,
+        level=2,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.exponents == {"G2": 1, "M1": 1, "P1": -1, "E1": 2, "E2": -1}
+
+    scans = scan_ratio_self_signed_eta_relations(
+        ratio_series=target,
+        moduli=(2, 3),
+        eta_levels=(1, 2),
+        order=order,
+    )
+    assert any(scan.relation is not None and scan.modulus == 2 and scan.level == 2 for scan in scans)
 
 
 def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation():
@@ -1827,6 +1890,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Mahler/transfer" in text
     assert "plus-product" in text
     assert "signed-product" in text
+    assert "signed-eta transfer" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text

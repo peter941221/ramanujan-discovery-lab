@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1860.05`
+- Build elapsed seconds before final render: `1786.94`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `73.48`
-- `source-family-scans`: `449.03`
-- `cross-family-functional-scans`: `867.65`
-- `explicit-gg-family-scans`: `394.08`
-- `benchmark-tower-scans`: `75.81`
-- `final-render`: `14.13`
+- `rhs-uniqueness-search`: `69.77`
+- `source-family-scans`: `422.71`
+- `cross-family-functional-scans`: `847.99`
+- `explicit-gg-family-scans`: `373.58`
+- `benchmark-tower-scans`: `72.90`
+- `final-render`: `13.15`
 
 ## Objects
 
@@ -157,6 +157,8 @@ No reduced-ratio self-quotient finite-product hit was found in the scanned box.
 No reduced-ratio self-quotient plus-product hit was found in the scanned box.
 
 No reduced-ratio self-quotient signed-product hit was found in the scanned box.
+
+No reduced-ratio self signed-eta transfer hit was found in the scanned box.
 
 No reduced-ratio eta-quotient hit was found in the scanned box.
 

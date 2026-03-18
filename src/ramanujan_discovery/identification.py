@@ -161,6 +161,16 @@ class SignedSelfQuotientProductRelationScan:
 
 
 @dataclass(frozen=True)
+class SelfSignedEtaRelationScan:
+    """Outcome for one modulus/level scan of a mixed signed modular-unit self-functional box."""
+
+    modulus: int
+    level: int
+    relation: MultiplicativeRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class SourceCorrectionSelfPolynomialHit:
     """A self-polynomial uniqueness hit after factoring source cores."""
 
@@ -1424,6 +1434,84 @@ def scan_ratio_self_signed_product_relations(
     return scans
 
 
+def search_self_signed_eta_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    level: int,
+    order: int,
+    max_abs_exponent: int = 8,
+) -> MultiplicativeRelation | None:
+    """Search F = F(t^m)^a * prod (1-t^r)^u_r (1+t^r)^v_r * eta(t)^w with bounded exponents."""
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if level < 1:
+        raise ValueError("level must be positive")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a self signed-eta search")
+
+    g_power_label = f"G{modulus}"
+    basis_series_by_variable = {
+        g_power_label: benchmark_power_substitution_series(target_series, power=modulus, order=order),
+        **{f"M{residue}": _one_minus_power_series(power=residue, order=order) for residue in range(1, modulus)},
+        **{f"P{residue}": _one_plus_power_series(power=residue, order=order) for residue in range(1, modulus)},
+        **_eta_quotient_basis_series(level=level, order=order),
+    }
+    relation = search_multiplicative_relation(
+        target_series=target_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+        max_abs_exponent=max_abs_exponent,
+    )
+    if relation is None:
+        return None
+    g_power_exponent = relation.exponents.get(g_power_label)
+    if g_power_exponent not in {-1, 1}:
+        return None
+    return relation
+
+
+def scan_ratio_self_signed_eta_relations(
+    *,
+    ratio_series: Series,
+    moduli: tuple[int, ...],
+    eta_levels: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[SelfSignedEtaRelationScan]:
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    unique_levels = tuple(sorted({level for level in eta_levels if level >= 1}))
+    if not unique_moduli or not unique_levels:
+        return []
+
+    scans: list[SelfSignedEtaRelationScan] = []
+    for modulus in unique_moduli:
+        for level in unique_levels:
+            try:
+                relation = search_self_signed_eta_relation(
+                    target_series=ratio_series,
+                    modulus=modulus,
+                    level=level,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+                scans.append(SelfSignedEtaRelationScan(modulus=modulus, level=level, relation=relation))
+            except ValueError as exc:
+                scans.append(
+                    SelfSignedEtaRelationScan(
+                        modulus=modulus,
+                        level=level,
+                        relation=None,
+                        error=str(exc),
+                    )
+                )
+    return scans
+
+
 def _t_series(*, order: int) -> Series:
     series = [sp.Integer(0) for _ in range(order)]
     if order > 1:
@@ -2466,6 +2554,47 @@ def _format_self_signed_product_relation(
         terms.append(base if exponent == 1 else f"{base}^{exponent}")
     rhs = " * ".join(terms) if terms else "1"
     return f"{target_variable}({series_symbol}) / {target_variable}({series_symbol}^{modulus}) = {rhs}"
+
+
+def _format_self_signed_eta_relation(
+    relation: MultiplicativeRelation,
+    *,
+    modulus: int,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    g_power_label = f"G{modulus}"
+    terms: list[str] = []
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name)
+        if exponent is None:
+            continue
+        if name == g_power_label:
+            base = f"{target_variable}({series_symbol}^{modulus})"
+            terms.append(base if exponent == 1 else f"({base})^{exponent}")
+            continue
+        if name.startswith("M"):
+            residue = int(name.removeprefix("M"))
+            base = f"(1 - {series_symbol})" if residue == 1 else f"(1 - {series_symbol}^{residue})"
+            terms.append(base if exponent == 1 else f"{base}^{exponent}")
+            continue
+        if name.startswith("P"):
+            residue = int(name.removeprefix("P"))
+            base = f"(1 + {series_symbol})" if residue == 1 else f"(1 + {series_symbol}^{residue})"
+            terms.append(base if exponent == 1 else f"{base}^{exponent}")
+            continue
+        if name.startswith("E"):
+            divisor = int(name.removeprefix("E"))
+            base = (
+                f"({series_symbol}; {series_symbol})_inf"
+                if divisor == 1
+                else f"({series_symbol}^{divisor}; {series_symbol}^{divisor})_inf"
+            )
+            terms.append(base if exponent == 1 else f"{base}^{exponent}")
+            continue
+        terms.append(name if exponent == 1 else f"{name}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable} = {rhs}"
 
 
 def _format_eta_quotient_relation(
@@ -4893,6 +5022,7 @@ def build_candidate_identification_note(
     reduced_ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
     reduced_ratio_self_plus_product_scans: list[SelfQuotientProductRelationScan] = []
     reduced_ratio_self_signed_product_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_ratio_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
     reduced_ratio_eta_quotient_scans: list[EtaQuotientRelationScan] = []
     try:
         reduced_reciprocal_witness, reduced_reciprocal_series = _reduced_reciprocal_bridge(
@@ -4957,6 +5087,13 @@ def build_candidate_identification_note(
         reduced_ratio_self_signed_product_scans = scan_ratio_self_signed_product_relations(
             ratio_series=reduced_ratio_series,
             moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+        reduced_ratio_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
+            ratio_series=reduced_ratio_series,
+            moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 3),
+            eta_levels=_eta_scan_levels(tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 3)),
             order=reduced_bridge_order,
             max_abs_exponent=6 if smoke else 8,
         )
@@ -5896,6 +6033,19 @@ def build_candidate_identification_note(
                     continue
                 lines.append(
                     f"- `{_format_self_signed_product_relation(scan.relation, modulus=scan.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        reduced_ratio_self_signed_eta_hits = [scan for scan in reduced_ratio_self_signed_eta_scans if scan.relation is not None]
+        if not reduced_ratio_self_signed_eta_hits:
+            lines.append("No reduced-ratio self signed-eta transfer hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self signed-eta transfer hits were found:")
+            for scan in reduced_ratio_self_signed_eta_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- `m={scan.modulus}`, `N={scan.level}`: `{_format_self_signed_eta_relation(scan.relation, modulus=scan.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
                 )
         lines.append("")
 
