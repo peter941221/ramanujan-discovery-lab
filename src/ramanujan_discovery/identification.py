@@ -152,6 +152,15 @@ class SelfMahlerLinearScan:
 
 
 @dataclass(frozen=True)
+class SignedSelfQuotientProductRelationScan:
+    """Outcome for one modulus scan of a mixed (1-t^r)/(1+t^r) self-quotient box."""
+
+    modulus: int
+    relation: MultiplicativeRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class SourceCorrectionSelfPolynomialHit:
     """A self-polynomial uniqueness hit after factoring source cores."""
 
@@ -1352,6 +1361,69 @@ def scan_ratio_self_plus_product_relations(
     return scans
 
 
+def search_self_quotient_signed_product_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    order: int,
+    max_abs_exponent: int = 8,
+) -> MultiplicativeRelation | None:
+    """Search F(t)/F(t^m) = prod_r (1-t^r)^a_r (1+t^r)^b_r with bounded exponents."""
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a signed self-quotient product search")
+
+    target_power_series = benchmark_power_substitution_series(target_series, power=modulus, order=order)
+    quotient_series = series_div(target_series[:order], target_power_series)
+    basis_series_by_variable = {
+        **{f"M{residue}": _one_minus_power_series(power=residue, order=order) for residue in range(1, modulus)},
+        **{f"P{residue}": _one_plus_power_series(power=residue, order=order) for residue in range(1, modulus)},
+    }
+    return search_multiplicative_relation(
+        target_series=quotient_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+        max_abs_exponent=max_abs_exponent,
+    )
+
+
+def scan_ratio_self_signed_product_relations(
+    *,
+    ratio_series: Series,
+    moduli: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[SignedSelfQuotientProductRelationScan]:
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    if not unique_moduli:
+        return []
+
+    scans: list[SignedSelfQuotientProductRelationScan] = []
+    for modulus in unique_moduli:
+        try:
+            relation = search_self_quotient_signed_product_relation(
+                target_series=ratio_series,
+                modulus=modulus,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+            scans.append(SignedSelfQuotientProductRelationScan(modulus=modulus, relation=relation))
+        except ValueError as exc:
+            scans.append(
+                SignedSelfQuotientProductRelationScan(
+                    modulus=modulus,
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+    return scans
+
+
 def _t_series(*, order: int) -> Series:
     series = [sp.Integer(0) for _ in range(order)]
     if order > 1:
@@ -2369,6 +2441,31 @@ def _format_self_plus_product_relation(
             terms.append(f"{base}^{exponent}")
     rhs = " * ".join(terms) if terms else "1"
     return f"{target_variable}({series_symbol}) / {target_variable}({series_symbol}^{relation.modulus}) = {rhs}"
+
+
+def _format_self_signed_product_relation(
+    relation: MultiplicativeRelation,
+    *,
+    modulus: int,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    terms: list[str] = []
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name)
+        if exponent is None:
+            continue
+        if name.startswith("M"):
+            residue = int(name.removeprefix("M"))
+            base = f"(1 - {series_symbol})" if residue == 1 else f"(1 - {series_symbol}^{residue})"
+        elif name.startswith("P"):
+            residue = int(name.removeprefix("P"))
+            base = f"(1 + {series_symbol})" if residue == 1 else f"(1 + {series_symbol}^{residue})"
+        else:
+            base = name
+        terms.append(base if exponent == 1 else f"{base}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable}({series_symbol}) / {target_variable}({series_symbol}^{modulus}) = {rhs}"
 
 
 def _format_eta_quotient_relation(
@@ -4795,6 +4892,7 @@ def build_candidate_identification_note(
     reduced_ratio_mahler_scan = SelfMahlerLinearScan((), (), (), ())
     reduced_ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
     reduced_ratio_self_plus_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_ratio_self_signed_product_scans: list[SignedSelfQuotientProductRelationScan] = []
     reduced_ratio_eta_quotient_scans: list[EtaQuotientRelationScan] = []
     try:
         reduced_reciprocal_witness, reduced_reciprocal_series = _reduced_reciprocal_bridge(
@@ -4851,6 +4949,12 @@ def build_candidate_identification_note(
             max_abs_exponent=6 if smoke else 8,
         )
         reduced_ratio_self_plus_product_scans = scan_ratio_self_plus_product_relations(
+            ratio_series=reduced_ratio_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+        reduced_ratio_self_signed_product_scans = scan_ratio_self_signed_product_relations(
             ratio_series=reduced_ratio_series,
             moduli=reduced_bridge_moduli,
             order=reduced_bridge_order,
@@ -5779,6 +5883,19 @@ def build_candidate_identification_note(
                     continue
                 lines.append(
                     f"- `{_format_self_plus_product_relation(scan.relation, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        reduced_ratio_self_signed_hits = [scan for scan in reduced_ratio_self_signed_product_scans if scan.relation is not None]
+        if not reduced_ratio_self_signed_hits:
+            lines.append("No reduced-ratio self-quotient signed-product hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self-quotient signed-product hits were found:")
+            for scan in reduced_ratio_self_signed_product_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- `{_format_self_signed_product_relation(scan.relation, modulus=scan.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
                 )
         lines.append("")
 

@@ -8,6 +8,7 @@ from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
     scan_ratio_self_plus_product_relations,
+    scan_ratio_self_signed_product_relations,
     signed_argument_substitution_series,
     scan_explicit_source_family_eta_correction_templates,
     scan_quotient_core_source_family_eta_corrections,
@@ -44,6 +45,7 @@ from ramanujan_discovery.identification import (
     search_self_mahler_linear_relation,
     search_polynomial_relation,
     search_self_quotient_plus_product_relation,
+    search_self_quotient_signed_product_relation,
     search_self_polynomial_uniqueness_relation,
     search_self_quotient_product_relation,
     search_self_t_polynomial_fractional_linear_relation,
@@ -141,6 +143,40 @@ def _build_self_plus_product_target(*, modulus: int, exponents_by_residue: dict[
     product_series = [sp.Integer(0) for _ in range(order)]
     product_series[0] = sp.Integer(1)
     for residue, exponent in sorted(exponents_by_residue.items()):
+        factor = [sp.Integer(0) for _ in range(order)]
+        factor[0] = sp.Integer(1)
+        if residue < order:
+            factor[residue] = sp.Integer(1)
+        if exponent >= 0:
+            product_series = series_mul(product_series, series_pow(factor, exponent))
+        else:
+            product_series = series_mul(product_series, series_invert(series_pow(factor, -exponent)))
+
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    current = product_series
+    while any(sp.simplify(value) != 0 for value in current[1:]):
+        target = series_mul(target, current)
+        current = benchmark_power_substitution_series(current, power=modulus, order=order)
+    return target
+
+
+def _build_self_signed_product_target(
+    *,
+    modulus: int,
+    minus_exponents_by_residue: dict[int, int],
+    plus_exponents_by_residue: dict[int, int],
+    order: int,
+):
+    product_series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for residue, exponent in sorted(minus_exponents_by_residue.items()):
+        factor = _one_minus_power_series(residue, order)
+        if exponent >= 0:
+            product_series = series_mul(product_series, series_pow(factor, exponent))
+        else:
+            product_series = series_mul(product_series, series_invert(series_pow(factor, -exponent)))
+    for residue, exponent in sorted(plus_exponents_by_residue.items()):
         factor = [sp.Integer(0) for _ in range(order)]
         factor[0] = sp.Integer(1)
         if residue < order:
@@ -584,6 +620,33 @@ def test_search_self_quotient_plus_product_relation_finds_periodic_plus_identity
         order=order,
     )
     assert any(scan.relation is not None and scan.modulus == 3 for scan in scans)
+
+
+def test_search_self_quotient_signed_product_relation_finds_mixed_identity():
+    order = 20
+    minus_expected = {1: 1}
+    plus_expected = {1: -1}
+    ratio = _build_self_signed_product_target(
+        modulus=2,
+        minus_exponents_by_residue=minus_expected,
+        plus_exponents_by_residue=plus_expected,
+        order=order,
+    )
+
+    relation = search_self_quotient_signed_product_relation(
+        target_series=ratio,
+        modulus=2,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.exponents == {"M1": 1, "P1": -1}
+
+    scans = scan_ratio_self_signed_product_relations(
+        ratio_series=ratio,
+        moduli=(2, 3),
+        order=order,
+    )
+    assert any(scan.relation is not None and scan.modulus == 2 for scan in scans)
 
 
 def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation():
@@ -1763,6 +1826,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert ("F_red = B1 / R" in text) or ("Reduced-object bridge construction failed" in text)
     assert "Mahler/transfer" in text
     assert "plus-product" in text
+    assert "signed-product" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text
