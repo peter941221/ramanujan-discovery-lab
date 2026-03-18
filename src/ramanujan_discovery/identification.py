@@ -126,6 +126,52 @@ class SelfFractionalLinearUniquenessScan:
 
 
 @dataclass(frozen=True)
+class SourceCorrectionSelfPolynomialHit:
+    """A self-polynomial uniqueness hit after factoring source cores."""
+
+    basis_labels: tuple[str, ...]
+    basis_expressions: tuple[str, ...]
+    modulus: int
+    max_fg_total_degree: int
+    max_t_degree: int
+    relation: PolynomialRelation
+
+
+@dataclass(frozen=True)
+class SourceCorrectionSelfPolynomialScan:
+    """Summary of source-core-corrected self-polynomial scans."""
+
+    correction_size: int
+    moduli_checked: tuple[int, ...]
+    fg_degree_values: tuple[int, ...]
+    t_degree_values: tuple[int, ...]
+    total_corrections_checked: int
+    hits: tuple[SourceCorrectionSelfPolynomialHit, ...]
+
+
+@dataclass(frozen=True)
+class SourceCorrectionSelfFractionalLinearHit:
+    """A self-fractional-linear uniqueness hit after factoring source cores."""
+
+    basis_labels: tuple[str, ...]
+    basis_expressions: tuple[str, ...]
+    modulus: int
+    max_t_degree: int
+    relation: SelfTPolynomialFractionalLinearRelation
+
+
+@dataclass(frozen=True)
+class SourceCorrectionSelfFractionalLinearScan:
+    """Summary of source-core-corrected self-fractional-linear scans."""
+
+    correction_size: int
+    moduli_checked: tuple[int, ...]
+    t_degree_values: tuple[int, ...]
+    total_corrections_checked: int
+    hits: tuple[SourceCorrectionSelfFractionalLinearHit, ...]
+
+
+@dataclass(frozen=True)
 class MultiplicativeRelation:
     """A structured relation F = prod_i B_i^e_i with small integer exponents."""
 
@@ -2569,6 +2615,25 @@ def _format_self_t_polynomial_fractional_linear_relation(
     )
 
 
+def _format_source_correction_expression(
+    *,
+    basis_labels: tuple[str, ...],
+    basis_expressions: tuple[str, ...],
+    target_variable: str,
+) -> str:
+    factors: list[str] = []
+    for label, expression in zip(basis_labels, basis_expressions):
+        base = label if expression == label else f"{label} = {expression}"
+        factors.append(base)
+    source_product = " * ".join(label for label in basis_labels)
+    if len(factors) == 1:
+        return f"G = {target_variable} / {source_product}    with    {factors[0]}"
+    return (
+        f"G = {target_variable} / ({source_product})    with    "
+        + ", ".join(factors)
+    )
+
+
 def _fractional_linear_relation_residual_series(
     relation: FractionalLinearRelation,
     *,
@@ -2694,6 +2759,165 @@ def scan_self_fractional_linear_uniqueness_relations(
     return SelfFractionalLinearUniquenessScan(
         moduli_checked=normalized_moduli,
         t_degree_values=normalized_t_degrees,
+        hits=tuple(hits),
+    )
+
+
+def _source_core_correction_entries(
+    *,
+    target_series: Series,
+    ordered_base_families: tuple[tuple[str, str, Series], ...],
+    correction_size: int,
+) -> tuple[tuple[tuple[str, ...], tuple[str, ...], Series], ...]:
+    if correction_size < 1:
+        raise ValueError("correction_size must be at least 1")
+    if correction_size > len(ordered_base_families):
+        return ()
+
+    entries: list[tuple[tuple[str, ...], tuple[str, ...], Series]] = []
+    if correction_size == 1:
+        for label, benchmark_name, basis_series in ordered_base_families:
+            entries.append(((label,), (benchmark_name,), series_div(target_series, basis_series)))
+        return tuple(entries)
+
+    if correction_size == 2:
+        for left_index, left_entry in enumerate(ordered_base_families):
+            left_label, left_name, left_series = left_entry
+            for right_entry in ordered_base_families[left_index + 1 :]:
+                right_label, right_name, right_series = right_entry
+                entries.append(
+                    (
+                        (left_label, right_label),
+                        (left_name, right_name),
+                        series_div(target_series, series_mul(left_series, right_series)),
+                    )
+                )
+        return tuple(entries)
+
+    raise ValueError("supported correction sizes are 1 and 2")
+
+
+def scan_source_correction_self_polynomial_uniqueness_relations(
+    *,
+    target_series: Series,
+    ordered_base_families: tuple[tuple[str, str, Series], ...],
+    correction_size: int,
+    moduli: tuple[int, ...],
+    order: int,
+    fg_degree_values: tuple[int, ...] = (1, 2),
+    t_degree_values: tuple[int, ...] = (1, 2),
+) -> SourceCorrectionSelfPolynomialScan:
+    correction_entries = _source_core_correction_entries(
+        target_series=target_series,
+        ordered_base_families=ordered_base_families,
+        correction_size=correction_size,
+    )
+    normalized_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    normalized_fg_degrees = tuple(sorted({degree for degree in fg_degree_values if degree >= 1}))
+    normalized_t_degrees = tuple(sorted({degree for degree in t_degree_values if degree >= 0}))
+    if not correction_entries or not normalized_moduli or not normalized_fg_degrees or not normalized_t_degrees:
+        return SourceCorrectionSelfPolynomialScan(
+            correction_size=correction_size,
+            moduli_checked=normalized_moduli,
+            fg_degree_values=normalized_fg_degrees,
+            t_degree_values=normalized_t_degrees,
+            total_corrections_checked=len(correction_entries),
+            hits=(),
+        )
+
+    hits: list[SourceCorrectionSelfPolynomialHit] = []
+    for basis_labels, basis_expressions, correction_series in correction_entries:
+        for modulus in normalized_moduli:
+            for fg_degree in normalized_fg_degrees:
+                for t_degree in normalized_t_degrees:
+                    try:
+                        relation = search_self_polynomial_uniqueness_relation(
+                            target_series=correction_series,
+                            modulus=modulus,
+                            order=order,
+                            max_fg_total_degree=fg_degree,
+                            max_t_degree=t_degree,
+                        )
+                    except ValueError:
+                        continue
+                    if relation is None:
+                        continue
+                    hits.append(
+                        SourceCorrectionSelfPolynomialHit(
+                            basis_labels=basis_labels,
+                            basis_expressions=basis_expressions,
+                            modulus=modulus,
+                            max_fg_total_degree=fg_degree,
+                            max_t_degree=t_degree,
+                            relation=relation,
+                        )
+                    )
+
+    return SourceCorrectionSelfPolynomialScan(
+        correction_size=correction_size,
+        moduli_checked=normalized_moduli,
+        fg_degree_values=normalized_fg_degrees,
+        t_degree_values=normalized_t_degrees,
+        total_corrections_checked=len(correction_entries),
+        hits=tuple(hits),
+    )
+
+
+def scan_source_correction_self_fractional_linear_uniqueness_relations(
+    *,
+    target_series: Series,
+    ordered_base_families: tuple[tuple[str, str, Series], ...],
+    correction_size: int,
+    moduli: tuple[int, ...],
+    order: int,
+    t_degree_values: tuple[int, ...] = (1, 2),
+) -> SourceCorrectionSelfFractionalLinearScan:
+    correction_entries = _source_core_correction_entries(
+        target_series=target_series,
+        ordered_base_families=ordered_base_families,
+        correction_size=correction_size,
+    )
+    normalized_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    normalized_t_degrees = tuple(sorted({degree for degree in t_degree_values if degree >= 0}))
+    if not correction_entries or not normalized_moduli or not normalized_t_degrees:
+        return SourceCorrectionSelfFractionalLinearScan(
+            correction_size=correction_size,
+            moduli_checked=normalized_moduli,
+            t_degree_values=normalized_t_degrees,
+            total_corrections_checked=len(correction_entries),
+            hits=(),
+        )
+
+    hits: list[SourceCorrectionSelfFractionalLinearHit] = []
+    for basis_labels, basis_expressions, correction_series in correction_entries:
+        for modulus in normalized_moduli:
+            for t_degree in normalized_t_degrees:
+                try:
+                    relation = search_self_t_polynomial_fractional_linear_relation(
+                        target_series=correction_series,
+                        modulus=modulus,
+                        order=order,
+                        max_t_degree=t_degree,
+                    )
+                except ValueError:
+                    continue
+                if relation is None:
+                    continue
+                hits.append(
+                    SourceCorrectionSelfFractionalLinearHit(
+                        basis_labels=basis_labels,
+                        basis_expressions=basis_expressions,
+                        modulus=modulus,
+                        max_t_degree=t_degree,
+                        relation=relation,
+                    )
+                )
+
+    return SourceCorrectionSelfFractionalLinearScan(
+        correction_size=correction_size,
+        moduli_checked=normalized_moduli,
+        t_degree_values=normalized_t_degrees,
+        total_corrections_checked=len(correction_entries),
         hits=tuple(hits),
     )
 
@@ -4081,9 +4305,12 @@ def _eta_scan_levels(levels: tuple[int, ...]) -> tuple[int, ...]:
     return tuple(sorted(normalized))
 
 
-def _rhs_uniqueness_moduli(levels: tuple[int, ...]) -> tuple[int, ...]:
-    preferred = tuple(sorted({level for level in levels if 2 <= level <= 4}))
-    return preferred if preferred else (2, 3, 4)
+def _rhs_uniqueness_moduli(levels: tuple[int, ...], *, smoke: bool) -> tuple[int, ...]:
+    upper = 4 if smoke else 6
+    preferred = tuple(sorted({level for level in levels if 2 <= level <= upper}))
+    if preferred:
+        return preferred
+    return (2, 3, 4) if smoke else (2, 3, 4, 5, 6)
 
 
 def build_candidate_identification_note(
@@ -4149,7 +4376,7 @@ def build_candidate_identification_note(
     source_family_scan_powers = _parameterized_source_family_powers(benchmark_powers, smoke=smoke)
     supplemental_source_family_powers = _supplemental_source_family_powers(smoke=smoke)
     eta_scan_levels = _eta_scan_levels(benchmark_powers)
-    rhs_uniqueness_moduli = _rhs_uniqueness_moduli(benchmark_powers)
+    rhs_uniqueness_moduli = _rhs_uniqueness_moduli(benchmark_powers, smoke=smoke)
     progress_steps = [
         "series-and-benchmark-setup",
         "rhs-uniqueness-search",
@@ -4227,14 +4454,14 @@ def build_candidate_identification_note(
         target_series=ratio_series,
         moduli=rhs_uniqueness_moduli,
         order=profile_order,
-        fg_degree_values=(1, 2),
-        t_degree_values=(1, 2),
+        fg_degree_values=(1, 2) if smoke else (1, 2, 3),
+        t_degree_values=(1, 2) if smoke else (1, 2, 3),
     )
     rhs_self_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
         target_series=ratio_series,
         moduli=rhs_uniqueness_moduli,
         order=profile_order,
-        t_degree_values=(1, 2),
+        t_degree_values=(1, 2) if smoke else (1, 2, 3),
     )
     advance_progress(
         completed_step="rhs-uniqueness-search",
@@ -4278,6 +4505,44 @@ def build_candidate_identification_note(
             series,
         )
         for label, _, series in source_family_base_series
+    )
+    one_core_self_polynomial_scan = scan_source_correction_self_polynomial_uniqueness_relations(
+        target_series=ratio_series,
+        ordered_base_families=source_family_base_series,
+        correction_size=1,
+        moduli=rhs_uniqueness_moduli,
+        order=profile_order,
+        fg_degree_values=(1, 2) if smoke else (1, 2),
+        t_degree_values=(1, 2) if smoke else (1, 2),
+    )
+    one_core_self_fractional_linear_scan = (
+        scan_source_correction_self_fractional_linear_uniqueness_relations(
+            target_series=ratio_series,
+            ordered_base_families=source_family_base_series,
+            correction_size=1,
+            moduli=rhs_uniqueness_moduli,
+            order=profile_order,
+            t_degree_values=(1, 2) if smoke else (1, 2),
+        )
+    )
+    two_core_self_polynomial_scan = scan_source_correction_self_polynomial_uniqueness_relations(
+        target_series=ratio_series,
+        ordered_base_families=source_family_base_series,
+        correction_size=2,
+        moduli=rhs_uniqueness_moduli,
+        order=profile_order,
+        fg_degree_values=(1, 2),
+        t_degree_values=(1, 2),
+    )
+    two_core_self_fractional_linear_scan = (
+        scan_source_correction_self_fractional_linear_uniqueness_relations(
+            target_series=ratio_series,
+            ordered_base_families=source_family_base_series,
+            correction_size=2,
+            moduli=rhs_uniqueness_moduli,
+            order=profile_order,
+            t_degree_values=(1, 2),
+        )
     )
     source_family_prefix_scans = scan_named_prefix_boxes(
         target_series=ratio_series,
@@ -4767,6 +5032,209 @@ def build_candidate_identification_note(
                     hit.relation,
                     modulus=hit.modulus,
                     target_variable="F",
+                    series_symbol=series_symbol,
+                ),
+                "```",
+                "",
+                f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "### One-Source-Core Correction Objects",
+            "",
+            "We then stripped a single nearby source core and repeated the uniqueness search on the residual correction object:",
+            "",
+            "```text",
+            "G = F / S",
+            "P(t, G(t), G(t^m)) = 0",
+            "G(t) = (A(t) + B(t)*(G(t^m) - 1)) / (C(t) + D(t)*(G(t^m) - 1))",
+            "```",
+            "",
+            f"- Source cores checked: {', '.join(f'`{label}`' for label, _, _ in source_family_base_series)}",
+            f"- Correction objects checked: `{one_core_self_polynomial_scan.total_corrections_checked}`",
+            "",
+        ]
+    )
+    if not one_core_self_polynomial_scan.hits:
+        lines.append("No one-core self-polynomial correction hit was found in the scanned box.")
+        lines.append("")
+    for hit in one_core_self_polynomial_scan.hits:
+        correction_series = ratio_series
+        for label in hit.basis_labels:
+            correction_series = series_div(
+                correction_series,
+                next(series for name, _, series in source_family_base_series if name == label),
+            )
+        relation_series_by_variable = {
+            "T": _t_series(order=profile_order),
+            "F": correction_series,
+            f"G{hit.modulus}": benchmark_power_substitution_series(
+                correction_series,
+                power=hit.modulus,
+                order=profile_order,
+            ),
+        }
+        residual = _relation_residual_series(
+            hit.relation,
+            series_by_variable=relation_series_by_variable,
+            order=profile_order,
+        )
+        residual_ok = all(sp.simplify(value) == 0 for value in residual)
+        relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+        relation_expr = hit.relation.as_sympy(relation_symbols)
+        lines.extend(
+            [
+                f"- One-core correction `{', '.join(hit.basis_labels)}` with `m={hit.modulus}`, `deg_(F,G) <= {hit.max_fg_total_degree}`, `deg_t <= {hit.max_t_degree}` produced:",
+                "",
+                "```text",
+                _format_source_correction_expression(
+                    basis_labels=hit.basis_labels,
+                    basis_expressions=hit.basis_expressions,
+                    target_variable="F",
+                ),
+                _format_expr(relation_expr),
+                "```",
+                "",
+                f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                "",
+            ]
+        )
+
+    if not one_core_self_fractional_linear_scan.hits:
+        lines.append("No one-core self-fractional-linear correction hit was found in the scanned box.")
+        lines.append("")
+    for hit in one_core_self_fractional_linear_scan.hits:
+        correction_series = ratio_series
+        for label in hit.basis_labels:
+            correction_series = series_div(
+                correction_series,
+                next(series for name, _, series in source_family_base_series if name == label),
+            )
+        residual = _self_t_polynomial_fractional_linear_relation_residual_series(
+            hit.relation,
+            target_series=correction_series,
+            modulus=hit.modulus,
+            order=profile_order,
+        )
+        residual_ok = all(sp.simplify(value) == 0 for value in residual)
+        lines.extend(
+            [
+                f"- One-core correction `{', '.join(hit.basis_labels)}` with `m={hit.modulus}`, `deg_t <= {hit.max_t_degree}` produced:",
+                "",
+                "```text",
+                _format_source_correction_expression(
+                    basis_labels=hit.basis_labels,
+                    basis_expressions=hit.basis_expressions,
+                    target_variable="F",
+                ),
+                _format_self_t_polynomial_fractional_linear_relation(
+                    hit.relation,
+                    modulus=hit.modulus,
+                    target_variable="G",
+                    series_symbol=series_symbol,
+                ),
+                "```",
+                "",
+                f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "### Two-Source-Core Correction Objects",
+            "",
+            "We also stripped products of two nearby source cores and repeated the same bounded uniqueness search on the residual object:",
+            "",
+            "```text",
+            "H = F / (S1 * S2)",
+            "P(t, H(t), H(t^m)) = 0",
+            "H(t) = (A(t) + B(t)*(H(t^m) - 1)) / (C(t) + D(t)*(H(t^m) - 1))",
+            "```",
+            "",
+            f"- Two-core correction objects checked: `{two_core_self_polynomial_scan.total_corrections_checked}`",
+            "",
+        ]
+    )
+    if not two_core_self_polynomial_scan.hits:
+        lines.append("No two-core self-polynomial correction hit was found in the scanned box.")
+        lines.append("")
+    for hit in two_core_self_polynomial_scan.hits:
+        correction_series = ratio_series
+        for label in hit.basis_labels:
+            correction_series = series_div(
+                correction_series,
+                next(series for name, _, series in source_family_base_series if name == label),
+            )
+        relation_series_by_variable = {
+            "T": _t_series(order=profile_order),
+            "F": correction_series,
+            f"G{hit.modulus}": benchmark_power_substitution_series(
+                correction_series,
+                power=hit.modulus,
+                order=profile_order,
+            ),
+        }
+        residual = _relation_residual_series(
+            hit.relation,
+            series_by_variable=relation_series_by_variable,
+            order=profile_order,
+        )
+        residual_ok = all(sp.simplify(value) == 0 for value in residual)
+        relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+        relation_expr = hit.relation.as_sympy(relation_symbols)
+        lines.extend(
+            [
+                f"- Two-core correction `{', '.join(hit.basis_labels)}` with `m={hit.modulus}`, `deg_(F,G) <= {hit.max_fg_total_degree}`, `deg_t <= {hit.max_t_degree}` produced:",
+                "",
+                "```text",
+                _format_source_correction_expression(
+                    basis_labels=hit.basis_labels,
+                    basis_expressions=hit.basis_expressions,
+                    target_variable="F",
+                ),
+                _format_expr(relation_expr),
+                "```",
+                "",
+                f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                "",
+            ]
+        )
+
+    if not two_core_self_fractional_linear_scan.hits:
+        lines.append("No two-core self-fractional-linear correction hit was found in the scanned box.")
+        lines.append("")
+    for hit in two_core_self_fractional_linear_scan.hits:
+        correction_series = ratio_series
+        for label in hit.basis_labels:
+            correction_series = series_div(
+                correction_series,
+                next(series for name, _, series in source_family_base_series if name == label),
+            )
+        residual = _self_t_polynomial_fractional_linear_relation_residual_series(
+            hit.relation,
+            target_series=correction_series,
+            modulus=hit.modulus,
+            order=profile_order,
+        )
+        residual_ok = all(sp.simplify(value) == 0 for value in residual)
+        lines.extend(
+            [
+                f"- Two-core correction `{', '.join(hit.basis_labels)}` with `m={hit.modulus}`, `deg_t <= {hit.max_t_degree}` produced:",
+                "",
+                "```text",
+                _format_source_correction_expression(
+                    basis_labels=hit.basis_labels,
+                    basis_expressions=hit.basis_expressions,
+                    target_variable="F",
+                ),
+                _format_self_t_polynomial_fractional_linear_relation(
+                    hit.relation,
+                    modulus=hit.modulus,
+                    target_variable="G",
                     series_symbol=series_symbol,
                 ),
                 "```",

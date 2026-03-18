@@ -14,6 +14,8 @@ from ramanujan_discovery.identification import (
     scan_gg_modular_equation_box,
     scan_self_fractional_linear_uniqueness_relations,
     scan_self_polynomial_uniqueness_relations,
+    scan_source_correction_self_fractional_linear_uniqueness_relations,
+    scan_source_correction_self_polynomial_uniqueness_relations,
     scan_two_quotient_core_source_family_self_fractional_linear_relations,
     scan_two_quotient_core_source_family_self_eta_corrections,
     scan_two_quotient_core_source_family_self_polynomial_relations,
@@ -412,6 +414,87 @@ def test_rhs_uniqueness_searches_skip_degenerate_non_self_relations():
     )
     assert polynomial_scan.hits == ()
     assert fractional_scan.hits == ()
+
+
+def test_scan_source_correction_self_polynomial_uniqueness_relations_finds_one_core_hit():
+    order = 16
+    rr = [sp.Integer(0) for _ in range(order)]
+    rr[0] = 1
+    rr[1] = 1
+    cubic = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[2] = 1
+
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = 1
+    for exponent in (1, 2, 4, 8):
+        if exponent < order:
+            correction[exponent] = 1
+    target = series_mul(rr, correction)
+
+    scan = scan_source_correction_self_polynomial_uniqueness_relations(
+        target_series=target,
+        ordered_base_families=(
+            ("RR", "rogers_ramanujan_normalized", rr),
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+        ),
+        correction_size=1,
+        moduli=(2, 3),
+        order=order,
+        fg_degree_values=(1,),
+        t_degree_values=(1,),
+    )
+    assert scan.total_corrections_checked == 2
+    assert scan.hits
+    hit = next(item for item in scan.hits if item.basis_labels == ("RR",) and item.modulus == 2)
+    assert hit.relation.variables == ("T", "F", "G2")
+
+
+def test_scan_source_correction_self_fractional_linear_uniqueness_relations_finds_two_core_hit():
+    order = 20
+    rr = [sp.Integer(0) for _ in range(order)]
+    rr[0] = 1
+    rr[1] = 1
+    cubic = [sp.Integer(0) for _ in range(order)]
+    cubic[0] = 1
+    cubic[2] = 1
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[3] = 1
+
+    eta = [sp.Integer(0) for _ in range(order)]
+    eta[0] = 1
+    eta[1] = 1
+    correction = _build_self_fractional_linear_eta_target(
+        modulus=2,
+        self_coeff=sp.Integer(2),
+        eta_coeff=sp.Integer(1),
+        eta_series=eta,
+        order=order,
+    )
+    target = series_mul(series_mul(rr, cubic), correction)
+
+    scan = scan_source_correction_self_fractional_linear_uniqueness_relations(
+        target_series=target,
+        ordered_base_families=(
+            ("RR", "rogers_ramanujan_normalized", rr),
+            ("cubic", "ramanujan_cubic_normalized", cubic),
+            ("GG", "gollnitz_gordon_normalized", gg),
+        ),
+        correction_size=2,
+        moduli=(2, 3),
+        order=order,
+        t_degree_values=(1,),
+    )
+    assert scan.total_corrections_checked == 3
+    assert scan.hits
+    hit = next(
+        item
+        for item in scan.hits
+        if item.basis_labels == ("RR", "cubic") and item.modulus == 2
+    )
+    assert hit.relation.numerator_t_coefficients == (sp.Integer(1), sp.Integer(1))
+    assert hit.relation.numerator_self_coefficients == (sp.Integer(2), sp.Integer(0))
 
 
 def test_scan_ratio_benchmark_fractional_linear_prefixes_finds_identity_relation():
@@ -1585,6 +1668,8 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "## RHS Uniqueness Search" in text
     assert "Polynomial Functional Box" in text
     assert "Fractional-Linear Functional Box" in text
+    assert "One-Source-Core Correction Objects" in text
+    assert "Two-Source-Core Correction Objects" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text

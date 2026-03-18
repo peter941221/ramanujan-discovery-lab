@@ -2,88 +2,136 @@
 
 ## Question
 
-Is the current `GG` modular-equation-heavy direction the right main road for the
-award-track hero case?
+After the new RHS uniqueness pass, is the current main direction still correct?
 
 ## Short Answer
 
-Partly yes, but not as the primary road.
+Yes on the **main road**, no on the **current box shape**.
 
-- Yes as a disciplined elimination lane:
-  the `GG` orbit is rich enough in the literature that it had to be checked in a
-  source-faithful way before making stronger novelty-facing claims.
-- No as the dominant next investment:
-  after the direct / reciprocal / quotient boxes, the mixed quotient-coordinate
-  lane, and the first exact Chan--Huang `q^3` / `q^4` modular-equation
-  polynomials all still return `0` hits, the expected value of pushing much
-  harder on `GG` alone is now lower than before.
+- Yes on the main road:
+  pushing toward a theorem-facing right-hand side for the hero ratio object is
+  still the correct award-track direction.
+- No on the current box shape:
+  the new bounded RHS scans now show that several of the simplest “small
+  equation” doors are closed.
 
-## Why The `GG` Direction Was Correct
+## What Changed In This Round
 
-Three literature facts justify the work already done:
+The identification layer now checks three theorem-facing lanes on the ratio
+object side:
 
-1. Chan--Huang explicitly derive modular equations connecting the GG object to
-   its `q^3` and `q^4` descendants, so a source-faithful `GG(q)`, `GG(-q)`,
-   `GG(q^2)`, `GG(q^3)`, `GG(q^4)` lane was not optional.
-2. Vasuki--Srivatsa Kumar push the same orbit into odd-prime lanes
-   (`q^5`, `q^7`, `q^11`), so the powered `GG` ladder and quotient coordinates
-   were mathematically motivated rather than ad hoc.
-3. Cho--Koo--Park treat the GG object as a modular unit, which means naive
-   benchmark-product scans are too weak to claim the orbit is exhausted.
+1. direct RHS uniqueness on
+   `F(t) = candidate / RR(q^3)`
+2. one-source-core corrected uniqueness on
+   `G(t) = F(t) / S(t)` with `S in {RR, cubic, GG, S}`
+3. two-source-core corrected uniqueness on
+   `H(t) = F(t) / (S1(t) * S2(t))`
+
+The bounded boxes now checked are:
+
+- self-polynomial:
+  `P(t, X(t), X(t^m)) = 0`
+  with `m in {2,3,4,5,6}`, `deg_(X, X_m) <= 3`, `deg_t <= 3`
+- self-fractional-linear:
+  `X(t) = (A(t) + B(t)*(X(t^m) - 1)) / (C(t) + D(t)*(X(t^m) - 1))`
+  with `deg_t <= 3` on the direct ratio object
+- corrected-object scans:
+  the same low-complexity polynomial / fractional-linear lanes after removing
+  one or two nearby source cores
+
+Current result:
+
+```text
+Direct RHS boxes: 0 hits
+One-core corrected RHS boxes: 0 hits
+Two-core corrected RHS boxes: 0 hits
+```
+
+## Why The Direction Is Still Correct
 
 Analogy:
 
-- If the candidate lives near a large city, checking only the highways is not
-  enough; the modular-equation papers tell us there are known rail lines too.
-  This round checked the first rail lines.
+- We know the left side of the equation very well now.
+- The new pass tried several “small locks” on the right side.
+- None of those locks opened.
+- That means the problem is probably not “wrong corridor”.
+- It means the true lock is more structured than the first key ring.
 
-## Why It Should No Longer Be The Main Road
+In award-track terms, this is still the correct trunk because:
 
-The local evidence has now moved the burden:
+1. the prize bar is a theorem bar, so a compact defining equation or a source
+   object with a uniqueness theorem still has the highest value
+2. the direct family-expansion roads have already accumulated many exact and
+   bounded no-hit results
+3. the new one-core / two-core correction pass says the hero case is not
+   immediately explained by “nearby known source object + tiny self-equation”
 
-- family-preserving `GG/GG2/GG3/GG4/GG5/GG7/GG11` scans still show `0` hits
-- quotient-coordinate scans still show `0` hits
-- mixed quotient-coordinate scans still show `0` hits
-- first exact Chan--Huang direct `q^3` / `q^4` polynomial templates still show
-  `0` hits
-- first exact Chan--Huang quotient-coordinate `q^3` / `q^4` templates still
-  show `0` hits
+## What The New `0` Hits Actually Mean
 
-That does **not** prove the hero case is not in the GG orbit.
-It does mean the next marginal hour spent on ever-larger GG boxes is now less
-valuable than before.
+They do **not** mean the RHS-first direction failed.
 
-## Recommended Priority Order Now
+They mean something more specific:
 
-1. Primary road:
-   keep pushing toward a final identity / proof-class recognition lane for the
-   hero ratio object itself, not another broad family-only expansion.
-2. Secondary road:
-   continue `GG` only where the literature gives an exact odd-prime template
-   that can be encoded with small ambiguity.
-3. Proof road:
-   strengthen the exact theorem / modularity / uniqueness path, because the
-   award-track bar is still a theorem bar, not a bounded-scan bar.
+- the hero object is probably not captured by a very low-degree self-polynomial
+  over `t` and `X(t^m)`
+- it is also probably not captured by the first low-degree
+  fractional-linear-recursive box
+- dividing out one or two nearby named source cores still does not drop the
+  candidate into those same tiny boxes
 
-## Concrete Recommendation
+So the current situation is closer to:
 
-Treat the current `GG` lane as a nearly-complete **obstruction-quality side
-branch**, not as the main trunk.
+```text
+left side known
+right side unknown
+small-box RHS guesses ruled out
+structured RHS generation still needed
+```
 
-The best next `GG` step is narrow:
+## Recommended Direction Now
 
-- extract exact odd-prime templates for `p in {5,7,11}` from the
-  Vasuki--Srivatsa Kumar / Cho--Koo--Park sources
+### 1) Keep The RHS-First Direction
 
-The best overall step is broader:
+Do not go back to broad family expansion as the main bet.
 
-- re-rank effort toward theorem-facing recognition and proof pathways once the
-  odd-prime `GG` formulas are either encoded cleanly or judged too ambiguous to
-  justify more local engineering time
+The direct theorem-facing road is still the best road because it is the only
+road that can naturally end in:
+
+- a uniqueness statement
+- a modularity statement
+- a final Lean-formalizable theorem
+
+### 2) Stop Expecting Tiny Generic Boxes To Be Enough
+
+The new evidence suggests the next gain probably will **not** come from merely
+turning:
+
+- `deg <= 2` into `deg <= 3`
+- or `m <= 4` into `m <= 6`
+
+Those were worth testing, and now they count as useful eliminations.
+But the next box should be more structured, not just larger.
+
+### 3) Prefer Structured Intermediate Objects
+
+The best next RHS work should probably come from one of these lanes:
+
+1. derive an intermediate object from the exact rational-equivalence /
+   convergent-reduction story and search equations for that object instead of
+   for raw `F`
+2. extract recurrence or transfer equations forced by the continued-fraction
+   coefficients themselves and convert those into candidate-defining functional
+   equations
+3. use modular-unit / eta-quotient architecture to propose the RHS shape first,
+   then verify it, instead of asking a generic low-degree box to guess it
 
 ## Current Verdict
 
 ```text
-Current direction = mathematically justified, but now better treated as
-secondary support rather than the main award-track bet.
+Direction verdict:
+RHS-first is still correct.
+
+Box verdict:
+the first low-complexity direct / one-core / two-core uniqueness boxes are now
+better viewed as ruled-out neighborhoods, not as the final destination.
 ```

@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1806.57`
+- Build elapsed seconds before final render: `1847.15`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `13.47`
-- `source-family-scans`: `332.89`
-- `cross-family-functional-scans`: `946.32`
-- `explicit-gg-family-scans`: `430.19`
-- `benchmark-tower-scans`: `83.69`
-- `final-render`: `15.15`
+- `rhs-uniqueness-search`: `46.80`
+- `source-family-scans`: `428.46`
+- `cross-family-functional-scans`: `882.35`
+- `explicit-gg-family-scans`: `407.54`
+- `benchmark-tower-scans`: `82.00`
+- `final-render`: `14.36`
 
 ## Objects
 
@@ -65,10 +65,10 @@ underdetermined polynomial relation search: 715 monomials > 90 constraints (incr
 We also ran a theorem-facing search directly on the ratio object, looking for a compact right-hand-side defining equation for:
 
 - `F = candidate / rogers_ramanujan_q3_normalized`
-- Moduli checked: `m=2`, `m=3`, `m=4`
-- Self-polynomial boxes: `deg_(F,G) <= 1`, `deg_(F,G) <= 2`
-- `t`-degree boxes: `deg_t <= 1`, `deg_t <= 2`
-- Self-fractional-linear `t`-degree boxes: `deg_t <= 1`, `deg_t <= 2`
+- Moduli checked: `m=2`, `m=3`, `m=4`, `m=5`, `m=6`
+- Self-polynomial boxes: `deg_(F,G) <= 1`, `deg_(F,G) <= 2`, `deg_(F,G) <= 3`
+- `t`-degree boxes: `deg_t <= 1`, `deg_t <= 2`, `deg_t <= 3`
+- Self-fractional-linear `t`-degree boxes: `deg_t <= 1`, `deg_t <= 2`, `deg_t <= 3`
 
 ### Polynomial Functional Box
 
@@ -85,6 +85,39 @@ F(t) = (A(t) + B(t)*(F(t^m) - 1)) / (C(t) + D(t)*(F(t^m) - 1))
 ```
 
 No candidate-dependent self-fractional-linear uniqueness relation was found in the scanned box.
+
+### One-Source-Core Correction Objects
+
+We then stripped a single nearby source core and repeated the uniqueness search on the residual correction object:
+
+```text
+G = F / S
+P(t, G(t), G(t^m)) = 0
+G(t) = (A(t) + B(t)*(G(t^m) - 1)) / (C(t) + D(t)*(G(t^m) - 1))
+```
+
+- Source cores checked: `RR`, `cubic`, `GG`, `S`
+- Correction objects checked: `4`
+
+No one-core self-polynomial correction hit was found in the scanned box.
+
+No one-core self-fractional-linear correction hit was found in the scanned box.
+
+### Two-Source-Core Correction Objects
+
+We also stripped products of two nearby source cores and repeated the same bounded uniqueness search on the residual object:
+
+```text
+H = F / (S1 * S2)
+P(t, H(t), H(t^m)) = 0
+H(t) = (A(t) + B(t)*(H(t^m) - 1)) / (C(t) + D(t)*(H(t^m) - 1))
+```
+
+- Two-core correction objects checked: `6`
+
+No two-core self-polynomial correction hit was found in the scanned box.
+
+No two-core self-fractional-linear correction hit was found in the scanned box.
 
 
 ## Benchmark Power-Tower Prefix Scan
