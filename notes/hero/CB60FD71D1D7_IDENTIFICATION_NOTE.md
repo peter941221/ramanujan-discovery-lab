@@ -8,6 +8,16 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
+- Build elapsed seconds before final render: `1801.19`
+
+## Build Timing
+
+- `series-and-benchmark-setup`: `0.00`
+- `source-family-scans`: `366.56`
+- `cross-family-functional-scans`: `927.59`
+- `explicit-gg-family-scans`: `429.41`
+- `benchmark-tower-scans`: `77.63`
+- `final-render`: `14.84`
 
 ## Objects
 

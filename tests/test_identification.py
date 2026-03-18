@@ -1453,6 +1453,9 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
 
     text = output_path.read_text(encoding="utf-8")
     assert "Identification Note: `hero`" in text
+    assert "## Build Timing" in text
+    assert "- `source-family-scans`:" in text
+    assert "- `final-render`:" in text
     assert "Extra Multivariate Search" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text

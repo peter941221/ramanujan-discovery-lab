@@ -5,6 +5,7 @@ from functools import lru_cache
 from itertools import product
 from math import comb, gcd
 from pathlib import Path
+from time import perf_counter
 
 import sympy as sp
 
@@ -3717,25 +3718,51 @@ def build_candidate_identification_note(
         "final-render",
     ]
     progress_status = {step_name: "pending" for step_name in progress_steps}
+    build_started_at = perf_counter()
+    stage_elapsed_seconds = {step_name: None for step_name in progress_steps}
+    current_stage_start = build_started_at
+
+    def advance_progress(*, completed_step: str | None = None, current_step: str) -> None:
+        nonlocal current_stage_start
+        now = perf_counter()
+        if completed_step is not None:
+            stage_elapsed_seconds[completed_step] = now - current_stage_start
+            progress_status[completed_step] = "completed"
+        progress_status[current_step] = "in_progress"
+        current_stage_start = now
+        write_progress(current_step=current_step)
 
     def write_progress(*, current_step: str) -> None:
+        now = perf_counter()
         progress_lines = [
             f"# Identification Note Build In Progress: `{record.id}`",
             "",
             f"- Status: `in_progress`",
             f"- Current step: `{current_step}`",
             f"- Output target: `{output_path}`",
+            f"- Elapsed build seconds: `{now - build_started_at:.2f}`",
             "",
             "## Progress",
             "",
         ]
         for step_name in progress_steps:
-            progress_lines.append(f"- `{step_name}`: `{progress_status[step_name]}`")
+            elapsed = stage_elapsed_seconds[step_name]
+            if progress_status[step_name] == "in_progress":
+                elapsed_text = f"{now - current_stage_start:.2f}"
+            elif elapsed is not None:
+                elapsed_text = f"{elapsed:.2f}"
+            else:
+                elapsed_text = "-"
+            progress_lines.append(
+                f"- `{step_name}`: `{progress_status[step_name]}` (elapsed seconds: `{elapsed_text}`)"
+            )
         progress_lines.append("")
         output_file.write_text("\n".join(progress_lines), encoding="utf-8")
 
+    stage_elapsed_seconds["series-and-benchmark-setup"] = perf_counter() - build_started_at
     progress_status["series-and-benchmark-setup"] = "completed"
     progress_status["source-family-scans"] = "in_progress"
+    current_stage_start = perf_counter()
     write_progress(current_step="source-family-scans")
 
     relation: PolynomialRelation | None = None
@@ -3817,9 +3844,10 @@ def build_candidate_identification_note(
         solve_order=min(profile_order, 14 if smoke else 18),
         supplemental_powers_by_family=supplemental_source_family_powers,
     )
-    progress_status["source-family-scans"] = "completed"
-    progress_status["cross-family-functional-scans"] = "in_progress"
-    write_progress(current_step="cross-family-functional-scans")
+    advance_progress(
+        completed_step="source-family-scans",
+        current_step="cross-family-functional-scans",
+    )
     two_core_source_family_eta_correction_scan = scan_two_core_source_family_eta_corrections(
         target_series=ratio_series,
         ordered_base_families=source_family_base_series,
@@ -3911,9 +3939,10 @@ def build_candidate_identification_note(
             correction_entries=two_quotient_core_correction_entries,
         )
     )
-    progress_status["cross-family-functional-scans"] = "completed"
-    progress_status["explicit-gg-family-scans"] = "in_progress"
-    write_progress(current_step="explicit-gg-family-scans")
+    advance_progress(
+        completed_step="cross-family-functional-scans",
+        current_step="explicit-gg-family-scans",
+    )
     source_family_eta_correction_scans = scan_source_family_eta_corrections(
         target_series=ratio_series,
         ordered_base_families=source_family_base_series,
@@ -3955,9 +3984,10 @@ def build_candidate_identification_note(
             else supplemental_source_family_powers.get("GG", ()),
         )
     )
-    progress_status["explicit-gg-family-scans"] = "completed"
-    progress_status["benchmark-tower-scans"] = "in_progress"
-    write_progress(current_step="benchmark-tower-scans")
+    advance_progress(
+        completed_step="explicit-gg-family-scans",
+        current_step="benchmark-tower-scans",
+    )
     power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
@@ -4037,9 +4067,17 @@ def build_candidate_identification_note(
             order=profile_order,
             solve_order=min(profile_order, 14 if smoke else 18),
         )
-    progress_status["benchmark-tower-scans"] = "completed"
-    progress_status["final-render"] = "in_progress"
-    write_progress(current_step="final-render")
+    advance_progress(
+        completed_step="benchmark-tower-scans",
+        current_step="final-render",
+    )
+    final_render_started_at = current_stage_start
+    build_elapsed_before_render = final_render_started_at - build_started_at
+    completed_stage_timing_lines = [
+        f"- `{step_name}`: `{stage_elapsed_seconds[step_name]:.2f}`"
+        for step_name in progress_steps[:-1]
+        if stage_elapsed_seconds[step_name] is not None
+    ]
 
     lines: list[str] = [
         f"# Identification Note: `{record.id}`",
@@ -4052,6 +4090,12 @@ def build_candidate_identification_note(
         f"- Depth: `{profile_depth}`",
         f"- Series order: `{profile_order}`",
         f"- Polynomial relation search: total degree `<= {profile_degree}`",
+        f"- Build elapsed seconds before final render: `{build_elapsed_before_render:.2f}`",
+        "",
+        "## Build Timing",
+        "",
+        *completed_stage_timing_lines,
+        "- `final-render`: `in_progress`",
         "",
         "## Objects",
         "",
@@ -6656,6 +6700,12 @@ def build_candidate_identification_note(
                         "",
                     ]
                 )
+    final_render_elapsed = perf_counter() - final_render_started_at
+    stage_elapsed_seconds["final-render"] = final_render_elapsed
+    for index, line in enumerate(lines):
+        if line == "- `final-render`: `in_progress`":
+            lines[index] = f"- `final-render`: `{final_render_elapsed:.2f}`"
+            break
 
     progress_status["final-render"] = "completed"
     output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
