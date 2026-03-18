@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1847.15`
+- Build elapsed seconds before final render: `1874.17`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `46.80`
-- `source-family-scans`: `428.46`
-- `cross-family-functional-scans`: `882.35`
-- `explicit-gg-family-scans`: `407.54`
-- `benchmark-tower-scans`: `82.00`
-- `final-render`: `14.36`
+- `rhs-uniqueness-search`: `73.86`
+- `source-family-scans`: `453.67`
+- `cross-family-functional-scans`: `876.04`
+- `explicit-gg-family-scans`: `395.08`
+- `benchmark-tower-scans`: `75.51`
+- `final-render`: `14.40`
 
 ## Objects
 
@@ -118,6 +118,39 @@ H(t) = (A(t) + B(t)*(H(t^m) - 1)) / (C(t) + D(t)*(H(t^m) - 1))
 No two-core self-polynomial correction hit was found in the scanned box.
 
 No two-core self-fractional-linear correction hit was found in the scanned box.
+
+### Rational-Equivalence Reduced Object
+
+We also switched from the raw hero reciprocal to the reduced-by-factor object coming from the exact convergent-factor / rational-equivalence bridge:
+
+```text
+R = reduced hero reciprocal object
+F_red = B1 / R    where    B1 = 1 / rogers_ramanujan_q3_normalized
+a1_red = t
+b1_red = 1
+a2_red = t^2
+b2_red = t + 1
+a3_red = t^4 + t^3
+b3_red = t^2 + 1
+r1 = t + 1
+r2 = t^2/(t + 1) + 1/(t + 1)
+r3 = t^3/(t^2 + 1) + 1/(t^2 + 1)
+```
+
+- This is the first source-informed RHS lane: it uses the exact reduction/equivalence bridge rather than a generic low-degree guess on the raw ratio object.
+- To keep this bridge tractable inside `identify`, the reduced-object lane is currently bounded at depth `12` and order `36`.
+
+No reduced-object self-polynomial hit was found in the scanned box.
+
+No reduced-object self-fractional-linear hit was found in the scanned box.
+
+No reduced-ratio self-polynomial hit was found in the scanned box.
+
+No reduced-ratio self-fractional-linear hit was found in the scanned box.
+
+No reduced-ratio self-quotient finite-product hit was found in the scanned box.
+
+No reduced-ratio eta-quotient hit was found in the scanned box.
 
 
 ## Benchmark Power-Tower Prefix Scan

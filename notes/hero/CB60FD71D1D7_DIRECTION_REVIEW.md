@@ -26,6 +26,9 @@ object side:
    `G(t) = F(t) / S(t)` with `S in {RR, cubic, GG, S}`
 3. two-source-core corrected uniqueness on
    `H(t) = F(t) / (S1(t) * S2(t))`
+4. rational-equivalence reduced-object uniqueness on
+   the reduced reciprocal bridge object `R(t)` and the reduced ratio
+   `F_red(t) = B1(t) / R(t)`
 
 The bounded boxes now checked are:
 
@@ -45,6 +48,8 @@ Current result:
 Direct RHS boxes: 0 hits
 One-core corrected RHS boxes: 0 hits
 Two-core corrected RHS boxes: 0 hits
+Reduced-object bridge boxes: 0 hits
+Reduced-ratio modular-unit boxes: 0 hits
 ```
 
 ## Why The Direction Is Still Correct
@@ -65,6 +70,9 @@ In award-track terms, this is still the correct trunk because:
    bounded no-hit results
 3. the new one-core / two-core correction pass says the hero case is not
    immediately explained by “nearby known source object + tiny self-equation”
+4. the new reduced-object bridge pass says even the exact convergent-factor
+   reduction does not immediately drop the problem into a tiny self-polynomial,
+   tiny self-fractional-linear, finite-product, or small eta-quotient box
 
 ## What The New `0` Hits Actually Mean
 
@@ -78,6 +86,9 @@ They mean something more specific:
   fractional-linear-recursive box
 - dividing out one or two nearby named source cores still does not drop the
   candidate into those same tiny boxes
+- even after moving to the exact reduced reciprocal object suggested by the
+  rational-equivalence proof layer, the reduced object and the reduced ratio
+  still avoid the current small functional / modular-unit boxes
 
 So the current situation is closer to:
 
@@ -124,6 +135,16 @@ The best next RHS work should probably come from one of these lanes:
    equations
 3. use modular-unit / eta-quotient architecture to propose the RHS shape first,
    then verify it, instead of asking a generic low-degree box to guess it
+
+This round partially advanced all three:
+
+- the exact reduced bridge object is now inside `identify`
+- the reduced coefficient profile / reverse scales are now surfaced directly in
+  the identification note
+- the reduced ratio now also gets a bounded modular-unit lane
+
+But all three still return bounded `0` hits, so the next gain probably needs a
+more bespoke object than `F`, `F/S`, `F/(S1*S2)`, `R`, or `F_red` alone.
 
 ## Current Verdict
 

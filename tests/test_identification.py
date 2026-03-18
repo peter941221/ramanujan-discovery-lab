@@ -1670,6 +1670,8 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Fractional-Linear Functional Box" in text
     assert "One-Source-Core Correction Objects" in text
     assert "Two-Source-Core Correction Objects" in text
+    assert "Rational-Equivalence Reduced Object" in text
+    assert ("F_red = B1 / R" in text) or ("Reduced-object bridge construction failed" in text)
     assert "Benchmark Power-Tower Prefix Scan" in text
     assert "Ratio-Object Source-Family Multiplicative Scan" in text
     assert "Ratio-Object Source-Family Fractional-Linear Scan" in text

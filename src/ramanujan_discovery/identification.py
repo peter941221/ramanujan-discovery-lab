@@ -12,10 +12,16 @@ import sympy as sp
 from ramanujan_discovery.analysis import _format_expr
 from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.models import CandidateRecord, QCFTemplate
-from ramanujan_discovery.research import reduce_template_by_step
+from ramanujan_discovery.research import (
+    _template_reciprocal_coeffs,
+    convergent_common_factor_reduction,
+    convergent_factor_equivalence_witness,
+    reduce_template_by_step,
+)
 from ramanujan_discovery.series import (
     Series,
     continued_fraction_series_coeffs,
+    series_add,
     series_div,
     series_invert,
     series_mul,
@@ -859,6 +865,59 @@ def _series_subtract_one(series: Series) -> Series:
     shifted = [sp.simplify(value) for value in series]
     shifted[0] = sp.simplify(shifted[0] - 1)
     return shifted
+
+
+def _expr_to_series(expr: sp.Expr, *, symbol: sp.Symbol, order: int) -> Series:
+    expanded = sp.expand(expr)
+    return [sp.simplify(expanded.coeff(symbol, index)) for index in range(order)]
+
+
+def _generalized_continued_fraction_series_from_coeffs(
+    *,
+    b0: sp.Expr,
+    a_terms: list[sp.Expr],
+    b_terms: list[sp.Expr],
+    symbol: sp.Symbol,
+    order: int,
+) -> Series:
+    if len(a_terms) != len(b_terms):
+        raise ValueError("a_terms and b_terms must have the same length")
+    if len(a_terms) < 2:
+        raise ValueError("a_terms and b_terms must be 1-indexed with at least one term")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+
+    tail: Series = [sp.Integer(0) for _ in range(order)]
+    for stage in range(len(a_terms) - 1, 0, -1):
+        denominator_series = series_add(_expr_to_series(b_terms[stage], symbol=symbol, order=order), tail)
+        numerator_series = _expr_to_series(a_terms[stage], symbol=symbol, order=order)
+        tail = series_mul(numerator_series, series_invert(denominator_series))
+
+    return series_add(_expr_to_series(b0, symbol=symbol, order=order), tail)
+
+
+def _reduced_reciprocal_bridge(
+    *,
+    template: QCFTemplate,
+    symbol: sp.Symbol,
+    depth: int,
+    order: int,
+):
+    b0, a_terms, b_terms = _template_reciprocal_coeffs(template.normalized(), q=symbol, depth=depth)
+    witness = convergent_factor_equivalence_witness(
+        b0=b0,
+        a_terms=a_terms,
+        b_terms=b_terms,
+    )
+    reduced_coeffs = witness.reduction.reduced_coeffs
+    reduced_series = _generalized_continued_fraction_series_from_coeffs(
+        b0=reduced_coeffs.b0,
+        a_terms=reduced_coeffs.a_terms,
+        b_terms=reduced_coeffs.b_terms,
+        symbol=symbol,
+        order=order,
+    )
+    return witness, reduced_series
 
 
 @lru_cache(maxsize=None)
@@ -4463,6 +4522,69 @@ def build_candidate_identification_note(
         order=profile_order,
         t_degree_values=(1, 2) if smoke else (1, 2, 3),
     )
+    reduced_bridge_depth = min(profile_depth, 8 if smoke else 12)
+    reduced_bridge_order = min(profile_order, 24 if smoke else 36)
+    reduced_bridge_moduli = tuple(modulus for modulus in rhs_uniqueness_moduli if modulus <= (3 if smoke else 4))
+    if not reduced_bridge_moduli:
+        reduced_bridge_moduli = rhs_uniqueness_moduli[: min(len(rhs_uniqueness_moduli), 2)]
+    reduced_bridge_error: str | None = None
+    reduced_reciprocal_witness = None
+    reduced_reciprocal_series: Series | None = None
+    reduced_ratio_series: Series | None = None
+    reduced_object_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_object_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_ratio_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_ratio_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_ratio_eta_quotient_scans: list[EtaQuotientRelationScan] = []
+    try:
+        reduced_reciprocal_witness, reduced_reciprocal_series = _reduced_reciprocal_bridge(
+            template=reduced_candidate,
+            symbol=sp.Symbol(series_symbol),
+            depth=reduced_bridge_depth,
+            order=reduced_bridge_order,
+        )
+        reduced_ratio_series = series_div(benchmark_recip[:reduced_bridge_order], reduced_reciprocal_series)
+        reduced_object_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+            target_series=reduced_reciprocal_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            fg_degree_values=(1, 2),
+            t_degree_values=(1, 2),
+        )
+        reduced_object_self_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+            target_series=reduced_reciprocal_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            t_degree_values=(1, 2),
+        )
+        reduced_ratio_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+            target_series=reduced_ratio_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            fg_degree_values=(1, 2),
+            t_degree_values=(1, 2),
+        )
+        reduced_ratio_self_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+            target_series=reduced_ratio_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            t_degree_values=(1, 2),
+        )
+        reduced_ratio_self_quotient_product_scans = scan_ratio_self_quotient_product_relations(
+            ratio_series=reduced_ratio_series,
+            moduli=reduced_bridge_moduli,
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+        reduced_ratio_eta_quotient_scans = scan_ratio_eta_quotient_relations(
+            ratio_series=reduced_ratio_series,
+            levels=_eta_scan_levels(reduced_bridge_moduli),
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+    except Exception as exc:
+        reduced_bridge_error = str(exc)
     advance_progress(
         completed_step="rhs-uniqueness-search",
         current_step="source-family-scans",
@@ -5243,6 +5365,119 @@ def build_candidate_identification_note(
                 "",
             ]
         )
+
+    lines.extend(
+        [
+            "### Rational-Equivalence Reduced Object",
+            "",
+            "We also switched from the raw hero reciprocal to the reduced-by-factor object coming from the exact convergent-factor / rational-equivalence bridge:",
+            "",
+        ]
+    )
+    if reduced_bridge_error is not None:
+        lines.extend(
+            [
+                "Reduced-object bridge construction failed:",
+                "",
+                "```text",
+                reduced_bridge_error,
+                "```",
+                "",
+            ]
+        )
+    elif reduced_reciprocal_witness is not None and reduced_reciprocal_series is not None and reduced_ratio_series is not None:
+        reduced_coeffs = reduced_reciprocal_witness.reduction.reduced_coeffs
+        lines.extend(
+            [
+                "```text",
+                "R = reduced hero reciprocal object",
+                f"F_red = B1 / R    where    B1 = 1 / {record.closest_benchmark}",
+                f"a1_red = {_format_expr(reduced_coeffs.a_terms[1])}",
+                f"b1_red = {_format_expr(reduced_coeffs.b_terms[1])}",
+                f"a2_red = {_format_expr(reduced_coeffs.a_terms[2])}",
+                f"b2_red = {_format_expr(reduced_coeffs.b_terms[2])}",
+                f"a3_red = {_format_expr(reduced_coeffs.a_terms[3])}",
+                f"b3_red = {_format_expr(reduced_coeffs.b_terms[3])}",
+                f"r1 = {_format_expr(reduced_reciprocal_witness.scale_terms[1])}",
+                f"r2 = {_format_expr(reduced_reciprocal_witness.scale_terms[2])}",
+                f"r3 = {_format_expr(reduced_reciprocal_witness.scale_terms[3])}",
+                "```",
+                "",
+                "- This is the first source-informed RHS lane: it uses the exact reduction/equivalence bridge rather than a generic low-degree guess on the raw ratio object.",
+                f"- To keep this bridge tractable inside `identify`, the reduced-object lane is currently bounded at depth `{reduced_bridge_depth}` and order `{reduced_bridge_order}`.",
+                "",
+            ]
+        )
+
+        if not reduced_object_self_polynomial_scan.hits:
+            lines.append("No reduced-object self-polynomial hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-object self-polynomial hits were found:")
+            for hit in reduced_object_self_polynomial_scan.hits:
+                relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+                relation_expr = hit.relation.as_sympy(relation_symbols)
+                lines.append(
+                    f"- `R`, `m={hit.modulus}`, `deg_(F,G) <= {hit.max_fg_total_degree}`, `deg_t <= {hit.max_t_degree}`: `{_format_expr(relation_expr)}`"
+                )
+        lines.append("")
+
+        if not reduced_object_self_fractional_linear_scan.hits:
+            lines.append("No reduced-object self-fractional-linear hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-object self-fractional-linear hits were found:")
+            for hit in reduced_object_self_fractional_linear_scan.hits:
+                lines.append(
+                    f"- `R`, `m={hit.modulus}`, `deg_t <= {hit.max_t_degree}`: `{_format_self_t_polynomial_fractional_linear_relation(hit.relation, modulus=hit.modulus, target_variable='R', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        if not reduced_ratio_self_polynomial_scan.hits:
+            lines.append("No reduced-ratio self-polynomial hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self-polynomial hits were found:")
+            for hit in reduced_ratio_self_polynomial_scan.hits:
+                relation_symbols = tuple(sp.Symbol(name) for name in hit.relation.variables)
+                relation_expr = hit.relation.as_sympy(relation_symbols)
+                lines.append(
+                    f"- `F_red`, `m={hit.modulus}`, `deg_(F,G) <= {hit.max_fg_total_degree}`, `deg_t <= {hit.max_t_degree}`: `{_format_expr(relation_expr)}`"
+                )
+        lines.append("")
+
+        if not reduced_ratio_self_fractional_linear_scan.hits:
+            lines.append("No reduced-ratio self-fractional-linear hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self-fractional-linear hits were found:")
+            for hit in reduced_ratio_self_fractional_linear_scan.hits:
+                lines.append(
+                    f"- `F_red`, `m={hit.modulus}`, `deg_t <= {hit.max_t_degree}`: `{_format_self_t_polynomial_fractional_linear_relation(hit.relation, modulus=hit.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        reduced_ratio_self_product_hits = [scan for scan in reduced_ratio_self_quotient_product_scans if scan.relation is not None]
+        if not reduced_ratio_self_product_hits:
+            lines.append("No reduced-ratio self-quotient finite-product hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self-quotient finite-product hits were found:")
+            for scan in reduced_ratio_self_product_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- `{_format_self_quotient_product_relation(scan.relation, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        reduced_ratio_eta_hits = [scan for scan in reduced_ratio_eta_quotient_scans if scan.relation is not None]
+        if not reduced_ratio_eta_hits:
+            lines.append("No reduced-ratio eta-quotient hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio eta-quotient hits were found:")
+            for scan in reduced_ratio_eta_quotient_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- Level `N={scan.level}`: `{_format_eta_quotient_relation(scan.relation, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
 
     if power_tower_scans:
         lines.extend(
