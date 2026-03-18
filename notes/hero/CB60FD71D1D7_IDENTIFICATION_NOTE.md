@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1850.10`
+- Build elapsed seconds before final render: `1749.75`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `73.22`
-- `source-family-scans`: `444.03`
-- `cross-family-functional-scans`: `865.56`
-- `explicit-gg-family-scans`: `392.13`
-- `benchmark-tower-scans`: `75.16`
-- `final-render`: `14.30`
+- `rhs-uniqueness-search`: `69.33`
+- `source-family-scans`: `414.93`
+- `cross-family-functional-scans`: `816.92`
+- `explicit-gg-family-scans`: `375.27`
+- `benchmark-tower-scans`: `73.30`
+- `final-render`: `13.43`
 
 ## Objects
 
@@ -148,6 +148,17 @@ Then b_n_red = 1 + x_n, a_n_red = x_n*(t + x_n), x_{n+1} = t*x_n.
 T(x) = 1 + x + (x*(t + x))/T(t*x)
 T(x)*T(t*x) - (1 + x)*T(t*x) - x*(t + x) = 0
 ```
+
+- We also anchored that tail law at the first stationary stage and scanned the concrete tail object itself.
+
+```text
+T_tail = T(t^2)
+U_tail = T_tail / (1 + t^2)
+```
+
+No anchored-tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes.
+
+No normalized anchored-tail hit was found in the same scanned box family after dividing by the visible factor `1 + x`.
 
 No reduced-object self-polynomial hit was found in the scanned box.
 

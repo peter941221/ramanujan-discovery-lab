@@ -184,6 +184,16 @@ class ReducedTailTransferEquation:
 
 
 @dataclass(frozen=True)
+class ReducedTailAnchor:
+    """A concrete tail object obtained by anchoring the stationary tail law at one stage."""
+
+    start_stage: int
+    state_expr: sp.Expr
+    tail_series: tuple[sp.Expr, ...]
+    normalized_series: tuple[sp.Expr, ...]
+
+
+@dataclass(frozen=True)
 class SourceCorrectionSelfPolynomialHit:
     """A self-polynomial uniqueness hit after factoring source cores."""
 
@@ -1011,6 +1021,43 @@ def detect_reduced_tail_transfer_equation(
         denominator_expr=1 + state,
         numerator_expr=sp.expand(state * (symbol + state)),
         next_state_expr=sp.expand(symbol * state),
+    )
+
+
+def build_reduced_tail_anchor(
+    *,
+    reduced_coeffs: ContinuedFractionCoeffs,
+    symbol: sp.Symbol,
+    start_stage: int = 3,
+    order: int,
+) -> ReducedTailAnchor | None:
+    """Build the anchored tail object T(state_expr) defined by T_n = b_n + a_n / T_{n+1}."""
+    if start_stage < 1:
+        raise ValueError("start_stage must be positive")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(reduced_coeffs.a_terms) != len(reduced_coeffs.b_terms):
+        raise ValueError("reduced coefficient lists must have the same length")
+    if len(reduced_coeffs.a_terms) <= start_stage:
+        return None
+
+    tail_series = _expr_to_series(reduced_coeffs.b_terms[-1], symbol=symbol, order=order)
+    for stage in range(len(reduced_coeffs.a_terms) - 2, start_stage - 1, -1):
+        denominator_series = tail_series
+        numerator_series = _expr_to_series(reduced_coeffs.a_terms[stage], symbol=symbol, order=order)
+        tail_series = series_add(
+            _expr_to_series(reduced_coeffs.b_terms[stage], symbol=symbol, order=order),
+            series_mul(numerator_series, series_invert(denominator_series)),
+        )
+
+    state_expr = sp.expand(reduced_coeffs.b_terms[start_stage] - 1)
+    normalization_series = _expr_to_series(1 + state_expr, symbol=symbol, order=order)
+    normalized_series = series_div(tail_series, normalization_series)
+    return ReducedTailAnchor(
+        start_stage=start_stage,
+        state_expr=state_expr,
+        tail_series=tuple(tail_series),
+        normalized_series=tuple(normalized_series),
     )
 
 
@@ -5086,6 +5133,21 @@ def build_candidate_identification_note(
     reduced_reciprocal_series: Series | None = None
     reduced_ratio_series: Series | None = None
     reduced_tail_transfer_equation: ReducedTailTransferEquation | None = None
+    reduced_tail_anchor: ReducedTailAnchor | None = None
+    reduced_tail_anchor_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_tail_anchor_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_tail_anchor_eta_scans: list[EtaQuotientRelationScan] = []
+    reduced_tail_anchor_self_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_self_plus_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
+    reduced_tail_anchor_normalized_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_tail_anchor_normalized_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_tail_anchor_normalized_eta_scans: list[EtaQuotientRelationScan] = []
+    reduced_tail_anchor_normalized_self_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_normalized_self_plus_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_normalized_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_normalized_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
     reduced_object_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_object_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_ratio_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
@@ -5107,6 +5169,12 @@ def build_candidate_identification_note(
         reduced_tail_transfer_equation = detect_reduced_tail_transfer_equation(
             reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
             symbol=sp.Symbol(series_symbol),
+        )
+        reduced_tail_anchor = build_reduced_tail_anchor(
+            reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+            symbol=sp.Symbol(series_symbol),
+            start_stage=3,
+            order=min(reduced_bridge_order, 24 if smoke else 24),
         )
         reduced_ratio_series = series_div(benchmark_recip[:reduced_bridge_order], reduced_reciprocal_series)
         reduced_object_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
@@ -5180,6 +5248,98 @@ def build_candidate_identification_note(
             order=reduced_bridge_order,
             max_abs_exponent=6 if smoke else 8,
         )
+        if reduced_tail_anchor is not None:
+            tail_anchor_order = len(reduced_tail_anchor.tail_series)
+            tail_anchor_moduli = tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4)
+            tail_anchor_eta_levels = _eta_scan_levels((1, 2, 3, 4, 6, 12))
+            reduced_tail_anchor_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+                target_series=list(reduced_tail_anchor.tail_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                fg_degree_values=(1, 2),
+                t_degree_values=(1, 2),
+            )
+            reduced_tail_anchor_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+                target_series=list(reduced_tail_anchor.tail_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                t_degree_values=(1, 2),
+            )
+            reduced_tail_anchor_eta_scans = scan_ratio_eta_quotient_relations(
+                ratio_series=list(reduced_tail_anchor.tail_series),
+                levels=tail_anchor_eta_levels,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_self_product_scans = scan_ratio_self_quotient_product_relations(
+                ratio_series=list(reduced_tail_anchor.tail_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_self_plus_scans = scan_ratio_self_plus_product_relations(
+                ratio_series=list(reduced_tail_anchor.tail_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_self_signed_scans = scan_ratio_self_signed_product_relations(
+                ratio_series=list(reduced_tail_anchor.tail_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
+                ratio_series=list(reduced_tail_anchor.tail_series),
+                moduli=tuple(modulus for modulus in tail_anchor_moduli if modulus <= 3),
+                eta_levels=_eta_scan_levels((1, 2, 3)),
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_normalized_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+                target_series=list(reduced_tail_anchor.normalized_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                fg_degree_values=(1, 2),
+                t_degree_values=(1, 2),
+            )
+            reduced_tail_anchor_normalized_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+                target_series=list(reduced_tail_anchor.normalized_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                t_degree_values=(1, 2),
+            )
+            reduced_tail_anchor_normalized_eta_scans = scan_ratio_eta_quotient_relations(
+                ratio_series=list(reduced_tail_anchor.normalized_series),
+                levels=tail_anchor_eta_levels,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_normalized_self_product_scans = scan_ratio_self_quotient_product_relations(
+                ratio_series=list(reduced_tail_anchor.normalized_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_normalized_self_plus_scans = scan_ratio_self_plus_product_relations(
+                ratio_series=list(reduced_tail_anchor.normalized_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_normalized_self_signed_scans = scan_ratio_self_signed_product_relations(
+                ratio_series=list(reduced_tail_anchor.normalized_series),
+                moduli=tail_anchor_moduli,
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_tail_anchor_normalized_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
+                ratio_series=list(reduced_tail_anchor.normalized_series),
+                moduli=tuple(modulus for modulus in tail_anchor_moduli if modulus <= 3),
+                eta_levels=_eta_scan_levels((1, 2, 3)),
+                order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
     except Exception as exc:
         reduced_bridge_error = str(exc)
     advance_progress(
@@ -6022,6 +6182,55 @@ def build_candidate_identification_note(
                     "",
                 ]
             )
+        if reduced_tail_anchor is not None:
+            tail_state = _format_expr(reduced_tail_anchor.state_expr)
+            tail_anchor_hits = any(
+                (
+                    reduced_tail_anchor_polynomial_scan.hits,
+                    reduced_tail_anchor_fractional_linear_scan.hits,
+                    [scan for scan in reduced_tail_anchor_eta_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_self_product_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_self_plus_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_self_signed_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_self_signed_eta_scans if scan.relation is not None],
+                )
+            )
+            normalized_tail_anchor_hits = any(
+                (
+                    reduced_tail_anchor_normalized_polynomial_scan.hits,
+                    reduced_tail_anchor_normalized_fractional_linear_scan.hits,
+                    [scan for scan in reduced_tail_anchor_normalized_eta_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_normalized_self_product_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_normalized_self_plus_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_normalized_self_signed_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_normalized_self_signed_eta_scans if scan.relation is not None],
+                )
+            )
+            lines.extend(
+                [
+                    "- We also anchored that tail law at the first stationary stage and scanned the concrete tail object itself.",
+                    "",
+                    "```text",
+                    f"T_tail = T({tail_state})",
+                    f"U_tail = T_tail / (1 + {tail_state})",
+                    "```",
+                    "",
+                ]
+            )
+            if not tail_anchor_hits:
+                lines.append(
+                    "No anchored-tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes."
+                )
+            else:
+                lines.append("Anchored-tail hits were found in the scanned box family.")
+            lines.append("")
+            if not normalized_tail_anchor_hits:
+                lines.append(
+                    "No normalized anchored-tail hit was found in the same scanned box family after dividing by the visible factor `1 + x`."
+                )
+            else:
+                lines.append("Normalized anchored-tail hits were found in the scanned box family.")
+            lines.append("")
 
         if not reduced_object_self_polynomial_scan.hits:
             lines.append("No reduced-object self-polynomial hit was found in the scanned box.")

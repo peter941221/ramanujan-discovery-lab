@@ -7,6 +7,7 @@ from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
+    build_reduced_tail_anchor,
     detect_reduced_tail_transfer_equation,
     scan_ratio_self_plus_product_relations,
     scan_ratio_self_signed_eta_relations,
@@ -1859,6 +1860,41 @@ def test_detect_reduced_tail_transfer_equation_finds_stationary_hero_tail():
     assert sp.simplify(relation.next_state_expr - t * x) == 0
 
 
+def test_build_reduced_tail_anchor_builds_stage_three_tail_and_normalization():
+    t = sp.Symbol("t")
+    reduced_coeffs = ContinuedFractionCoeffs(
+        b0=sp.Integer(1),
+        a_terms=[
+            sp.Integer(0),
+            t,
+            t**2,
+            t**3 + t**4,
+            t**4 + t**6,
+            t**5 + t**8,
+            t**6 + t**10,
+        ],
+        b_terms=[
+            sp.Integer(0),
+            sp.Integer(1),
+            1 + t,
+            1 + t**2,
+            1 + t**3,
+            1 + t**4,
+            1 + t**5,
+        ],
+    )
+
+    anchor = build_reduced_tail_anchor(reduced_coeffs=reduced_coeffs, symbol=t, start_stage=3, order=12)
+
+    assert anchor is not None
+    assert anchor.start_stage == 3
+    assert sp.simplify(anchor.state_expr - t**2) == 0
+    assert anchor.tail_series[0] == 1
+    assert anchor.tail_series[2] == 1
+    assert anchor.tail_series[3] == 1
+    assert anchor.normalized_series[0] == 1
+
+
 def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     verified = tmp_path / "verified.jsonl"
     output_path = tmp_path / "identify.md"
@@ -1926,6 +1962,8 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert ("F_red = B1 / R" in text) or ("Reduced-object bridge construction failed" in text)
     assert ("stationary tail family" in text) or ("Reduced-object bridge construction failed" in text)
     assert ("T(x) = 1 + x + (x*(t + x))/T(t*x)" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("T_tail = T(t^2)" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("U_tail = T_tail / (1 + t^2)" in text) or ("Reduced-object bridge construction failed" in text)
     assert "Mahler/transfer" in text
     assert "plus-product" in text
     assert "signed-product" in text
