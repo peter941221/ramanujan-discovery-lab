@@ -5134,6 +5134,7 @@ def build_candidate_identification_note(
     reduced_ratio_series: Series | None = None
     reduced_tail_transfer_equation: ReducedTailTransferEquation | None = None
     reduced_tail_anchor: ReducedTailAnchor | None = None
+    reduced_next_tail_anchor: ReducedTailAnchor | None = None
     reduced_tail_anchor_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_tail_anchor_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_tail_anchor_eta_scans: list[EtaQuotientRelationScan] = []
@@ -5148,6 +5149,13 @@ def build_candidate_identification_note(
     reduced_tail_anchor_normalized_self_plus_scans: list[SelfQuotientProductRelationScan] = []
     reduced_tail_anchor_normalized_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
     reduced_tail_anchor_normalized_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
+    reduced_next_tail_reciprocal_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_next_tail_reciprocal_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_next_tail_reciprocal_eta_scans: list[EtaQuotientRelationScan] = []
+    reduced_next_tail_reciprocal_self_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_next_tail_reciprocal_self_plus_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_next_tail_reciprocal_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_next_tail_reciprocal_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
     reduced_object_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_object_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_ratio_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
@@ -5174,6 +5182,12 @@ def build_candidate_identification_note(
             reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
             symbol=sp.Symbol(series_symbol),
             start_stage=3,
+            order=min(reduced_bridge_order, 24 if smoke else 24),
+        )
+        reduced_next_tail_anchor = build_reduced_tail_anchor(
+            reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+            symbol=sp.Symbol(series_symbol),
+            start_stage=4,
             order=min(reduced_bridge_order, 24 if smoke else 24),
         )
         reduced_ratio_series = series_div(benchmark_recip[:reduced_bridge_order], reduced_reciprocal_series)
@@ -5338,6 +5352,55 @@ def build_candidate_identification_note(
                 moduli=tuple(modulus for modulus in tail_anchor_moduli if modulus <= 3),
                 eta_levels=_eta_scan_levels((1, 2, 3)),
                 order=tail_anchor_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+        if reduced_next_tail_anchor is not None:
+            next_tail_reciprocal_series = series_invert(list(reduced_next_tail_anchor.normalized_series))
+            next_tail_order = len(next_tail_reciprocal_series)
+            next_tail_moduli = tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4)
+            next_tail_eta_levels = _eta_scan_levels((1, 2, 3, 4, 6, 12))
+            reduced_next_tail_reciprocal_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+                target_series=next_tail_reciprocal_series,
+                moduli=next_tail_moduli,
+                order=next_tail_order,
+                fg_degree_values=(1, 2),
+                t_degree_values=(1, 2),
+            )
+            reduced_next_tail_reciprocal_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+                target_series=next_tail_reciprocal_series,
+                moduli=next_tail_moduli,
+                order=next_tail_order,
+                t_degree_values=(1, 2),
+            )
+            reduced_next_tail_reciprocal_eta_scans = scan_ratio_eta_quotient_relations(
+                ratio_series=next_tail_reciprocal_series,
+                levels=next_tail_eta_levels,
+                order=next_tail_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_next_tail_reciprocal_self_product_scans = scan_ratio_self_quotient_product_relations(
+                ratio_series=next_tail_reciprocal_series,
+                moduli=next_tail_moduli,
+                order=next_tail_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_next_tail_reciprocal_self_plus_scans = scan_ratio_self_plus_product_relations(
+                ratio_series=next_tail_reciprocal_series,
+                moduli=next_tail_moduli,
+                order=next_tail_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_next_tail_reciprocal_self_signed_scans = scan_ratio_self_signed_product_relations(
+                ratio_series=next_tail_reciprocal_series,
+                moduli=next_tail_moduli,
+                order=next_tail_order,
+                max_abs_exponent=6 if smoke else 8,
+            )
+            reduced_next_tail_reciprocal_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
+                ratio_series=next_tail_reciprocal_series,
+                moduli=tuple(modulus for modulus in next_tail_moduli if modulus <= 3),
+                eta_levels=_eta_scan_levels((1, 2, 3)),
+                order=next_tail_order,
                 max_abs_exponent=6 if smoke else 8,
             )
     except Exception as exc:
@@ -6230,6 +6293,36 @@ def build_candidate_identification_note(
                 )
             else:
                 lines.append("Normalized anchored-tail hits were found in the scanned box family.")
+            lines.append("")
+        if reduced_next_tail_anchor is not None:
+            next_tail_state = _format_expr(reduced_next_tail_anchor.state_expr)
+            next_tail_reciprocal_hits = any(
+                (
+                    reduced_next_tail_reciprocal_polynomial_scan.hits,
+                    reduced_next_tail_reciprocal_fractional_linear_scan.hits,
+                    [scan for scan in reduced_next_tail_reciprocal_eta_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_self_product_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_self_plus_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_self_signed_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_self_signed_eta_scans if scan.relation is not None],
+                )
+            )
+            lines.extend(
+                [
+                    "- We also pushed one step deeper along the exact tail law and scanned the reciprocal-normalized next-tail object.",
+                    "",
+                    "```text",
+                    f"R_tail = (1 + {next_tail_state}) / T({next_tail_state})",
+                    "```",
+                    "",
+                ]
+            )
+            if not next_tail_reciprocal_hits:
+                lines.append(
+                    "No reciprocal-normalized next-tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes."
+                )
+            else:
+                lines.append("Reciprocal-normalized next-tail hits were found in the scanned box family.")
             lines.append("")
 
         if not reduced_object_self_polynomial_scan.hits:

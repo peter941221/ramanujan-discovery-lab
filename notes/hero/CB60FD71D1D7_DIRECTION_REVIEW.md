@@ -35,6 +35,8 @@ object side:
 6. anchored tail-object scans on
    `T_tail = T(t^2)` and its first visible normalization
    `U_tail = T_tail / (1 + t^2)`
+7. reciprocal-normalized next-tail scans on
+   `R_tail = (1 + t^3) / T(t^3)`
 
 The bounded boxes now checked are:
 
@@ -57,6 +59,7 @@ Two-core corrected RHS boxes: 0 hits
 Reduced-tail transfer law: exact hit
 Anchored tail boxes: 0 hits
 Normalized anchored tail boxes: 0 hits
+Reciprocal-normalized next-tail boxes: 0 hits
 Reduced-object bridge boxes: 0 hits
 Reduced-ratio modular-unit boxes: 0 hits
 Reduced-object Mahler/transfer boxes: 0 hits
@@ -90,6 +93,14 @@ U_tail = T_tail / (1 + t^2)
 the same bounded self-polynomial / self-fractional-linear / eta /
 product-style boxes still give `0` hits.
 
+Pushing one exact step deeper along the same transfer chain,
+
+```text
+R_tail = (1 + t^3) / T(t^3)
+```
+
+still gives `0` hits in that same bounded self / eta / product family.
+
 ## Why The Direction Is Still Correct
 
 Analogy:
@@ -119,14 +130,17 @@ In award-track terms, this is still the correct trunk because:
 6. even after anchoring that transfer law at `x = t^2` and dividing by the
    first visible factor `1 + t^2`, the concrete tail objects still avoid the
    same small functional / modular-unit boxes
-7. the next deeper source-informed passes still stay empty:
+7. even after moving one exact step further to the reciprocal-normalized
+   next-tail object `R_tail = (1 + t^3) / T(t^3)`, the same bounded boxes
+   still stay empty
+8. the next deeper source-informed passes still stay empty:
    bounded multi-level Mahler/transfer boxes and bounded `(1+t^r)` self-quotient
    product boxes both still give `0` hits on the reduced lanes
-8. even after mixing the two simplest modular-unit building blocks into one
+9. even after mixing the two simplest modular-unit building blocks into one
    bounded signed-product lane
    `prod (1-t^r)^{a_r} (1+t^r)^{b_r}`,
    the reduced ratio still gives `0` hits
-9. even after allowing the reduced ratio to carry its own shifted copy together
+10. even after allowing the reduced ratio to carry its own shifted copy together
    with signed modular-unit pieces and eta pieces in one bounded
    signed-eta transfer lane, the reduced ratio still gives `0` hits
 
@@ -152,6 +166,9 @@ They mean something more specific:
 - and even the first concrete incarnations of that scaffold,
   `T_tail = T(t^2)` and `U_tail = T_tail / (1 + t^2)`,
   still do not fall into the current low-complexity self / eta / product boxes
+- and even one exact step deeper,
+  `R_tail = (1 + t^3) / T(t^3)`,
+  still does not fall into those same bounded boxes
 - even after adding a more source-informed recursive lane (`Mahler/transfer`)
   and a more source-informed modular-unit lane (products built from `1+t^r`,
   matching the reverse-scale shape), the reduced lanes still avoid the current
@@ -218,6 +235,8 @@ This round partially advanced all three:
   reduced ratio
 - the first anchored tail objects `T_tail` and `U_tail` now also get their own
   bounded self / eta / product scan layer, and those boxes still return `0`
+- the next reciprocal-normalized tail object `R_tail = (1 + t^3) / T(t^3)` now
+  also gets the same bounded scan layer, and that box family still returns `0`
 - the reduced ratio now also gets a bounded modular-unit lane
 - the reduced ratio now also gets a bounded plus-product lane based on
   `1+t^r`, and both the reduced object and reduced ratio now get a bounded
@@ -226,7 +245,7 @@ This round partially advanced all three:
 So the next gain probably needs a more bespoke object than `F`, `F/S`,
 `F/(S1*S2)`, `R`, or `F_red` alone; the most natural next candidate is the
 tail family `T(x)` itself or a deeper renormalization of `T(x)` beyond the
-first visible factor `1 + t^2`.
+first visible factors `1 + t^2` and `1 + t^3`.
 
 ## Current Verdict
 

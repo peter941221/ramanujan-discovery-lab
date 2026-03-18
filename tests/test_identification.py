@@ -1964,6 +1964,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert ("T(x) = 1 + x + (x*(t + x))/T(t*x)" in text) or ("Reduced-object bridge construction failed" in text)
     assert ("T_tail = T(t^2)" in text) or ("Reduced-object bridge construction failed" in text)
     assert ("U_tail = T_tail / (1 + t^2)" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("R_tail = (1 + t^3) / T(t^3)" in text) or ("Reduced-object bridge construction failed" in text)
     assert "Mahler/transfer" in text
     assert "plus-product" in text
     assert "signed-product" in text

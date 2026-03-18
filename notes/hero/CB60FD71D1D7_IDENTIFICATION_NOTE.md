@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1749.75`
+- Build elapsed seconds before final render: `1872.24`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `69.33`
-- `source-family-scans`: `414.93`
-- `cross-family-functional-scans`: `816.92`
-- `explicit-gg-family-scans`: `375.27`
-- `benchmark-tower-scans`: `73.30`
-- `final-render`: `13.43`
+- `rhs-uniqueness-search`: `75.39`
+- `source-family-scans`: `448.50`
+- `cross-family-functional-scans`: `875.43`
+- `explicit-gg-family-scans`: `397.11`
+- `benchmark-tower-scans`: `75.81`
+- `final-render`: `14.49`
 
 ## Objects
 
@@ -159,6 +159,14 @@ U_tail = T_tail / (1 + t^2)
 No anchored-tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes.
 
 No normalized anchored-tail hit was found in the same scanned box family after dividing by the visible factor `1 + x`.
+
+- We also pushed one step deeper along the exact tail law and scanned the reciprocal-normalized next-tail object.
+
+```text
+R_tail = (1 + t^3) / T(t^3)
+```
+
+No reciprocal-normalized next-tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes.
 
 No reduced-object self-polynomial hit was found in the scanned box.
 
