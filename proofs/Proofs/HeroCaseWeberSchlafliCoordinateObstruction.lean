@@ -24,6 +24,12 @@ class. Instead, the first exact failure of the Morton Weber-Schlafli template
 
 falls into a small repeated witness table with seven currently realized classes.
 
+That seven-class table also compresses one step further:
+
+- the coefficient support is exactly `{-1, 3, 8}`
+- the coefficient `3` lives on the even power ladder `2, 4, 6, 8, 10`
+- the exceptional coefficients `-1` and `8` only occur at power `2`
+
 So this module is a theorem-shaped exact obstruction shell, not yet a positive
 source identification theorem.
 -/
@@ -87,6 +93,13 @@ def expectedClasses : List ObstructionClass :=
     ⟨10, 3⟩
   ]
 
+def expectedCoefficients : List Int := [-1, 3, 8]
+
+def coefficientSupport : List Int :=
+  witnesses.map FirstFailureWitness.coeff
+
+def coeffThreePowerLadder : List Nat := [2, 4, 6, 8, 10]
+
 def sampleWitnessProp (sample : TailSample) : Prop :=
   (witnessFor sample).sampleLabel = sample.label ∧
     (classFor sample).power = (witnessFor sample).power ∧
@@ -128,6 +141,52 @@ theorem classCoverage_true : classCoverageProp := by
   have h : classCoverageCheck = true := by native_decide
   simpa [classCoverageCheck, classCoverageProp] using h
 
+def coefficientCoverageProp : Prop :=
+  coefficientSupport.all (fun coeff => decide (coeff ∈ expectedCoefficients)) = true ∧
+    expectedCoefficients.all (fun coeff => decide (coeff ∈ coefficientSupport)) = true
+
+def coefficientCoverageCheck : Bool :=
+  coefficientSupport.all (fun coeff => decide (coeff ∈ expectedCoefficients)) &&
+    expectedCoefficients.all (fun coeff => decide (coeff ∈ coefficientSupport))
+
+theorem coefficientCoverage_true : coefficientCoverageProp := by
+  have h : coefficientCoverageCheck = true := by native_decide
+  simpa [coefficientCoverageCheck, coefficientCoverageProp] using h
+
+def coeffThreeLadderProp : Prop :=
+  coeffThreePowerLadder.all (fun power => decide (⟨power, 3⟩ ∈ witnessClasses)) = true ∧
+    witnessClasses.all (fun obstruction =>
+      decide (obstruction.coeff ≠ 3 ∨ obstruction.power ∈ coeffThreePowerLadder)) = true
+
+def coeffThreeLadderCheck : Bool :=
+  coeffThreePowerLadder.all (fun power => decide (⟨power, 3⟩ ∈ witnessClasses)) &&
+    witnessClasses.all (fun obstruction =>
+      decide (obstruction.coeff ≠ 3 ∨ obstruction.power ∈ coeffThreePowerLadder))
+
+theorem coeffThreeLadder_true : coeffThreeLadderProp := by
+  have h : coeffThreeLadderCheck = true := by native_decide
+  simpa [coeffThreeLadderCheck, coeffThreeLadderProp] using h
+
+def exceptionalCoeffPowerProp : Prop :=
+  ⟨2, -1⟩ ∈ witnessClasses ∧
+    ⟨2, 8⟩ ∈ witnessClasses ∧
+    witnessClasses.all (fun obstruction =>
+      decide (obstruction.coeff ≠ -1 ∨ obstruction.power = 2)) = true ∧
+    witnessClasses.all (fun obstruction =>
+      decide (obstruction.coeff ≠ 8 ∨ obstruction.power = 2)) = true
+
+def exceptionalCoeffPowerCheck : Bool :=
+  decide (⟨2, -1⟩ ∈ witnessClasses) &&
+    decide (⟨2, 8⟩ ∈ witnessClasses) &&
+    witnessClasses.all (fun obstruction =>
+      decide (obstruction.coeff ≠ -1 ∨ obstruction.power = 2)) &&
+    witnessClasses.all (fun obstruction =>
+      decide (obstruction.coeff ≠ 8 ∨ obstruction.power = 2))
+
+theorem exceptionalCoeffPower_true : exceptionalCoeffPowerProp := by
+  have h : exceptionalCoeffPowerCheck = true := by native_decide
+  simpa [exceptionalCoeffPowerCheck, exceptionalCoeffPowerProp, and_assoc] using h
+
 def coordinateWaypoint : Prop :=
   coordinateLabel = "P_ws" ∧
     coordinateExpression = "P_ws = (1/F - F) / 2" ∧
@@ -142,6 +201,9 @@ structure WaypointCertificate where
   sampleWitness : ∀ sample : TailSample, sampleWitnessProp sample
   firstFailure : ∀ sample : TailSample, firstFailureProp sample
   classCoverage : classCoverageProp
+  coefficientCoverage : coefficientCoverageProp
+  coeffThreeLadder : coeffThreeLadderProp
+  exceptionalCoeffPower : exceptionalCoeffPowerProp
 
 def currentWaypointCertificate : WaypointCertificate where
   coordinate := coordinateWaypoint_true
@@ -149,13 +211,19 @@ def currentWaypointCertificate : WaypointCertificate where
   sampleWitness := sampleWitness_true
   firstFailure := firstFailure_true
   classCoverage := classCoverage_true
+  coefficientCoverage := coefficientCoverage_true
+  coeffThreeLadder := coeffThreeLadder_true
+  exceptionalCoeffPower := exceptionalCoeffPower_true
 
 def currentWaypoint : Prop :=
   coordinateWaypoint ∧
     witnessTableProp ∧
     (∀ sample : TailSample, sampleWitnessProp sample) ∧
     (∀ sample : TailSample, firstFailureProp sample) ∧
-    classCoverageProp
+    classCoverageProp ∧
+    coefficientCoverageProp ∧
+    coeffThreeLadderProp ∧
+    exceptionalCoeffPowerProp
 
 theorem currentWaypoint_true : currentWaypoint := by
   exact ⟨
@@ -163,7 +231,10 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.witnessTable,
     currentWaypointCertificate.sampleWitness,
     currentWaypointCertificate.firstFailure,
-    currentWaypointCertificate.classCoverage
+    currentWaypointCertificate.classCoverage,
+    currentWaypointCertificate.coefficientCoverage,
+    currentWaypointCertificate.coeffThreeLadder,
+    currentWaypointCertificate.exceptionalCoeffPower
   ⟩
 
 end WeberSchlafliCoordinate

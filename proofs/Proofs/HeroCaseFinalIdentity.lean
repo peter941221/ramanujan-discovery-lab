@@ -116,7 +116,9 @@ Current source-family-specific exact lane:
   Weber-Schlafli template
   `P^2*P_2^2 + P^2 - 2*P_2`
   currently lands in a seven-class repeated witness table rather than one
-  universal class
+  universal class, and that table now compresses further into the coefficient
+  support `{-1, 3, 8}`, the coefficient-`3` even ladder `2,4,6,8,10`, and the
+  two exceptional power-`2` classes for coefficients `-1` and `8`
 - `Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean` still packages the
   theorem-shaped exact shell for the explicit square lane `X_mt = F^2`,
   recording that the Proposition 3.2 template
@@ -454,6 +456,14 @@ def weberClassInvariantBridgeResearchWaypoint : Prop :=
 theorem weberClassInvariantBridgeResearchWaypoint_true :
     weberClassInvariantBridgeResearchWaypoint := by
   exact Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
+
+def weberSchlafliBridgeResearchWaypoint : Prop :=
+  weberSchlafliCoordinateExcludedProp ∧
+    weberClassInvariantBridgeResearchWaypoint
+
+theorem weberSchlafliBridgeResearchWaypoint_true :
+    weberSchlafliBridgeResearchWaypoint := by
+  exact ⟨weberSchlafliCoordinateExcluded, weberClassInvariantBridgeResearchWaypoint_true⟩
 
 def namedWeberOrbitResearchWaypoint : Prop :=
   Proofs.HeroCase.GGQ34.currentWaypoint ∧

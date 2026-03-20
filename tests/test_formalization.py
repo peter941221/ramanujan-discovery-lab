@@ -105,6 +105,7 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "mortonSquaredCoordinateExcluded" in text
     assert "weberSchlafliCoordinateExcluded" in text
     assert "mortonNamedCoordinateResearchWaypoint_true" in text
+    assert "weberSchlafliBridgeResearchWaypoint_true" in text
     assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in text
@@ -114,6 +115,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
     assert "(2,-1)" in text
     assert "(10,3)" in text
+    assert "{-1, 3, 8}" in text
+    assert "2,4,6,8,10" in text
     assert "currentNamedWeberOrbitResearchCertificate" in text
     assert "namedWeberOrbitResearchWaypoint_true" in text
     assert "currentRecognitionFrontierCertificate" in text
@@ -138,6 +141,7 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "mortonSquaredCoordinateExcluded" in lean_text
     assert "weberSchlafliCoordinateExcluded" in lean_text
     assert "mortonNamedCoordinateResearchWaypoint_true" in lean_text
+    assert "weberSchlafliBridgeResearchWaypoint_true" in lean_text
     assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in lean_text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in lean_text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in lean_text
@@ -147,6 +151,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in lean_text
     assert "(2,-1)" in lean_text
     assert "(10,3)" in lean_text
+    assert "{-1, 3, 8}" in lean_text
+    assert "2,4,6,8,10" in lean_text
     assert "currentNamedWeberOrbitResearchCertificate" in lean_text
     assert "namedWeberOrbitResearchWaypoint_true" in lean_text
     assert "currentRecognitionFrontierCertificate" in lean_text
