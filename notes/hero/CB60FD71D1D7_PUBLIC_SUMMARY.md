@@ -59,7 +59,14 @@ has been found in the primary sources checked so far.
   `p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`, with
   `Z_g = ((1 - t*F^2)^2) / (4*t*F^2)`.
   On the true `GG` source these recover the explicit named objects
-  `(t^2; t^4)_inf^12` and `(-t^2; t^4)_inf^12`, but on the current hero
+  `(t^2; t^4)_inf^12` and `(-t^2; t^4)_inf^12`.
+  Berndt--Chan--Zhang then identifies the Ramanujan-Weber `G_n` / `g_n`
+  normalization with classical Weber `f` / `f1`, while Yui--Zagier supplies
+  the classical Weber `f`, `f1`, `f2` trio, so the current
+  `g12_ws` / `p12_ws` / `G_f2_ws` shell is now being read as that named Weber
+  trio in the project's normalization rather than as an anonymous product
+  gadget.
+  But on the current hero
   tail-family ladder they still give `0` hits after the first direct-template,
   eta / modular-unit, and plus-Pochhammer correction passes.
 - That same Weber pair is now tied together by an exact bridge
@@ -84,6 +91,11 @@ has been found in the primary sources checked so far.
   `1` at `t^1` with coefficient `4`, and its first follow-up
   `H_X_ws = (G_X_ws - 1) / (4*t^1)` still stays outside the same first
   theorem-shaped closure boxes.
+  With the classical Weber naming closure in place, this
+  `Q_gp_ws -> X_g_ws -> G_X_ws`
+  branch is now best read as the source-faithful classical Weber
+  quotient/template lane, and it still looks cleaner than the product branch as
+  the main constructive trunk.
   The same lane now also compares the two hero-side normalized follow-ups
   directly:
   `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws` both first
@@ -144,4 +156,5 @@ candidate = RR(q^3) * (1 - q^12 + 2 q^15 - q^18) + O(q^31)
 - Chan, Huang, 1997: https://mrc.sdu.edu.cn/ziliao/8.pdf
 - Akkarapakam, Morton, 2024: https://nyjm.albany.edu/j/2024/30-36.html
 - Adiga, Kim, et al., 2017: https://www.filomat.org/index.php/filomat/article/download/4026/4026/31-13-2-4026.pdf
+- Berndt, Chan, Zhang, 1997: https://mrc.sdu.edu.cn/ziliao/10.pdf
 - Yui, Zagier, 1997: https://people.mpim-bonn.mpg.de/zagier/files/doi/10.1090/S0025-5718-97-00854-5/fulltext.pdf

@@ -112,7 +112,9 @@ Current source-family-specific exact lane:
   tri-product coordinate
   `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)` plus its
   normalized follow-up `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)` also stay
-  outside the first checked theorem-shaped closure boxes, and the focused quotient
+  outside the first checked theorem-shaped closure boxes, the same shell now
+  records the source-backed classical Weber trio reading coming from
+  Berndt--Chan--Zhang plus Yui--Zagier, and the focused quotient
   `R_gp_ws = G_p12_ws / G_g12_ws` plus the normalized follow-up
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` still have `0` hits in the first
   checked self-polynomial / self-fractional-linear / self-quotient-product /
@@ -350,10 +352,11 @@ def knownSourceOrbitExclusionWaypoint : Prop :=
   directLocalObstructionsProp ∧
   (∀ b lam : Int, lam ≠ 0 → simpleCor2cfBranchesExcludedProp b lam) ∧
   Proofs.HeroCase.GGQ34.currentWaypoint ∧
-  Proofs.HeroCase.WeberCompanion.currentWaypoint
+  Proofs.HeroCase.WeberCompanion.currentWaypoint ∧
+  Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
 
 theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoint := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro shiftA shiftB shiftLambda
     exact page43NearestShiftCubeExcluded shiftA shiftB shiftLambda
   · exact page43PolynomialPrefactorExcluded
@@ -365,6 +368,7 @@ theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoi
     exact simpleCor2cfBranchesExcluded b lam h
   · exact Proofs.HeroCase.GGQ34.currentWaypoint_true
   · exact Proofs.HeroCase.WeberCompanion.currentWaypoint_true
+  · exact Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
 
 def exactWaypointStatement : Prop :=
   finiteConvergentReductionWaypoint ∧ knownSourceOrbitExclusionWaypoint
@@ -404,6 +408,37 @@ def weberClassInvariantBridgeResearchWaypoint : Prop :=
 theorem weberClassInvariantBridgeResearchWaypoint_true :
     weberClassInvariantBridgeResearchWaypoint := by
   exact Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
+
+def namedWeberOrbitResearchWaypoint : Prop :=
+  Proofs.HeroCase.GGQ34.currentWaypoint ∧
+    Proofs.HeroCase.WeberCompanion.currentWaypoint ∧
+    Proofs.HeroCase.GGWeightedCorrection.currentWaypoint ∧
+    Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
+
+structure NamedWeberOrbitResearchCertificate where
+  ggQ34 : Proofs.HeroCase.GGQ34.currentWaypoint
+  weberCompanion : Proofs.HeroCase.WeberCompanion.currentWaypoint
+  ggWeightedCorrection : Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
+  weberClassInvariantBridge : Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
+
+def currentNamedWeberOrbitResearchCertificate : NamedWeberOrbitResearchCertificate where
+  ggQ34 := Proofs.HeroCase.GGQ34.currentWaypoint_true
+  weberCompanion := Proofs.HeroCase.WeberCompanion.currentWaypoint_true
+  ggWeightedCorrection := Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
+  weberClassInvariantBridge := Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
+
+theorem currentNamedWeberOrbitResearchCertificate_sound :
+    namedWeberOrbitResearchWaypoint := by
+  exact ⟨
+    currentNamedWeberOrbitResearchCertificate.ggQ34,
+    currentNamedWeberOrbitResearchCertificate.weberCompanion,
+    currentNamedWeberOrbitResearchCertificate.ggWeightedCorrection,
+    currentNamedWeberOrbitResearchCertificate.weberClassInvariantBridge
+  ⟩
+
+theorem namedWeberOrbitResearchWaypoint_true :
+    namedWeberOrbitResearchWaypoint := by
+  exact currentNamedWeberOrbitResearchCertificate_sound
 
 /-!
 TODO (award track, endgame):

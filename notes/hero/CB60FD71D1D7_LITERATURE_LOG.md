@@ -747,6 +747,19 @@ b(τ/2)^2 = b(τ) + 4
      moving from raw `GG` quotient coordinates to Weber-style modular-function
      coordinates is a source-backed shift, not a random coordinate trick.
 
+5. Berndt, Chan, Zhang, 1997
+   - link:
+     `https://mrc.sdu.edu.cn/ziliao/10.pdf`
+   - verified role:
+     explicit Ramanujan-Weber / classical-Weber dictionary:
+     Ramanujan-Weber `G_n` / `g_n` are identified there with the classical
+     Weber `f` / `f1` normalization.
+   - direction consequence:
+     once paired with Yui--Zagier's classical Weber `f`, `f1`, `f2` trio,
+     the current `g12_ws` / `p12_ws` / `G_f2_ws` shell is no longer just a
+     suggestive algebra gadget; it becomes a source-backed classical Weber
+     trio in project normalization.
+
 ### Phase-1 exit conclusion
 
 Phase 1 now exits with a sharper local target:
@@ -782,6 +795,54 @@ Analogy:
 
 The current literature now says the gearbox view is the more faithful next
 representation.
+
+## 2026-03-20 Update: Classical Weber Trio Naming Closure
+
+This pass asked a naming-closure question rather than a new scan question:
+
+```text
+after the Ramanujan-Weber class-invariant compression,
+can the current `g12_ws / p12_ws / G_f2_ws` shell be named from sources
+rather than only treated as an internally useful coordinate package?
+```
+
+Primary source spine used for this closure:
+
+1. Berndt, Chan, Zhang, 1997
+   - role:
+     identifies Ramanujan-Weber `G_n` / `g_n` with the classical Weber
+     `f` / `f1` normalization.
+
+2. Yui, Zagier, 1997
+   - role:
+     supplies the classical Weber `f`, `f1`, `f2` trio as the ambient
+     modular-function source language.
+
+### Outcome
+
+- the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should now be read as a
+  named classical Weber trio in project normalization, not as an anonymous
+  product gadget
+- correspondingly, the branch
+  `Q_gp_ws -> X_g_ws -> G_X_ws`
+  is now best described as the source-faithful classical Weber
+  quotient/template lane
+- this is a naming and closure gain, not a positive final identity:
+  the product follow-up branch
+  `G_f2_ws -> H_f2_ws`
+  still stays negative in the first theorem-shaped boxes, and the quotient
+  branch remains the cleaner constructive trunk
+
+### Direction consequence
+
+The next move inside the same orbit should still prioritize:
+
+- `X_g_ws`
+- `G_X_ws`
+- `H_X_ws`
+- the later quotient-return bridge
+
+rather than pivoting the whole search toward the classical product lane alone.
 
 ## 2026-03-20 Update: Companion `B = b(4τ)` Pass Closes Too
 

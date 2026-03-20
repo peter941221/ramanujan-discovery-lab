@@ -127,11 +127,32 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -276,11 +297,32 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-8`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-8*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-5/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `8`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -425,11 +467,32 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^2` with coefficient `8`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (8*t^2)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `4`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^2` with coefficient `-8`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -574,11 +637,32 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-12`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-12*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-25/6`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `12`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -723,11 +807,32 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -872,11 +977,32 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `3/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1021,11 +1147,32 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^2` with coefficient `4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (4*t^2)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `6`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^2` with coefficient `-4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1170,11 +1317,32 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-8`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-8*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `8`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1319,11 +1487,32 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1468,11 +1657,32 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1617,11 +1827,32 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^2` with coefficient `4`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (4*t^2)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `5`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^2` with coefficient `-4`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1766,11 +1997,32 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+- Classical Weber `f2` tri-product bridge: `G_f2_ws - G_g12_ws*G_p12_ws = 0`.
+- Classical Weber source reading: Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization rather than as an anonymous product gadget.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws`: `G_f2_ws - 1` first fails at `t^1` with coefficient `-8`.
+- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-8*t^1)`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-3/2`.
+- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized eta templates: `0` / `4` hit boxes.
+- Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
 - Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate route reading: with that classical Weber source interpretation in place, the current `Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the source-faithful classical Weber quotient/template lane, so it still outranks wider anonymous scans and the already-negative product follow-up branch.
 - Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `8`.
 - Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
 - Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
@@ -1884,8 +2136,10 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton Weber-Schlafli sample hits found: `0`
 - Weber g-class-invariant sample hits found: `0`
 - Weber G-class-invariant sample hits found: `0`
+- Classical Weber `f2` tri-product sample hits found: `0`
 - Weber residual-quotient sample hits found: `0`
 - Weber residual-follow-up sample hits found: `0`
-- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
+- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `544.75`
+- Build elapsed seconds: `557.99`
+

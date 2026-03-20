@@ -146,6 +146,12 @@ Working interpretation:
   named objects:
   - `g12_ws = (t^2; t^4)_inf^12`
   - `p12_ws = (-t^2; t^4)_inf^12`
+- Berndt--Chan--Zhang identifies Ramanujan-Weber `G_n` / `g_n` with classical
+  Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber
+  `f`, `f1`, `f2` trio, so the current
+  `g12_ws / p12_ws / G_f2_ws`
+  shell should now be read as a named classical Weber trio in project
+  normalization rather than as an anonymous product gadget
 - this is stronger than a negative `P/B` shell alone because it gives a genuine
   positive compression on the source family, not just another obstruction
 - on the sampled hero tail-family ladder, both new coordinates still give `0`
@@ -399,7 +405,9 @@ Current Phase 2 result:
   more reusable theorem style
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
-  the next implementation should first exploit the new
+  the next implementation should keep the now source-backed
+  classical Weber trio visible, but still prioritize the quotient/template
+  branch over the product branch; in particular it should track the
   classical Weber `f2` tri-product lane
   `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)` and its normalized
   follow-up `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`,

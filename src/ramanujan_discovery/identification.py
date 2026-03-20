@@ -13035,6 +13035,14 @@ def build_candidate_tail_family_note(
                     f"- Classical Weber `f2` tri-product bridge: "
                     f"`{bridge_scan.classical_product_coordinate_bridge_expression}`."
                 )
+                lines.append(
+                    "- Classical Weber source reading: Berndt--Chan--Zhang identify "
+                    "Ramanujan-Weber `G_n` / `g_n` with Weber `f` / `f1`, and "
+                    "Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, "
+                    "so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be "
+                    "read as that named Weber trio in the project's normalization "
+                    "rather than as an anonymous product gadget."
+                )
                 if (
                     classical_product_scan.first_failure_power is None
                     or classical_product_scan.first_failure_coeff is None
@@ -13207,6 +13215,14 @@ def build_candidate_tail_family_note(
                 lines.append(
                     f"- Weber quotient-coordinate template bridge: "
                     f"`{bridge_scan.quotient_coordinate_template_bridge_expression}`."
+                )
+                lines.append(
+                    "- Weber quotient-coordinate route reading: with that classical "
+                    "Weber source interpretation in place, the current "
+                    "`Q_gp_ws` / `X_g_ws` / `G_X_ws` branch is the "
+                    "source-faithful classical Weber quotient/template lane, so it "
+                    "still outranks wider anonymous scans and the already-negative "
+                    "product follow-up branch."
                 )
                 if (
                     coordinate_scan.first_failure_power is None

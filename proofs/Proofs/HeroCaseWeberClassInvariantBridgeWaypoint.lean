@@ -25,6 +25,12 @@ class-invariant compression lane:
   = G_g12_ws*G_p12_ws`
   together with its normalized follow-up
   `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`
+- Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical
+  Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber
+  `f`, `f1`, `f2` trio
+- so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should now be read as
+  that named Weber trio in the project's normalization rather than as an
+  anonymous product gadget
 - the template-normalized coordinate
   `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`
   is the current source-faithful positive-recognition object
@@ -110,6 +116,9 @@ def classicalProductCoordinateFollowupExpression : String :=
 def classicalProductCoordinateFollowupFirstFailure : FirstFailureWitness := ⟨1, (1 : Rat) / 2⟩
 
 def classicalProductCoordinateFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def classicalWeberTrioReading : String :=
+  "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, and `G_X_ws` are the current source-faithful quotient/template branch."
 
 def focusedQuotientCoordinateLabel : String := "X_g_ws"
 
@@ -197,6 +206,19 @@ def quotientFollowupBridgeFractionalLinearHit : Bool := false
 def quotientFollowupBridgeQuotientSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
 def quotientFollowupBridgeQuotientFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def namedGGModularEquationBasis : String :=
+  "GG(t), GG(-t), GG(t^2), GG(t^3), GG(t^4)"
+
+structure NamedGGClosureStatus where
+  directHits : Nat
+  quotientHits : Nat
+  mixedQuotientHits : Nat
+deriving Repr, DecidableEq
+
+def quotientFollowupBridgeNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
 
 def focusedQuotientLabel : String := "R_gp_ws"
 
@@ -294,6 +316,20 @@ theorem classicalProductCoordinateWaypoint_true : classicalProductCoordinateWayp
     classicalProductCoordinateFollowupExpression,
     classicalProductCoordinateFollowupFirstFailure,
     classicalProductCoordinateFollowupSmallBoxStatus
+  ]
+
+def classicalWeberTrioReadingProp : Prop :=
+  classicalWeberTrioReading =
+      "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, and `G_X_ws` are the current source-faithful quotient/template branch." ∧
+    focusedQuotientCoordinateLabel = "X_g_ws" ∧
+    templateNormalizedCoordinateLabel = "G_X_ws"
+
+theorem classicalWeberTrioReading_true : classicalWeberTrioReadingProp := by
+  simp [
+    classicalWeberTrioReadingProp,
+    classicalWeberTrioReading,
+    focusedQuotientCoordinateLabel,
+    templateNormalizedCoordinateLabel
   ]
 
 def primaryResidualSelectionProp : Prop :=
@@ -568,6 +604,34 @@ theorem quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true :
     quotientFollowupBridgeQuotientFollowupSmallBoxStatus
   ]
 
+def quotientFollowupBridgeNamedGGClosureStatusProp : Prop :=
+  namedGGModularEquationBasis = "GG(t), GG(-t), GG(t^2), GG(t^3), GG(t^4)" ∧
+    quotientFollowupBridgeNamedGGClosureStatus.directHits = 0 ∧
+    quotientFollowupBridgeNamedGGClosureStatus.quotientHits = 0 ∧
+    quotientFollowupBridgeNamedGGClosureStatus.mixedQuotientHits = 0
+
+theorem quotientFollowupBridgeNamedGGClosureStatus_true :
+    quotientFollowupBridgeNamedGGClosureStatusProp := by
+  simp [
+    quotientFollowupBridgeNamedGGClosureStatusProp,
+    namedGGModularEquationBasis,
+    quotientFollowupBridgeNamedGGClosureStatus
+  ]
+
+def quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp : Prop :=
+  namedGGModularEquationBasis = "GG(t), GG(-t), GG(t^2), GG(t^3), GG(t^4)" ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus.directHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus.quotientHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus.mixedQuotientHits = 0
+
+theorem quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true :
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp := by
+  simp [
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp,
+    namedGGModularEquationBasis,
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus
+  ]
+
 def quotientFollowupReturnBridgeProp : Prop :=
   quotientFollowupBridgeDifferenceLabel = "D_XK_ws" ∧
     quotientFollowupBridgeDifferenceExpression = "D_XK_ws = K_XR_ws - H_X_ws" ∧
@@ -581,7 +645,9 @@ def quotientFollowupReturnBridgeProp : Prop :=
     quotientFollowupBridgeQuotientFollowupFirstFailureProp ∧
     quotientFollowupBridgeStatusProp ∧
     quotientFollowupBridgeQuotientSmallBoxStatusProp ∧
-    quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp ∧
+    quotientFollowupBridgeNamedGGClosureStatusProp ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp
 
 theorem quotientFollowupReturnBridge_true : quotientFollowupReturnBridgeProp := by
   simp [
@@ -597,7 +663,9 @@ theorem quotientFollowupReturnBridge_true : quotientFollowupReturnBridgeProp := 
     quotientFollowupBridgeQuotientFollowupFirstFailure_true,
     quotientFollowupBridgeStatus_true,
     quotientFollowupBridgeQuotientSmallBoxStatus_true,
-    quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true,
+    quotientFollowupBridgeNamedGGClosureStatus_true,
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true
   ]
 
 def focusedQuotientSmallBoxStatusProp : Prop :=
@@ -628,6 +696,7 @@ structure WaypointCertificate where
   bridge : exactCoordinateBridgeProp
   quotientCoordinateBridge : exactQuotientCoordinateBridgeProp
   classicalProductCoordinate : classicalProductCoordinateWaypointProp
+  classicalWeberReading : classicalWeberTrioReadingProp
   templateCoordinate : templateNormalizedCoordinateProp
   selection : primaryResidualSelectionProp
   templateFirstFailure : templateNormalizedCoordinateFirstFailureProp
@@ -657,6 +726,7 @@ def currentWaypointCertificate : WaypointCertificate where
   bridge := exactCoordinateBridge_true
   quotientCoordinateBridge := exactQuotientCoordinateBridge_true
   classicalProductCoordinate := classicalProductCoordinateWaypoint_true
+  classicalWeberReading := classicalWeberTrioReading_true
   templateCoordinate := templateNormalizedCoordinate_true
   selection := primaryResidualSelection_true
   templateFirstFailure := templateNormalizedCoordinateFirstFailure_true
@@ -686,6 +756,7 @@ def currentWaypoint : Prop :=
   exactCoordinateBridgeProp ∧
     exactQuotientCoordinateBridgeProp ∧
     classicalProductCoordinateWaypointProp ∧
+    classicalWeberTrioReadingProp ∧
     templateNormalizedCoordinateProp ∧
     primaryResidualSelectionProp ∧
     templateNormalizedCoordinateFirstFailureProp ∧
@@ -715,6 +786,7 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.bridge,
     currentWaypointCertificate.quotientCoordinateBridge,
     currentWaypointCertificate.classicalProductCoordinate,
+    currentWaypointCertificate.classicalWeberReading,
     currentWaypointCertificate.templateCoordinate,
     currentWaypointCertificate.selection,
     currentWaypointCertificate.templateFirstFailure,

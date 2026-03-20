@@ -110,6 +110,12 @@ Literature status
   On the hero tail-family samples, both coordinates still give `0` hits after
   the direct template check, the first eta / modular-unit correction check, and
   the first narrower plus-Pochhammer correction check.
+  Berndt--Chan--Zhang identifies Ramanujan-Weber `G_n` / `g_n` with classical
+  Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber
+  `f`, `f1`, `f2` trio, so the same
+  `g12_ws / p12_ws / G_f2_ws`
+  shell is now source-backed as a named classical Weber trio in project
+  normalization rather than as an anonymous product gadget.
   The next focused bridge now keeps `G_g12_ws` as the primary eta-side
   residual, ties `G_p12_ws` to it through the exact coordinate identity
   `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`,
