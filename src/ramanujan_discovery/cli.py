@@ -6,7 +6,11 @@ from ramanujan_discovery.analysis import build_candidate_analysis_note, build_ca
 from ramanujan_discovery.config import SearchConfig, VerificationConfig
 from ramanujan_discovery.discovery import discover_candidates
 from ramanujan_discovery.formalization import build_candidate_formalization_assets
-from ramanujan_discovery.identification import build_candidate_identification_note
+from ramanujan_discovery.identification import (
+    build_candidate_identification_note,
+    build_candidate_tail_operator_note,
+    build_candidate_tail_family_note,
+)
 from ramanujan_discovery.research import build_candidate_research_note
 from ramanujan_discovery.reporting import build_report, build_site
 from ramanujan_discovery.storage import write_candidates
@@ -97,6 +101,42 @@ def build_parser() -> argparse.ArgumentParser:
     )
     identify.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
     identify.add_argument("--out", type=str, required=True)
+
+    tail_note = subparsers.add_parser(
+        "tail-note",
+        help="Write a tail-family-first source-recognition note for one candidate.",
+    )
+    tail_note.add_argument("--in", dest="input_path", type=str, required=True)
+    tail_note.add_argument("--candidate-id", type=str, required=True)
+    tail_note.add_argument("--depth", type=int, default=40)
+    tail_note.add_argument("--series-order", type=int, default=36)
+    tail_note.add_argument(
+        "--tail-stages",
+        type=str,
+        default="3,4,5",
+        help="Comma-separated start stages whose normalized tail samples should be scanned.",
+    )
+    tail_note.add_argument("--max-gap-depth", type=int, default=3)
+    tail_note.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
+    tail_note.add_argument("--out", type=str, required=True)
+
+    tail_operator_note = subparsers.add_parser(
+        "tail-operator-note",
+        help="Write a tail-family-first operator / q-difference note for one candidate.",
+    )
+    tail_operator_note.add_argument("--in", dest="input_path", type=str, required=True)
+    tail_operator_note.add_argument("--candidate-id", type=str, required=True)
+    tail_operator_note.add_argument("--depth", type=int, default=40)
+    tail_operator_note.add_argument("--series-order", type=int, default=36)
+    tail_operator_note.add_argument(
+        "--tail-stages",
+        type=str,
+        default="3,4,5",
+        help="Comma-separated start stages whose normalized tail samples should be scanned.",
+    )
+    tail_operator_note.add_argument("--max-gap-depth", type=int, default=3)
+    tail_operator_note.add_argument("--smoke", action="store_true", help="Use a reduced-cost profile for fast local validation.")
+    tail_operator_note.add_argument("--out", type=str, required=True)
 
     site = subparsers.add_parser("site", help="Render a GitHub Pages-friendly static site.")
     site.add_argument("--in", dest="input_path", type=str, required=True)
@@ -194,6 +234,32 @@ def main(argv: list[str] | None = None) -> int:
             series_order=args.series_order,
             max_degree=args.max_degree,
             benchmark_powers=_parse_int_list(args.benchmark_powers),
+            smoke=args.smoke,
+        )
+        return 0
+
+    if args.command == "tail-note":
+        build_candidate_tail_family_note(
+            input_path=args.input_path,
+            candidate_id=args.candidate_id,
+            output_path=args.out,
+            depth=args.depth,
+            series_order=args.series_order,
+            tail_stages=_parse_int_list(args.tail_stages),
+            max_gap_depth=args.max_gap_depth,
+            smoke=args.smoke,
+        )
+        return 0
+
+    if args.command == "tail-operator-note":
+        build_candidate_tail_operator_note(
+            input_path=args.input_path,
+            candidate_id=args.candidate_id,
+            output_path=args.out,
+            depth=args.depth,
+            series_order=args.series_order,
+            tail_stages=_parse_int_list(args.tail_stages),
+            max_gap_depth=args.max_gap_depth,
             smoke=args.smoke,
         )
         return 0

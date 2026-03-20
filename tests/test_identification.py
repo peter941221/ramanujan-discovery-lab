@@ -8,7 +8,13 @@ from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
     benchmark_power_substitution_series,
     build_reduced_tail_anchor,
+    build_gap_normalized_series,
+    scan_ratio_self_plus_pochhammer_relations,
+    scan_ratio_self_plus_pochhammer_eta_relations,
     detect_reduced_tail_transfer_equation,
+    _eta_quotient_basis_series,
+    _one_minus_power_series,
+    _one_plus_power_series,
     scan_ratio_self_plus_product_relations,
     scan_ratio_self_signed_eta_relations,
     scan_ratio_self_signed_product_relations,
@@ -16,6 +22,7 @@ from ramanujan_discovery.identification import (
     scan_explicit_source_family_eta_correction_templates,
     scan_quotient_core_source_family_eta_corrections,
     scan_source_family_eta_corrections,
+    scan_source_family_self_plus_pochhammer_eta_corrections,
     scan_gg_modular_equation_box,
     scan_self_mahler_linear_relations,
     scan_self_fractional_linear_uniqueness_relations,
@@ -39,13 +46,18 @@ from ramanujan_discovery.identification import (
     scan_ratio_benchmark_fractional_linear_prefixes,
     scan_ratio_benchmark_multiplicative_prefixes,
     scan_ratio_benchmark_power_relation_prefixes,
+    scan_ratio_modular_unit_eta_relations,
     scan_ratio_benchmark_two_layer_fractional_linear_prefixes,
     scan_ratio_eta_quotient_relations,
     scan_ratio_self_quotient_product_relations,
+    scan_morton_periodic_point_box,
+    search_modular_unit_eta_relation,
     search_eta_quotient_relation,
     search_fractional_linear_relation,
     search_multiplicative_relation,
     search_self_mahler_linear_relation,
+    search_self_plus_pochhammer_relation,
+    search_self_plus_pochhammer_eta_relation,
     search_polynomial_relation,
     search_self_quotient_plus_product_relation,
     search_self_signed_eta_relation,
@@ -273,6 +285,59 @@ def _eta_pochhammer_series(divisor: int, order: int):
     for power in range(divisor, order, divisor):
         series = series_mul(series, _one_minus_power_series(power, order))
     return series
+
+
+def _plus_residue_pochhammer_series(*, residue: int, modulus: int, order: int):
+    series = [sp.Integer(0) for _ in range(order)]
+    series[0] = sp.Integer(1)
+    for power in range(residue, order, modulus):
+        factor = [sp.Integer(0) for _ in range(order)]
+        factor[0] = sp.Integer(1)
+        if power < order:
+            factor[power] = sp.Integer(1)
+        series = series_mul(series, factor)
+    return series
+
+
+def _build_self_plus_pochhammer_target(*, modulus: int, exponents_by_residue: dict[int, int], order: int):
+    product_series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for residue, exponent in sorted(exponents_by_residue.items()):
+        factor = _plus_residue_pochhammer_series(residue=residue, modulus=modulus, order=order)
+        if exponent >= 0:
+            product_series = series_mul(product_series, series_pow(factor, exponent))
+        else:
+            product_series = series_mul(product_series, series_invert(series_pow(factor, -exponent)))
+
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = sp.Integer(1)
+    current = product_series
+    while any(sp.simplify(value) != 0 for value in current[1:]):
+        target = series_mul(target, current)
+        current = benchmark_power_substitution_series(current, power=modulus, order=order)
+    return target
+
+
+def _build_self_plus_pochhammer_eta_target(
+    *,
+    modulus: int,
+    exponents_by_residue: dict[int, int],
+    eta_series,
+    order: int,
+):
+    product_series = [sp.Integer(0) for _ in range(order)]
+    product_series[0] = sp.Integer(1)
+    for residue, exponent in sorted(exponents_by_residue.items()):
+        factor = _plus_residue_pochhammer_series(residue=residue, modulus=modulus, order=order)
+        if exponent >= 0:
+            product_series = series_mul(product_series, series_pow(factor, exponent))
+        else:
+            product_series = series_mul(product_series, series_invert(series_pow(factor, -exponent)))
+    return _build_self_eta_target(
+        modulus=modulus,
+        eta_series=series_mul(product_series, eta_series),
+        order=order,
+    )
 
 
 def test_search_bivariate_relation_finds_linear_identity():
@@ -686,6 +751,56 @@ def test_search_self_quotient_signed_product_relation_finds_mixed_identity():
     assert any(scan.relation is not None and scan.modulus == 2 for scan in scans)
 
 
+def test_search_self_plus_pochhammer_relation_finds_periodic_plus_transfer_identity():
+    order = 24
+    expected = {1: 1, 2: -1}
+    ratio = _build_self_plus_pochhammer_target(modulus=3, exponents_by_residue=expected, order=order)
+
+    relation = search_self_plus_pochhammer_relation(
+        target_series=ratio,
+        modulus=3,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.exponents == {"G3": 1, "PP1": 1, "PP2": -1}
+
+    scans = scan_ratio_self_plus_pochhammer_relations(
+        ratio_series=ratio,
+        moduli=(2, 3, 4),
+        order=order,
+    )
+    assert any(scan.relation is not None and scan.modulus == 3 for scan in scans)
+
+
+def test_search_self_plus_pochhammer_eta_relation_finds_mixed_transfer_identity():
+    order = 24
+    expected = {1: 1, 2: -1}
+    eta_basis = series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order)))
+    target = _build_self_plus_pochhammer_eta_target(
+        modulus=3,
+        exponents_by_residue=expected,
+        eta_series=eta_basis,
+        order=order,
+    )
+
+    relation = search_self_plus_pochhammer_eta_relation(
+        target_series=target,
+        modulus=3,
+        level=2,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.exponents == {"G3": 1, "PP1": 1, "PP2": -1, "E1": 2, "E2": -1}
+
+    scans = scan_ratio_self_plus_pochhammer_eta_relations(
+        ratio_series=target,
+        moduli=(2, 3, 4),
+        eta_levels=(1, 2),
+        order=order,
+    )
+    assert any(scan.relation is not None and scan.modulus == 3 and scan.level == 2 for scan in scans)
+
+
 def test_search_self_signed_eta_relation_finds_mixed_transfer_identity():
     order = 20
     eta_basis = series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order)))
@@ -850,6 +965,68 @@ def test_scan_ratio_eta_quotient_relations_hits_matching_level():
     assert hit.relation.exponents == {"E1": 2, "E2": -1}
 
 
+def test_search_modular_unit_eta_relation_finds_small_box_hit():
+    order = 18
+    target = series_mul(
+        series_mul(
+            _one_minus_power_series(power=1, order=order),
+            _one_plus_power_series(power=1, order=order),
+        ),
+        series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order))),
+    )
+
+    relation = search_modular_unit_eta_relation(
+        target_series=target,
+        modulus=2,
+        level=2,
+        order=order,
+    )
+    assert relation is not None
+    assert relation.exponents == {"M1": 1, "P1": 1, "E1": 2, "E2": -1}
+
+
+def test_scan_ratio_modular_unit_eta_relations_hits_matching_box():
+    order = 18
+    target = series_mul(
+        series_mul(
+            _one_minus_power_series(power=1, order=order),
+            _one_plus_power_series(power=1, order=order),
+        ),
+        series_mul(series_pow(_eta_pochhammer_series(1, order), 2), series_invert(_eta_pochhammer_series(2, order))),
+    )
+
+    scans = scan_ratio_modular_unit_eta_relations(
+        ratio_series=target,
+        moduli=(2, 3, 4),
+        eta_levels=(1, 2),
+        order=order,
+    )
+    assert scans
+    hit = next(scan for scan in scans if scan.modulus == 2 and scan.level == 2)
+    assert hit.relation is not None
+    assert hit.relation.exponents == {"M1": 1, "P1": 1, "E1": 2, "E2": -1}
+
+
+def test_scan_morton_periodic_point_box_records_first_failure():
+    order = 12
+    target = [sp.Integer(0) for _ in range(order)]
+    target[0] = 1
+    target[1] = 1
+
+    scan = scan_morton_periodic_point_box(
+        target_series=target,
+        order=order,
+    )
+    assert len(scan.template_results) == 4
+    direct = next(
+        item for item in scan.template_results
+        if item.label == "Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`"
+    )
+    assert direct.hit is False
+    assert direct.first_failure_power == 0
+    assert direct.first_failure_coeff == 2
+
+
 def test_scan_source_family_eta_corrections_finds_power_times_eta_hit():
     order = 18
     gg = [sp.Integer(0) for _ in range(order)]
@@ -875,6 +1052,40 @@ def test_scan_source_family_eta_corrections_finds_power_times_eta_hit():
     level_2_hit = next(scan for scan in gg2_scan.eta_scans if scan.level == 2)
     assert level_2_hit.relation is not None
     assert level_2_hit.relation.exponents == {"E1": 2, "E2": -1}
+
+
+def test_scan_source_family_self_plus_pochhammer_eta_corrections_finds_one_core_hit():
+    order = 24
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    gg2 = benchmark_power_substitution_series(gg, power=2, order=order)
+    correction = _build_self_plus_pochhammer_eta_target(
+        modulus=3,
+        exponents_by_residue={1: 1, 2: -1},
+        eta_series=series_mul(
+            series_pow(_eta_pochhammer_series(1, order), 2),
+            series_invert(_eta_pochhammer_series(2, order)),
+        ),
+        order=order,
+    )
+    target = series_mul(gg2, correction)
+
+    scans = scan_source_family_self_plus_pochhammer_eta_corrections(
+        target_series=target,
+        ordered_base_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        powers=(2, 3),
+        moduli=(2, 3, 4),
+        eta_levels=(1, 2),
+        order=order,
+    )
+    assert len(scans) == 1
+    family_scan = scans[0]
+    gg2_scan = next(scan for scan in family_scan.direct_basis_scans if scan.basis_label == "GG2")
+    hit = next(scan for scan in gg2_scan.self_scans if scan.modulus == 3 and scan.level == 2)
+    assert hit.relation is not None
+    assert hit.relation.exponents == {"G3": 1, "PP1": 1, "PP2": -1, "E1": 2, "E2": -1}
 
 
 def test_scan_two_core_source_family_eta_corrections_finds_cross_family_hit():
@@ -1799,11 +2010,389 @@ def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_g
         "Chan--Huang Cor. 3.2(ii) on (F, GG4)",
     )
     assert scan.exact_polynomial_template_hits == scan.exact_polynomial_template_labels
+    assert tuple(label for label, _, _ in scan.exact_polynomial_template_obstructions) == (
+        "Chan--Huang Cor. 3.2(i) on (F, GG3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, GG4)",
+    )
+    assert all(power is None and coeff is None for _, power, coeff in scan.exact_polynomial_template_obstructions)
     assert scan.quotient_exact_polynomial_template_labels == (
         "Chan--Huang Cor. 3.2(i) on (F, Q_3)",
         "Chan--Huang Cor. 3.2(ii) on (F, Q_4)",
     )
     assert scan.quotient_exact_polynomial_template_hits == scan.quotient_exact_polynomial_template_labels
+    assert tuple(label for label, _, _ in scan.quotient_exact_polynomial_template_obstructions) == (
+        "Chan--Huang Cor. 3.2(i) on (F, Q_3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, Q_4)",
+    )
+    assert all(power is None and coeff is None for _, power, coeff in scan.quotient_exact_polynomial_template_obstructions)
+
+
+def test_scan_gg_modular_equation_box_reports_weighted_q3q4_coordinate():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+
+    scan = scan_gg_modular_equation_box(
+        target_series=weighted_target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=10,
+    )
+
+    assert len(scan.weighted_coordinate_diagnostics) == 1
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    assert diagnostic.label == "W_34"
+    assert diagnostic.expression == "Q_3^3 / Q_4^2"
+    assert diagnostic.log_expression == "3*log(Q_3) - 2*log(Q_4)"
+    assert diagnostic.correction_expression == "F / W_34"
+    assert diagnostic.first_difference_power is None
+    assert diagnostic.first_difference_coeff is None
+    assert diagnostic.first_log_difference_power is None
+    assert diagnostic.first_log_difference_coeff is None
+    assert diagnostic.correction_first_gap_power is None
+    assert diagnostic.correction_first_gap_coeff is None
+    assert diagnostic.normalized_correction_label is None
+    assert diagnostic.normalized_correction_gap is None
+    assert diagnostic.polynomial_degree1_relation is not None
+    assert diagnostic.fractional_linear_relation is not None
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_modular_unit_correction():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    target = series_mul(weighted_target, _one_plus_power_series(power=1, order=order))
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=10,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    assert diagnostic.correction_expression == "F / W_34"
+    assert diagnostic.correction_first_gap_power == 1
+    assert sp.simplify(diagnostic.correction_first_gap_coeff - 1) == 0
+    assert all(item.relation is None for item in diagnostic.correction_eta_scans)
+    modular_hits = [item for item in diagnostic.correction_modular_unit_eta_scans if item.relation is not None]
+    assert len(modular_hits) == 1
+    assert modular_hits[0].modulus == 2
+    assert modular_hits[0].level == 1
+    assert modular_hits[0].relation.exponents.get("P1") == 1
+    assert diagnostic.normalized_correction_label == "G_W34"
+    assert diagnostic.normalized_correction_gap is not None
+    assert diagnostic.normalized_correction_gap.shift == 1
+    assert sp.simplify(diagnostic.normalized_correction_gap.leading_coefficient - 1) == 0
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_normalized_modular_unit_hit():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = sp.Integer(1)
+    correction[1] = sp.Integer(1)
+    correction[2] = sp.Integer(1)
+    target = series_mul(weighted_target, correction)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=10,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    assert diagnostic.normalized_correction_label == "G_W34"
+    assert diagnostic.normalized_correction_gap is not None
+    assert diagnostic.normalized_correction_gap.shift == 1
+    normalized_modular_hits = [
+        item for item in diagnostic.normalized_correction_modular_unit_eta_scans if item.relation is not None
+    ]
+    assert len(normalized_modular_hits) == 1
+    assert normalized_modular_hits[0].modulus == 2
+    assert normalized_modular_hits[0].level == 1
+    assert normalized_modular_hits[0].relation.exponents.get("P1") == 1
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_normalized_source_family_hit():
+    order = 18
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    eta_series = _eta_quotient_basis_series(level=1, order=order)["E1"]
+    normalized_correction = series_mul(gg, eta_series)
+    correction = [sp.Integer(1)] + normalized_correction[: order - 1]
+    target = series_mul(weighted_target, correction)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=10,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+        weighted_correction_source_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        weighted_correction_source_powers=(2, 3),
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    assert diagnostic.normalized_correction_label == "G_W34"
+    source_hits = []
+    for family_scan in diagnostic.normalized_correction_source_family_eta_scans:
+        for basis_scan in family_scan.direct_basis_scans:
+            for eta_scan in basis_scan.eta_scans:
+                if eta_scan.relation is not None:
+                    source_hits.append(
+                        (family_scan.family_label, basis_scan.basis_label, eta_scan.level, eta_scan.relation.exponents)
+                    )
+    assert ("GG", "GG", 1, {"E1": 1}) in source_hits
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_second_normalized_modular_unit_hit():
+    order = 20
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    second_normalized = _one_plus_power_series(power=1, order=order)
+    normalized = [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)]
+    for index, coeff in enumerate(second_normalized[: order - 2]):
+        normalized[index + 2] = sp.simplify(normalized[index + 2] + coeff)
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = 1
+    for index, coeff in enumerate(normalized[: order - 1]):
+        correction[index + 1] = sp.simplify(correction[index + 1] - coeff)
+    target = series_mul(weighted_target, correction)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=12,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    assert diagnostic.normalized_correction_label == "G_W34"
+    assert diagnostic.second_normalized_correction_label == "G2_W34"
+    assert diagnostic.second_normalized_correction_gap is not None
+    assert diagnostic.second_normalized_correction_gap.shift == 2
+    second_normalized_modular_hits = [
+        item
+        for item in diagnostic.second_normalized_correction_modular_unit_eta_scans
+        if item.relation is not None
+    ]
+    assert len(second_normalized_modular_hits) == 1
+    assert second_normalized_modular_hits[0].modulus == 2
+    assert second_normalized_modular_hits[0].level == 1
+    assert second_normalized_modular_hits[0].relation.exponents.get("P1") == 1
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_second_normalized_source_family_hit():
+    order = 20
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    eta_series = _eta_quotient_basis_series(level=1, order=order)["E1"]
+    second_normalized = series_mul(gg, eta_series)
+    normalized = [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)]
+    for index, coeff in enumerate(second_normalized[: order - 2]):
+        normalized[index + 2] = sp.simplify(normalized[index + 2] + coeff)
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = 1
+    for index, coeff in enumerate(normalized[: order - 1]):
+        correction[index + 1] = sp.simplify(correction[index + 1] - coeff)
+    target = series_mul(weighted_target, correction)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=12,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+        weighted_correction_source_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        weighted_correction_source_powers=(2, 3),
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    assert diagnostic.second_normalized_correction_label == "G2_W34"
+    second_source_hits = []
+    for family_scan in diagnostic.second_normalized_correction_source_family_eta_scans:
+        for basis_scan in family_scan.direct_basis_scans:
+            for eta_scan in basis_scan.eta_scans:
+                if eta_scan.relation is not None:
+                    second_source_hits.append(
+                        (family_scan.family_label, basis_scan.basis_label, eta_scan.level, eta_scan.relation.exponents)
+                    )
+    assert ("GG", "GG", 1, {"E1": 1}) in second_source_hits
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_second_normalized_quotient_hit():
+    order = 20
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    second_normalized = q3
+    normalized = [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)]
+    for index, coeff in enumerate(second_normalized[: order - 2]):
+        normalized[index + 2] = sp.simplify(normalized[index + 2] + coeff)
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = 1
+    for index, coeff in enumerate(normalized[: order - 1]):
+        correction[index + 1] = sp.simplify(correction[index + 1] - coeff)
+    target = series_mul(weighted_target, correction)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=12,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+        weighted_correction_source_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        weighted_correction_source_powers=(2, 3),
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    quotient_hits = [
+        scan
+        for scan in diagnostic.second_normalized_correction_quotient_polynomial_scans
+        if scan.relation is not None
+    ]
+    assert quotient_hits
+    assert quotient_hits[0].basis_labels[-1] == "Q_3"
+
+
+def test_scan_gg_modular_equation_box_finds_weighted_q3q4_second_normalized_explicit_transform_hit():
+    order = 20
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+    gg[2] = 2
+
+    gg3 = benchmark_power_substitution_series(gg, power=3, order=order)
+    gg4 = benchmark_power_substitution_series(gg, power=4, order=order)
+    q3 = series_div(gg3, gg)
+    q4 = series_div(gg4, gg)
+    weighted_target = series_div(series_pow(q3, 3), series_pow(q4, 2))
+    eta_series = _eta_quotient_basis_series(level=1, order=order)["E1"]
+    second_normalized = series_mul(q3, eta_series)
+    normalized = [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)]
+    for index, coeff in enumerate(second_normalized[: order - 2]):
+        normalized[index + 2] = sp.simplify(normalized[index + 2] + coeff)
+    correction = [sp.Integer(0) for _ in range(order)]
+    correction[0] = 1
+    for index, coeff in enumerate(normalized[: order - 1]):
+        correction[index + 1] = sp.simplify(correction[index + 1] - coeff)
+    target = series_mul(weighted_target, correction)
+
+    scan = scan_gg_modular_equation_box(
+        target_series=target,
+        benchmark_name="gollnitz_gordon_normalized",
+        gg_series=gg,
+        order=order,
+        degree_values=(1,),
+        max_abs_exponent=4,
+        solve_order=12,
+        weighted_correction_eta_levels=(1,),
+        weighted_correction_moduli=(2,),
+        weighted_correction_max_abs_exponent=2,
+        weighted_correction_source_families=(("GG", "gollnitz_gordon_normalized", gg),),
+        weighted_correction_source_powers=(2, 3),
+    )
+
+    diagnostic = scan.weighted_coordinate_diagnostics[0]
+    explicit_hits = []
+    for family_scan in diagnostic.second_normalized_correction_explicit_transform_eta_scans:
+        for hit in family_scan.hits:
+            explicit_hits.append((family_scan.family_label, hit.template_label, hit.level, hit.relation.exponents))
+    assert ("GG", "GG3 / GG", 1, {"E1": 1}) in explicit_hits
 
 
 def test_scan_parameterized_source_family_power_boxes_supports_family_specific_powers():
@@ -1895,6 +2484,48 @@ def test_build_reduced_tail_anchor_builds_stage_three_tail_and_normalization():
     assert anchor.normalized_series[0] == 1
 
 
+def test_build_gap_normalized_series_normalizes_first_nonzero_gap():
+    series = [
+        sp.Integer(1),
+        sp.Integer(0),
+        sp.Integer(0),
+        sp.Integer(2),
+        sp.Integer(-2),
+        sp.Integer(4),
+    ]
+
+    gap = build_gap_normalized_series(target_series=series)
+
+    assert gap is not None
+    assert gap.shift == 3
+    assert gap.leading_coefficient == 2
+    assert gap.normalized_series[:3] == (1, -1, 2)
+
+
+def test_build_gap_normalized_series_can_be_applied_twice_for_second_gap():
+    series = [
+        sp.Integer(1),
+        sp.Integer(0),
+        sp.Integer(0),
+        sp.Integer(2),
+        sp.Integer(0),
+        sp.Integer(0),
+        sp.Integer(-6),
+        sp.Integer(12),
+    ]
+
+    first_gap = build_gap_normalized_series(target_series=series)
+    assert first_gap is not None
+    assert first_gap.shift == 3
+    assert first_gap.leading_coefficient == 2
+
+    second_gap = build_gap_normalized_series(target_series=list(first_gap.normalized_series))
+    assert second_gap is not None
+    assert second_gap.shift == 3
+    assert second_gap.leading_coefficient == -3
+    assert second_gap.normalized_series[:2] == (1, -2)
+
+
 def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     verified = tmp_path / "verified.jsonl"
     output_path = tmp_path / "identify.md"
@@ -1965,8 +2596,16 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert ("T_tail = T(t^2)" in text) or ("Reduced-object bridge construction failed" in text)
     assert ("U_tail = T_tail / (1 + t^2)" in text) or ("Reduced-object bridge construction failed" in text)
     assert ("R_tail = (1 + t^3) / T(t^3)" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("G_tail = (U_tail - 1) / t^3" in text) or ("Reduced-object bridge construction failed" in text)
+    assert ("H_tail = (1 - R_tail) / t^4" in text) or ("Reduced-object bridge construction failed" in text)
+    assert "Method compression: both exact tail residuals now fail twice" in text
+    assert "one nearby source-family core times a small eta tail" in text
+    assert "Second-gap compression" in text
     assert "Mahler/transfer" in text
     assert "plus-product" in text
+    assert "plus-Pochhammer" in text
+    assert "plus-Pochhammer + eta" in text
+    assert "No one-core reduced-ratio self plus-Pochhammer + eta hit" in text
     assert "signed-product" in text
     assert "signed-eta transfer" in text
     assert "Benchmark Power-Tower Prefix Scan" in text
@@ -1975,6 +2614,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Ratio-Object Source-Family Two-Layer Fractional-Linear Scan" in text
     assert "Ratio-Object Parameterized Source-Family Power Scan" in text
     assert "Ratio-Object Source-Family Eta-Correction Scan" in text
+
     assert "Ratio-Object Two-Core Source-Family Eta Scan" in text
     assert "Ratio-Object Quotient-Core Source-Family Eta Scan" in text
     assert "Ratio-Object Two-Quotient-Core Source-Family Eta Scan" in text
@@ -1984,6 +2624,11 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Ratio-Object Two-Quotient-Core Self-Polynomial Functional Scan" in text
     assert "Ratio-Object Explicit GG/S Template Eta-Correction Scan" in text
     assert "Ratio-Object GG Modular-Equation Template Scan" in text
+    assert "Normalized weighted correction `G_W34`" in text
+    assert "Second normalized weighted correction `G2_W34`" in text
+    assert "Second normalized weighted correction `G2_W34` quotient-coordinate prefixes" in text
+    assert "Second normalized weighted correction `G2_W34` mixed quotient-coordinate prefixes" in text
+    assert "no explicit GG transform-template eta-correction hit was found" in text
     assert "`GGneg = GG(-t)`" in text
     assert "Quotient basis: `Q_neg = GG(-t) / GG(t)`" in text
     assert "Quotient-coordinate polynomial" in text
@@ -2005,6 +2650,7 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "Ratio-Object RR-Tower Prefix Scan" in text
     assert "Ratio-Object Self-Quotient Finite-Product Scan" in text
     assert "Ratio-Object Eta-Quotient Scan" in text
+    assert "Ratio-Object Modular-Unit / Eta Scan" in text
     assert "Ratio-Object Multiplicative RR-Tower Scan" in text
     assert "Ratio-Object Fractional-Linear RR-Tower Scan" in text
     assert "Ratio-Object Two-Layer Fractional-Linear RR-Tower Scan" in text
@@ -2012,3 +2658,159 @@ def test_cli_identify_writes_power_tower_scan(tmp_path: Path):
     assert "`B2 = B1(t^2)`" in text
     assert "`B4 = B1(t^4)`" in text
     assert "total degree <= 1" in text
+
+
+def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
+    verified = tmp_path / "verified.jsonl"
+    output_path = tmp_path / "tail-note.md"
+
+    record = CandidateRecord(
+        id="hero",
+        template=QCFTemplate(
+            numerator_scale=1,
+            numerator_q_shift=3,
+            numerator_q_step=3,
+            numerator_extra_scale=1,
+            numerator_extra_q_shift=6,
+            numerator_extra_q_step=6,
+            denominator_constant=1,
+            denominator_scale=1,
+            denominator_q_shift=3,
+            denominator_q_step=3,
+        ),
+        q_values=[0.04],
+        value_estimates=["0.0"],
+        matched_target="unmatched",
+        closest_benchmark="rogers_ramanujan_q3_normalized",
+        closest_benchmark_digits=7,
+        family_bucket="hybrid_perturbed_family",
+        equivalence_key="review::demo",
+        benchmark_kind="exploratory",
+        digits_agree=7,
+        stability_score=50,
+        novelty_status="review",
+        notes="demo",
+    )
+    write_candidates(verified, [record])
+
+    assert (
+        main(
+            [
+                "tail-note",
+                "--in",
+                str(verified),
+                "--candidate-id",
+                "hero",
+                "--tail-stages",
+                "3,4",
+                "--max-gap-depth",
+                "2",
+                "--smoke",
+                "--out",
+                str(output_path),
+            ]
+        )
+        == 0
+    )
+
+    text = output_path.read_text(encoding="utf-8")
+    assert "Tail-Family Note: `hero`" in text
+    assert "## Exact Tail Family" in text
+    assert "## Variable-Level Source-Core Recognition Lane" in text
+    assert "GG/Weber modular-equation" in text
+    assert "GG basis ladder" in text
+    assert "Preferred quotient coordinates" in text
+    assert "U_t2 = T(t^2) / (1 + t^2)" in text
+    assert "U_t2_g1 = (U_t2 - 1) / t^3" in text
+    assert "U_t2_g2 = (U_t2_g1 - 1) / t^1" in text
+    assert "U_t3 = T(t^3) / (1 + t^3)" in text
+    assert "Direct eta-quotient templates" in text
+    assert "Direct modular-unit / eta templates" in text
+    assert "Morton periodic-point / algebraic-function templates" in text
+    assert "Morton obstruction witnesses" in text
+    assert "GG direct / reciprocal / quotient templates" in text
+    assert "GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4`" in text
+    assert "GG exact quotient-coordinate obstruction witnesses" in text
+    assert "GG weighted quotient-coordinate diagnostic `W_34 = Q_3^3 / Q_4^2`" in text
+    assert "GG weighted correction `F / W_34`" in text
+    assert "GG normalized weighted correction `G_W34`" in text
+    assert "GG second normalized weighted correction `G2_W34`" in text
+    assert "GG second normalized weighted correction `G2_W34` quotient-coordinate prefixes" in text
+    assert "GG second normalized weighted correction `G2_W34` mixed quotient-coordinate prefixes" in text
+    assert "no degree-`<= 2` polynomial or one-coordinate fractional-linear closure was found" in text
+    assert "GG mixed quotient-coordinate prefixes" in text
+    assert "## Tail Verdict" in text
+    assert "Source-core eta hits found" in text
+    assert "Direct eta-quotient sample hits found" in text
+    assert "Direct modular-unit / eta sample hits found" in text
+    assert "GG/Weber modular-equation sample hits found" in text
+    assert "GG exact quotient-coordinate sample hits found" in text
+    assert "Morton periodic-point / algebraic-function sample hits found" in text
+
+
+def test_cli_tail_operator_note_writes_tail_operator_note(tmp_path: Path):
+    verified = tmp_path / "verified.jsonl"
+    output_path = tmp_path / "tail-operator-note.md"
+
+    record = CandidateRecord(
+        id="hero",
+        template=QCFTemplate(
+            numerator_scale=1,
+            numerator_q_shift=3,
+            numerator_q_step=3,
+            numerator_extra_scale=1,
+            numerator_extra_q_shift=6,
+            numerator_extra_q_step=6,
+            denominator_constant=1,
+            denominator_scale=1,
+            denominator_q_shift=3,
+            denominator_q_step=3,
+        ),
+        q_values=[0.04],
+        value_estimates=["0.0"],
+        matched_target="unmatched",
+        closest_benchmark="rogers_ramanujan_q3_normalized",
+        closest_benchmark_digits=7,
+        family_bucket="hybrid_perturbed_family",
+        equivalence_key="review::demo",
+        benchmark_kind="exploratory",
+        digits_agree=7,
+        stability_score=50,
+        novelty_status="review",
+        notes="demo",
+    )
+    write_candidates(verified, [record])
+
+    assert (
+        main(
+            [
+                "tail-operator-note",
+                "--in",
+                str(verified),
+                "--candidate-id",
+                "hero",
+                "--tail-stages",
+                "3,4",
+                "--max-gap-depth",
+                "2",
+                "--smoke",
+                "--out",
+                str(output_path),
+            ]
+        )
+        == 0
+    )
+
+    text = output_path.read_text(encoding="utf-8")
+    assert "Tail-Operator Note: `hero`" in text
+    assert "## Exact Tail Family" in text
+    assert "## Operator Lane" in text
+    assert "A_0(t) + A_1(t)*Y(t) + A_2(t)*Y(t^m) + A_3(t)*Y(t^(m^2)) = 0" in text
+    assert "### `U_t2`" in text
+    assert "### `U_t2_g1`" in text
+    assert "### `U_t3`" in text
+    assert "Moduli checked" in text
+    assert "Recurrence depths checked" in text
+    assert "No affine q-difference / Mahler operator hit was found in the scanned box." in text
+    assert "## Operator Verdict" in text
+    assert "Total affine q-difference / Mahler hits found" in text

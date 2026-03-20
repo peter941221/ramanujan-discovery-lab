@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `1872.24`
+- Build elapsed seconds before final render: `2085.51`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `75.39`
-- `source-family-scans`: `448.50`
-- `cross-family-functional-scans`: `875.43`
-- `explicit-gg-family-scans`: `397.11`
-- `benchmark-tower-scans`: `75.81`
-- `final-render`: `14.49`
+- `rhs-uniqueness-search`: `131.21`
+- `source-family-scans`: `573.74`
+- `cross-family-functional-scans`: `915.55`
+- `explicit-gg-family-scans`: `389.44`
+- `benchmark-tower-scans`: `75.59`
+- `final-render`: `13.70`
 
 ## Objects
 
@@ -168,6 +168,44 @@ R_tail = (1 + t^3) / T(t^3)
 
 No reciprocal-normalized next-tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes.
 
+- We also stripped off the first visible nonzero gap from the renormalized tail objects.
+
+```text
+G_tail = (U_tail - 1) / t^3
+H_tail = (1 - R_tail) / t^4
+```
+
+No gap-normalized tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes.
+
+Method compression: both exact tail residuals now fail twice in bounded boxes — first in their raw normalized form, and again after stripping the first visible nonzero gap (`t^3` for `U_tail - 1`, `t^4` for `1 - R_tail`).
+
+We also checked whether the first-gap tail residuals look more like one nearby source-family core times a small eta tail than like a standalone tiny self-equation:
+
+```text
+G_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+H_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `G_tail`: no one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`.
+- `H_tail`: no one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`.
+
+We then stripped one more visible nonzero gap from those first-gap residuals and kept only the more source-directed one-core eta-correction question:
+
+```text
+G2_tail = (G_tail - 1) / t^1
+H2_tail = (H_tail - 1) / t^2
+```
+
+```text
+G2_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+H2_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `G2_tail`: no one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`.
+- `H2_tail`: no one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`.
+
+Second-gap compression: even after stripping a second visible gap from `G_tail` and `H_tail`, the one-core source-family eta-correction lane still stays empty in the scanned nearby basis ladders.
+
 No reduced-object self-polynomial hit was found in the scanned box.
 
 No reduced-object self-fractional-linear hit was found in the scanned box.
@@ -185,6 +223,19 @@ No reduced-ratio self-quotient finite-product hit was found in the scanned box.
 No reduced-ratio self-quotient plus-product hit was found in the scanned box.
 
 No reduced-ratio self-quotient signed-product hit was found in the scanned box.
+
+No reduced-ratio self plus-Pochhammer transfer hit was found in the scanned box.
+
+No reduced-ratio self plus-Pochhammer + eta transfer hit was found in the scanned box.
+
+We also checked whether removing one nearby source-family core reveals that same reverse-scale-aware mixed transfer box on the reduced ratio side:
+
+```text
+G_red = F_red / T
+G_red = G_red(t^m)^a * prod_r (-t^r; t^m)_inf^{e_r} * eta_tail
+```
+
+- No one-core reduced-ratio self plus-Pochhammer + eta hit was found across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`.
 
 No reduced-ratio self signed-eta transfer hit was found in the scanned box.
 
@@ -627,6 +678,25 @@ F = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))
 - Quotient basis: `Q_neg = GG(-t) / GG(t)`, `Q_2 = GG(t^2) / GG(t)`, `Q_3 = GG(t^3) / GG(t)`, `Q_4 = GG(t^4) / GG(t)`, `Q_5 = GG(t^5) / GG(t)`, `Q_7 = GG(t^7) / GG(t)`, `Q_11 = GG(t^11) / GG(t)`
 - Exact quotient-coordinate literature templates checked: `Chan--Huang Cor. 3.2(i) on (F, Q_3)`, `Chan--Huang Cor. 3.2(ii) on (F, Q_4)`.
 - No exact Chan--Huang quotient-coordinate modular-equation polynomial hit was found.
+- Weighted quotient-coordinate diagnostics now also test the first `3:2` Weber-style compression suggested by the `Q_3/Q_4` obstruction classes.
+- Weighted coordinate `W_34 = Q_3^3 / Q_4^2`: `F - W_34` first fails at `t^1` with coefficient `-1`; `log(F) - (3*log(Q_3) - 2*log(Q_4))` first fails at `t^1` with coefficient `-1`.
+- Weighted coordinate `W_34`: no candidate-dependent polynomial relation of total degree `<= 1` was found.
+- Weighted coordinate `W_34`: no candidate-dependent polynomial relation of total degree `<= 2` was found.
+- Weighted coordinate `W_34`: no one-coordinate fractional-linear closure was found.
+- Weighted correction `F / W_34`: `F / W_34 - 1` first fails at `t^1` with coefficient `-1`.
+- Weighted correction `F / W_34`: no eta-quotient hit was found in the checked small levels.
+- Weighted correction `F / W_34`: no modular-unit / eta hit was found in the checked small boxes.
+- Normalized weighted correction `G_W34`: G_W34 = (1 - F / W_34) / t^1.
+- Normalized weighted correction `G_W34`: no eta-quotient hit was found in the checked small levels.
+- Normalized weighted correction `G_W34`: no modular-unit / eta hit was found in the checked small boxes.
+- Normalized weighted correction `G_W34`: no one-core source-family eta-correction hit was found across `RR`, `GG` raw/quotient bases.
+- Second normalized weighted correction `G2_W34`: G2_W34 = (G_W34 - 1) / (-4*t^2).
+- Second normalized weighted correction `G2_W34`: no eta-quotient hit was found in the checked small levels.
+- Second normalized weighted correction `G2_W34`: no modular-unit / eta hit was found in the checked small boxes.
+- Second normalized weighted correction `G2_W34`: no one-core source-family eta-correction hit was found across `RR`, `GG` raw/quotient bases.
+- Second normalized weighted correction `G2_W34`: no explicit GG transform-template eta-correction hit was found in the checked small boxes.
+- Second normalized weighted correction `G2_W34` quotient-coordinate prefixes: polynomial `0` / `9` hit prefixes; skipped `5`; multiplicative `0` / `7` hit prefixes; fractional-linear `0` / `5` hit prefixes; skipped `2`; two-layer fractional-linear `0` / `6` hit prefixes.
+- Second normalized weighted correction `G2_W34` mixed quotient-coordinate prefixes: polynomial `0` / `10` hit prefixes; skipped `6`; multiplicative `0` / `8` hit prefixes; fractional-linear `0` / `5` hit prefixes; skipped `3`; two-layer fractional-linear `0` / `7` hit prefixes.
 - Quotient-coordinate polynomial scan: no candidate-dependent hit was found in the checked quotient prefixes.
 - Quotient-coordinate polynomial `total degree <= 1`: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
 - Quotient-coordinate polynomial `total degree <= 2`: no hit for prefixes ending at `Q_neg`, `Q_2`, `Q_3`, `Q_4`, `Q_5`, `Q_7`, `Q_11`.
@@ -718,6 +788,21 @@ F = prod_{d|N} (t^d; t^d)_inf^{e_d}
 No eta-quotient relation was found in any scanned level.
 
 - No hit for eta levels `N=1`, `N=2`, `N=3`, `N=4`, `N=5`, `N=6`, `N=12`, `N=20`.
+
+## Ratio-Object Modular-Unit / Eta Scan
+
+We also checked whether the ratio object collapses into a small modular-unit / eta expression before introducing any self-copy lane:
+
+```text
+F = prod_r (1 - t^r)^{a_r} * prod_r (1 + t^r)^{b_r} * prod_{d|N} (t^d; t^d)_inf^{e_d}
+```
+
+- `F = candidate / rogers_ramanujan_q3_normalized`
+- This is a source-faithful modular-function recognition lane: a hit would be closer to an eta-quotient / modular-unit closed form than to another anonymous prefix fit.
+
+No modular-unit / eta relation was found in any scanned modulus/level box.
+
+- No hit for modular-unit boxes `m=2, N=1`, `m=2, N=2`, `m=2, N=3`, `m=2, N=4`, `m=2, N=5`, `m=2, N=6`, `m=2, N=12`, `m=2, N=20`, `m=3, N=1`, `m=3, N=2`, `m=3, N=3`, `m=3, N=4`, `m=3, N=5`, `m=3, N=6`, `m=3, N=12`, `m=3, N=20`, `m=4, N=1`, `m=4, N=2`, `m=4, N=3`, `m=4, N=4`, `m=4, N=5`, `m=4, N=6`, `m=4, N=12`, `m=4, N=20`.
 
 ## Ratio-Object Multiplicative RR-Tower Scan
 

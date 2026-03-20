@@ -162,6 +162,25 @@ class SignedSelfQuotientProductRelationScan:
 
 
 @dataclass(frozen=True)
+class SelfPlusPochhammerRelationScan:
+    """Outcome for one modulus scan of a periodic plus-Pochhammer self-transfer box."""
+
+    modulus: int
+    relation: MultiplicativeRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
+class SelfPlusPochhammerEtaRelationScan:
+    """Outcome for one modulus/level scan of a plus-Pochhammer + eta self-transfer box."""
+
+    modulus: int
+    level: int
+    relation: MultiplicativeRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class SelfSignedEtaRelationScan:
     """Outcome for one modulus/level scan of a mixed signed modular-unit self-functional box."""
 
@@ -190,6 +209,15 @@ class ReducedTailAnchor:
     start_stage: int
     state_expr: sp.Expr
     tail_series: tuple[sp.Expr, ...]
+    normalized_series: tuple[sp.Expr, ...]
+
+
+@dataclass(frozen=True)
+class GapNormalizedSeries:
+    """A constant-1 series normalized by its first nonzero gap after the constant term."""
+
+    shift: int
+    leading_coefficient: sp.Expr
     normalized_series: tuple[sp.Expr, ...]
 
 
@@ -285,6 +313,16 @@ class EtaQuotientRelationScan:
 
 
 @dataclass(frozen=True)
+class ModularUnitEtaRelationScan:
+    """Outcome for one modular-unit / eta scan."""
+
+    modulus: int
+    level: int
+    relation: MultiplicativeRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
 class EtaCorrectionBasisScan:
     """Eta-quotient correction scans for one fixed source-family basis choice."""
 
@@ -302,6 +340,43 @@ class SourceFamilyEtaCorrectionScan:
     benchmark_name: str
     direct_basis_scans: tuple[EtaCorrectionBasisScan, ...]
     quotient_basis_scans: tuple[EtaCorrectionBasisScan, ...]
+
+
+@dataclass(frozen=True)
+class SelfPlusPochhammerEtaCorrectionBasisScan:
+    """Self plus-Pochhammer + eta scans for one fixed source-family basis choice."""
+
+    basis_label: str
+    basis_expression: str
+    basis_series: Series
+    self_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+
+
+@dataclass(frozen=True)
+class SourceFamilySelfPlusPochhammerEtaCorrectionScan:
+    """Per-family source-core self plus-Pochhammer + eta scans over raw and quotient basis choices."""
+
+    family_label: str
+    benchmark_name: str
+    direct_basis_scans: tuple[SelfPlusPochhammerEtaCorrectionBasisScan, ...]
+    quotient_basis_scans: tuple[SelfPlusPochhammerEtaCorrectionBasisScan, ...]
+
+
+@dataclass(frozen=True)
+class TailFamilySourceEtaSample:
+    """One tail-family specialization/gap-depth sample with nearby source-core eta scans."""
+
+    label: str
+    expression: str
+    start_stage: int
+    gap_depth: int
+    state_expr: sp.Expr
+    series: tuple[sp.Expr, ...]
+    source_family_eta_scans: tuple[SourceFamilyEtaCorrectionScan, ...]
+    direct_eta_scans: tuple[EtaQuotientRelationScan, ...] = ()
+    direct_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
+    gg_modular_equation_scan: GGModularEquationScan | None = None
+    morton_periodic_point_scan: MortonPeriodicPointScan | None = None
 
 
 @dataclass(frozen=True)
@@ -563,6 +638,46 @@ class ExplicitSourceFamilyEtaCorrectionScan:
 
 
 @dataclass(frozen=True)
+class GGWeightedCoordinateDiagnostic:
+    """A weighted quotient-coordinate diagnostic inside the GG modular-equation lane."""
+
+    label: str
+    expression: str
+    log_expression: str
+    correction_expression: str
+    first_difference_power: int | None
+    first_difference_coeff: sp.Expr | None
+    first_log_difference_power: int | None
+    first_log_difference_coeff: sp.Expr | None
+    correction_first_gap_power: int | None
+    correction_first_gap_coeff: sp.Expr | None
+    polynomial_degree1_relation: PolynomialRelation | None
+    polynomial_degree2_relation: PolynomialRelation | None
+    fractional_linear_relation: FractionalLinearRelation | None
+    correction_eta_scans: tuple[EtaQuotientRelationScan, ...] = ()
+    correction_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
+    normalized_correction_label: str | None = None
+    normalized_correction_gap: GapNormalizedSeries | None = None
+    normalized_correction_eta_scans: tuple[EtaQuotientRelationScan, ...] = ()
+    normalized_correction_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
+    normalized_correction_source_family_eta_scans: tuple[SourceFamilyEtaCorrectionScan, ...] = ()
+    second_normalized_correction_label: str | None = None
+    second_normalized_correction_gap: GapNormalizedSeries | None = None
+    second_normalized_correction_eta_scans: tuple[EtaQuotientRelationScan, ...] = ()
+    second_normalized_correction_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
+    second_normalized_correction_source_family_eta_scans: tuple[SourceFamilyEtaCorrectionScan, ...] = ()
+    second_normalized_correction_quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...] = ()
+    second_normalized_correction_quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...] = ()
+    second_normalized_correction_quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_explicit_transform_eta_scans: tuple[ExplicitSourceFamilyEtaCorrectionScan, ...] = ()
+
+
+@dataclass(frozen=True)
 class GGModularEquationScan:
     """A literature-driven GG box built from sign and low-power substitutions."""
 
@@ -572,6 +687,7 @@ class GGModularEquationScan:
     hit_templates: tuple[str, ...]
     exact_polynomial_template_labels: tuple[str, ...]
     exact_polynomial_template_hits: tuple[str, ...]
+    exact_polynomial_template_obstructions: tuple[tuple[str, int | None, sp.Expr | None], ...]
     polynomial_scans: tuple[NamedPolynomialRelationScan, ...]
     multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
     fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
@@ -579,15 +695,34 @@ class GGModularEquationScan:
     quotient_basis_series: tuple[tuple[str, str, Series], ...]
     quotient_exact_polynomial_template_labels: tuple[str, ...]
     quotient_exact_polynomial_template_hits: tuple[str, ...]
+    quotient_exact_polynomial_template_obstructions: tuple[tuple[str, int | None, sp.Expr | None], ...]
     quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...]
     quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
     quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
     quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...]
+    weighted_coordinate_diagnostics: tuple[GGWeightedCoordinateDiagnostic, ...]
     mixed_quotient_basis_series: tuple[tuple[str, str, Series], ...]
     mixed_quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...]
     mixed_quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...]
     mixed_quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...]
     mixed_quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...]
+
+
+@dataclass(frozen=True)
+class MortonPeriodicPointTemplateResult:
+    """One Morton-inspired exact periodic-point / algebraic-function template outcome."""
+
+    label: str
+    first_failure_power: int | None
+    first_failure_coeff: sp.Expr | None
+    hit: bool
+
+
+@dataclass(frozen=True)
+class MortonPeriodicPointScan:
+    """A small exact template box inspired by Morton's periodic-point algebraic functions."""
+
+    template_results: tuple[MortonPeriodicPointTemplateResult, ...]
 
 
 @dataclass(frozen=True)
@@ -1061,6 +1196,37 @@ def build_reduced_tail_anchor(
     )
 
 
+def build_gap_normalized_series(
+    *,
+    target_series: Series,
+) -> GapNormalizedSeries | None:
+    """Normalize a constant-1 series by its first nonzero term after the constant coefficient."""
+    if len(target_series) < 2:
+        raise ValueError("target_series must have length at least 2")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for gap normalization")
+
+    residual = [sp.simplify(value - (1 if index == 0 else 0)) for index, value in enumerate(target_series)]
+    shift: int | None = None
+    leading_coefficient: sp.Expr | None = None
+    for index in range(1, len(residual)):
+        if sp.simplify(residual[index]) != 0:
+            shift = index
+            leading_coefficient = sp.simplify(residual[index])
+            break
+    if shift is None or leading_coefficient is None:
+        return None
+
+    normalized: Series = [sp.Integer(0) for _ in range(len(target_series))]
+    for index in range(len(target_series) - shift):
+        normalized[index] = sp.simplify(residual[index + shift] / leading_coefficient)
+    return GapNormalizedSeries(
+        shift=shift,
+        leading_coefficient=leading_coefficient,
+        normalized_series=tuple(normalized),
+    )
+
+
 @lru_cache(maxsize=None)
 def _series_log_coeffs_cached(series: tuple[sp.Expr, ...]) -> tuple[sp.Expr, ...]:
     """Cached coefficients of log(F) for a series F with constant term 1."""
@@ -1124,6 +1290,28 @@ def _one_plus_power_series(*, power: int, order: int) -> Series:
 
 
 @lru_cache(maxsize=None)
+def _plus_residue_pochhammer_series_tuple(*, residue: int, modulus: int, order: int) -> tuple[sp.Expr, ...]:
+    if residue < 1:
+        raise ValueError("residue must be positive")
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if residue >= modulus:
+        raise ValueError("residue must be strictly smaller than modulus")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+
+    series: Series = [sp.Integer(0) for _ in range(order)]
+    series[0] = sp.Integer(1)
+    for power in range(residue, order, modulus):
+        series = series_mul(series, list(_one_plus_power_series_tuple(power=power, order=order)))
+    return tuple(series)
+
+
+def _plus_residue_pochhammer_series(*, residue: int, modulus: int, order: int) -> Series:
+    return list(_plus_residue_pochhammer_series_tuple(residue=residue, modulus=modulus, order=order))
+
+
+@lru_cache(maxsize=None)
 def _eta_pochhammer_series_tuple(*, divisor: int, order: int) -> tuple[sp.Expr, ...]:
     if divisor < 1:
         raise ValueError("divisor must be positive")
@@ -1159,6 +1347,35 @@ def _eta_quotient_basis_series(*, level: int, order: int) -> dict[str, Series]:
     return {
         name: list(series)
         for name, series in _eta_quotient_basis_series_tuple(level=level, order=order)
+    }
+
+
+@lru_cache(maxsize=None)
+def _modular_unit_eta_basis_series_tuple(
+    *,
+    modulus: int,
+    level: int,
+    order: int,
+) -> tuple[tuple[str, tuple[sp.Expr, ...]], ...]:
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    basis_entries: list[tuple[str, tuple[sp.Expr, ...]]] = []
+    for residue in range(1, modulus):
+        basis_entries.append((f"M{residue}", _one_minus_power_series_tuple(power=residue, order=order)))
+    for residue in range(1, modulus):
+        basis_entries.append((f"P{residue}", _one_plus_power_series_tuple(power=residue, order=order)))
+    basis_entries.extend(_eta_quotient_basis_series_tuple(level=level, order=order))
+    return tuple(basis_entries)
+
+
+def _modular_unit_eta_basis_series(*, modulus: int, level: int, order: int) -> dict[str, Series]:
+    return {
+        name: list(series)
+        for name, series in _modular_unit_eta_basis_series_tuple(
+            modulus=modulus,
+            level=level,
+            order=order,
+        )
     }
 
 
@@ -1536,6 +1753,157 @@ def scan_ratio_self_signed_product_relations(
     return scans
 
 
+def search_self_plus_pochhammer_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    order: int,
+    max_abs_exponent: int = 8,
+) -> MultiplicativeRelation | None:
+    """Search F = F(t^m)^a * prod_r (-t^r; t^m)_inf^e_r with bounded exponents."""
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a self plus-Pochhammer search")
+
+    g_power_label = f"G{modulus}"
+    basis_series_by_variable = {
+        g_power_label: benchmark_power_substitution_series(target_series, power=modulus, order=order),
+        **{
+            f"PP{residue}": _plus_residue_pochhammer_series(residue=residue, modulus=modulus, order=order)
+            for residue in range(1, modulus)
+        },
+    }
+    relation = search_multiplicative_relation(
+        target_series=target_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+        max_abs_exponent=max_abs_exponent,
+    )
+    if relation is None:
+        return None
+    g_power_exponent = relation.exponents.get(g_power_label)
+    if g_power_exponent not in {-1, 1}:
+        return None
+    return relation
+
+
+def scan_ratio_self_plus_pochhammer_relations(
+    *,
+    ratio_series: Series,
+    moduli: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[SelfPlusPochhammerRelationScan]:
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    if not unique_moduli:
+        return []
+
+    scans: list[SelfPlusPochhammerRelationScan] = []
+    for modulus in unique_moduli:
+        try:
+            relation = search_self_plus_pochhammer_relation(
+                target_series=ratio_series,
+                modulus=modulus,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+            scans.append(SelfPlusPochhammerRelationScan(modulus=modulus, relation=relation))
+        except ValueError as exc:
+            scans.append(
+                SelfPlusPochhammerRelationScan(
+                    modulus=modulus,
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+    return scans
+
+
+def search_self_plus_pochhammer_eta_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    level: int,
+    order: int,
+    max_abs_exponent: int = 8,
+) -> MultiplicativeRelation | None:
+    """Search F = F(t^m)^a * prod_r (-t^r; t^m)_inf^u_r * eta_tail with bounded exponents."""
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if level < 1:
+        raise ValueError("level must be positive")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a self plus-Pochhammer eta search")
+
+    g_power_label = f"G{modulus}"
+    basis_series_by_variable = {
+        g_power_label: benchmark_power_substitution_series(target_series, power=modulus, order=order),
+        **{
+            f"PP{residue}": _plus_residue_pochhammer_series(residue=residue, modulus=modulus, order=order)
+            for residue in range(1, modulus)
+        },
+        **_eta_quotient_basis_series(level=level, order=order),
+    }
+    relation = search_multiplicative_relation(
+        target_series=target_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+        max_abs_exponent=max_abs_exponent,
+    )
+    if relation is None:
+        return None
+    g_power_exponent = relation.exponents.get(g_power_label)
+    if g_power_exponent not in {-1, 1}:
+        return None
+    return relation
+
+
+def scan_ratio_self_plus_pochhammer_eta_relations(
+    *,
+    ratio_series: Series,
+    moduli: tuple[int, ...],
+    eta_levels: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[SelfPlusPochhammerEtaRelationScan]:
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    unique_levels = tuple(sorted({level for level in eta_levels if level >= 1}))
+    if not unique_moduli or not unique_levels:
+        return []
+
+    scans: list[SelfPlusPochhammerEtaRelationScan] = []
+    for modulus in unique_moduli:
+        for level in unique_levels:
+            try:
+                relation = search_self_plus_pochhammer_eta_relation(
+                    target_series=ratio_series,
+                    modulus=modulus,
+                    level=level,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+                scans.append(SelfPlusPochhammerEtaRelationScan(modulus=modulus, level=level, relation=relation))
+            except ValueError as exc:
+                scans.append(
+                    SelfPlusPochhammerEtaRelationScan(
+                        modulus=modulus,
+                        level=level,
+                        relation=None,
+                        error=str(exc),
+                    )
+                )
+    return scans
+
+
 def search_self_signed_eta_relation(
     *,
     target_series: Series,
@@ -1772,6 +2140,82 @@ def scan_ratio_eta_quotient_relations(
     return scans
 
 
+def search_modular_unit_eta_relation(
+    *,
+    target_series: Series,
+    modulus: int,
+    level: int,
+    order: int,
+    max_abs_exponent: int = 8,
+) -> MultiplicativeRelation | None:
+    """Search F = prod (1-t^r)^a_r (1+t^r)^b_r * eta_tail with bounded integer exponents."""
+    if modulus < 2:
+        raise ValueError("modulus must be at least 2")
+    if level < 1:
+        raise ValueError("level must be positive")
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1 for a modular-unit / eta search")
+
+    basis_series_by_variable = _modular_unit_eta_basis_series(
+        modulus=modulus,
+        level=level,
+        order=order,
+    )
+    return search_multiplicative_relation(
+        target_series=target_series,
+        basis_series_by_variable=basis_series_by_variable,
+        order=order,
+        max_abs_exponent=max_abs_exponent,
+    )
+
+
+def scan_ratio_modular_unit_eta_relations(
+    *,
+    ratio_series: Series,
+    moduli: tuple[int, ...],
+    eta_levels: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+) -> list[ModularUnitEtaRelationScan]:
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    unique_levels = tuple(sorted({level for level in eta_levels if level >= 1}))
+    if not unique_moduli or not unique_levels:
+        return []
+
+    scans: list[ModularUnitEtaRelationScan] = []
+    for modulus in unique_moduli:
+        for level in unique_levels:
+            try:
+                relation = search_modular_unit_eta_relation(
+                    target_series=ratio_series,
+                    modulus=modulus,
+                    level=level,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+                scans.append(
+                    ModularUnitEtaRelationScan(
+                        modulus=modulus,
+                        level=level,
+                        relation=relation,
+                    )
+                )
+            except ValueError as exc:
+                scans.append(
+                    ModularUnitEtaRelationScan(
+                        modulus=modulus,
+                        level=level,
+                        relation=None,
+                        error=str(exc),
+                    )
+                )
+    return scans
+
+
 def scan_source_family_eta_corrections(
     *,
     target_series: Series,
@@ -1862,6 +2306,244 @@ def scan_source_family_eta_corrections(
             )
         )
     return scans
+
+
+def scan_source_family_self_plus_pochhammer_eta_corrections(
+    *,
+    target_series: Series,
+    ordered_base_families: tuple[tuple[str, str, Series], ...],
+    powers: tuple[int, ...],
+    moduli: tuple[int, ...],
+    eta_levels: tuple[int, ...],
+    order: int,
+    max_abs_exponent: int = 8,
+    supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
+) -> list[SourceFamilySelfPlusPochhammerEtaCorrectionScan]:
+    if not ordered_base_families:
+        return []
+
+    unique_powers = tuple(sorted({power for power in powers if power >= 2}))
+    unique_moduli = tuple(sorted({modulus for modulus in moduli if modulus >= 2}))
+    normalized_eta_levels = tuple(sorted({level for level in eta_levels if level >= 1}))
+    if not unique_moduli or not normalized_eta_levels:
+        return []
+
+    scans: list[SourceFamilySelfPlusPochhammerEtaCorrectionScan] = []
+    for family_label, benchmark_name, base_series in ordered_base_families:
+        family_powers = set(unique_powers)
+        if supplemental_powers_by_family is not None:
+            family_powers.update(
+                power
+                for power in supplemental_powers_by_family.get(family_label, ())
+                if power >= 2
+            )
+
+        direct_basis_entries: list[tuple[str, str, Series]] = [(family_label, family_label, base_series)]
+        for power in tuple(sorted(family_powers)):
+            direct_basis_entries.append(
+                (
+                    f"{family_label}{power}",
+                    f"{family_label}{power}",
+                    benchmark_power_substitution_series(base_series, power=power, order=order),
+                )
+            )
+
+        quotient_basis_entries: list[tuple[str, str, Series]] = []
+        for label, _, basis_series in direct_basis_entries[1:]:
+            quotient_basis_entries.append(
+                (
+                    f"{family_label}_Q{int(label.removeprefix(family_label))}",
+                    f"{label} / {family_label}",
+                    series_div(basis_series, base_series),
+                )
+            )
+
+        direct_basis_scans = tuple(
+            SelfPlusPochhammerEtaCorrectionBasisScan(
+                basis_label=label,
+                basis_expression=expr,
+                basis_series=basis_series,
+                self_scans=tuple(
+                    scan_ratio_self_plus_pochhammer_eta_relations(
+                        ratio_series=series_div(target_series, basis_series),
+                        moduli=unique_moduli,
+                        eta_levels=normalized_eta_levels,
+                        order=order,
+                        max_abs_exponent=max_abs_exponent,
+                    )
+                ),
+            )
+            for label, expr, basis_series in direct_basis_entries
+        )
+        quotient_basis_scans = tuple(
+            SelfPlusPochhammerEtaCorrectionBasisScan(
+                basis_label=label,
+                basis_expression=expr,
+                basis_series=basis_series,
+                self_scans=tuple(
+                    scan_ratio_self_plus_pochhammer_eta_relations(
+                        ratio_series=series_div(target_series, basis_series),
+                        moduli=unique_moduli,
+                        eta_levels=normalized_eta_levels,
+                        order=order,
+                        max_abs_exponent=max_abs_exponent,
+                    )
+                ),
+            )
+            for label, expr, basis_series in quotient_basis_entries
+        )
+
+        scans.append(
+            SourceFamilySelfPlusPochhammerEtaCorrectionScan(
+                family_label=family_label,
+                benchmark_name=benchmark_name,
+                direct_basis_scans=direct_basis_scans,
+                quotient_basis_scans=quotient_basis_scans,
+            )
+        )
+    return scans
+
+
+def scan_tail_family_source_eta_ladder(
+    *,
+    reduced_coeffs: ContinuedFractionCoeffs,
+    symbol: sp.Symbol,
+    ordered_base_families: tuple[tuple[str, str, Series], ...],
+    start_stages: tuple[int, ...] = (3, 4, 5),
+    max_gap_depth: int = 3,
+    order: int,
+    powers: tuple[int, ...] = (2, 3, 4),
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    max_abs_exponent: int = 8,
+    gg_order: int | None = None,
+    gg_benchmark_name: str | None = None,
+    gg_base_series: Series | None = None,
+    gg_degree_values: tuple[int, ...] = (1, 2),
+    gg_max_abs_exponent: int = 8,
+    gg_solve_order: int | None = None,
+    gg_supplemental_powers: tuple[int, ...] = (),
+    morton_order: int | None = None,
+) -> tuple[TailFamilySourceEtaSample, ...]:
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if max_gap_depth < 0:
+        raise ValueError("max_gap_depth must be non-negative")
+
+    normalized_stages = tuple(sorted({stage for stage in start_stages if stage >= 1}))
+    if not normalized_stages:
+        return ()
+    gg_scan_order = order if gg_order is None else max(2, min(gg_order, order))
+    morton_scan_order = order if morton_order is None else max(2, min(morton_order, order))
+
+    series_symbol = str(symbol)
+    samples: list[TailFamilySourceEtaSample] = []
+    for start_stage in normalized_stages:
+        anchor = build_reduced_tail_anchor(
+            reduced_coeffs=reduced_coeffs,
+            symbol=symbol,
+            start_stage=start_stage,
+            order=order,
+        )
+        if anchor is None:
+            continue
+
+        state_expr = sp.expand(anchor.state_expr)
+        state_text = _format_expr(state_expr)
+        state_suffix = "".join(ch for ch in state_text if ch.isalnum()) or f"s{start_stage}"
+        base_label = f"U_{state_suffix}"
+        current_label = base_label
+        current_expression = f"{current_label} = T({state_text}) / (1 + {state_text})"
+        current_series = list(anchor.normalized_series)
+
+        for gap_depth in range(max_gap_depth + 1):
+            truncated_base_families = tuple(
+                (label, benchmark_name, basis_series[:order])
+                for label, benchmark_name, basis_series in ordered_base_families
+            )
+            direct_eta_scans = tuple(
+                scan_ratio_eta_quotient_relations(
+                    ratio_series=current_series,
+                    levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            )
+            direct_modular_unit_eta_scans = tuple(
+                scan_ratio_modular_unit_eta_relations(
+                    ratio_series=current_series,
+                    moduli=powers,
+                    eta_levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            )
+            source_scans = tuple(
+                scan_source_family_eta_corrections(
+                    target_series=current_series,
+                    ordered_base_families=truncated_base_families,
+                    powers=powers,
+                    eta_levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            )
+            weighted_correction_source_families = tuple(
+                entry for entry in truncated_base_families if entry[0] in {"RR", "GG"}
+            )
+            gg_scan = (
+                None
+                if gg_benchmark_name is None or gg_base_series is None
+                else scan_gg_modular_equation_box(
+                    target_series=current_series[:gg_scan_order],
+                    benchmark_name=gg_benchmark_name,
+                    gg_series=gg_base_series[:gg_scan_order],
+                    order=gg_scan_order,
+                    degree_values=gg_degree_values,
+                    max_abs_exponent=gg_max_abs_exponent,
+                    solve_order=gg_solve_order,
+                    supplemental_powers=gg_supplemental_powers,
+                    weighted_correction_eta_levels=eta_levels,
+                    weighted_correction_moduli=tuple(modulus for modulus in powers if modulus <= 4) or (2, 3, 4),
+                    weighted_correction_max_abs_exponent=max_abs_exponent,
+                    weighted_correction_source_families=weighted_correction_source_families,
+                    weighted_correction_source_powers=powers,
+                )
+            )
+            morton_scan = scan_morton_periodic_point_box(
+                target_series=current_series[:morton_scan_order],
+                order=morton_scan_order,
+            )
+            samples.append(
+                TailFamilySourceEtaSample(
+                    label=current_label,
+                    expression=current_expression,
+                    start_stage=start_stage,
+                    gap_depth=gap_depth,
+                    state_expr=state_expr,
+                    series=tuple(current_series),
+                    direct_eta_scans=direct_eta_scans,
+                    direct_modular_unit_eta_scans=direct_modular_unit_eta_scans,
+                    source_family_eta_scans=source_scans,
+                    gg_modular_equation_scan=gg_scan,
+                    morton_periodic_point_scan=morton_scan,
+                )
+            )
+            if gap_depth == max_gap_depth:
+                break
+            gap = build_gap_normalized_series(target_series=current_series)
+            if gap is None:
+                break
+            next_label = f"{base_label}_g{gap_depth + 1}"
+            current_expression = _format_gap_normalization_formula(
+                source_variable=current_label,
+                target_variable=next_label,
+                gap=gap,
+                series_symbol=series_symbol,
+            )
+            current_label = next_label
+            current_series = list(gap.normalized_series)
+
+    return tuple(samples)
 
 
 def _source_family_raw_basis_entries(
@@ -2658,6 +3340,77 @@ def _format_self_signed_product_relation(
     return f"{target_variable}({series_symbol}) / {target_variable}({series_symbol}^{modulus}) = {rhs}"
 
 
+def _format_self_plus_pochhammer_relation(
+    relation: MultiplicativeRelation,
+    *,
+    modulus: int,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    g_power_label = f"G{modulus}"
+    terms: list[str] = []
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name)
+        if exponent is None:
+            continue
+        if name == g_power_label:
+            base = f"{target_variable}({series_symbol}^{modulus})"
+            terms.append(base if exponent == 1 else f"({base})^{exponent}")
+            continue
+        if name.startswith("PP"):
+            residue = int(name.removeprefix("PP"))
+            base = (
+                f"(-{series_symbol}; {series_symbol}^{modulus})_inf"
+                if residue == 1
+                else f"(-{series_symbol}^{residue}; {series_symbol}^{modulus})_inf"
+            )
+            terms.append(base if exponent == 1 else f"{base}^{exponent}")
+            continue
+        terms.append(name if exponent == 1 else f"{name}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable} = {rhs}"
+
+
+def _format_self_plus_pochhammer_eta_relation(
+    relation: MultiplicativeRelation,
+    *,
+    modulus: int,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    g_power_label = f"G{modulus}"
+    terms: list[str] = []
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name)
+        if exponent is None:
+            continue
+        if name == g_power_label:
+            base = f"{target_variable}({series_symbol}^{modulus})"
+            terms.append(base if exponent == 1 else f"({base})^{exponent}")
+            continue
+        if name.startswith("PP"):
+            residue = int(name.removeprefix("PP"))
+            base = (
+                f"(-{series_symbol}; {series_symbol}^{modulus})_inf"
+                if residue == 1
+                else f"(-{series_symbol}^{residue}; {series_symbol}^{modulus})_inf"
+            )
+            terms.append(base if exponent == 1 else f"{base}^{exponent}")
+            continue
+        if name.startswith("E"):
+            divisor = int(name.removeprefix("E"))
+            base = (
+                f"({series_symbol}; {series_symbol})_inf"
+                if divisor == 1
+                else f"({series_symbol}^{divisor}; {series_symbol}^{divisor})_inf"
+            )
+            terms.append(base if exponent == 1 else f"{base}^{exponent}")
+            continue
+        terms.append(name if exponent == 1 else f"{name}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable} = {rhs}"
+
+
 def _format_self_signed_eta_relation(
     relation: MultiplicativeRelation,
     *,
@@ -2699,6 +3452,23 @@ def _format_self_signed_eta_relation(
     return f"{target_variable} = {rhs}"
 
 
+def _format_self_mahler_linear_relation(
+    relation: PolynomialRelation,
+    *,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    symbol_map: dict[str, sp.Symbol] = {
+        "T": sp.Symbol(series_symbol),
+        "F": sp.Symbol(target_variable),
+    }
+    for variable in relation.variables:
+        if variable.startswith("G"):
+            symbol_map[variable] = sp.Symbol(variable)
+    expr = relation.as_sympy(tuple(symbol_map[name] for name in relation.variables))
+    return f"{_format_expr(sp.expand(expr))} = 0"
+
+
 def _format_reduced_tail_transfer_equation(
     relation: ReducedTailTransferEquation,
 ) -> tuple[str, str, str, str]:
@@ -2714,6 +3484,22 @@ def _format_reduced_tail_transfer_equation(
         f"T({state_variable}) = 1 + {state_variable} + ({state_variable}*({base_symbol} + {state_variable}))/T({next_state})",
         f"T({state_variable})*T({next_state}) - (1 + {state_variable})*T({next_state}) - {state_variable}*({base_symbol} + {state_variable}) = 0",
     )
+
+
+def _format_gap_normalization_formula(
+    *,
+    source_variable: str,
+    target_variable: str,
+    gap: GapNormalizedSeries,
+    series_symbol: str,
+) -> str:
+    leading_coeff = _format_expr(gap.leading_coefficient)
+    shift = gap.shift
+    if leading_coeff == "1":
+        return f"{target_variable} = ({source_variable} - 1) / {series_symbol}^{shift}"
+    if leading_coeff == "-1":
+        return f"{target_variable} = (1 - {source_variable}) / {series_symbol}^{shift}"
+    return f"{target_variable} = ({source_variable} - 1) / ({leading_coeff}*{series_symbol}^{shift})"
 
 
 def _format_eta_quotient_relation(
@@ -2737,6 +3523,37 @@ def _format_eta_quotient_relation(
             terms.append(base)
         else:
             terms.append(f"{base}^{exponent}")
+    rhs = " * ".join(terms) if terms else "1"
+    return f"{target_variable} = {rhs}"
+
+
+def _format_modular_unit_eta_relation(
+    relation: MultiplicativeRelation,
+    *,
+    target_variable: str,
+    series_symbol: str,
+) -> str:
+    terms: list[str] = []
+    for name in relation.basis_variables:
+        exponent = relation.exponents.get(name)
+        if exponent is None:
+            continue
+        if name.startswith("M"):
+            residue = int(name.removeprefix("M"))
+            base = f"(1 - {series_symbol})" if residue == 1 else f"(1 - {series_symbol}^{residue})"
+        elif name.startswith("P"):
+            residue = int(name.removeprefix("P"))
+            base = f"(1 + {series_symbol})" if residue == 1 else f"(1 + {series_symbol}^{residue})"
+        elif name.startswith("E"):
+            divisor = int(name.removeprefix("E"))
+            base = (
+                f"({series_symbol}; {series_symbol})_inf"
+                if divisor == 1
+                else f"({series_symbol}^{divisor}; {series_symbol}^{divisor})_inf"
+            )
+        else:
+            base = name
+        terms.append(base if exponent == 1 else f"{base}^{exponent}")
     rhs = " * ".join(terms) if terms else "1"
     return f"{target_variable} = {rhs}"
 
@@ -2852,6 +3669,158 @@ def _format_two_quotient_core_source_family_eta_correction(
     rhs_terms = source_terms + eta_terms
     rhs = " * ".join(rhs_terms) if rhs_terms else "1"
     return f"{target_variable} = {rhs}"
+
+
+def _flatten_source_family_eta_hits(
+    scans: list[SourceFamilyEtaCorrectionScan] | tuple[SourceFamilyEtaCorrectionScan, ...],
+) -> list[tuple[str, str, str, int, MultiplicativeRelation]]:
+    hits: list[tuple[str, str, str, int, MultiplicativeRelation]] = []
+    for family_scan in scans:
+        for basis_scan in family_scan.direct_basis_scans:
+            for eta_scan in basis_scan.eta_scans:
+                if eta_scan.relation is not None:
+                    hits.append(
+                        (
+                            basis_scan.basis_label,
+                            basis_scan.basis_expression,
+                            "raw",
+                            eta_scan.level,
+                            eta_scan.relation,
+                        )
+                    )
+        for basis_scan in family_scan.quotient_basis_scans:
+            for eta_scan in basis_scan.eta_scans:
+                if eta_scan.relation is not None:
+                    hits.append(
+                        (
+                            basis_scan.basis_label,
+                            basis_scan.basis_expression,
+                            "quotient",
+                            eta_scan.level,
+                            eta_scan.relation,
+                        )
+                    )
+    return hits
+
+
+def _named_prefix_scan_hit_labels(scans, *, hit_predicate) -> tuple[str, ...]:
+    return tuple(
+        scan.basis_labels[-1]
+        for scan in scans
+        if scan.error is None and hit_predicate(scan)
+    )
+
+
+def _named_prefix_scan_checked_count(scans) -> int:
+    return sum(1 for scan in scans if scan.error is None)
+
+
+def _named_prefix_scan_skipped_count(scans) -> int:
+    return sum(1 for scan in scans if scan.error is not None)
+
+
+def _format_tail_prefix_summary(scans, *, label: str, hit_predicate) -> str:
+    hit_labels = _named_prefix_scan_hit_labels(scans, hit_predicate=hit_predicate)
+    checked_count = _named_prefix_scan_checked_count(scans)
+    skipped_count = _named_prefix_scan_skipped_count(scans)
+    summary = f"{label} `{len(hit_labels)}` / `{checked_count}` hit prefixes"
+    if hit_labels:
+        summary += f" ({', '.join(f'`{value}`' for value in hit_labels)})"
+    if skipped_count:
+        summary += f"; skipped `{skipped_count}`"
+    return summary
+
+
+def _gg_modular_equation_scan_has_hit(scan: GGModularEquationScan) -> bool:
+    if scan.hit_templates:
+        return True
+    if scan.exact_polynomial_template_hits or scan.quotient_exact_polynomial_template_hits:
+        return True
+    if any(_gg_weighted_coordinate_diagnostic_has_hit(item) for item in scan.weighted_coordinate_diagnostics):
+        return True
+    if any(item.relation is not None for item in scan.polynomial_scans):
+        return True
+    if any(item.relation is not None for item in scan.multiplicative_scans):
+        return True
+    if any(item.relation is not None for item in scan.fractional_linear_scans):
+        return True
+    if any(item.total_hits > 0 for item in scan.two_layer_fractional_linear_scans):
+        return True
+    if any(item.relation is not None for item in scan.quotient_polynomial_scans):
+        return True
+    if any(item.relation is not None for item in scan.quotient_multiplicative_scans):
+        return True
+    if any(item.relation is not None for item in scan.quotient_fractional_linear_scans):
+        return True
+    if any(item.total_hits > 0 for item in scan.quotient_two_layer_fractional_linear_scans):
+        return True
+    if any(item.relation is not None for item in scan.mixed_quotient_polynomial_scans):
+        return True
+    if any(item.relation is not None for item in scan.mixed_quotient_multiplicative_scans):
+        return True
+    if any(item.relation is not None for item in scan.mixed_quotient_fractional_linear_scans):
+        return True
+    if any(item.total_hits > 0 for item in scan.mixed_quotient_two_layer_fractional_linear_scans):
+        return True
+    return False
+
+
+def _gg_modular_equation_scan_has_exact_quotient_hit(scan: GGModularEquationScan) -> bool:
+    return bool(scan.quotient_exact_polynomial_template_hits)
+
+
+def _morton_periodic_point_scan_has_hit(scan: MortonPeriodicPointScan) -> bool:
+    return any(item.hit for item in scan.template_results)
+
+
+def _gg_weighted_coordinate_diagnostic_has_hit(diagnostic: GGWeightedCoordinateDiagnostic) -> bool:
+    return (
+        (diagnostic.first_difference_power is None and diagnostic.first_difference_coeff is None)
+        or (diagnostic.first_log_difference_power is None and diagnostic.first_log_difference_coeff is None)
+        or any(scan.relation is not None for scan in diagnostic.correction_eta_scans)
+        or any(scan.relation is not None for scan in diagnostic.correction_modular_unit_eta_scans)
+        or any(scan.relation is not None for scan in diagnostic.normalized_correction_eta_scans)
+        or any(scan.relation is not None for scan in diagnostic.normalized_correction_modular_unit_eta_scans)
+        or bool(_flatten_source_family_eta_hits(diagnostic.normalized_correction_source_family_eta_scans))
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_eta_scans)
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_modular_unit_eta_scans)
+        or bool(_flatten_source_family_eta_hits(diagnostic.second_normalized_correction_source_family_eta_scans))
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_quotient_polynomial_scans)
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_quotient_multiplicative_scans)
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_quotient_fractional_linear_scans)
+        or any(scan.total_hits > 0 for scan in diagnostic.second_normalized_correction_quotient_two_layer_fractional_linear_scans)
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_mixed_quotient_polynomial_scans)
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_mixed_quotient_multiplicative_scans)
+        or any(scan.relation is not None for scan in diagnostic.second_normalized_correction_mixed_quotient_fractional_linear_scans)
+        or any(scan.total_hits > 0 for scan in diagnostic.second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans)
+        or any(scan.hits for scan in diagnostic.second_normalized_correction_explicit_transform_eta_scans)
+        or diagnostic.polynomial_degree1_relation is not None
+        or diagnostic.polynomial_degree2_relation is not None
+        or diagnostic.fractional_linear_relation is not None
+    )
+
+
+def _format_exact_polynomial_obstruction(
+    obstruction: tuple[str, int | None, sp.Expr | None],
+    *,
+    series_symbol: str,
+) -> str:
+    label, power, coeff = obstruction
+    if power is None or coeff is None:
+        return f"`{label}` matches through the checked truncation"
+    return f"`{label}` first fails at `{series_symbol}^{power}` with coefficient `{_format_expr(coeff)}`"
+
+
+def _format_weighted_coordinate_obstruction(
+    *,
+    power: int | None,
+    coeff: sp.Expr | None,
+    lhs: str,
+    series_symbol: str,
+) -> str:
+    if power is None or coeff is None:
+        return f"`{lhs}` matches through the checked truncation"
+    return f"`{lhs}` first fails at `{series_symbol}^{power}` with coefficient `{_format_expr(coeff)}`"
 
 
 def _format_self_eta_correction(
@@ -4535,13 +5504,116 @@ def _gg_exact_modular_relations(order: int) -> tuple[tuple[str, PolynomialRelati
     )
 
 
+@lru_cache(maxsize=None)
+def _morton_periodic_point_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
+    x, y = sp.symbols("F G")
+    morton_f = _polynomial_relation_from_sympy_expr(
+        expr=y**2 + (x**2 - 1) * y + x**2,
+        variables=("F", "G"),
+        order=order,
+    )
+    morton_g = _polynomial_relation_from_sympy_expr(
+        expr=y**2 - (x**2 - 4 * x + 1) * y + x**2,
+        variables=("F", "G"),
+        order=order,
+    )
+    return (
+        ("Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`", morton_f),
+        ("Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`", morton_g),
+        ("Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`", morton_f),
+        ("Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`", morton_f),
+    )
+
+
+def _first_nonzero_residual_term(
+    residual: Series,
+) -> tuple[int | None, sp.Expr | None]:
+    for power, coeff in enumerate(residual):
+        simplified = sp.simplify(coeff)
+        if simplified != 0:
+            return power, simplified
+    return None, None
+
+
+def scan_morton_periodic_point_box(
+    *,
+    target_series: Series,
+    order: int,
+) -> MortonPeriodicPointScan:
+    if order < 2:
+        return MortonPeriodicPointScan(template_results=())
+
+    target_trunc = target_series[:order]
+    target_q2 = benchmark_power_substitution_series(target_trunc, power=2, order=order)
+    target_sq = series_pow(target_trunc, 2)
+    target_q2_sq = series_pow(target_q2, 2)
+    one_series = [sp.Integer(0) for _ in range(order)]
+    one_series[0] = sp.Integer(1)
+    neg_target_q2 = [sp.simplify(-value) for value in target_q2]
+    positive_transform = series_div(
+        series_add(one_series, neg_target_q2),
+        series_add(one_series, target_q2),
+    )
+    negative_transform = series_div(
+        series_add(target_q2, [sp.Integer(-1)] + [sp.Integer(0)] * (order - 1)),
+        series_add(target_q2, one_series),
+    )
+    relation_map = dict(_morton_periodic_point_relations(order))
+    template_specs = (
+        (
+            "Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`",
+            relation_map["Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`"],
+            {"F": target_trunc, "G": target_q2},
+        ),
+        (
+            "Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`",
+            relation_map["Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`"],
+            {"F": target_sq, "G": target_q2_sq},
+        ),
+        (
+            "Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`",
+            relation_map["Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`"],
+            {"F": target_trunc, "G": positive_transform},
+        ),
+        (
+            "Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`",
+            relation_map["Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`"],
+            {"F": target_trunc, "G": negative_transform},
+        ),
+    )
+    template_results: list[MortonPeriodicPointTemplateResult] = []
+    for label, relation, series_by_variable in template_specs:
+        residual = _relation_residual_series(
+            relation,
+            series_by_variable=series_by_variable,
+            order=order,
+        )
+        power, coeff = _first_nonzero_residual_term(residual)
+        template_results.append(
+            MortonPeriodicPointTemplateResult(
+                label=label,
+                first_failure_power=power,
+                first_failure_coeff=coeff,
+                hit=all(sp.simplify(value) == 0 for value in residual),
+            )
+        )
+    return MortonPeriodicPointScan(template_results=tuple(template_results))
+
+
 def _gg_exact_modular_template_hits(
     *,
     target_series: Series,
     ordered_basis_entries: tuple[tuple[str, str, Series], ...],
     quotient_basis_entries: tuple[tuple[str, str, Series], ...],
     order: int,
-) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
+) -> tuple[
+    tuple[str, ...],
+    tuple[str, ...],
+    tuple[tuple[str, int | None, sp.Expr | None], ...],
+    tuple[str, ...],
+    tuple[str, ...],
+    tuple[tuple[str, int | None, sp.Expr | None], ...],
+]:
     basis_by_label = {label: series for label, _, series in ordered_basis_entries}
     quotient_by_label = {label: series for label, _, series in quotient_basis_entries}
     relation_map = dict(_gg_exact_modular_relations(order))
@@ -4551,6 +5623,7 @@ def _gg_exact_modular_template_hits(
 
     exact_labels: list[str] = []
     exact_hits: list[str] = []
+    exact_obstructions: list[tuple[str, int | None, sp.Expr | None]] = []
     if "GG3" in basis_by_label:
         label = "Chan--Huang Cor. 3.2(i) on (F, GG3)"
         exact_labels.append(label)
@@ -4559,6 +5632,7 @@ def _gg_exact_modular_template_hits(
             series_by_variable={"F": target_series, "G": basis_by_label["GG3"], "T": variable_series},
             order=order,
         )
+        exact_obstructions.append((label, *_first_nonzero_residual_term(residual)))
         if all(sp.simplify(value) == 0 for value in residual):
             exact_hits.append(label)
     if "GG4" in basis_by_label:
@@ -4569,11 +5643,13 @@ def _gg_exact_modular_template_hits(
             series_by_variable={"F": target_series, "G": basis_by_label["GG4"], "T": variable_series},
             order=order,
         )
+        exact_obstructions.append((label, *_first_nonzero_residual_term(residual)))
         if all(sp.simplify(value) == 0 for value in residual):
             exact_hits.append(label)
 
     quotient_labels: list[str] = []
     quotient_hits: list[str] = []
+    quotient_obstructions: list[tuple[str, int | None, sp.Expr | None]] = []
     if "Q_3" in quotient_by_label:
         label = "Chan--Huang Cor. 3.2(i) on (F, Q_3)"
         quotient_labels.append(label)
@@ -4582,6 +5658,7 @@ def _gg_exact_modular_template_hits(
             series_by_variable={"F": target_series, "Q": quotient_by_label["Q_3"], "T": variable_series},
             order=order,
         )
+        quotient_obstructions.append((label, *_first_nonzero_residual_term(residual)))
         if all(sp.simplify(value) == 0 for value in residual):
             quotient_hits.append(label)
     if "Q_4" in quotient_by_label:
@@ -4592,14 +5669,320 @@ def _gg_exact_modular_template_hits(
             series_by_variable={"F": target_series, "Q": quotient_by_label["Q_4"], "T": variable_series},
             order=order,
         )
+        quotient_obstructions.append((label, *_first_nonzero_residual_term(residual)))
         if all(sp.simplify(value) == 0 for value in residual):
             quotient_hits.append(label)
 
     return (
         tuple(exact_labels),
         tuple(exact_hits),
+        tuple(exact_obstructions),
         tuple(quotient_labels),
         tuple(quotient_hits),
+        tuple(quotient_obstructions),
+    )
+
+
+def _gg_weighted_coordinate_diagnostics(
+    *,
+    target_series: Series,
+    benchmark_name: str,
+    gg_series: Series,
+    quotient_basis_entries: tuple[tuple[str, str, Series], ...],
+    order: int,
+    coordinate_degree_values: tuple[int, ...] = (1, 2),
+    coordinate_max_abs_exponent: int = 4,
+    coordinate_solve_order: int | None = None,
+    correction_eta_levels: tuple[int, ...] = (1, 2, 3, 4),
+    correction_moduli: tuple[int, ...] = (2, 3, 4),
+    correction_max_abs_exponent: int = 4,
+    correction_source_families: tuple[tuple[str, str, Series], ...] = (),
+    correction_source_powers: tuple[int, ...] = (2, 3, 4),
+    correction_source_supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
+) -> tuple[GGWeightedCoordinateDiagnostic, ...]:
+    quotient_by_label = {label: series for label, _, series in quotient_basis_entries}
+    q3_series = quotient_by_label.get("Q_3")
+    q4_series = quotient_by_label.get("Q_4")
+    if q3_series is None or q4_series is None:
+        return ()
+
+    quotient_ordered_basis_series = tuple(
+        (label, series[:order]) for label, _, series in quotient_basis_entries
+    )
+    mixed_quotient_ordered_basis_series = (("GG", gg_series[:order]),) + quotient_ordered_basis_series
+
+    weighted_series = series_div(series_pow(q3_series, 3), series_pow(q4_series, 2))
+    weighted_log_series = [
+        sp.simplify(3 * coeff_q3 - 2 * coeff_q4)
+        for coeff_q3, coeff_q4 in zip(_series_log_coeffs(q3_series), _series_log_coeffs(q4_series))
+    ]
+    direct_difference = [
+        sp.simplify(target_series[index] - weighted_series[index])
+        for index in range(order)
+    ]
+    target_log_series = _series_log_coeffs(target_series)
+    log_difference = [
+        sp.simplify(target_log_series[index] - weighted_log_series[index])
+        for index in range(order)
+    ]
+    weighted_correction_series = series_div(target_series, weighted_series)
+    weighted_correction_gap = [
+        sp.simplify(
+            weighted_correction_series[index] - (sp.Integer(1) if index == 0 else sp.Integer(0))
+        )
+        for index in range(order)
+    ]
+
+    solve_order = min(order, 12)
+    variable_series = [sp.Integer(0) for _ in range(solve_order)]
+    if solve_order > 1:
+        variable_series[1] = sp.Integer(1)
+
+    polynomial_degree1_relation = None
+    if solve_order >= 4:
+        polynomial_degree1_relation = search_polynomial_relation(
+            series_by_variable={
+                "F": target_series[:solve_order],
+                "W": weighted_series[:solve_order],
+                "T": variable_series,
+            },
+            order=solve_order,
+            max_total_degree=1,
+            required_variable="F",
+        )
+
+    polynomial_degree2_relation = None
+    if solve_order >= 10:
+        polynomial_degree2_relation = search_polynomial_relation(
+            series_by_variable={
+                "F": target_series[:solve_order],
+                "W": weighted_series[:solve_order],
+                "T": variable_series,
+            },
+            order=solve_order,
+            max_total_degree=2,
+            required_variable="F",
+        )
+
+    fractional_linear_relation = None
+    if solve_order >= 4:
+        fractional_linear_relation = search_fractional_linear_relation(
+            target_series=target_series[:solve_order],
+            basis_series_by_variable={"W_34": weighted_series[:solve_order]},
+            order=solve_order,
+        )
+
+    correction_eta_scans = tuple(
+        scan_ratio_eta_quotient_relations(
+            ratio_series=weighted_correction_series,
+            levels=correction_eta_levels,
+            order=solve_order,
+            max_abs_exponent=correction_max_abs_exponent,
+        )
+    )
+    correction_modular_unit_eta_scans = tuple(
+        scan_ratio_modular_unit_eta_relations(
+            ratio_series=weighted_correction_series,
+            moduli=correction_moduli,
+            eta_levels=correction_eta_levels,
+            order=solve_order,
+            max_abs_exponent=correction_max_abs_exponent,
+        )
+    )
+    normalized_correction_gap = build_gap_normalized_series(target_series=weighted_correction_series)
+    normalized_correction_label = None
+    normalized_correction_eta_scans: tuple[EtaQuotientRelationScan, ...] = ()
+    normalized_correction_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
+    normalized_correction_source_family_eta_scans: tuple[SourceFamilyEtaCorrectionScan, ...] = ()
+    second_normalized_correction_label = None
+    second_normalized_correction_gap = None
+    second_normalized_correction_eta_scans: tuple[EtaQuotientRelationScan, ...] = ()
+    second_normalized_correction_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
+    second_normalized_correction_source_family_eta_scans: tuple[SourceFamilyEtaCorrectionScan, ...] = ()
+    second_normalized_correction_quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...] = ()
+    second_normalized_correction_quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...] = ()
+    second_normalized_correction_quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_polynomial_scans: tuple[NamedPolynomialRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_multiplicative_scans: tuple[NamedMultiplicativeRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_fractional_linear_scans: tuple[NamedFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans: tuple[NamedTwoLayerFractionalLinearRelationScan, ...] = ()
+    second_normalized_correction_explicit_transform_eta_scans: tuple[ExplicitSourceFamilyEtaCorrectionScan, ...] = ()
+    if normalized_correction_gap is not None:
+        normalized_correction_label = "G_W34"
+        normalized_correction_series = list(normalized_correction_gap.normalized_series[:solve_order])
+        normalized_correction_eta_scans = tuple(
+            scan_ratio_eta_quotient_relations(
+                ratio_series=normalized_correction_series,
+                levels=correction_eta_levels,
+                order=solve_order,
+                max_abs_exponent=correction_max_abs_exponent,
+            )
+        )
+        normalized_correction_modular_unit_eta_scans = tuple(
+            scan_ratio_modular_unit_eta_relations(
+                ratio_series=normalized_correction_series,
+                moduli=correction_moduli,
+                eta_levels=correction_eta_levels,
+                order=solve_order,
+                max_abs_exponent=correction_max_abs_exponent,
+            )
+        )
+        normalized_correction_source_family_eta_scans = tuple(
+            scan_source_family_eta_corrections(
+                target_series=normalized_correction_series,
+                ordered_base_families=tuple(
+                    (label, benchmark_name, basis_series[:solve_order])
+                    for label, benchmark_name, basis_series in correction_source_families
+                ),
+                powers=correction_source_powers,
+                eta_levels=correction_eta_levels,
+                order=solve_order,
+                max_abs_exponent=correction_max_abs_exponent,
+                supplemental_powers_by_family=correction_source_supplemental_powers_by_family,
+            )
+        )
+        second_normalized_correction_gap = build_gap_normalized_series(
+            target_series=list(normalized_correction_gap.normalized_series)
+        )
+        if second_normalized_correction_gap is not None:
+            second_normalized_correction_label = "G2_W34"
+            second_normalized_correction_series = list(
+                second_normalized_correction_gap.normalized_series[:solve_order]
+            )
+            deeper_solve_order = coordinate_solve_order or solve_order
+            second_normalized_correction_eta_scans = tuple(
+                scan_ratio_eta_quotient_relations(
+                    ratio_series=second_normalized_correction_series,
+                    levels=correction_eta_levels,
+                    order=solve_order,
+                    max_abs_exponent=correction_max_abs_exponent,
+                )
+            )
+            second_normalized_correction_modular_unit_eta_scans = tuple(
+                scan_ratio_modular_unit_eta_relations(
+                    ratio_series=second_normalized_correction_series,
+                    moduli=correction_moduli,
+                    eta_levels=correction_eta_levels,
+                    order=solve_order,
+                    max_abs_exponent=correction_max_abs_exponent,
+                )
+            )
+            second_normalized_correction_source_family_eta_scans = tuple(
+                scan_source_family_eta_corrections(
+                    target_series=second_normalized_correction_series,
+                    ordered_base_families=tuple(
+                        (label, benchmark_name, basis_series[:solve_order])
+                        for label, benchmark_name, basis_series in correction_source_families
+                    ),
+                    powers=correction_source_powers,
+                    eta_levels=correction_eta_levels,
+                    order=solve_order,
+                    max_abs_exponent=correction_max_abs_exponent,
+                    supplemental_powers_by_family=correction_source_supplemental_powers_by_family,
+                )
+            )
+            second_normalized_correction_quotient_prefix_scans = scan_named_prefix_boxes(
+                target_series=second_normalized_correction_series,
+                ordered_basis_series=tuple(
+                    (label, series[:solve_order]) for label, series in quotient_ordered_basis_series
+                ),
+                order=solve_order,
+                degree_values=coordinate_degree_values,
+                required_variable="F",
+                max_abs_exponent=coordinate_max_abs_exponent,
+                solve_order=deeper_solve_order,
+            )
+            second_normalized_correction_quotient_polynomial_scans = (
+                second_normalized_correction_quotient_prefix_scans.polynomial_scans
+            )
+            second_normalized_correction_quotient_multiplicative_scans = (
+                second_normalized_correction_quotient_prefix_scans.multiplicative_scans
+            )
+            second_normalized_correction_quotient_fractional_linear_scans = (
+                second_normalized_correction_quotient_prefix_scans.fractional_linear_scans
+            )
+            second_normalized_correction_quotient_two_layer_fractional_linear_scans = (
+                second_normalized_correction_quotient_prefix_scans.two_layer_fractional_linear_scans
+            )
+            second_normalized_correction_mixed_prefix_scans = scan_named_prefix_boxes(
+                target_series=second_normalized_correction_series,
+                ordered_basis_series=tuple(
+                    (label, series[:solve_order]) for label, series in mixed_quotient_ordered_basis_series
+                ),
+                order=solve_order,
+                degree_values=coordinate_degree_values,
+                required_variable="F",
+                max_abs_exponent=coordinate_max_abs_exponent,
+                solve_order=deeper_solve_order,
+            )
+            second_normalized_correction_mixed_quotient_polynomial_scans = (
+                second_normalized_correction_mixed_prefix_scans.polynomial_scans
+            )
+            second_normalized_correction_mixed_quotient_multiplicative_scans = (
+                second_normalized_correction_mixed_prefix_scans.multiplicative_scans
+            )
+            second_normalized_correction_mixed_quotient_fractional_linear_scans = (
+                second_normalized_correction_mixed_prefix_scans.fractional_linear_scans
+            )
+            second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans = (
+                second_normalized_correction_mixed_prefix_scans.two_layer_fractional_linear_scans
+            )
+            second_normalized_correction_explicit_transform_eta_scans = tuple(
+                scan_explicit_source_family_eta_correction_templates(
+                    target_series=second_normalized_correction_series,
+                    ordered_base_families=(("GG", benchmark_name, gg_series[:solve_order]),),
+                    powers=correction_source_powers,
+                    eta_levels=correction_eta_levels,
+                    order=solve_order,
+                    max_abs_exponent=correction_max_abs_exponent,
+                    supplemental_powers_by_family=(
+                        None
+                        if correction_source_supplemental_powers_by_family is None
+                        else {
+                            "GG": correction_source_supplemental_powers_by_family.get("GG", ())
+                        }
+                    ),
+                )
+            )
+
+    return (
+        GGWeightedCoordinateDiagnostic(
+            label="W_34",
+            expression="Q_3^3 / Q_4^2",
+            log_expression="3*log(Q_3) - 2*log(Q_4)",
+            correction_expression="F / W_34",
+            first_difference_power=_first_nonzero_residual_term(direct_difference)[0],
+            first_difference_coeff=_first_nonzero_residual_term(direct_difference)[1],
+            first_log_difference_power=_first_nonzero_residual_term(log_difference)[0],
+            first_log_difference_coeff=_first_nonzero_residual_term(log_difference)[1],
+            correction_first_gap_power=_first_nonzero_residual_term(weighted_correction_gap)[0],
+            correction_first_gap_coeff=_first_nonzero_residual_term(weighted_correction_gap)[1],
+            polynomial_degree1_relation=polynomial_degree1_relation,
+            polynomial_degree2_relation=polynomial_degree2_relation,
+            fractional_linear_relation=fractional_linear_relation,
+            correction_eta_scans=correction_eta_scans,
+            correction_modular_unit_eta_scans=correction_modular_unit_eta_scans,
+            normalized_correction_label=normalized_correction_label,
+            normalized_correction_gap=normalized_correction_gap,
+            normalized_correction_eta_scans=normalized_correction_eta_scans,
+            normalized_correction_modular_unit_eta_scans=normalized_correction_modular_unit_eta_scans,
+            normalized_correction_source_family_eta_scans=normalized_correction_source_family_eta_scans,
+            second_normalized_correction_label=second_normalized_correction_label,
+            second_normalized_correction_gap=second_normalized_correction_gap,
+            second_normalized_correction_eta_scans=second_normalized_correction_eta_scans,
+            second_normalized_correction_modular_unit_eta_scans=second_normalized_correction_modular_unit_eta_scans,
+            second_normalized_correction_source_family_eta_scans=second_normalized_correction_source_family_eta_scans,
+            second_normalized_correction_quotient_polynomial_scans=second_normalized_correction_quotient_polynomial_scans,
+            second_normalized_correction_quotient_multiplicative_scans=second_normalized_correction_quotient_multiplicative_scans,
+            second_normalized_correction_quotient_fractional_linear_scans=second_normalized_correction_quotient_fractional_linear_scans,
+            second_normalized_correction_quotient_two_layer_fractional_linear_scans=second_normalized_correction_quotient_two_layer_fractional_linear_scans,
+            second_normalized_correction_mixed_quotient_polynomial_scans=second_normalized_correction_mixed_quotient_polynomial_scans,
+            second_normalized_correction_mixed_quotient_multiplicative_scans=second_normalized_correction_mixed_quotient_multiplicative_scans,
+            second_normalized_correction_mixed_quotient_fractional_linear_scans=second_normalized_correction_mixed_quotient_fractional_linear_scans,
+            second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans=second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans,
+            second_normalized_correction_explicit_transform_eta_scans=second_normalized_correction_explicit_transform_eta_scans,
+        ),
     )
 
 
@@ -4736,6 +6119,12 @@ def scan_gg_modular_equation_box(
     max_abs_exponent: int = 8,
     solve_order: int | None = None,
     supplemental_powers: tuple[int, ...] = (),
+    weighted_correction_eta_levels: tuple[int, ...] = (1, 2, 3, 4),
+    weighted_correction_moduli: tuple[int, ...] = (2, 3, 4),
+    weighted_correction_max_abs_exponent: int = 4,
+    weighted_correction_source_families: tuple[tuple[str, str, Series], ...] = (),
+    weighted_correction_source_powers: tuple[int, ...] = (2, 3, 4),
+    weighted_correction_source_supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
 ) -> GGModularEquationScan:
     ordered_basis_entries = _gg_modular_equation_ordered_basis_series(
         base_series=gg_series,
@@ -4782,13 +6171,31 @@ def scan_gg_modular_equation_box(
     (
         exact_polynomial_template_labels,
         exact_polynomial_template_hits,
+        exact_polynomial_template_obstructions,
         quotient_exact_polynomial_template_labels,
         quotient_exact_polynomial_template_hits,
+        quotient_exact_polynomial_template_obstructions,
     ) = _gg_exact_modular_template_hits(
         target_series=target_series,
         ordered_basis_entries=ordered_basis_entries,
         quotient_basis_entries=quotient_basis_series,
         order=order,
+    )
+    weighted_coordinate_diagnostics = _gg_weighted_coordinate_diagnostics(
+        target_series=target_series,
+        benchmark_name=benchmark_name,
+        gg_series=gg_series,
+        quotient_basis_entries=quotient_basis_series,
+        order=order,
+        coordinate_degree_values=degree_values,
+        coordinate_max_abs_exponent=max_abs_exponent,
+        coordinate_solve_order=solve_order,
+        correction_eta_levels=weighted_correction_eta_levels,
+        correction_moduli=weighted_correction_moduli,
+        correction_max_abs_exponent=weighted_correction_max_abs_exponent,
+        correction_source_families=weighted_correction_source_families,
+        correction_source_powers=weighted_correction_source_powers,
+        correction_source_supplemental_powers_by_family=weighted_correction_source_supplemental_powers_by_family,
     )
 
     checked_templates: list[str] = []
@@ -4805,6 +6212,7 @@ def scan_gg_modular_equation_box(
         hit_templates=tuple(hit_templates),
         exact_polynomial_template_labels=exact_polynomial_template_labels,
         exact_polynomial_template_hits=exact_polynomial_template_hits,
+        exact_polynomial_template_obstructions=exact_polynomial_template_obstructions,
         polynomial_scans=direct_scans.polynomial_scans,
         multiplicative_scans=direct_scans.multiplicative_scans,
         fractional_linear_scans=direct_scans.fractional_linear_scans,
@@ -4812,10 +6220,12 @@ def scan_gg_modular_equation_box(
         quotient_basis_series=quotient_basis_series,
         quotient_exact_polynomial_template_labels=quotient_exact_polynomial_template_labels,
         quotient_exact_polynomial_template_hits=quotient_exact_polynomial_template_hits,
+        quotient_exact_polynomial_template_obstructions=quotient_exact_polynomial_template_obstructions,
         quotient_polynomial_scans=quotient_scans.polynomial_scans,
         quotient_multiplicative_scans=quotient_scans.multiplicative_scans,
         quotient_fractional_linear_scans=quotient_scans.fractional_linear_scans,
         quotient_two_layer_fractional_linear_scans=quotient_scans.two_layer_fractional_linear_scans,
+        weighted_coordinate_diagnostics=weighted_coordinate_diagnostics,
         mixed_quotient_basis_series=mixed_quotient_basis_series,
         mixed_quotient_polynomial_scans=mixed_quotient_scans.polynomial_scans,
         mixed_quotient_multiplicative_scans=mixed_quotient_scans.multiplicative_scans,
@@ -5135,6 +6545,8 @@ def build_candidate_identification_note(
     reduced_tail_transfer_equation: ReducedTailTransferEquation | None = None
     reduced_tail_anchor: ReducedTailAnchor | None = None
     reduced_next_tail_anchor: ReducedTailAnchor | None = None
+    reduced_tail_anchor_gap: GapNormalizedSeries | None = None
+    reduced_next_tail_reciprocal_gap: GapNormalizedSeries | None = None
     reduced_tail_anchor_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_tail_anchor_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_tail_anchor_eta_scans: list[EtaQuotientRelationScan] = []
@@ -5156,6 +6568,26 @@ def build_candidate_identification_note(
     reduced_next_tail_reciprocal_self_plus_scans: list[SelfQuotientProductRelationScan] = []
     reduced_next_tail_reciprocal_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
     reduced_next_tail_reciprocal_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
+    reduced_tail_anchor_gap_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_tail_anchor_gap_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_tail_anchor_gap_eta_scans: list[EtaQuotientRelationScan] = []
+    reduced_tail_anchor_gap_self_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_gap_self_plus_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_gap_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_tail_anchor_gap_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
+    reduced_tail_anchor_gap_source_family_eta_scans: list[SourceFamilyEtaCorrectionScan] = []
+    reduced_tail_anchor_second_gap: GapNormalizedSeries | None = None
+    reduced_tail_anchor_second_gap_source_family_eta_scans: list[SourceFamilyEtaCorrectionScan] = []
+    reduced_next_tail_reciprocal_gap_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
+    reduced_next_tail_reciprocal_gap_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
+    reduced_next_tail_reciprocal_gap_eta_scans: list[EtaQuotientRelationScan] = []
+    reduced_next_tail_reciprocal_gap_self_product_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_next_tail_reciprocal_gap_self_plus_scans: list[SelfQuotientProductRelationScan] = []
+    reduced_next_tail_reciprocal_gap_self_signed_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_next_tail_reciprocal_gap_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
+    reduced_next_tail_reciprocal_gap_source_family_eta_scans: list[SourceFamilyEtaCorrectionScan] = []
+    reduced_next_tail_reciprocal_second_gap: GapNormalizedSeries | None = None
+    reduced_next_tail_reciprocal_second_gap_source_family_eta_scans: list[SourceFamilyEtaCorrectionScan] = []
     reduced_object_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
     reduced_object_self_fractional_linear_scan = SelfFractionalLinearUniquenessScan((), (), ())
     reduced_ratio_self_polynomial_scan = SelfPolynomialUniquenessScan((), (), (), ())
@@ -5165,6 +6597,9 @@ def build_candidate_identification_note(
     reduced_ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
     reduced_ratio_self_plus_product_scans: list[SelfQuotientProductRelationScan] = []
     reduced_ratio_self_signed_product_scans: list[SignedSelfQuotientProductRelationScan] = []
+    reduced_ratio_self_plus_pochhammer_scans: list[SelfPlusPochhammerRelationScan] = []
+    reduced_ratio_self_plus_pochhammer_eta_scans: list[SelfPlusPochhammerEtaRelationScan] = []
+    reduced_ratio_source_family_self_plus_pochhammer_eta_scans: list[SourceFamilySelfPlusPochhammerEtaCorrectionScan] = []
     reduced_ratio_self_signed_eta_scans: list[SelfSignedEtaRelationScan] = []
     reduced_ratio_eta_quotient_scans: list[EtaQuotientRelationScan] = []
     try:
@@ -5249,6 +6684,19 @@ def build_candidate_identification_note(
             order=reduced_bridge_order,
             max_abs_exponent=6 if smoke else 8,
         )
+        reduced_ratio_self_plus_pochhammer_scans = scan_ratio_self_plus_pochhammer_relations(
+            ratio_series=reduced_ratio_series,
+            moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4),
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+        reduced_ratio_self_plus_pochhammer_eta_scans = scan_ratio_self_plus_pochhammer_eta_relations(
+            ratio_series=reduced_ratio_series,
+            moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4),
+            eta_levels=_eta_scan_levels((1, 2, 3, 4)),
+            order=reduced_bridge_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
         reduced_ratio_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
             ratio_series=reduced_ratio_series,
             moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 3),
@@ -5266,6 +6714,7 @@ def build_candidate_identification_note(
             tail_anchor_order = len(reduced_tail_anchor.tail_series)
             tail_anchor_moduli = tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4)
             tail_anchor_eta_levels = _eta_scan_levels((1, 2, 3, 4, 6, 12))
+            reduced_tail_anchor_gap = build_gap_normalized_series(target_series=list(reduced_tail_anchor.normalized_series))
             reduced_tail_anchor_polynomial_scan = scan_self_polynomial_uniqueness_relations(
                 target_series=list(reduced_tail_anchor.tail_series),
                 moduli=tail_anchor_moduli,
@@ -5354,11 +6803,60 @@ def build_candidate_identification_note(
                 order=tail_anchor_order,
                 max_abs_exponent=6 if smoke else 8,
             )
+            if reduced_tail_anchor_gap is not None:
+                reduced_tail_anchor_second_gap = build_gap_normalized_series(
+                    target_series=list(reduced_tail_anchor_gap.normalized_series)
+                )
+                reduced_tail_anchor_gap_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+                    target_series=list(reduced_tail_anchor_gap.normalized_series),
+                    moduli=tail_anchor_moduli,
+                    order=tail_anchor_order,
+                    fg_degree_values=(1, 2),
+                    t_degree_values=(1, 2),
+                )
+                reduced_tail_anchor_gap_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+                    target_series=list(reduced_tail_anchor_gap.normalized_series),
+                    moduli=tail_anchor_moduli,
+                    order=tail_anchor_order,
+                    t_degree_values=(1, 2),
+                )
+                reduced_tail_anchor_gap_eta_scans = scan_ratio_eta_quotient_relations(
+                    ratio_series=list(reduced_tail_anchor_gap.normalized_series),
+                    levels=tail_anchor_eta_levels,
+                    order=tail_anchor_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_tail_anchor_gap_self_product_scans = scan_ratio_self_quotient_product_relations(
+                    ratio_series=list(reduced_tail_anchor_gap.normalized_series),
+                    moduli=tail_anchor_moduli,
+                    order=tail_anchor_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_tail_anchor_gap_self_plus_scans = scan_ratio_self_plus_product_relations(
+                    ratio_series=list(reduced_tail_anchor_gap.normalized_series),
+                    moduli=tail_anchor_moduli,
+                    order=tail_anchor_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_tail_anchor_gap_self_signed_scans = scan_ratio_self_signed_product_relations(
+                    ratio_series=list(reduced_tail_anchor_gap.normalized_series),
+                    moduli=tail_anchor_moduli,
+                    order=tail_anchor_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_tail_anchor_gap_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
+                    ratio_series=list(reduced_tail_anchor_gap.normalized_series),
+                    moduli=tuple(modulus for modulus in tail_anchor_moduli if modulus <= 3),
+                    eta_levels=_eta_scan_levels((1, 2, 3)),
+                    order=tail_anchor_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
         if reduced_next_tail_anchor is not None:
             next_tail_reciprocal_series = series_invert(list(reduced_next_tail_anchor.normalized_series))
             next_tail_order = len(next_tail_reciprocal_series)
             next_tail_moduli = tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4)
             next_tail_eta_levels = _eta_scan_levels((1, 2, 3, 4, 6, 12))
+            reduced_next_tail_reciprocal_gap = build_gap_normalized_series(target_series=next_tail_reciprocal_series)
             reduced_next_tail_reciprocal_polynomial_scan = scan_self_polynomial_uniqueness_relations(
                 target_series=next_tail_reciprocal_series,
                 moduli=next_tail_moduli,
@@ -5403,6 +6901,54 @@ def build_candidate_identification_note(
                 order=next_tail_order,
                 max_abs_exponent=6 if smoke else 8,
             )
+            if reduced_next_tail_reciprocal_gap is not None:
+                reduced_next_tail_reciprocal_second_gap = build_gap_normalized_series(
+                    target_series=list(reduced_next_tail_reciprocal_gap.normalized_series)
+                )
+                reduced_next_tail_reciprocal_gap_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+                    target_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    moduli=next_tail_moduli,
+                    order=next_tail_order,
+                    fg_degree_values=(1, 2),
+                    t_degree_values=(1, 2),
+                )
+                reduced_next_tail_reciprocal_gap_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+                    target_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    moduli=next_tail_moduli,
+                    order=next_tail_order,
+                    t_degree_values=(1, 2),
+                )
+                reduced_next_tail_reciprocal_gap_eta_scans = scan_ratio_eta_quotient_relations(
+                    ratio_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    levels=next_tail_eta_levels,
+                    order=next_tail_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_next_tail_reciprocal_gap_self_product_scans = scan_ratio_self_quotient_product_relations(
+                    ratio_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    moduli=next_tail_moduli,
+                    order=next_tail_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_next_tail_reciprocal_gap_self_plus_scans = scan_ratio_self_plus_product_relations(
+                    ratio_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    moduli=next_tail_moduli,
+                    order=next_tail_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_next_tail_reciprocal_gap_self_signed_scans = scan_ratio_self_signed_product_relations(
+                    ratio_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    moduli=next_tail_moduli,
+                    order=next_tail_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
+                reduced_next_tail_reciprocal_gap_self_signed_eta_scans = scan_ratio_self_signed_eta_relations(
+                    ratio_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+                    moduli=tuple(modulus for modulus in next_tail_moduli if modulus <= 3),
+                    eta_levels=_eta_scan_levels((1, 2, 3)),
+                    order=next_tail_order,
+                    max_abs_exponent=6 if smoke else 8,
+                )
     except Exception as exc:
         reduced_bridge_error = str(exc)
     advance_progress(
@@ -5448,6 +6994,75 @@ def build_candidate_identification_note(
         )
         for label, _, series in source_family_base_series
     )
+    gap_tail_source_family_powers = (2, 3, 4)
+    gap_tail_source_family_eta_levels = _eta_scan_levels((1, 2, 3, 4))
+    if reduced_tail_anchor_gap is not None:
+        gap_tail_order = len(reduced_tail_anchor_gap.normalized_series)
+        reduced_tail_anchor_gap_source_family_eta_scans = scan_source_family_eta_corrections(
+            target_series=list(reduced_tail_anchor_gap.normalized_series),
+            ordered_base_families=tuple(
+                (label, benchmark_name, basis_series[:gap_tail_order])
+                for label, benchmark_name, basis_series in source_family_base_series
+            ),
+            powers=gap_tail_source_family_powers,
+            eta_levels=gap_tail_source_family_eta_levels,
+            order=gap_tail_order,
+            max_abs_exponent=4 if smoke else 6,
+        )
+    if reduced_tail_anchor_second_gap is not None:
+        gap_tail_order = len(reduced_tail_anchor_second_gap.normalized_series)
+        reduced_tail_anchor_second_gap_source_family_eta_scans = scan_source_family_eta_corrections(
+            target_series=list(reduced_tail_anchor_second_gap.normalized_series),
+            ordered_base_families=tuple(
+                (label, benchmark_name, basis_series[:gap_tail_order])
+                for label, benchmark_name, basis_series in source_family_base_series
+            ),
+            powers=gap_tail_source_family_powers,
+            eta_levels=gap_tail_source_family_eta_levels,
+            order=gap_tail_order,
+            max_abs_exponent=4 if smoke else 6,
+        )
+    if reduced_next_tail_reciprocal_gap is not None:
+        gap_tail_order = len(reduced_next_tail_reciprocal_gap.normalized_series)
+        reduced_next_tail_reciprocal_gap_source_family_eta_scans = scan_source_family_eta_corrections(
+            target_series=list(reduced_next_tail_reciprocal_gap.normalized_series),
+            ordered_base_families=tuple(
+                (label, benchmark_name, basis_series[:gap_tail_order])
+                for label, benchmark_name, basis_series in source_family_base_series
+            ),
+            powers=gap_tail_source_family_powers,
+            eta_levels=gap_tail_source_family_eta_levels,
+            order=gap_tail_order,
+            max_abs_exponent=4 if smoke else 6,
+        )
+    if reduced_next_tail_reciprocal_second_gap is not None:
+        gap_tail_order = len(reduced_next_tail_reciprocal_second_gap.normalized_series)
+        reduced_next_tail_reciprocal_second_gap_source_family_eta_scans = scan_source_family_eta_corrections(
+            target_series=list(reduced_next_tail_reciprocal_second_gap.normalized_series),
+            ordered_base_families=tuple(
+                (label, benchmark_name, basis_series[:gap_tail_order])
+                for label, benchmark_name, basis_series in source_family_base_series
+            ),
+            powers=gap_tail_source_family_powers,
+            eta_levels=gap_tail_source_family_eta_levels,
+            order=gap_tail_order,
+            max_abs_exponent=4 if smoke else 6,
+        )
+    if reduced_ratio_series is not None:
+        reduced_ratio_source_family_self_plus_pochhammer_eta_scans = (
+            scan_source_family_self_plus_pochhammer_eta_corrections(
+                target_series=reduced_ratio_series,
+                ordered_base_families=tuple(
+                    (label, benchmark_name, basis_series[:reduced_bridge_order])
+                    for label, benchmark_name, basis_series in source_family_base_series
+                ),
+                powers=(2, 3, 4),
+                moduli=tuple(modulus for modulus in reduced_bridge_moduli if modulus <= 4),
+                eta_levels=_eta_scan_levels((1, 2, 3, 4)),
+                order=reduced_bridge_order,
+                max_abs_exponent=4 if smoke else 6,
+            )
+        )
     one_core_self_polynomial_scan = scan_source_correction_self_polynomial_uniqueness_relations(
         target_series=ratio_series,
         ordered_base_families=source_family_base_series,
@@ -5634,6 +7249,14 @@ def build_candidate_identification_note(
         max_abs_exponent=4 if smoke else 6,
         supplemental_powers_by_family=supplemental_source_family_powers,
     )
+    weighted_correction_source_families = tuple(
+        entry for entry in source_family_base_series if entry[0] in {"RR", "GG"}
+    )
+    weighted_correction_source_supplemental_powers = {
+        family_label: supplemental_source_family_powers.get(family_label, ())
+        for family_label, _, _ in weighted_correction_source_families
+        if family_label in supplemental_source_family_powers
+    }
     gg_modular_equation_scan = (
         None
         if gg_base_family_entry is None
@@ -5648,6 +7271,12 @@ def build_candidate_identification_note(
             supplemental_powers=()
             if smoke
             else supplemental_source_family_powers.get("GG", ()),
+            weighted_correction_eta_levels=eta_scan_levels,
+            weighted_correction_moduli=tuple(modulus for modulus in source_family_scan_powers if modulus <= 4) or (2, 3, 4),
+            weighted_correction_max_abs_exponent=4 if smoke else 6,
+            weighted_correction_source_families=weighted_correction_source_families,
+            weighted_correction_source_powers=source_family_scan_powers,
+            weighted_correction_source_supplemental_powers_by_family=weighted_correction_source_supplemental_powers,
         )
     )
     advance_progress(
@@ -5658,6 +7287,7 @@ def build_candidate_identification_note(
     ratio_power_tower_scans: list[BenchmarkPowerRelationScan] = []
     ratio_self_quotient_product_scans: list[SelfQuotientProductRelationScan] = []
     ratio_eta_quotient_scans: list[EtaQuotientRelationScan] = []
+    ratio_modular_unit_eta_scans: list[ModularUnitEtaRelationScan] = []
     ratio_multiplicative_scans: list[MultiplicativeRelationScan] = []
     ratio_fractional_linear_scans: list[FractionalLinearRelationScan] = []
     ratio_two_layer_fractional_linear_scans: list[TwoLayerFractionalLinearRelationScan] = []
@@ -5710,6 +7340,13 @@ def build_candidate_identification_note(
         ratio_eta_quotient_scans = scan_ratio_eta_quotient_relations(
             ratio_series=ratio_series,
             levels=_eta_scan_levels(tuple(benchmark_power_series)),
+            order=profile_order,
+            max_abs_exponent=6 if smoke else 8,
+        )
+        ratio_modular_unit_eta_scans = scan_ratio_modular_unit_eta_relations(
+            ratio_series=ratio_series,
+            moduli=tuple(modulus for modulus in tuple(benchmark_power_series) if modulus <= 4) or (2, 3),
+            eta_levels=_eta_scan_levels(tuple(benchmark_power_series)),
             order=profile_order,
             max_abs_exponent=6 if smoke else 8,
         )
@@ -6324,6 +7961,189 @@ def build_candidate_identification_note(
             else:
                 lines.append("Reciprocal-normalized next-tail hits were found in the scanned box family.")
             lines.append("")
+        if reduced_tail_anchor_gap is not None or reduced_next_tail_reciprocal_gap is not None:
+            gap_tail_hits = any(
+                (
+                    reduced_tail_anchor_gap_polynomial_scan.hits,
+                    reduced_tail_anchor_gap_fractional_linear_scan.hits,
+                    [scan for scan in reduced_tail_anchor_gap_eta_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_gap_self_product_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_gap_self_plus_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_gap_self_signed_scans if scan.relation is not None],
+                    [scan for scan in reduced_tail_anchor_gap_self_signed_eta_scans if scan.relation is not None],
+                    reduced_next_tail_reciprocal_gap_polynomial_scan.hits,
+                    reduced_next_tail_reciprocal_gap_fractional_linear_scan.hits,
+                    [scan for scan in reduced_next_tail_reciprocal_gap_eta_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_gap_self_product_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_gap_self_plus_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_gap_self_signed_scans if scan.relation is not None],
+                    [scan for scan in reduced_next_tail_reciprocal_gap_self_signed_eta_scans if scan.relation is not None],
+                )
+            )
+            def _format_gap_formula(*, source_variable: str, target_variable: str, gap: GapNormalizedSeries) -> str:
+                leading_coeff = _format_expr(gap.leading_coefficient)
+                shift = gap.shift
+                if leading_coeff == "1":
+                    return f"{target_variable} = ({source_variable} - 1) / {series_symbol}^{shift}"
+                if leading_coeff == "-1":
+                    return f"{target_variable} = (1 - {source_variable}) / {series_symbol}^{shift}"
+                return f"{target_variable} = ({source_variable} - 1) / ({leading_coeff}*{series_symbol}^{shift})"
+
+            lines.extend(
+                [
+                    "- We also stripped off the first visible nonzero gap from the renormalized tail objects.",
+                    "",
+                    "```text",
+                ]
+            )
+            if reduced_tail_anchor_gap is not None:
+                lines.append(
+                    _format_gap_formula(
+                        source_variable="U_tail",
+                        target_variable="G_tail",
+                        gap=reduced_tail_anchor_gap,
+                    )
+                )
+            if reduced_next_tail_reciprocal_gap is not None:
+                lines.append(
+                    _format_gap_formula(
+                        source_variable="R_tail",
+                        target_variable="H_tail",
+                        gap=reduced_next_tail_reciprocal_gap,
+                    )
+                )
+            lines.extend(["```", ""])
+            if not gap_tail_hits:
+                lines.append(
+                    "No gap-normalized tail hit was found in the scanned self-polynomial, self-fractional-linear, eta-quotient, finite-product, plus-product, signed-product, or signed-eta boxes."
+                )
+            else:
+                lines.append("Gap-normalized tail hits were found in the scanned box family.")
+            lines.append("")
+            lines.append(
+                "Method compression: both exact tail residuals now fail twice in bounded boxes — first in their raw normalized form, and again after stripping the first visible nonzero gap (`t^3` for `U_tail - 1`, `t^4` for `1 - R_tail`)."
+            )
+            lines.append("")
+            if reduced_tail_anchor_gap_source_family_eta_scans or reduced_next_tail_reciprocal_gap_source_family_eta_scans:
+                lines.extend(
+                    [
+                        "We also checked whether the first-gap tail residuals look more like one nearby source-family core times a small eta tail than like a standalone tiny self-equation:",
+                        "",
+                        "```text",
+                        "G_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+                        "H_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+                        "```",
+                        "",
+                    ]
+                )
+
+                def _flatten_source_family_eta_hits(
+                    scans: list[SourceFamilyEtaCorrectionScan],
+                ) -> list[tuple[str, str, str, int, MultiplicativeRelation]]:
+                    hits: list[tuple[str, str, str, int, MultiplicativeRelation]] = []
+                    for family_scan in scans:
+                        for basis_scan in family_scan.direct_basis_scans:
+                            for eta_scan in basis_scan.eta_scans:
+                                if eta_scan.relation is not None:
+                                    hits.append(
+                                        (
+                                            basis_scan.basis_label,
+                                            basis_scan.basis_expression,
+                                            "raw",
+                                            eta_scan.level,
+                                            eta_scan.relation,
+                                        )
+                                    )
+                        for basis_scan in family_scan.quotient_basis_scans:
+                            for eta_scan in basis_scan.eta_scans:
+                                if eta_scan.relation is not None:
+                                    hits.append(
+                                        (
+                                            basis_scan.basis_label,
+                                            basis_scan.basis_expression,
+                                            "quotient",
+                                            eta_scan.level,
+                                            eta_scan.relation,
+                                        )
+                                    )
+                    return hits
+
+                for target_label, target_variable, target_scans in (
+                    ("`G_tail`", "G_tail", reduced_tail_anchor_gap_source_family_eta_scans),
+                    ("`H_tail`", "H_tail", reduced_next_tail_reciprocal_gap_source_family_eta_scans),
+                ):
+                    if not target_scans:
+                        continue
+                    target_hits = _flatten_source_family_eta_hits(target_scans)
+                    if not target_hits:
+                        lines.append(
+                            f"- {target_label}: no one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`."
+                        )
+                        continue
+                    lines.append(f"- {target_label}: source-family eta-correction hits were found:")
+                    for basis_label, basis_expression, basis_kind, level, relation in target_hits:
+                        lines.append(
+                            f"  - {basis_kind} basis `{basis_label}`, `N={level}`: `{_format_source_family_eta_correction(basis_expression=basis_expression, relation=relation, target_variable=target_variable, series_symbol=series_symbol)}`"
+                        )
+                lines.append("")
+
+            if reduced_tail_anchor_second_gap is not None or reduced_next_tail_reciprocal_second_gap is not None:
+                lines.extend(
+                    [
+                        "We then stripped one more visible nonzero gap from those first-gap residuals and kept only the more source-directed one-core eta-correction question:",
+                        "",
+                        "```text",
+                    ]
+                )
+                if reduced_tail_anchor_second_gap is not None:
+                    lines.append(
+                        _format_gap_formula(
+                            source_variable="G_tail",
+                            target_variable="G2_tail",
+                            gap=reduced_tail_anchor_second_gap,
+                        )
+                    )
+                if reduced_next_tail_reciprocal_second_gap is not None:
+                    lines.append(
+                        _format_gap_formula(
+                            source_variable="H_tail",
+                            target_variable="H2_tail",
+                            gap=reduced_next_tail_reciprocal_second_gap,
+                        )
+                    )
+                lines.extend(
+                    [
+                        "```",
+                        "",
+                        "```text",
+                        "G2_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+                        "H2_tail = T * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+                        "```",
+                        "",
+                    ]
+                )
+                for target_label, target_variable, target_scans in (
+                    ("`G2_tail`", "G2_tail", reduced_tail_anchor_second_gap_source_family_eta_scans),
+                    ("`H2_tail`", "H2_tail", reduced_next_tail_reciprocal_second_gap_source_family_eta_scans),
+                ):
+                    if not target_scans:
+                        continue
+                    target_hits = _flatten_source_family_eta_hits(target_scans)
+                    if not target_hits:
+                        lines.append(
+                            f"- {target_label}: no one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`."
+                        )
+                        continue
+                    lines.append(f"- {target_label}: source-family eta-correction hits were found:")
+                    for basis_label, basis_expression, basis_kind, level, relation in target_hits:
+                        lines.append(
+                            f"  - {basis_kind} basis `{basis_label}`, `N={level}`: `{_format_source_family_eta_correction(basis_expression=basis_expression, relation=relation, target_variable=target_variable, series_symbol=series_symbol)}`"
+                        )
+                lines.append("")
+                lines.append(
+                    "Second-gap compression: even after stripping a second visible gap from `G_tail` and `H_tail`, the one-core source-family eta-correction lane still stays empty in the scanned nearby basis ladders."
+                )
+                lines.append("")
 
         if not reduced_object_self_polynomial_scan.hits:
             lines.append("No reduced-object self-polynomial hit was found in the scanned box.")
@@ -6431,6 +8251,95 @@ def build_candidate_identification_note(
                     f"- `{_format_self_signed_product_relation(scan.relation, modulus=scan.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
                 )
         lines.append("")
+
+        reduced_ratio_self_plus_pochhammer_hits = [
+            scan for scan in reduced_ratio_self_plus_pochhammer_scans if scan.relation is not None
+        ]
+        if not reduced_ratio_self_plus_pochhammer_hits:
+            lines.append("No reduced-ratio self plus-Pochhammer transfer hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self plus-Pochhammer transfer hits were found:")
+            for scan in reduced_ratio_self_plus_pochhammer_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- `m={scan.modulus}`: `{_format_self_plus_pochhammer_relation(scan.relation, modulus=scan.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        reduced_ratio_self_plus_pochhammer_eta_hits = [
+            scan for scan in reduced_ratio_self_plus_pochhammer_eta_scans if scan.relation is not None
+        ]
+        if not reduced_ratio_self_plus_pochhammer_eta_hits:
+            lines.append("No reduced-ratio self plus-Pochhammer + eta transfer hit was found in the scanned box.")
+        else:
+            lines.append("Reduced-ratio self plus-Pochhammer + eta transfer hits were found:")
+            for scan in reduced_ratio_self_plus_pochhammer_eta_scans:
+                if scan.relation is None:
+                    continue
+                lines.append(
+                    f"- `m={scan.modulus}`, `N={scan.level}`: `{_format_self_plus_pochhammer_eta_relation(scan.relation, modulus=scan.modulus, target_variable='F_red', series_symbol=series_symbol)}`"
+                )
+        lines.append("")
+
+        if reduced_ratio_source_family_self_plus_pochhammer_eta_scans:
+            lines.extend(
+                [
+                    "We also checked whether removing one nearby source-family core reveals that same reverse-scale-aware mixed transfer box on the reduced ratio side:",
+                    "",
+                    "```text",
+                    "G_red = F_red / T",
+                    "G_red = G_red(t^m)^a * prod_r (-t^r; t^m)_inf^{e_r} * eta_tail",
+                    "```",
+                    "",
+                ]
+            )
+
+            reduced_ratio_source_family_self_plus_pochhammer_eta_hits: list[
+                tuple[str, str, str, int, int, MultiplicativeRelation]
+            ] = []
+            for family_scan in reduced_ratio_source_family_self_plus_pochhammer_eta_scans:
+                for basis_scan in family_scan.direct_basis_scans:
+                    for self_scan in basis_scan.self_scans:
+                        if self_scan.relation is not None:
+                            reduced_ratio_source_family_self_plus_pochhammer_eta_hits.append(
+                                (
+                                    basis_scan.basis_label,
+                                    basis_scan.basis_expression,
+                                    "raw",
+                                    self_scan.modulus,
+                                    self_scan.level,
+                                    self_scan.relation,
+                                )
+                            )
+                for basis_scan in family_scan.quotient_basis_scans:
+                    for self_scan in basis_scan.self_scans:
+                        if self_scan.relation is not None:
+                            reduced_ratio_source_family_self_plus_pochhammer_eta_hits.append(
+                                (
+                                    basis_scan.basis_label,
+                                    basis_scan.basis_expression,
+                                    "quotient",
+                                    self_scan.modulus,
+                                    self_scan.level,
+                                    self_scan.relation,
+                                )
+                            )
+
+            if not reduced_ratio_source_family_self_plus_pochhammer_eta_hits:
+                lines.append(
+                    "- No one-core reduced-ratio self plus-Pochhammer + eta hit was found across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`."
+                )
+            else:
+                lines.append("- One-core reduced-ratio self plus-Pochhammer + eta hits were found:")
+                for basis_label, basis_expression, basis_kind, modulus, level, relation in (
+                    reduced_ratio_source_family_self_plus_pochhammer_eta_hits
+                ):
+                    lines.append(
+                        f"  - {basis_kind} basis `{basis_label}`, `m={modulus}`, `N={level}`:"
+                        f" `G_red = F_red / ({basis_expression}); {_format_self_plus_pochhammer_eta_relation(relation, modulus=modulus, target_variable='G_red', series_symbol=series_symbol)}`"
+                    )
+            lines.append("")
 
         reduced_ratio_self_signed_eta_hits = [scan for scan in reduced_ratio_self_signed_eta_scans if scan.relation is not None]
         if not reduced_ratio_self_signed_eta_hits:
@@ -8294,6 +10203,296 @@ def build_candidate_identification_note(
                     lines.append(
                         "- No exact Chan--Huang quotient-coordinate modular-equation polynomial hit was found."
                     )
+            if gg_modular_equation_scan.weighted_coordinate_diagnostics:
+                lines.append(
+                    "- Weighted quotient-coordinate diagnostics now also test the first `3:2` Weber-style compression suggested by the `Q_3/Q_4` obstruction classes."
+                )
+                for diagnostic in gg_modular_equation_scan.weighted_coordinate_diagnostics:
+                    eta_hit_levels = [
+                        f"`N={scan.level}`"
+                        for scan in diagnostic.correction_eta_scans
+                        if scan.relation is not None
+                    ]
+                    modular_hit_boxes = [
+                        f"`m={scan.modulus}, N={scan.level}`"
+                        for scan in diagnostic.correction_modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    normalized_eta_hit_levels = [
+                        f"`N={scan.level}`"
+                        for scan in diagnostic.normalized_correction_eta_scans
+                        if scan.relation is not None
+                    ]
+                    normalized_modular_hit_boxes = [
+                        f"`m={scan.modulus}, N={scan.level}`"
+                        for scan in diagnostic.normalized_correction_modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    normalized_source_hits = _flatten_source_family_eta_hits(
+                        diagnostic.normalized_correction_source_family_eta_scans
+                    )
+                    normalized_source_family_labels = ", ".join(
+                        f"`{family_scan.family_label}`"
+                        for family_scan in diagnostic.normalized_correction_source_family_eta_scans
+                    )
+                    second_normalized_eta_hit_levels = [
+                        f"`N={scan.level}`"
+                        for scan in diagnostic.second_normalized_correction_eta_scans
+                        if scan.relation is not None
+                    ]
+                    second_normalized_modular_hit_boxes = [
+                        f"`m={scan.modulus}, N={scan.level}`"
+                        for scan in diagnostic.second_normalized_correction_modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    second_normalized_source_hits = _flatten_source_family_eta_hits(
+                        diagnostic.second_normalized_correction_source_family_eta_scans
+                    )
+                    second_normalized_source_family_labels = ", ".join(
+                        f"`{family_scan.family_label}`"
+                        for family_scan in diagnostic.second_normalized_correction_source_family_eta_scans
+                    )
+                    second_normalized_explicit_eta_hit_count = sum(
+                        len(scan.hits)
+                        for scan in diagnostic.second_normalized_correction_explicit_transform_eta_scans
+                    )
+                    second_normalized_quotient_polynomial_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_quotient_polynomial_scans,
+                        label="polynomial",
+                        hit_predicate=lambda item: item.relation is not None,
+                    )
+                    second_normalized_quotient_multiplicative_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_quotient_multiplicative_scans,
+                        label="multiplicative",
+                        hit_predicate=lambda item: item.relation is not None,
+                    )
+                    second_normalized_quotient_fractional_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_quotient_fractional_linear_scans,
+                        label="fractional-linear",
+                        hit_predicate=lambda item: item.relation is not None,
+                    )
+                    second_normalized_quotient_two_layer_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_quotient_two_layer_fractional_linear_scans,
+                        label="two-layer fractional-linear",
+                        hit_predicate=lambda item: item.total_hits > 0,
+                    )
+                    second_normalized_mixed_polynomial_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_mixed_quotient_polynomial_scans,
+                        label="polynomial",
+                        hit_predicate=lambda item: item.relation is not None,
+                    )
+                    second_normalized_mixed_multiplicative_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_mixed_quotient_multiplicative_scans,
+                        label="multiplicative",
+                        hit_predicate=lambda item: item.relation is not None,
+                    )
+                    second_normalized_mixed_fractional_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_mixed_quotient_fractional_linear_scans,
+                        label="fractional-linear",
+                        hit_predicate=lambda item: item.relation is not None,
+                    )
+                    second_normalized_mixed_two_layer_summary = _format_tail_prefix_summary(
+                        diagnostic.second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans,
+                        label="two-layer fractional-linear",
+                        hit_predicate=lambda item: item.total_hits > 0,
+                    )
+                    lines.append(
+                        f"- Weighted coordinate `{diagnostic.label} = {diagnostic.expression}`: "
+                        + _format_weighted_coordinate_obstruction(
+                            power=diagnostic.first_difference_power,
+                            coeff=diagnostic.first_difference_coeff,
+                            lhs=f"F - {diagnostic.label}",
+                            series_symbol=series_symbol,
+                        )
+                        + "; "
+                        + _format_weighted_coordinate_obstruction(
+                            power=diagnostic.first_log_difference_power,
+                            coeff=diagnostic.first_log_difference_coeff,
+                            lhs=f"log(F) - ({diagnostic.log_expression})",
+                            series_symbol=series_symbol,
+                        )
+                        + "."
+                    )
+                    if diagnostic.polynomial_degree1_relation is None:
+                        lines.append(
+                            f"- Weighted coordinate `{diagnostic.label}`: no candidate-dependent polynomial relation of total degree `<= 1` was found."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weighted coordinate `{diagnostic.label}`: a candidate-dependent polynomial relation of total degree `<= 1` was found."
+                        )
+                    if diagnostic.polynomial_degree2_relation is None:
+                        lines.append(
+                            f"- Weighted coordinate `{diagnostic.label}`: no candidate-dependent polynomial relation of total degree `<= 2` was found."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weighted coordinate `{diagnostic.label}`: a candidate-dependent polynomial relation of total degree `<= 2` was found."
+                        )
+                    if diagnostic.fractional_linear_relation is None:
+                        lines.append(
+                            f"- Weighted coordinate `{diagnostic.label}`: no one-coordinate fractional-linear closure was found."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weighted coordinate `{diagnostic.label}`: a one-coordinate fractional-linear closure was found."
+                        )
+                    lines.append(
+                        f"- Weighted correction `{diagnostic.correction_expression}`: "
+                        + _format_weighted_coordinate_obstruction(
+                            power=diagnostic.correction_first_gap_power,
+                            coeff=diagnostic.correction_first_gap_coeff,
+                            lhs=f"{diagnostic.correction_expression} - 1",
+                            series_symbol=series_symbol,
+                        )
+                        + "."
+                    )
+                    if eta_hit_levels:
+                        lines.append(
+                            f"- Weighted correction `{diagnostic.correction_expression}`: eta-quotient hit(s) found at {', '.join(eta_hit_levels)}."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weighted correction `{diagnostic.correction_expression}`: no eta-quotient hit was found in the checked small levels."
+                        )
+                    if modular_hit_boxes:
+                        lines.append(
+                            f"- Weighted correction `{diagnostic.correction_expression}`: modular-unit / eta hit(s) found at {', '.join(modular_hit_boxes)}."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weighted correction `{diagnostic.correction_expression}`: no modular-unit / eta hit was found in the checked small boxes."
+                        )
+                    if diagnostic.normalized_correction_gap is not None and diagnostic.normalized_correction_label is not None:
+                        lines.append(
+                            f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: "
+                            + _format_gap_normalization_formula(
+                                source_variable=diagnostic.correction_expression,
+                                target_variable=diagnostic.normalized_correction_label,
+                                gap=diagnostic.normalized_correction_gap,
+                                series_symbol=series_symbol,
+                            )
+                            + "."
+                        )
+                        if normalized_eta_hit_levels:
+                            lines.append(
+                                f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: eta-quotient hit(s) found at {', '.join(normalized_eta_hit_levels)}."
+                            )
+                        else:
+                            lines.append(
+                                f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: no eta-quotient hit was found in the checked small levels."
+                            )
+                        if normalized_modular_hit_boxes:
+                            lines.append(
+                                f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: modular-unit / eta hit(s) found at {', '.join(normalized_modular_hit_boxes)}."
+                            )
+                        else:
+                            lines.append(
+                                f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: no modular-unit / eta hit was found in the checked small boxes."
+                            )
+                        if normalized_source_hits:
+                            lines.append(
+                                f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: source-family eta-correction hit(s) were found:"
+                            )
+                            for basis_label, basis_expression, basis_kind, level, relation in normalized_source_hits:
+                                lines.append(
+                                    "  - "
+                                    + f"`{basis_kind}` basis `{basis_label}` at `N={level}`: "
+                                    + _format_source_family_eta_correction(
+                                        basis_expression=basis_expression,
+                                        relation=relation,
+                                        target_variable=diagnostic.normalized_correction_label,
+                                        series_symbol=series_symbol,
+                                    )
+                                )
+                        else:
+                            family_text = normalized_source_family_labels or "the checked source-family"
+                            lines.append(
+                                f"- Normalized weighted correction `{diagnostic.normalized_correction_label}`: no one-core source-family eta-correction hit was found across {family_text} raw/quotient bases."
+                            )
+                    if (
+                        diagnostic.second_normalized_correction_gap is not None
+                        and diagnostic.second_normalized_correction_label is not None
+                        and diagnostic.normalized_correction_label is not None
+                    ):
+                        lines.append(
+                            f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: "
+                            + _format_gap_normalization_formula(
+                                source_variable=diagnostic.normalized_correction_label,
+                                target_variable=diagnostic.second_normalized_correction_label,
+                                gap=diagnostic.second_normalized_correction_gap,
+                                series_symbol=series_symbol,
+                            )
+                            + "."
+                        )
+                        if second_normalized_eta_hit_levels:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: eta-quotient hit(s) found at {', '.join(second_normalized_eta_hit_levels)}."
+                            )
+                        else:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no eta-quotient hit was found in the checked small levels."
+                            )
+                        if second_normalized_modular_hit_boxes:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: modular-unit / eta hit(s) found at {', '.join(second_normalized_modular_hit_boxes)}."
+                            )
+                        else:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no modular-unit / eta hit was found in the checked small boxes."
+                            )
+                        if second_normalized_source_hits:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: source-family eta-correction hit(s) were found:"
+                            )
+                            for basis_label, basis_expression, basis_kind, level, relation in second_normalized_source_hits:
+                                lines.append(
+                                    "  - "
+                                    + f"`{basis_kind}` basis `{basis_label}` at `N={level}`: "
+                                    + _format_source_family_eta_correction(
+                                        basis_expression=basis_expression,
+                                        relation=relation,
+                                        target_variable=diagnostic.second_normalized_correction_label,
+                                        series_symbol=series_symbol,
+                                    )
+                                )
+                        else:
+                            family_text = second_normalized_source_family_labels or "the checked source-family"
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no one-core source-family eta-correction hit was found across {family_text} raw/quotient bases."
+                            )
+                        if second_normalized_explicit_eta_hit_count:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: explicit GG transform-template eta-correction hit(s) were found in `{second_normalized_explicit_eta_hit_count}` checked boxes."
+                            )
+                        else:
+                            lines.append(
+                                f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no explicit GG transform-template eta-correction hit was found in the checked small boxes."
+                            )
+                        lines.append(
+                            f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}` quotient-coordinate prefixes: "
+                            + "; ".join(
+                                (
+                                    second_normalized_quotient_polynomial_summary,
+                                    second_normalized_quotient_multiplicative_summary,
+                                    second_normalized_quotient_fractional_summary,
+                                    second_normalized_quotient_two_layer_summary,
+                                )
+                            )
+                            + "."
+                        )
+                        lines.append(
+                            f"- Second normalized weighted correction `{diagnostic.second_normalized_correction_label}` mixed quotient-coordinate prefixes: "
+                            + "; ".join(
+                                (
+                                    second_normalized_mixed_polynomial_summary,
+                                    second_normalized_mixed_multiplicative_summary,
+                                    second_normalized_mixed_fractional_summary,
+                                    second_normalized_mixed_two_layer_summary,
+                                )
+                            )
+                            + "."
+                        )
 
             grouped_gg_quotient_polynomial_scans: dict[int, list[NamedPolynomialRelationScan]] = {}
             for scan in gg_modular_equation_scan.quotient_polynomial_scans:
@@ -8717,6 +10916,73 @@ def build_candidate_identification_note(
                 ]
             )
 
+    if ratio_modular_unit_eta_scans:
+        lines.extend(
+            [
+                "",
+                "## Ratio-Object Modular-Unit / Eta Scan",
+                "",
+                "We also checked whether the ratio object collapses into a small modular-unit / eta expression before introducing any self-copy lane:",
+                "",
+                "```text",
+                "F = prod_r (1 - t^r)^{a_r} * prod_r (1 + t^r)^{b_r} * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+                "```",
+                "",
+                f"- `F = candidate / {record.closest_benchmark}`",
+                "- This is a source-faithful modular-function recognition lane: a hit would be closer to an eta-quotient / modular-unit closed form than to another anonymous prefix fit.",
+                "",
+            ]
+        )
+
+        any_modular_unit_hit = any(scan.relation is not None for scan in ratio_modular_unit_eta_scans)
+        if not any_modular_unit_hit:
+            lines.append("No modular-unit / eta relation was found in any scanned modulus/level box.")
+            lines.append("")
+
+        no_hit_labels = [
+            f"`m={scan.modulus}, N={scan.level}`"
+            for scan in ratio_modular_unit_eta_scans
+            if scan.error is None and scan.relation is None
+        ]
+        if not any_modular_unit_hit and no_hit_labels:
+            lines.append(f"- No hit for modular-unit boxes {', '.join(no_hit_labels)}.")
+
+        for scan in ratio_modular_unit_eta_scans:
+            if scan.error is not None:
+                lines.append(
+                    f"- Modular-unit / eta box `m={scan.modulus}`, `N={scan.level}` skipped: {scan.error}"
+                )
+                continue
+            if scan.relation is None:
+                continue
+            residual = _multiplicative_relation_residual_series(
+                scan.relation,
+                target_series=ratio_series,
+                basis_series_by_variable=_modular_unit_eta_basis_series(
+                    modulus=scan.modulus,
+                    level=scan.level,
+                    order=profile_order,
+                ),
+                order=profile_order,
+            )
+            residual_ok = all(sp.simplify(value) == 0 for value in residual)
+            lines.extend(
+                [
+                    f"- Modular-unit / eta box `m={scan.modulus}`, `N={scan.level}` produced a candidate relation:",
+                    "",
+                    "```text",
+                    _format_modular_unit_eta_relation(
+                        scan.relation,
+                        target_variable="F",
+                        series_symbol=series_symbol,
+                    ),
+                    "```",
+                    "",
+                    f"  Verified by exact series re-expansion modulo `{series_symbol}^{profile_order}`: `{residual_ok}`",
+                    "",
+                ]
+            )
+
     if ratio_multiplicative_scans:
         lines.extend(
             [
@@ -8951,4 +11217,822 @@ def build_candidate_identification_note(
             break
 
     progress_status["final-render"] = "completed"
+    output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def build_candidate_tail_family_note(
+    *,
+    input_path: str,
+    candidate_id: str,
+    output_path: str,
+    depth: int = 40,
+    series_order: int = 36,
+    tail_stages: tuple[int, ...] = (3, 4, 5),
+    max_gap_depth: int = 3,
+    smoke: bool = False,
+) -> None:
+    records = read_candidates(input_path)
+    record: CandidateRecord | None = None
+    for item in records:
+        if item.id == candidate_id:
+            record = item
+            break
+    if record is None:
+        raise KeyError(f"unknown candidate id: {candidate_id}")
+
+    benchmark = get_benchmark(record.closest_benchmark)
+    profile_depth = min(depth, 24 if smoke else depth)
+    profile_order = min(series_order, 24 if smoke else series_order)
+    active = _series_active_exponents(record.template) + _series_active_exponents(benchmark.canonical_template)
+    step = 0
+    for value in active:
+        step = gcd(step, value)
+    if step <= 0:
+        step = 1
+
+    reduced_candidate = record.template
+    series_symbol = "q"
+    variable_label = "q"
+    if step > 1:
+        maybe_candidate = reduce_template_by_step(record.template, step)
+        maybe_benchmark = reduce_template_by_step(benchmark.canonical_template, step)
+        if maybe_candidate is not None and maybe_benchmark is not None:
+            reduced_candidate = maybe_candidate
+            series_symbol = "t"
+            variable_label = f"t = q^{step}"
+
+    reduced_bridge_depth = min(profile_depth, 8 if smoke else 12)
+    reduced_bridge_order = min(profile_order, 24 if smoke else 30)
+    output_file = Path(output_path)
+    build_started_at = perf_counter()
+    lines = [
+        f"# Tail-Family Note: `{record.id}`",
+        "",
+        "## Snapshot",
+        "",
+        f"- Candidate id: `{record.id}`",
+        f"- Closest benchmark: `{record.closest_benchmark}`",
+        f"- Variable view: `{variable_label}`",
+        f"- Tail stages checked: `{', '.join(str(stage) for stage in tail_stages)}`",
+        f"- Max gap depth checked: `{max_gap_depth}`",
+        "",
+    ]
+
+    reduced_bridge_error: str | None = None
+    reduced_reciprocal_witness = None
+    reduced_tail_transfer_equation: ReducedTailTransferEquation | None = None
+    try:
+        reduced_reciprocal_witness, _ = _reduced_reciprocal_bridge(
+            template=reduced_candidate,
+            symbol=sp.Symbol(series_symbol),
+            depth=reduced_bridge_depth,
+            order=reduced_bridge_order,
+        )
+        reduced_tail_transfer_equation = detect_reduced_tail_transfer_equation(
+            reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+            symbol=sp.Symbol(series_symbol),
+        )
+    except Exception as exc:
+        reduced_bridge_error = str(exc)
+
+    if reduced_bridge_error is not None or reduced_reciprocal_witness is None or reduced_tail_transfer_equation is None:
+        lines.extend(
+            [
+                "Tail-family setup failed:",
+                "",
+                "```text",
+                reduced_bridge_error or "unknown reduced-tail setup failure",
+                "```",
+                "",
+            ]
+        )
+        output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return
+
+    relation_lines = _format_reduced_tail_transfer_equation(reduced_tail_transfer_equation)
+    lines.extend(
+        [
+            "## Exact Tail Family",
+            "",
+            "- From stage `3` onward, the reduced coefficients collapse into one stationary tail family.",
+            "",
+            "```text",
+            *relation_lines,
+            "```",
+            "",
+            "## Variable-Level Source-Core Recognition Lane",
+            "",
+            "We now treat the normalized tail family itself as the main intermediate object:",
+            "",
+            "```text",
+            "U(x) = T(x) / (1 + x)",
+            "```",
+            "",
+            "- For each sampled state `x = t^k`, we scan `U(x)` and its repeated gap-normalized residuals.",
+            "- Unlike the broader `identify` note, this lane keeps only the source-driven one-core eta-correction question:",
+            "",
+            "```text",
+            "Y = S * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+            "```",
+            "",
+            "- We also keep two more source-faithful direct recognition lanes on the same sampled objects:",
+            "",
+            "```text",
+            "Y = prod_r (1 - t^r)^{a_r} * prod_r (1 + t^r)^{b_r} * prod_{d|N} (t^d; t^d)_inf^{e_d}",
+            "f(Y, Y_2) = 0,   g(Y^2, Y_2^2) = 0,   f(Y, (1-Y_2)/(1+Y_2)) = 0",
+            "```",
+            "",
+            "- The first is a direct modular-unit / eta lane.",
+            "- The second is a Morton-2024-inspired periodic-point / algebraic-function lane built from the exact low-degree polynomials attached to the GG/Weber orbit.",
+            "",
+        ]
+    )
+
+    source_family_basis_catalog = _source_family_basis_catalog(record.closest_benchmark)
+    source_family_base_series = tuple(
+        (
+            label,
+            benchmark_name,
+            continued_fraction_series_coeffs(
+                get_benchmark(benchmark_name).canonical_template.normalized(),
+                depth=profile_depth,
+                order=reduced_bridge_order,
+            ),
+        )
+        for label, benchmark_name in source_family_basis_catalog
+    )
+    gg_base_family_entry = next(
+        (entry for entry in source_family_base_series if entry[0] == "GG"),
+        None,
+    )
+    sample_scans = scan_tail_family_source_eta_ladder(
+        reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+        symbol=sp.Symbol(series_symbol),
+        ordered_base_families=source_family_base_series,
+        start_stages=tail_stages,
+        max_gap_depth=max_gap_depth,
+        order=reduced_bridge_order,
+        powers=(2, 3, 4),
+        eta_levels=_eta_scan_levels((1, 2, 3, 4)),
+        max_abs_exponent=4 if smoke else 6,
+        gg_order=min(reduced_bridge_order, 20),
+        gg_benchmark_name=None if gg_base_family_entry is None else gg_base_family_entry[1],
+        gg_base_series=None if gg_base_family_entry is None else gg_base_family_entry[2],
+        gg_degree_values=(1, 2),
+        gg_max_abs_exponent=4 if smoke else 6,
+        gg_solve_order=min(reduced_bridge_order, 14 if smoke else 18),
+        gg_supplemental_powers=(),
+    )
+
+    if not sample_scans:
+        lines.extend(
+            [
+                "No tail-family samples were available for the requested stage/gap profile.",
+                "",
+            ]
+        )
+    else:
+        gg_lane_scan = next(
+            (
+                sample.gg_modular_equation_scan
+                for sample in sample_scans
+                if sample.gg_modular_equation_scan is not None
+            ),
+            None,
+        )
+        if gg_lane_scan is not None:
+            gg_basis_descriptions = [
+                f"`{label} = {expression}`"
+                for label, expression, _ in gg_lane_scan.ordered_basis_series
+            ]
+            gg_quotient_descriptions = [
+                f"`{label} = {expression}`"
+                for label, expression, _ in gg_lane_scan.quotient_basis_series
+            ]
+            lines.extend(
+                [
+                    "- We also check a `GG/Weber modular-equation` lane on the same sampled `U(x)` objects and their gap residuals:",
+                    "",
+                    "```text",
+                    "Y = T",
+                    "Y = 1 / T",
+                    "Y = T_i / T_j",
+                    "P(Y, T_i) = 0",
+                    "Y = prod_i T_i^e_i",
+                    "Y = (1 + sum a_i*(T_i - 1)) / (1 + sum b_i*(T_i - 1))",
+                    "```",
+                    "",
+                    f"- GG base benchmark: `{gg_lane_scan.benchmark_name}`",
+                    f"- GG basis ladder: {', '.join(gg_basis_descriptions)}",
+                    f"- Preferred quotient coordinates: {', '.join(gg_quotient_descriptions)}",
+                    "- The narrowest exact quotient-coordinate lane keeps special attention on `Q_3 = GG(t^3)/GG(t)` and `Q_4 = GG(t^4)/GG(t)`, because those are the Chan--Huang exact modular-equation coordinates.",
+                    "- Each sample below reports direct, quotient-coordinate, and mixed quotient-coordinate prefix summaries for this literature-driven lane.",
+                    "",
+                ]
+            )
+        for sample in sample_scans:
+            hits = _flatten_source_family_eta_hits(sample.source_family_eta_scans)
+            lines.extend(
+                [
+                    f"### `{sample.label}`",
+                    "",
+                    f"- Start stage: `{sample.start_stage}`",
+                    f"- Gap depth: `{sample.gap_depth}`",
+                    f"- State: `{_format_expr(sample.state_expr)}`",
+                    "",
+                    "```text",
+                    sample.expression,
+                    "```",
+                    "",
+                ]
+            )
+            if not hits:
+                lines.append(
+                    "- No one-core source-family eta-correction hit across raw/quotient basis choices from `RR`, `cubic`, `GG`, `S` through powers `2,3,4`."
+                )
+            else:
+                lines.append("- One-core source-family eta-correction hits were found:")
+                for basis_label, basis_expression, basis_kind, level, relation in hits:
+                    lines.append(
+                        f"  - {basis_kind} basis `{basis_label}`, `N={level}`: `{_format_source_family_eta_correction(basis_expression=basis_expression, relation=relation, target_variable=sample.label, series_symbol=series_symbol)}`"
+                    )
+            direct_eta_hits = [scan for scan in sample.direct_eta_scans if scan.relation is not None]
+            direct_modular_unit_hits = [
+                scan for scan in sample.direct_modular_unit_eta_scans if scan.relation is not None
+            ]
+            lines.append(
+                f"- Direct eta-quotient templates: `{len(direct_eta_hits)}` / `{len(sample.direct_eta_scans)}` hit boxes."
+            )
+            if direct_eta_hits:
+                for scan in direct_eta_hits:
+                    lines.append(
+                        f"  - eta level `N={scan.level}`: `{_format_eta_quotient_relation(scan.relation, target_variable=sample.label, series_symbol=series_symbol)}`"
+                    )
+            lines.append(
+                f"- Direct modular-unit / eta templates: `{len(direct_modular_unit_hits)}` / `{len(sample.direct_modular_unit_eta_scans)}` hit boxes."
+            )
+            if direct_modular_unit_hits:
+                for scan in direct_modular_unit_hits:
+                    lines.append(
+                        f"  - modular box `m={scan.modulus}`, `N={scan.level}`: `{_format_modular_unit_eta_relation(scan.relation, target_variable=sample.label, series_symbol=series_symbol)}`"
+                    )
+            if sample.morton_periodic_point_scan is not None:
+                morton_scan = sample.morton_periodic_point_scan
+                morton_hits = [item for item in morton_scan.template_results if item.hit]
+                lines.append(
+                    f"- Morton periodic-point / algebraic-function templates: `{len(morton_hits)}` / `{len(morton_scan.template_results)}` exact hits."
+                )
+                if morton_scan.template_results:
+                    lines.append(
+                        "- Morton obstruction witnesses: "
+                        + "; ".join(
+                            _format_exact_polynomial_obstruction(
+                                (item.label, item.first_failure_power, item.first_failure_coeff),
+                                series_symbol=series_symbol,
+                            )
+                            for item in morton_scan.template_results
+                        )
+                        + "."
+                    )
+            if sample.gg_modular_equation_scan is not None:
+                gg_scan = sample.gg_modular_equation_scan
+                direct_prefix_summary = "; ".join(
+                    (
+                        _format_tail_prefix_summary(
+                            gg_scan.polynomial_scans,
+                            label="polynomial",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.multiplicative_scans,
+                            label="multiplicative",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.fractional_linear_scans,
+                            label="fractional-linear",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.two_layer_fractional_linear_scans,
+                            label="two-layer fractional-linear",
+                            hit_predicate=lambda item: item.total_hits > 0,
+                        ),
+                    )
+                )
+                quotient_prefix_summary = "; ".join(
+                    (
+                        _format_tail_prefix_summary(
+                            gg_scan.quotient_polynomial_scans,
+                            label="polynomial",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.quotient_multiplicative_scans,
+                            label="multiplicative",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.quotient_fractional_linear_scans,
+                            label="fractional-linear",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.quotient_two_layer_fractional_linear_scans,
+                            label="two-layer fractional-linear",
+                            hit_predicate=lambda item: item.total_hits > 0,
+                        ),
+                    )
+                )
+                mixed_prefix_summary = "; ".join(
+                    (
+                        _format_tail_prefix_summary(
+                            gg_scan.mixed_quotient_polynomial_scans,
+                            label="polynomial",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.mixed_quotient_multiplicative_scans,
+                            label="multiplicative",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.mixed_quotient_fractional_linear_scans,
+                            label="fractional-linear",
+                            hit_predicate=lambda item: item.relation is not None,
+                        ),
+                        _format_tail_prefix_summary(
+                            gg_scan.mixed_quotient_two_layer_fractional_linear_scans,
+                            label="two-layer fractional-linear",
+                            hit_predicate=lambda item: item.total_hits > 0,
+                        ),
+                    )
+                )
+                exact_template_summary = (
+                    f"`{len(gg_scan.hit_templates)}` / `{len(gg_scan.checked_templates)}` exact template hits"
+                )
+                if gg_scan.hit_templates:
+                    exact_template_summary += (
+                        f" ({', '.join(f'`{label}`' for label in gg_scan.hit_templates)})"
+                    )
+                direct_exact_summary = (
+                    f"`{len(gg_scan.exact_polynomial_template_hits)}` / `{len(gg_scan.exact_polynomial_template_labels)}` exact Chan--Huang direct hits"
+                )
+                if gg_scan.exact_polynomial_template_hits:
+                    direct_exact_summary += (
+                        f" ({', '.join(f'`{label}`' for label in gg_scan.exact_polynomial_template_hits)})"
+                    )
+                quotient_exact_summary = (
+                    f"`{len(gg_scan.quotient_exact_polynomial_template_hits)}` / `{len(gg_scan.quotient_exact_polynomial_template_labels)}` exact Chan--Huang quotient-coordinate hits"
+                )
+                if gg_scan.quotient_exact_polynomial_template_hits:
+                    quotient_exact_summary += (
+                        f" ({', '.join(f'`{label}`' for label in gg_scan.quotient_exact_polynomial_template_hits)})"
+                    )
+                lines.extend(
+                    [
+                        f"- GG direct / reciprocal / quotient templates: {exact_template_summary}.",
+                        f"- GG direct exact modular-equation templates: {direct_exact_summary}.",
+                        f"- GG quotient exact modular-equation templates: {quotient_exact_summary}.",
+                        "- GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4` before any broader quotient-prefix interpretation.",
+                        "- GG exact quotient-coordinate obstruction witnesses: "
+                        + "; ".join(
+                            _format_exact_polynomial_obstruction(
+                                obstruction,
+                                series_symbol=series_symbol,
+                            )
+                            for obstruction in gg_scan.quotient_exact_polynomial_template_obstructions
+                        )
+                        + ".",
+                        *[
+                            "- GG weighted quotient-coordinate diagnostic "
+                            + f"`{diagnostic.label} = {diagnostic.expression}`: "
+                            + _format_weighted_coordinate_obstruction(
+                                power=diagnostic.first_difference_power,
+                                coeff=diagnostic.first_difference_coeff,
+                                lhs=f"F - {diagnostic.label}",
+                                series_symbol=series_symbol,
+                            )
+                            + "; "
+                            + _format_weighted_coordinate_obstruction(
+                                power=diagnostic.first_log_difference_power,
+                                coeff=diagnostic.first_log_difference_coeff,
+                                lhs=f"log(F) - ({diagnostic.log_expression})",
+                                series_symbol=series_symbol,
+                            )
+                            + "."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                        ],
+                        *[
+                            "- GG weighted correction "
+                            + f"`{diagnostic.correction_expression}`: "
+                            + _format_weighted_coordinate_obstruction(
+                                power=diagnostic.correction_first_gap_power,
+                                coeff=diagnostic.correction_first_gap_coeff,
+                                lhs=f"{diagnostic.correction_expression} - 1",
+                                series_symbol=series_symbol,
+                            )
+                            + "."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                        ],
+                        *[
+                            "- GG normalized weighted correction "
+                            + f"`{diagnostic.normalized_correction_label}`: "
+                            + _format_gap_normalization_formula(
+                                source_variable=diagnostic.correction_expression,
+                                target_variable=diagnostic.normalized_correction_label,
+                                gap=diagnostic.normalized_correction_gap,
+                                series_symbol=series_symbol,
+                            )
+                            + "."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.normalized_correction_label is not None
+                            and diagnostic.normalized_correction_gap is not None
+                        ],
+                        *[
+                            "- GG second normalized weighted correction "
+                            + f"`{diagnostic.second_normalized_correction_label}`: "
+                            + _format_gap_normalization_formula(
+                                source_variable=diagnostic.normalized_correction_label,
+                                target_variable=diagnostic.second_normalized_correction_label,
+                                gap=diagnostic.second_normalized_correction_gap,
+                                series_symbol=series_symbol,
+                            )
+                            + "."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.normalized_correction_label is not None
+                            and diagnostic.second_normalized_correction_label is not None
+                            and diagnostic.second_normalized_correction_gap is not None
+                        ],
+                        *[
+                            f"- GG weighted quotient-coordinate `{diagnostic.label}`: no degree-`<= 2` polynomial or one-coordinate fractional-linear closure was found."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.polynomial_degree1_relation is None
+                            and diagnostic.polynomial_degree2_relation is None
+                            and diagnostic.fractional_linear_relation is None
+                        ],
+                        *[
+                            f"- GG weighted correction `{diagnostic.correction_expression}`: no eta-quotient or modular-unit / eta hit was found in the checked small correction boxes."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if not any(scan.relation is not None for scan in diagnostic.correction_eta_scans)
+                            and not any(scan.relation is not None for scan in diagnostic.correction_modular_unit_eta_scans)
+                        ],
+                        *[
+                            f"- GG normalized weighted correction `{diagnostic.normalized_correction_label}`: no eta-quotient or modular-unit / eta hit was found in the checked small normalized boxes."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.normalized_correction_label is not None
+                            and not any(scan.relation is not None for scan in diagnostic.normalized_correction_eta_scans)
+                            and not any(scan.relation is not None for scan in diagnostic.normalized_correction_modular_unit_eta_scans)
+                        ],
+                        *[
+                            f"- GG normalized weighted correction `{diagnostic.normalized_correction_label}`: no one-core source-family eta-correction hit was found across `RR`, `GG` raw/quotient bases."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.normalized_correction_label is not None
+                            and not _flatten_source_family_eta_hits(diagnostic.normalized_correction_source_family_eta_scans)
+                        ],
+                        *[
+                            f"- GG second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no eta-quotient or modular-unit / eta hit was found in the checked small second-normalized boxes."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.second_normalized_correction_label is not None
+                            and not any(scan.relation is not None for scan in diagnostic.second_normalized_correction_eta_scans)
+                            and not any(scan.relation is not None for scan in diagnostic.second_normalized_correction_modular_unit_eta_scans)
+                        ],
+                        *[
+                            f"- GG second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no one-core source-family eta-correction hit was found across `RR`, `GG` raw/quotient bases."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.second_normalized_correction_label is not None
+                            and not _flatten_source_family_eta_hits(diagnostic.second_normalized_correction_source_family_eta_scans)
+                        ],
+                        *[
+                            f"- GG second normalized weighted correction `{diagnostic.second_normalized_correction_label}`: no explicit GG transform-template eta-correction hit was found in the checked small boxes."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.second_normalized_correction_label is not None
+                            and not any(scan.hits for scan in diagnostic.second_normalized_correction_explicit_transform_eta_scans)
+                        ],
+                        *[
+                            "- GG second normalized weighted correction "
+                            + f"`{diagnostic.second_normalized_correction_label}` quotient-coordinate prefixes: "
+                            + "; ".join(
+                                (
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_quotient_polynomial_scans,
+                                        label="polynomial",
+                                        hit_predicate=lambda item: item.relation is not None,
+                                    ),
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_quotient_multiplicative_scans,
+                                        label="multiplicative",
+                                        hit_predicate=lambda item: item.relation is not None,
+                                    ),
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_quotient_fractional_linear_scans,
+                                        label="fractional-linear",
+                                        hit_predicate=lambda item: item.relation is not None,
+                                    ),
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_quotient_two_layer_fractional_linear_scans,
+                                        label="two-layer fractional-linear",
+                                        hit_predicate=lambda item: item.total_hits > 0,
+                                    ),
+                                )
+                            )
+                            + "."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.second_normalized_correction_label is not None
+                        ],
+                        *[
+                            "- GG second normalized weighted correction "
+                            + f"`{diagnostic.second_normalized_correction_label}` mixed quotient-coordinate prefixes: "
+                            + "; ".join(
+                                (
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_mixed_quotient_polynomial_scans,
+                                        label="polynomial",
+                                        hit_predicate=lambda item: item.relation is not None,
+                                    ),
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_mixed_quotient_multiplicative_scans,
+                                        label="multiplicative",
+                                        hit_predicate=lambda item: item.relation is not None,
+                                    ),
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_mixed_quotient_fractional_linear_scans,
+                                        label="fractional-linear",
+                                        hit_predicate=lambda item: item.relation is not None,
+                                    ),
+                                    _format_tail_prefix_summary(
+                                        diagnostic.second_normalized_correction_mixed_quotient_two_layer_fractional_linear_scans,
+                                        label="two-layer fractional-linear",
+                                        hit_predicate=lambda item: item.total_hits > 0,
+                                    ),
+                                )
+                            )
+                            + "."
+                            for diagnostic in gg_scan.weighted_coordinate_diagnostics
+                            if diagnostic.second_normalized_correction_label is not None
+                        ],
+                        f"- GG direct prefixes: {direct_prefix_summary}.",
+                        f"- GG quotient-coordinate prefixes: {quotient_prefix_summary}.",
+                        f"- GG mixed quotient-coordinate prefixes: {mixed_prefix_summary}.",
+                    ]
+                )
+            lines.append("")
+
+        hit_count = sum(1 for sample in sample_scans if _flatten_source_family_eta_hits(sample.source_family_eta_scans))
+        direct_eta_hit_count = sum(1 for sample in sample_scans if any(scan.relation is not None for scan in sample.direct_eta_scans))
+        direct_modular_unit_hit_count = sum(
+            1
+            for sample in sample_scans
+            if any(scan.relation is not None for scan in sample.direct_modular_unit_eta_scans)
+        )
+        gg_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.gg_modular_equation_scan is not None
+            and _gg_modular_equation_scan_has_hit(sample.gg_modular_equation_scan)
+        )
+        gg_exact_quotient_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.gg_modular_equation_scan is not None
+            and _gg_modular_equation_scan_has_exact_quotient_hit(sample.gg_modular_equation_scan)
+        )
+        morton_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.morton_periodic_point_scan is not None
+            and _morton_periodic_point_scan_has_hit(sample.morton_periodic_point_scan)
+        )
+        lines.extend(
+            [
+                "## Tail Verdict",
+                "",
+                f"- Samples checked: `{len(sample_scans)}`",
+                f"- Source-core eta hits found: `{hit_count}`",
+                f"- Direct eta-quotient sample hits found: `{direct_eta_hit_count}`",
+                f"- Direct modular-unit / eta sample hits found: `{direct_modular_unit_hit_count}`",
+                f"- GG/Weber modular-equation sample hits found: `{gg_hit_count}`",
+                f"- GG exact quotient-coordinate sample hits found: `{gg_exact_quotient_hit_count}`",
+                f"- Morton periodic-point / algebraic-function sample hits found: `{morton_hit_count}`",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the Morton-inspired algebraic-function templates, or the first literature-driven GG/Weber modular-equation boxes.",
+                "",
+                f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
+                "",
+            ]
+        )
+
+    output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def build_candidate_tail_operator_note(
+    *,
+    input_path: str,
+    candidate_id: str,
+    output_path: str,
+    depth: int = 40,
+    series_order: int = 36,
+    tail_stages: tuple[int, ...] = (3, 4, 5),
+    max_gap_depth: int = 3,
+    smoke: bool = False,
+) -> None:
+    records = read_candidates(input_path)
+    record: CandidateRecord | None = None
+    for item in records:
+        if item.id == candidate_id:
+            record = item
+            break
+    if record is None:
+        raise KeyError(f"unknown candidate id: {candidate_id}")
+
+    benchmark = get_benchmark(record.closest_benchmark)
+    profile_depth = min(depth, 24 if smoke else depth)
+    profile_order = min(series_order, 24 if smoke else series_order)
+    active = _series_active_exponents(record.template) + _series_active_exponents(benchmark.canonical_template)
+    step = 0
+    for value in active:
+        step = gcd(step, value)
+    if step <= 0:
+        step = 1
+
+    reduced_candidate = record.template
+    series_symbol = "q"
+    variable_label = "q"
+    if step > 1:
+        maybe_candidate = reduce_template_by_step(record.template, step)
+        maybe_benchmark = reduce_template_by_step(benchmark.canonical_template, step)
+        if maybe_candidate is not None and maybe_benchmark is not None:
+            reduced_candidate = maybe_candidate
+            series_symbol = "t"
+            variable_label = f"t = q^{step}"
+
+    reduced_bridge_depth = min(profile_depth, 8 if smoke else 12)
+    reduced_bridge_order = min(profile_order, 24 if smoke else 30)
+    output_file = Path(output_path)
+    build_started_at = perf_counter()
+    lines = [
+        f"# Tail-Operator Note: `{record.id}`",
+        "",
+        "## Snapshot",
+        "",
+        f"- Candidate id: `{record.id}`",
+        f"- Closest benchmark: `{record.closest_benchmark}`",
+        f"- Variable view: `{variable_label}`",
+        f"- Tail stages checked: `{', '.join(str(stage) for stage in tail_stages)}`",
+        f"- Max gap depth checked: `{max_gap_depth}`",
+        "",
+    ]
+
+    reduced_bridge_error: str | None = None
+    reduced_reciprocal_witness = None
+    reduced_tail_transfer_equation: ReducedTailTransferEquation | None = None
+    try:
+        reduced_reciprocal_witness, _ = _reduced_reciprocal_bridge(
+            template=reduced_candidate,
+            symbol=sp.Symbol(series_symbol),
+            depth=reduced_bridge_depth,
+            order=reduced_bridge_order,
+        )
+        reduced_tail_transfer_equation = detect_reduced_tail_transfer_equation(
+            reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+            symbol=sp.Symbol(series_symbol),
+        )
+    except Exception as exc:
+        reduced_bridge_error = str(exc)
+
+    if reduced_bridge_error is not None or reduced_reciprocal_witness is None or reduced_tail_transfer_equation is None:
+        lines.extend(
+            [
+                "Tail-operator setup failed:",
+                "",
+                "```text",
+                reduced_bridge_error or "unknown reduced-tail setup failure",
+                "```",
+                "",
+            ]
+        )
+        output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return
+
+    relation_lines = _format_reduced_tail_transfer_equation(reduced_tail_transfer_equation)
+    lines.extend(
+        [
+            "## Exact Tail Family",
+            "",
+            "- The operator lane starts from the same exact stationary tail law rather than from a fresh anonymous ansatz.",
+            "",
+            "```text",
+            *relation_lines,
+            "```",
+            "",
+            "## Operator Lane",
+            "",
+            "We now ask a more recurrence-first question on the sampled tail ladder:",
+            "",
+            "```text",
+            "A_0(t) + A_1(t)*Y(t) + A_2(t)*Y(t^m) + A_3(t)*Y(t^(m^2)) = 0",
+            "```",
+            "",
+            "- This is the current affine q-difference / Mahler-style operator box.",
+            "- The goal is not another family label; it is a compact operator statement that could later support an operator-factorization or uniqueness proof.",
+            "",
+        ]
+    )
+
+    sample_scans = scan_tail_family_source_eta_ladder(
+        reduced_coeffs=reduced_reciprocal_witness.reduction.reduced_coeffs,
+        symbol=sp.Symbol(series_symbol),
+        ordered_base_families=(),
+        start_stages=tail_stages,
+        max_gap_depth=max_gap_depth,
+        order=reduced_bridge_order,
+        powers=(2, 3),
+        eta_levels=(),
+        max_abs_exponent=4 if smoke else 6,
+        gg_benchmark_name=None,
+        gg_base_series=None,
+        morton_order=min(reduced_bridge_order, 18 if smoke else 24),
+    )
+
+    total_hits = 0
+    for sample in sample_scans:
+        sample_order = min(len(sample.series), 18 if smoke else 24)
+        mahler_scan = scan_self_mahler_linear_relations(
+            target_series=list(sample.series[:sample_order]),
+            moduli=(2,) if smoke else (2, 3),
+            levels_checked=(2,) if smoke else (2, 3),
+            order=sample_order,
+            t_degree_values=(1, 2) if smoke else (1, 2, 3),
+        )
+        total_hits += len(mahler_scan.hits)
+        lines.extend(
+            [
+                f"### `{sample.label}`",
+                "",
+                f"- Start stage: `{sample.start_stage}`",
+                f"- Gap depth: `{sample.gap_depth}`",
+                f"- State: `{_format_expr(sample.state_expr)}`",
+                "",
+                "```text",
+                sample.expression,
+                "```",
+                "",
+                f"- Moduli checked: {', '.join(f'`m={value}`' for value in mahler_scan.moduli_checked) if mahler_scan.moduli_checked else '`none`'}",
+                f"- Recurrence depths checked: {', '.join(f'`levels={value}`' for value in mahler_scan.levels_checked) if mahler_scan.levels_checked else '`none`'}",
+                f"- Polynomial t-degrees checked: {', '.join(f'`deg_t={value}`' for value in mahler_scan.t_degree_values) if mahler_scan.t_degree_values else '`none`'}",
+            ]
+        )
+        if not mahler_scan.hits:
+            lines.append("- No affine q-difference / Mahler operator hit was found in the scanned box.")
+            lines.append("")
+            continue
+        lines.append(f"- Affine q-difference / Mahler operator hits found: `{len(mahler_scan.hits)}`")
+        lines.append("")
+        for hit in mahler_scan.hits:
+            relation_series_by_variable = {
+                "T": _t_series(order=sample_order),
+                "F": list(sample.series[:sample_order]),
+            }
+            for variable in hit.relation.variables:
+                if variable.startswith("G"):
+                    relation_series_by_variable[variable] = benchmark_power_substitution_series(
+                        list(sample.series[:sample_order]),
+                        power=int(variable.removeprefix("G")),
+                        order=sample_order,
+                    )
+            residual = _relation_residual_series(
+                hit.relation,
+                series_by_variable=relation_series_by_variable,
+                order=sample_order,
+            )
+            residual_ok = all(sp.simplify(value) == 0 for value in residual)
+            lines.extend(
+                [
+                    f"- Modulus `m={hit.modulus}`, recurrence depth `{hit.levels}`, `deg_t={hit.max_t_degree}`:",
+                    "",
+                    "```text",
+                    _format_self_mahler_linear_relation(
+                        hit.relation,
+                        target_variable=sample.label,
+                        series_symbol=series_symbol,
+                    ),
+                    "```",
+                    "",
+                    f"  Verified by exact series re-expansion modulo `{series_symbol}^{sample_order}`: `{residual_ok}`",
+                    "",
+                ]
+            )
+
+    lines.extend(
+        [
+            "## Operator Verdict",
+            "",
+            f"- Samples checked: `{len(sample_scans)}`",
+            f"- Total affine q-difference / Mahler hits found: `{total_hits}`",
+            "- Current reading: the exact tail law is strong enough to justify an operator-first endgame, but the first low-degree affine q-difference box is still mostly a diagnostic lane rather than a final theorem.",
+            "",
+            f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
+            "",
+        ]
+    )
+
     output_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
