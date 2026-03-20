@@ -1,8 +1,11 @@
 import Proofs.HeroCaseObjects
+import Proofs.HeroCaseGGQuotientCoordinateObstruction
+import Proofs.HeroCaseGGWeightedCorrectionWaypoint
 import Proofs.HeroCaseHeineCor2cf
 import Proofs.HeroCaseLocal
 import Proofs.HeroCasePage43Equivalence
 import Proofs.HeroCaseSubsequenceExact
+import Proofs.HeroCaseTailOperatorWaypoint
 import Proofs.RationalEquivalence
 
 open Polynomial
@@ -80,6 +83,23 @@ Current source-family-specific exact lane:
   simple cubic contraction mismatches at the decisive early stages
 - `Proofs/HeroCaseHeineCor2cf.lean` already proves exact low-stage Heine
   `cor2cf` branch mismatches in the forced `a = 0` lane
+- `Proofs/HeroCaseGGQuotientCoordinateObstruction.lean` now packages the
+  current tail-family-first `GG` quotient-coordinate witness table for
+  `Q_3 = GG(t^3)/GG(t)` and `Q_4 = GG(t^4)/GG(t)` as a Lean waypoint shell,
+  including a sample-indexed theorem family asserting each currently sampled
+  tail object already fails at the recorded first exact `Q_3` and `Q_4`
+  residual term, together with the shared leading-obstruction compression
+  `q3Coeff = 2*rho`, `q4Coeff = 3*rho`
+- `Proofs/HeroCaseGGWeightedCorrectionWaypoint.lean` now packages the next
+  hero-ratio diagnostic layer after `W_34 = Q_3^3 / Q_4^2`:
+  the recorded first failure of `F / W_34`, the current normalized follow-up
+  `G_W34`, the deeper follow-up `G2_W34`, and the checked small eta /
+  modular-unit / RR-GG source-family correction boxes at both normalized
+  layers
+- `Proofs/HeroCaseTailOperatorWaypoint.lean` now records the current sampled
+  tail-operator lane (`12` sampled tail objects, Mahler-style moduli `2,3`,
+  recurrence depths `2,3`, and `t`-degrees `1,2,3`) as a proof-workspace
+  landing spot for a later exact operator / factorization theorem
 - this scaffold now packages that rational-function equivalence layer together
   with the page-43 nearest-shift-cube exclusions, the exact zero-shift
   single-prefactor exclusions, and the exact RR/cubic
@@ -307,10 +327,11 @@ def knownSourceOrbitExclusionWaypoint : Prop :=
   (∀ stride offset : Nat, 2 ≤ stride → offset < stride →
     nearestArithmeticSubsequenceSourcesExcludedProp stride offset) ∧
   directLocalObstructionsProp ∧
-  (∀ b lam : Int, lam ≠ 0 → simpleCor2cfBranchesExcludedProp b lam)
+  (∀ b lam : Int, lam ≠ 0 → simpleCor2cfBranchesExcludedProp b lam) ∧
+  Proofs.HeroCase.GGQ34.currentWaypoint
 
 theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoint := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro shiftA shiftB shiftLambda
     exact page43NearestShiftCubeExcluded shiftA shiftB shiftLambda
   · exact page43PolynomialPrefactorExcluded
@@ -320,6 +341,7 @@ theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoi
   · exact directLocalObstructions
   · intro b lam h
     exact simpleCor2cfBranchesExcluded b lam h
+  · exact Proofs.HeroCase.GGQ34.currentWaypoint_true
 
 def exactWaypointStatement : Prop :=
   finiteConvergentReductionWaypoint ∧ knownSourceOrbitExclusionWaypoint
@@ -341,6 +363,18 @@ theorem currentExactWaypointCertificate_sound : exactWaypointStatement := by
 theorem exactWaypointStatement_true : exactWaypointStatement := by
   exact currentExactWaypointCertificate_sound
 
+def tailOperatorResearchWaypoint : Prop :=
+  Proofs.HeroCase.TailOperator.currentWaypoint
+
+theorem tailOperatorResearchWaypoint_true : tailOperatorResearchWaypoint := by
+  exact Proofs.HeroCase.TailOperator.currentWaypoint_true
+
+def ggWeightedCorrectionResearchWaypoint : Prop :=
+  Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
+
+theorem ggWeightedCorrectionResearchWaypoint_true : ggWeightedCorrectionResearchWaypoint := by
+  exact Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
+
 /-!
 TODO (award track, endgame):
 
@@ -353,7 +387,10 @@ TODO (award track, endgame):
    the currently formalized nearest-shift cube plus the exact zero-shift
    single-prefactor box for `f2/gcf3` / `f4/gcf2`,
    especially if shifted or multi-prefactor rational lanes become relevant.
-5. Prove the final identity in Lean and remove this placeholder.
+5. Upgrade the current `GG` quotient-coordinate waypoint shell into actual
+   exact modular-equation obstruction theorems, and either absorb or replace
+   the current weighted-correction research waypoint with an exact theorem.
+6. Prove the final identity in Lean and remove this placeholder.
 -/
 
 def finalIdentityStatement : Prop :=

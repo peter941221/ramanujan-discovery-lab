@@ -1186,6 +1186,7 @@ def _write_formalization_note(context: FormalizationContext, output_path: str) -
                     "- This candidate matches the current hero-case structural signature in reduced variable `t`.",
                     f"- Award-track target module (Lean scaffold): `{award_target}`",
                     "- Current state: the module compiles, carries status marker `exclusion_waypoint`, and now exposes the current exact waypoint as a certificate object `currentExactWaypointCertificate`, whose two fields are proved by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then repackaged by `exactWaypointStatement_true`.",
+                    "- Current modular-coordinate waypoint: `proofs/Proofs/HeroCaseGGWeightedCorrectionWaypoint.lean` records the first failure of `F / W_34`, the normalized probe `G_W34`, the deeper follow-up `G2_W34`, and the current empty small correction boxes at both normalized layers.",
                     "- `finalIdentityStatement` is still a placeholder because no final closed form is identified yet.",
                     "- Only replace the placeholder after a concrete closed form is identified.",
                 ]
@@ -1425,6 +1426,7 @@ def _write_lean_skeleton(context: FormalizationContext, output_path: str) -> Non
                 f"First reverse-equivalence scales: {', '.join(f'r{n} = {_format_fraction_expr(context.factor_witness.scale_terms[n])}' for n in range(1, min(5, len(context.factor_witness.scale_terms))))}",
                 "These scales are rational functions, and Proofs/RationalEquivalence.lean already formalizes the finite-stage reverse equivalence transform over RatFunc Rat; the remaining gap is a fuller fraction-field coefficient layer for the infinite-object bridge.",
                 "Proofs/HeroCaseFinalIdentity.lean packages that exact waypoint via the certificate object `currentExactWaypointCertificate`, whose two fields are established by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then bundled by `exactWaypointStatement_true`; the lower-level ingredients still include `heroConvergentRatFunc_eq_reducedHeroConvergentRatFunc`, `reverseEquivalenceRecoversHeroData`, `page43PolynomialPrefactorExcluded`, `page43ReciprocalPrefactorExcluded`, `nearestArithmeticSubsequenceSourcesExcluded`, `directLocalObstructions`, and `simpleCor2cfBranchesExcluded`.",
+                "The same proof workspace also now records the current weighted `GG` correction ladder in `Proofs/HeroCaseGGWeightedCorrectionWaypoint.lean`: first failure of `F / W_34`, normalized follow-up `G_W34`, deeper follow-up `G2_W34`, and the current no-small-correction verdicts at both normalized layers.",
                 (
                     "Current source-family-specific exact lanes: zero-shift f2/gcf3 and f4/gcf2"
                     " n-dependent equivalence, plus the nearest unit-a-shift, unit-b-shift, mixed unit-a/unit-b-shift, mixed unit-a/unit-lambda-shift, mixed unit-b/unit-lambda-shift, mixed unit-a/unit-b/unit-lambda-shift, and unit-lambda-shift lanes,"
