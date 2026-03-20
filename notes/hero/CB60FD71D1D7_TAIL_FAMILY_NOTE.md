@@ -516,4 +516,3 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton periodic-point / algebraic-function sample hits found: `0`
 - Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the Morton-inspired algebraic-function templates, or the first literature-driven GG/Weber modular-equation boxes.
 - Build elapsed seconds: `326.08`
-

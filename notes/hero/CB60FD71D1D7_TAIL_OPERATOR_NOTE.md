@@ -216,4 +216,3 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Total affine q-difference / Mahler hits found: `0`
 - Current reading: the exact tail law is strong enough to justify an operator-first endgame, but the first low-degree affine q-difference box is still mostly a diagnostic lane rather than a final theorem.
 - Build elapsed seconds: `32.70`
-
