@@ -43,6 +43,12 @@ f(Y, Y_2) = 0,   g(Y^2, Y_2^2) = 0,   f(Y, (1-Y_2)/(1+Y_2)) = 0
 
 - The first is a direct modular-unit / eta lane.
 - The second is a Morton-2024-inspired periodic-point / algebraic-function lane built from the exact low-degree polynomials attached to the GG/Weber orbit.
+- Phase 2 now also opens the first deeper Weber-Schlafli coordinate lane on the same sampled objects:
+
+```text
+P_ws = (1/Y - Y) / 2
+P_ws^2 * P_ws,2^2 + P_ws^2 - 2*P_ws,2 = 0
+```
 
 - We also check a `GG/Weber modular-equation` lane on the same sampled `U(x)` objects and their gap residuals:
 
@@ -76,6 +82,9 @@ U_t2 = T(t^2) / (1 + t^2)
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -113,6 +122,9 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -150,6 +162,9 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -187,6 +202,9 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `8`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -224,6 +242,9 @@ U_t3 = T(t^3) / (1 + t^3)
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^8` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -261,6 +282,9 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^4` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -298,6 +322,9 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -335,6 +362,9 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -372,6 +402,9 @@ U_t4 = T(t^4) / (1 + t^4)
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^10` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -409,6 +442,9 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -446,6 +482,9 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -483,6 +522,9 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Direct modular-unit / eta templates: `0` / `12` hit boxes.
 - Morton periodic-point / algebraic-function templates: `0` / `4` exact hits.
 - Morton obstruction witnesses: `Morton Prop. 8.1 self-substitution template `f(Y, Y_2)`` first fails at `t^0` with coefficient `2`; `Morton Prop. 8.2 squared template `g(Y^2, Y_2^2)`` first fails at `t^0` with coefficient `4`; `Morton Cor. 7.4 transformed template `f(Y, (1-Y_2)/(1+Y_2))`` first fails at `t^0` with coefficient `1`; `Morton Cor. 7.5 transformed template `f(Y, (Y_2-1)/(Y_2+1))`` first fails at `t^0` with coefficient `1`.
+- Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
+- Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -514,5 +556,7 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - GG/Weber modular-equation sample hits found: `0`
 - GG exact quotient-coordinate sample hits found: `0`
 - Morton periodic-point / algebraic-function sample hits found: `0`
-- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the Morton-inspired algebraic-function templates, or the first literature-driven GG/Weber modular-equation boxes.
-- Build elapsed seconds: `326.08`
+- Morton Weber-Schlafli sample hits found: `0`
+- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate template, or the first literature-driven GG/Weber modular-equation boxes.
+
+- Build elapsed seconds: `336.70`

@@ -284,18 +284,6 @@ Focus:
 - implement only the highest-value lane from Sprint 1, with tail-family-derived
   objects preferred if the literature still does not name a stronger orbit
 
-Current expected target:
-
-- exact or near-exact quotient-coordinate relations involving
-  `Q_3 = GG(q^3)/GG(q)` and `Q_4 = GG(q^4)/GG(q)`, with `GG(q)`, `GG(-q)`,
-  and `GG(q^2)` used only as supporting coordinates when needed
-- first the diagnostic coordinate `Theta_tail = (m, rho)` extracted from the
-  shared leading `Q_3 / Q_4` obstruction term
-- then, if that coordinate still does not stabilize the next residual layer,
-  a deeper Weber / modular-curve parameter compatible with the same `3:2`
-  weighting, such as a `Q_3^3 / Q_4^2`-type coordinate rather than the raw
-  quotient pair alone
-
 Refined `2026-03-20` target:
 
 - start directly with the first literature-backed deeper Weber coordinate
@@ -308,10 +296,30 @@ Refined `2026-03-20` target:
   the Morton periodic-point / Weber-Schlafli polynomial relation linking
   `P(τ)` and `P(2τ)`
 
+Current Phase 2 result:
+
+- implemented the first deeper Weber-Schlafli coordinate lane directly on the
+  sampled tail-family objects and their gap-normalized residuals via
+  `P_ws = (1/F - F) / 2`
+- tested the first Morton Weber-Schlafli exact template
+  `P_ws^2 * P_ws,2^2 + P_ws^2 - 2*P_ws,2 = 0`
+- outcome:
+  all sampled objects still give `0` exact hits in this first Weber lane, so
+  the result is a sharper source-faithful obstruction rather than a positive
+  identification
+- refined next move:
+  keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
+  the next implementation should bring in the companion coordinate
+  `B = b(4τ)` or another literature-backed Weber coordinate, not widen
+  anonymous prefix boxes again
+
 Success condition:
 
 - either a new positive candidate relation appears, or this precise orbit is
   narrowed enough to justify moving to the next named source class
+- current reading:
+  achieved in the narrowing sense; Sprint 2 now closes the first `P = p(8τ)`
+  pass with a reusable negative result and a clearer next coordinate choice
 
 ### Sprint 3 — Theorem Conversion
 

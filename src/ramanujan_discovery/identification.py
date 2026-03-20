@@ -719,10 +719,20 @@ class MortonPeriodicPointTemplateResult:
 
 
 @dataclass(frozen=True)
+class MortonWeberCoordinateScan:
+    """A deeper Weber-Schlafli coordinate scan inside the Morton lane."""
+
+    label: str
+    expression: str
+    template_results: tuple[MortonPeriodicPointTemplateResult, ...]
+
+
+@dataclass(frozen=True)
 class MortonPeriodicPointScan:
     """A small exact template box inspired by Morton's periodic-point algebraic functions."""
 
     template_results: tuple[MortonPeriodicPointTemplateResult, ...]
+    weber_coordinate_scans: tuple[MortonWeberCoordinateScan, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -3770,7 +3780,11 @@ def _gg_modular_equation_scan_has_exact_quotient_hit(scan: GGModularEquationScan
 
 
 def _morton_periodic_point_scan_has_hit(scan: MortonPeriodicPointScan) -> bool:
-    return any(item.hit for item in scan.template_results)
+    return any(item.hit for item in scan.template_results) or any(
+        item.hit
+        for coordinate_scan in scan.weber_coordinate_scans
+        for item in coordinate_scan.template_results
+    )
 
 
 def _gg_weighted_coordinate_diagnostic_has_hit(diagnostic: GGWeightedCoordinateDiagnostic) -> bool:
@@ -5525,6 +5539,21 @@ def _morton_periodic_point_relations(order: int) -> tuple[tuple[str, PolynomialR
     )
 
 
+@lru_cache(maxsize=None)
+def _morton_weber_schlafli_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
+    p, p2 = sp.symbols("P P_2")
+    return (
+        (
+            "Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`",
+            _polynomial_relation_from_sympy_expr(
+                expr=p**2 * p2**2 + p**2 - 2 * p2,
+                variables=("P", "P_2"),
+                order=order,
+            ),
+        ),
+    )
+
+
 def _first_nonzero_residual_term(
     residual: Series,
 ) -> tuple[int | None, sp.Expr | None]:
@@ -5533,6 +5562,24 @@ def _first_nonzero_residual_term(
         if simplified != 0:
             return power, simplified
     return None, None
+
+
+def _weber_schlafli_coordinate_series(
+    *,
+    target_series: Series,
+    order: int,
+) -> Series | None:
+    if order < 1:
+        return None
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0]) == 0:
+        return None
+    inverse_series = series_invert(target_series[:order])
+    return [
+        sp.simplify((inverse_series[index] - target_series[index]) / 2)
+        for index in range(order)
+    ]
 
 
 def scan_morton_periodic_point_box(
@@ -5597,7 +5644,44 @@ def scan_morton_periodic_point_box(
                 hit=all(sp.simplify(value) == 0 for value in residual),
             )
         )
-    return MortonPeriodicPointScan(template_results=tuple(template_results))
+    weber_coordinate_scans: list[MortonWeberCoordinateScan] = []
+    weber_coordinate_series = _weber_schlafli_coordinate_series(
+        target_series=target_trunc,
+        order=order,
+    )
+    if weber_coordinate_series is not None:
+        weber_coordinate_q2 = benchmark_power_substitution_series(
+            weber_coordinate_series,
+            power=2,
+            order=order,
+        )
+        weber_template_results: list[MortonPeriodicPointTemplateResult] = []
+        for label, relation in _morton_weber_schlafli_relations(order):
+            residual = _relation_residual_series(
+                relation,
+                series_by_variable={"P": weber_coordinate_series, "P_2": weber_coordinate_q2},
+                order=order,
+            )
+            power, coeff = _first_nonzero_residual_term(residual)
+            weber_template_results.append(
+                MortonPeriodicPointTemplateResult(
+                    label=label,
+                    first_failure_power=power,
+                    first_failure_coeff=coeff,
+                    hit=all(sp.simplify(value) == 0 for value in residual),
+                )
+            )
+        weber_coordinate_scans.append(
+            MortonWeberCoordinateScan(
+                label="P_ws",
+                expression="P_ws = (1/F - F) / 2",
+                template_results=tuple(weber_template_results),
+            )
+        )
+    return MortonPeriodicPointScan(
+        template_results=tuple(template_results),
+        weber_coordinate_scans=tuple(weber_coordinate_scans),
+    )
 
 
 def _gg_exact_modular_template_hits(
@@ -11344,6 +11428,12 @@ def build_candidate_tail_family_note(
             "",
             "- The first is a direct modular-unit / eta lane.",
             "- The second is a Morton-2024-inspired periodic-point / algebraic-function lane built from the exact low-degree polynomials attached to the GG/Weber orbit.",
+            "- Phase 2 now also opens the first deeper Weber-Schlafli coordinate lane on the same sampled objects:",
+            "",
+            "```text",
+            "P_ws = (1/Y - Y) / 2",
+            "P_ws^2 * P_ws,2^2 + P_ws^2 - 2*P_ws,2 = 0",
+            "```",
             "",
         ]
     )
@@ -11494,6 +11584,26 @@ def build_candidate_tail_family_note(
                         )
                         + "."
                     )
+                for coordinate_scan in morton_scan.weber_coordinate_scans:
+                    weber_hits = [item for item in coordinate_scan.template_results if item.hit]
+                    lines.append(
+                        f"- Morton Weber-Schlafli coordinate `{coordinate_scan.label}`: `{coordinate_scan.expression}`."
+                    )
+                    lines.append(
+                        f"- Morton Weber-Schlafli templates on `{coordinate_scan.label}`: `{len(weber_hits)}` / `{len(coordinate_scan.template_results)}` exact hits."
+                    )
+                    if coordinate_scan.template_results:
+                        lines.append(
+                            "- Morton Weber-Schlafli obstruction witnesses: "
+                            + "; ".join(
+                                _format_exact_polynomial_obstruction(
+                                    (item.label, item.first_failure_power, item.first_failure_coeff),
+                                    series_symbol=series_symbol,
+                                )
+                                for item in coordinate_scan.template_results
+                            )
+                            + "."
+                        )
             if sample.gg_modular_equation_scan is not None:
                 gg_scan = sample.gg_modular_equation_scan
                 direct_prefix_summary = "; ".join(
@@ -11803,6 +11913,16 @@ def build_candidate_tail_family_note(
             if sample.morton_periodic_point_scan is not None
             and _morton_periodic_point_scan_has_hit(sample.morton_periodic_point_scan)
         )
+        morton_weber_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.morton_periodic_point_scan is not None
+            and any(
+                item.hit
+                for coordinate_scan in sample.morton_periodic_point_scan.weber_coordinate_scans
+                for item in coordinate_scan.template_results
+            )
+        )
         lines.extend(
             [
                 "## Tail Verdict",
@@ -11814,7 +11934,8 @@ def build_candidate_tail_family_note(
                 f"- GG/Weber modular-equation sample hits found: `{gg_hit_count}`",
                 f"- GG exact quotient-coordinate sample hits found: `{gg_exact_quotient_hit_count}`",
                 f"- Morton periodic-point / algebraic-function sample hits found: `{morton_hit_count}`",
-                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the Morton-inspired algebraic-function templates, or the first literature-driven GG/Weber modular-equation boxes.",
+                f"- Morton Weber-Schlafli sample hits found: `{morton_weber_hit_count}`",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate template, or the first literature-driven GG/Weber modular-equation boxes.",
                 "",
                 f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
                 "",

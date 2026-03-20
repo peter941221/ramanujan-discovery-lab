@@ -1990,6 +1990,27 @@ def test_scan_gg_modular_equation_box_supports_odd_prime_descendants():
     )
 
 
+def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_branch():
+    order = 12
+    target = [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)]
+
+    scan = scan_morton_periodic_point_box(
+        target_series=target,
+        order=order,
+    )
+
+    assert scan.template_results
+    assert scan.weber_coordinate_scans
+    weber_scan = scan.weber_coordinate_scans[0]
+    assert weber_scan.label == "P_ws"
+    assert weber_scan.expression == "P_ws = (1/F - F) / 2"
+    assert len(weber_scan.template_results) == 1
+    assert weber_scan.template_results[0].label == "Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`"
+    assert weber_scan.template_results[0].hit
+    assert weber_scan.template_results[0].first_failure_power is None
+    assert weber_scan.template_results[0].first_failure_coeff is None
+
+
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
     order = 24
     gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
@@ -2728,6 +2749,10 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Direct modular-unit / eta templates" in text
     assert "Morton periodic-point / algebraic-function templates" in text
     assert "Morton obstruction witnesses" in text
+    assert "P_ws = (1/Y - Y) / 2" in text
+    assert "Morton Weber-Schlafli coordinate `P_ws`" in text
+    assert "Morton Weber-Schlafli templates on `P_ws`" in text
+    assert "Morton Weber-Schlafli obstruction witnesses" in text
     assert "GG direct / reciprocal / quotient templates" in text
     assert "GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4`" in text
     assert "GG exact quotient-coordinate obstruction witnesses" in text
@@ -2746,6 +2771,7 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "GG/Weber modular-equation sample hits found" in text
     assert "GG exact quotient-coordinate sample hits found" in text
     assert "Morton periodic-point / algebraic-function sample hits found" in text
+    assert "Morton Weber-Schlafli sample hits found" in text
 
 
 def test_cli_tail_operator_note_writes_tail_operator_note(tmp_path: Path):

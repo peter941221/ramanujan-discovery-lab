@@ -70,7 +70,7 @@ Literature status
 - Exact tail-family note:
   `notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
 - Current verdict:
-  the sampled `U_t2`, `U_t3`, `U_t4` ladder and their gap-normalized residuals still give `0` hits in the checked one-core source-family eta boxes, direct eta boxes, direct modular-unit / eta boxes, Morton periodic-point templates, and the current `GG/Weber` modular-equation templates.
+  the sampled `U_t2`, `U_t3`, `U_t4` ladder and their gap-normalized residuals still give `0` hits in the checked one-core source-family eta boxes, direct eta boxes, direct modular-unit / eta boxes, Morton periodic-point templates, the first Weber-Schlafli coordinate template, and the current `GG/Weber` modular-equation templates.
 
 ### B. `GG` quotient-coordinate obstruction
 
@@ -129,5 +129,5 @@ Literature status
 ## Priority Queue
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
-2. Push the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`, starting with the Weber-Schlafli coordinate `P = p(8τ)`.
+2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the first Weber-Schlafli pass `P = p(8τ)` is now complete, so the next source-faithful companion should be `B = b(4τ)` or another named Weber coordinate.
 3. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.
