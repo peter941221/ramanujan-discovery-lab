@@ -108,7 +108,11 @@ Current source-family-specific exact lane:
   next focused hand-off after the Ramanujan-Weber class-invariant compression:
   the eta-side residual `G_g12_ws` is the current primary residual, the
   plus-side residual `G_p12_ws` is kept as its algebraically constrained
-  companion through the exact coordinate bridge, and the focused quotient
+  companion through the exact coordinate bridge, the classical Weber `f2`
+  tri-product coordinate
+  `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)` plus its
+  normalized follow-up `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)` also stay
+  outside the first checked theorem-shaped closure boxes, and the focused quotient
   `R_gp_ws = G_p12_ws / G_g12_ws` plus the normalized follow-up
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` still have `0` hits in the first
   checked self-polynomial / self-fractional-linear / self-quotient-product /

@@ -66,6 +66,15 @@ has been found in the primary sources checked so far.
   `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
   This lets the project keep `G_g12_ws` as the current primary eta-side
   residual, treat `G_p12_ws` as the constrained companion, and insert the
+  classical Weber `f2` tri-product coordinate
+  `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`.
+  On the hero sample, that product coordinate first differs from `1` at `t^1`
+  with coefficient `-4`, and its normalized follow-up
+  `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)` then first differs from `1` at `t^1`
+  with coefficient `1/2`; both layers still give `0` hits in the same first
+  narrow theorem-shaped closure boxes, so this product lane currently looks
+  more like another structured obstruction than like the final RHS.
+  The same compression then inserts the
   tighter quotient-coordinate `X_g_ws = 16*t^2 / g12_ws^2` together with the
   exact bridge `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0`,
   `Q_gp_ws = p12_ws / g12_ws`.

@@ -400,6 +400,10 @@ Current Phase 2 result:
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
   the next implementation should first exploit the new
+  classical Weber `f2` tri-product lane
+  `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)` and its normalized
+  follow-up `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`,
+  together with the new
   `X_g_ws` / `Q_gp_ws` exact bridge together with the template-normalized lane
   `G_X_ws = 1 / G_g12_ws^2` and the direct follow-up bridge
   `D_XR_ws` / `Q_XR_ws`, and only then explain the focused residual quotient
@@ -414,6 +418,15 @@ Current Phase 2 result:
 - interpretation:
   this narrows the honest label for those two objects to
   `derived return bridge`, not `identified named coordinate`
+- meanwhile, the new classical Weber `f2` tri-product lane also stays negative
+  in the same first self-polynomial, self-fractional-linear,
+  self-quotient-product, eta / modular-unit, and plus-Pochhammer boxes, with
+  `G_f2_ws - 1` first failing at `t^1` with coefficient `-4`
+- route consequence:
+  the quotient/template-normalized branch still looks cleaner than the product
+  branch, so the next local priority should remain on `X_g_ws`, `G_X_ws`,
+  `H_X_ws`, and the later `R_gp_ws` hand-off rather than pivoting to the
+  classical product lane as the main trunk
 
 Success condition:
 
@@ -428,6 +441,10 @@ Success condition:
   The follow-up return-bridge literature closure now sharpens that handoff one
   step further: `Q_XK_ws` / `L_XK_ws` are useful bridge coordinates, but they
   are still not identified named `GG` modular-equation coordinates.
+  The later classical Weber `f2` tri-product lane `G_f2_ws` / `H_f2_ws` also
+  now closes negatively in the same first theorem-shaped boxes, so the route
+  decision becomes sharper rather than fuzzier: stay with the quotient lane as
+  the main constructive trunk.
 
 ### Sprint 3 — Theorem Conversion
 

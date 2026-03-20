@@ -113,6 +113,14 @@ Literature status
   The next focused bridge now keeps `G_g12_ws` as the primary eta-side
   residual, ties `G_p12_ws` to it through the exact coordinate identity
   `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`,
+  now also records the classical Weber `f2` tri-product coordinate
+  `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws`,
+  and on the hero sample that coordinate first differs from `1` at `t^1` with
+  coefficient `-4`; its normalized follow-up
+  `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)` then first differs from `1` at `t^1`
+  with coefficient `1/2`, while both layers still give `0` hits in the same
+  first self-polynomial, self-fractional-linear, self-quotient finite-product,
+  eta / modular-unit, and plus-Pochhammer boxes.
   compresses that bridge further through
   `X_g_ws = 16*t^2 / g12_ws^2` and
   `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0`
@@ -220,7 +228,7 @@ Literature status
 ## Priority Queue
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
-2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, `G2_W34`, `Q_XK_ws`, and `L_XK_ws`; the direct `P = p(8τ)` and companion `B = b(4τ)` passes are now complete, the later return-bridge literature closure also stays negative inside the named `GG` basis, and the next source-faithful move should therefore be another named Weber coordinate or an exact closure theorem for why the return bridge does not land on a named coordinate.
+2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, `G2_W34`, `Q_XK_ws`, `L_XK_ws`, and the new classical Weber `f2` tri-product lane `G_f2_ws` / `H_f2_ws`; that product lane also stays negative in the first theorem-shaped boxes, so the cleaner constructive priority still sits on the quotient/template-normalized branch `X_g_ws`, `G_X_ws`, `H_X_ws` rather than on the product branch.
 3. Treat the new Weber class-invariant pair `g12_ws` / `p12_ws` as the current best constructive hand-off: the next narrowing step should try to explain `G_g12_ws` or `G_p12_ws`, not reopen broader anonymous search boxes.
 4. Prefer the new bridge-normalized reading of that hand-off: use `G_g12_ws` as the primary residual, treat `G_p12_ws` as the algebraically constrained companion, keep `X_g_ws = 16*t^2 / g12_ws^2`, `G_X_ws = 1 / G_g12_ws^2`, the direct follow-up bridge `D_XR_ws` / `Q_XR_ws`, and the exact raw quotient bridge `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0` in the foreground, and explain `R_gp_ws = G_p12_ws / G_g12_ws` only after this template-normalized lane is exhausted.
 5. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.

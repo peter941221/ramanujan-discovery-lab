@@ -2084,6 +2084,16 @@ def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
     assert scan.exact_bridge_holds
     assert scan.exact_bridge_first_failure_power is None
     assert scan.exact_bridge_first_failure_coeff is None
+    assert scan.classical_product_coordinate_label == "G_f2_ws"
+    assert scan.classical_product_coordinate_expression == (
+        "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws"
+    )
+    assert scan.classical_product_coordinate_bridge_expression == "G_f2_ws - G_g12_ws*G_p12_ws = 0"
+    assert scan.classical_product_coordinate_scan.label == "G_f2_ws"
+    assert scan.classical_product_coordinate_scan.first_failure_power is None
+    assert scan.classical_product_coordinate_scan.first_failure_coeff is None
+    assert len(scan.classical_product_coordinate_scan.self_polynomial_scan.hits) >= 1
+    assert scan.classical_product_coordinate_scan.normalized_followup is None
     assert scan.quotient_coordinate_label == "X_g_ws"
     assert scan.quotient_coordinate_expression == "X_g_ws = 16*t^2 / g12_ws^2"
     assert scan.quotient_coordinate_bridge_expression == (
@@ -2135,6 +2145,52 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert scan is not None
     assert scan.exact_bridge_holds
     assert scan.quotient_coordinate_bridge_holds
+    assert scan.classical_product_coordinate_scan.first_failure_power == 1
+    assert scan.classical_product_coordinate_scan.first_failure_coeff == -4
+    assert not scan.classical_product_coordinate_scan.self_polynomial_scan.hits
+    assert not scan.classical_product_coordinate_scan.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None for item in scan.classical_product_coordinate_scan.self_quotient_product_scans
+    )
+    assert all(item.relation is None for item in scan.classical_product_coordinate_scan.eta_scans)
+    assert all(
+        item.relation is None for item in scan.classical_product_coordinate_scan.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None for item in scan.classical_product_coordinate_scan.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.classical_product_coordinate_scan.self_plus_pochhammer_eta_scans
+    )
+    assert scan.classical_product_coordinate_scan.normalized_followup is not None
+    assert scan.classical_product_coordinate_scan.normalized_followup.label == "H_f2_ws"
+    assert scan.classical_product_coordinate_scan.normalized_followup.expression == (
+        "H_f2_ws = (G_f2_ws - 1) / (-4*t^1)"
+    )
+    assert scan.classical_product_coordinate_scan.normalized_followup.first_failure_power == 1
+    assert scan.classical_product_coordinate_scan.normalized_followup.first_failure_coeff == sp.Rational(1, 2)
+    assert not scan.classical_product_coordinate_scan.normalized_followup.self_polynomial_scan.hits
+    assert not scan.classical_product_coordinate_scan.normalized_followup.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None
+        for item in scan.classical_product_coordinate_scan.normalized_followup.self_quotient_product_scans
+    )
+    assert all(
+        item.relation is None for item in scan.classical_product_coordinate_scan.normalized_followup.eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.classical_product_coordinate_scan.normalized_followup.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.classical_product_coordinate_scan.normalized_followup.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.classical_product_coordinate_scan.normalized_followup.self_plus_pochhammer_eta_scans
+    )
     assert scan.quotient_coordinate_template_scan.first_failure_power == 1
     assert scan.quotient_coordinate_template_scan.first_failure_coeff == 4
     assert not scan.quotient_coordinate_template_scan.self_polynomial_scan.hits
@@ -3024,6 +3080,10 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber residual bridge keeps `G_g12_ws` as the current primary residual" in text
     assert "Weber residual exact coordinate bridge" in text
     assert "g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0" in text
+    assert "Classical Weber `f2` tri-product coordinate `G_f2_ws`" in text
+    assert "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws" in text
+    assert "Classical Weber `f2` tri-product bridge" in text
+    assert "Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`" in text
     assert "Weber residual quotient-coordinate `X_g_ws`" in text
     assert "X_g_ws = 16*t^2 / g12_ws^2" in text
     assert "Weber residual exact quotient-coordinate bridge" in text
@@ -3073,6 +3133,7 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton Weber-Schlafli sample hits found" in text
     assert "Weber g-class-invariant sample hits found" in text
     assert "Weber G-class-invariant sample hits found" in text
+    assert "Classical Weber `f2` tri-product sample hits found" in text
     assert "Weber residual-quotient sample hits found" in text
     assert "Weber residual-follow-up sample hits found" in text
 

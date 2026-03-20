@@ -19,6 +19,12 @@ class-invariant compression lane:
 - the exact quotient-coordinate bridge
   `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0` with
   `Q_gp_ws = p12_ws / g12_ws` is the current tighter elimination relation
+- the same named Weber pair also now carries a classical Weber `f2`
+  tri-product coordinate
+  `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)
+  = G_g12_ws*G_p12_ws`
+  together with its normalized follow-up
+  `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`
 - the template-normalized coordinate
   `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`
   is the current source-faithful positive-recognition object
@@ -83,6 +89,27 @@ def exactCoordinateBridgeExpression : String :=
 
 def exactResidualBridgeExpression : String :=
   "(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0"
+
+def classicalProductCoordinateLabel : String := "G_f2_ws"
+
+def classicalProductCoordinateExpression : String :=
+  "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws"
+
+def classicalProductCoordinateBridgeExpression : String :=
+  "G_f2_ws - G_g12_ws*G_p12_ws = 0"
+
+def classicalProductCoordinateFirstFailure : FirstFailureWitness := ⟨1, -4⟩
+
+def classicalProductCoordinateSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def classicalProductCoordinateFollowupLabel : String := "H_f2_ws"
+
+def classicalProductCoordinateFollowupExpression : String :=
+  "H_f2_ws = (G_f2_ws - 1) / (-4*t^1)"
+
+def classicalProductCoordinateFollowupFirstFailure : FirstFailureWitness := ⟨1, (1 : Rat) / 2⟩
+
+def classicalProductCoordinateFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
 def focusedQuotientCoordinateLabel : String := "X_g_ws"
 
@@ -229,6 +256,46 @@ theorem templateNormalizedCoordinate_true : templateNormalizedCoordinateProp := 
     templateNormalizedCoordinateBridgeExpression
   ]
 
+def classicalProductCoordinateWaypointProp : Prop :=
+  classicalProductCoordinateLabel = "G_f2_ws" ∧
+    classicalProductCoordinateExpression =
+      "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws" ∧
+    classicalProductCoordinateBridgeExpression = "G_f2_ws - G_g12_ws*G_p12_ws = 0" ∧
+    classicalProductCoordinateFirstFailure.power = 1 ∧
+    classicalProductCoordinateFirstFailure.coeff = -4 ∧
+    classicalProductCoordinateSmallBoxStatus.etaHits = 0 ∧
+    classicalProductCoordinateSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    classicalProductCoordinateSmallBoxStatus.selfPolynomialHits = 0 ∧
+    classicalProductCoordinateSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    classicalProductCoordinateSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    classicalProductCoordinateSmallBoxStatus.plusPochhammerHits = 0 ∧
+    classicalProductCoordinateSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    classicalProductCoordinateFollowupLabel = "H_f2_ws" ∧
+    classicalProductCoordinateFollowupExpression = "H_f2_ws = (G_f2_ws - 1) / (-4*t^1)" ∧
+    classicalProductCoordinateFollowupFirstFailure.power = 1 ∧
+    classicalProductCoordinateFollowupFirstFailure.coeff = (1 : Rat) / 2 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.etaHits = 0 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    classicalProductCoordinateFollowupSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem classicalProductCoordinateWaypoint_true : classicalProductCoordinateWaypointProp := by
+  simp [
+    classicalProductCoordinateWaypointProp,
+    classicalProductCoordinateLabel,
+    classicalProductCoordinateExpression,
+    classicalProductCoordinateBridgeExpression,
+    classicalProductCoordinateFirstFailure,
+    classicalProductCoordinateSmallBoxStatus,
+    classicalProductCoordinateFollowupLabel,
+    classicalProductCoordinateFollowupExpression,
+    classicalProductCoordinateFollowupFirstFailure,
+    classicalProductCoordinateFollowupSmallBoxStatus
+  ]
+
 def primaryResidualSelectionProp : Prop :=
   primaryResidualLabel = "G_g12_ws" ∧
     primaryResidualExpression = "G_g12_ws = g12_ws / (t^2; t^4)_inf^12" ∧
@@ -236,6 +303,11 @@ def primaryResidualSelectionProp : Prop :=
     companionResidualExpression = "G_p12_ws = p12_ws / (-t^2; t^4)_inf^12" ∧
     focusedQuotientCoordinateLabel = "X_g_ws" ∧
     focusedQuotientCoordinateExpression = "X_g_ws = 16*t^2 / g12_ws^2" ∧
+    classicalProductCoordinateLabel = "G_f2_ws" ∧
+    classicalProductCoordinateExpression =
+      "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws" ∧
+    classicalProductCoordinateFollowupLabel = "H_f2_ws" ∧
+    classicalProductCoordinateFollowupExpression = "H_f2_ws = (G_f2_ws - 1) / (-4*t^1)" ∧
     templateNormalizedCoordinateLabel = "G_X_ws" ∧
     templateNormalizedCoordinateExpression =
       "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2" ∧
@@ -267,6 +339,10 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     companionResidualExpression,
     focusedQuotientCoordinateLabel,
     focusedQuotientCoordinateExpression,
+    classicalProductCoordinateLabel,
+    classicalProductCoordinateExpression,
+    classicalProductCoordinateFollowupLabel,
+    classicalProductCoordinateFollowupExpression,
     templateNormalizedCoordinateLabel,
     templateNormalizedCoordinateExpression,
     templateNormalizedFollowupLabel,
@@ -551,6 +627,7 @@ theorem normalizedFollowupSmallBoxStatus_true : normalizedFollowupSmallBoxStatus
 structure WaypointCertificate where
   bridge : exactCoordinateBridgeProp
   quotientCoordinateBridge : exactQuotientCoordinateBridgeProp
+  classicalProductCoordinate : classicalProductCoordinateWaypointProp
   templateCoordinate : templateNormalizedCoordinateProp
   selection : primaryResidualSelectionProp
   templateFirstFailure : templateNormalizedCoordinateFirstFailureProp
@@ -579,6 +656,7 @@ structure WaypointCertificate where
 def currentWaypointCertificate : WaypointCertificate where
   bridge := exactCoordinateBridge_true
   quotientCoordinateBridge := exactQuotientCoordinateBridge_true
+  classicalProductCoordinate := classicalProductCoordinateWaypoint_true
   templateCoordinate := templateNormalizedCoordinate_true
   selection := primaryResidualSelection_true
   templateFirstFailure := templateNormalizedCoordinateFirstFailure_true
@@ -607,6 +685,7 @@ def currentWaypointCertificate : WaypointCertificate where
 def currentWaypoint : Prop :=
   exactCoordinateBridgeProp ∧
     exactQuotientCoordinateBridgeProp ∧
+    classicalProductCoordinateWaypointProp ∧
     templateNormalizedCoordinateProp ∧
     primaryResidualSelectionProp ∧
     templateNormalizedCoordinateFirstFailureProp ∧
@@ -635,6 +714,7 @@ theorem currentWaypoint_true : currentWaypoint := by
   exact ⟨
     currentWaypointCertificate.bridge,
     currentWaypointCertificate.quotientCoordinateBridge,
+    currentWaypointCertificate.classicalProductCoordinate,
     currentWaypointCertificate.templateCoordinate,
     currentWaypointCertificate.selection,
     currentWaypointCertificate.templateFirstFailure,

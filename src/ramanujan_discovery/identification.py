@@ -771,6 +771,10 @@ class WeberResidualBridgeScan:
     exact_bridge_first_failure_power: int | None
     exact_bridge_first_failure_coeff: sp.Expr | None
     residual_bridge_expression: str
+    classical_product_coordinate_label: str
+    classical_product_coordinate_expression: str
+    classical_product_coordinate_bridge_expression: str
+    classical_product_coordinate_scan: "ConstantOneSeriesScan"
     quotient_coordinate_label: str
     quotient_coordinate_expression: str
     quotient_coordinate_bridge_expression: str
@@ -6487,6 +6491,19 @@ def scan_weber_class_invariant_bridge_box(
         for index in range(order)
     ]
     bridge_first_failure_power, bridge_first_failure_coeff = _first_nonzero_residual_term(bridge_series)
+    classical_product_coordinate_scan = _scan_constant_one_series(
+        label="G_f2_ws",
+        expression=(
+            "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)"
+            " = G_g12_ws*G_p12_ws"
+        ),
+        target_series=series_mul(g_correction_series, p_correction_series),
+        order=order,
+        eta_levels=eta_levels,
+        moduli=moduli,
+        max_abs_exponent=max_abs_exponent,
+        followup_label="H_f2_ws",
+    )
 
     raw_quotient_series = series_div(p_coordinate_series, g_coordinate_series)
     raw_quotient_squared = series_pow(raw_quotient_series, 2)
@@ -6709,6 +6726,13 @@ def scan_weber_class_invariant_bridge_box(
             " + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2"
             " + 4096*t^6 = 0"
         ),
+        classical_product_coordinate_label="G_f2_ws",
+        classical_product_coordinate_expression=(
+            "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)"
+            " = G_g12_ws*G_p12_ws"
+        ),
+        classical_product_coordinate_bridge_expression="G_f2_ws - G_g12_ws*G_p12_ws = 0",
+        classical_product_coordinate_scan=classical_product_coordinate_scan,
         quotient_coordinate_label="X_g_ws",
         quotient_coordinate_expression="X_g_ws = 16*t^2 / g12_ws^2",
         quotient_coordinate_bridge_expression=(
@@ -12979,6 +13003,161 @@ def build_candidate_tail_family_note(
                 lines.append(
                     f"- Weber residual exact residual bridge: `{bridge_scan.residual_bridge_expression}`."
                 )
+                classical_product_scan = bridge_scan.classical_product_coordinate_scan
+                classical_product_eta_hits = [
+                    scan for scan in classical_product_scan.eta_scans if scan.relation is not None
+                ]
+                classical_product_modular_hits = [
+                    scan
+                    for scan in classical_product_scan.modular_unit_eta_scans
+                    if scan.relation is not None
+                ]
+                classical_product_plus_hits = [
+                    scan
+                    for scan in classical_product_scan.self_plus_pochhammer_scans
+                    if scan.relation is not None
+                ]
+                classical_product_plus_eta_hits = [
+                    scan
+                    for scan in classical_product_scan.self_plus_pochhammer_eta_scans
+                    if scan.relation is not None
+                ]
+                classical_product_self_product_hits = [
+                    scan
+                    for scan in classical_product_scan.self_quotient_product_scans
+                    if scan.relation is not None
+                ]
+                lines.append(
+                    f"- Classical Weber `f2` tri-product coordinate `{bridge_scan.classical_product_coordinate_label}`: "
+                    f"`{bridge_scan.classical_product_coordinate_expression}`."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product bridge: "
+                    f"`{bridge_scan.classical_product_coordinate_bridge_expression}`."
+                )
+                if (
+                    classical_product_scan.first_failure_power is None
+                    or classical_product_scan.first_failure_coeff is None
+                ):
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product coordinate `{classical_product_scan.label}`: "
+                        "matches `1` through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product coordinate `{classical_product_scan.label}`: "
+                        f"`{classical_product_scan.label} - 1` first fails at "
+                        f"`{series_symbol}^{classical_product_scan.first_failure_power}` with coefficient "
+                        f"`{_format_expr(classical_product_scan.first_failure_coeff)}`."
+                    )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product self-polynomial uniqueness boxes: "
+                    f"`{len(classical_product_scan.self_polynomial_scan.hits)}` / "
+                    f"`{len(classical_product_scan.self_polynomial_scan.moduli_checked) * len(classical_product_scan.self_polynomial_scan.fg_degree_values) * len(classical_product_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product self-fractional-linear uniqueness boxes: "
+                    f"`{len(classical_product_scan.self_fractional_linear_scan.hits)}` / "
+                    f"`{len(classical_product_scan.self_fractional_linear_scan.moduli_checked) * len(classical_product_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product self-quotient finite-product boxes: "
+                    f"`{len(classical_product_self_product_hits)}` / "
+                    f"`{len(classical_product_scan.self_quotient_product_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product eta templates: `{len(classical_product_eta_hits)}` / "
+                    f"`{len(classical_product_scan.eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product modular-unit / eta templates: "
+                    f"`{len(classical_product_modular_hits)}` / `{len(classical_product_scan.modular_unit_eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product plus-Pochhammer templates: "
+                    f"`{len(classical_product_plus_hits)}` / `{len(classical_product_scan.self_plus_pochhammer_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Classical Weber `f2` tri-product plus-Pochhammer + eta templates: "
+                    f"`{len(classical_product_plus_eta_hits)}` / "
+                    f"`{len(classical_product_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                )
+                if classical_product_scan.normalized_followup is not None:
+                    classical_product_followup = classical_product_scan.normalized_followup
+                    classical_product_followup_self_product_hits = [
+                        scan
+                        for scan in classical_product_followup.self_quotient_product_scans
+                        if scan.relation is not None
+                    ]
+                    classical_product_followup_eta_hits = [
+                        scan for scan in classical_product_followup.eta_scans if scan.relation is not None
+                    ]
+                    classical_product_followup_modular_hits = [
+                        scan
+                        for scan in classical_product_followup.modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    classical_product_followup_plus_hits = [
+                        scan
+                        for scan in classical_product_followup.self_plus_pochhammer_scans
+                        if scan.relation is not None
+                    ]
+                    classical_product_followup_plus_eta_hits = [
+                        scan
+                        for scan in classical_product_followup.self_plus_pochhammer_eta_scans
+                        if scan.relation is not None
+                    ]
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized follow-up `{classical_product_followup.label}`: "
+                        f"`{classical_product_followup.expression}`."
+                    )
+                    if (
+                        classical_product_followup.first_failure_power is None
+                        or classical_product_followup.first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Classical Weber `f2` tri-product normalized follow-up `{classical_product_followup.label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Classical Weber `f2` tri-product normalized follow-up `{classical_product_followup.label}`: "
+                            f"`{classical_product_followup.label} - 1` first fails at "
+                            f"`{series_symbol}^{classical_product_followup.first_failure_power}` with coefficient "
+                            f"`{_format_expr(classical_product_followup.first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: "
+                        f"`{len(classical_product_followup.self_polynomial_scan.hits)}` / "
+                        f"`{len(classical_product_followup.self_polynomial_scan.moduli_checked) * len(classical_product_followup.self_polynomial_scan.fg_degree_values) * len(classical_product_followup.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized self-fractional-linear uniqueness boxes: "
+                        f"`{len(classical_product_followup.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(classical_product_followup.self_fractional_linear_scan.moduli_checked) * len(classical_product_followup.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized self-quotient finite-product boxes: "
+                        f"`{len(classical_product_followup_self_product_hits)}` / "
+                        f"`{len(classical_product_followup.self_quotient_product_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized eta templates: `{len(classical_product_followup_eta_hits)}` / "
+                        f"`{len(classical_product_followup.eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized modular-unit / eta templates: "
+                        f"`{len(classical_product_followup_modular_hits)}` / `{len(classical_product_followup.modular_unit_eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized plus-Pochhammer templates: "
+                        f"`{len(classical_product_followup_plus_hits)}` / `{len(classical_product_followup.self_plus_pochhammer_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: "
+                        f"`{len(classical_product_followup_plus_eta_hits)}` / "
+                        f"`{len(classical_product_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
+                    )
                 lines.append(
                     f"- Weber residual quotient-coordinate `{bridge_scan.quotient_coordinate_label}`: "
                     f"`{bridge_scan.quotient_coordinate_expression}`."
@@ -13991,6 +14170,35 @@ def build_candidate_tail_family_note(
             if sample.weber_p_class_invariant_scan is not None
             and _weber_class_invariant_scan_has_hit(sample.weber_p_class_invariant_scan)
         )
+        weber_classical_product_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.weber_residual_bridge_scan is not None
+            and (
+                bool(sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_polynomial_scan.hits)
+                or bool(sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_fractional_linear_scan.hits)
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_quotient_product_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.eta_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.modular_unit_eta_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_plus_pochhammer_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_plus_pochhammer_eta_scans
+                )
+            )
+        )
         weber_residual_quotient_hit_count = sum(
             1
             for sample in sample_scans
@@ -14061,9 +14269,10 @@ def build_candidate_tail_family_note(
                 f"- Morton Weber-Schlafli sample hits found: `{morton_weber_hit_count}`",
                 f"- Weber g-class-invariant sample hits found: `{weber_g_class_invariant_hit_count}`",
                 f"- Weber G-class-invariant sample hits found: `{weber_p_class_invariant_hit_count}`",
+                f"- Classical Weber `f2` tri-product sample hits found: `{weber_classical_product_hit_count}`",
                 f"- Weber residual-quotient sample hits found: `{weber_residual_quotient_hit_count}`",
                 f"- Weber residual-follow-up sample hits found: `{weber_residual_followup_hit_count}`",
-                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.",
                 "",
                 f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
                 "",
