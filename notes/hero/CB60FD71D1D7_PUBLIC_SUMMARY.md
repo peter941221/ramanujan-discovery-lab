@@ -62,9 +62,24 @@ has been found in the primary sources checked so far.
   `(t^2; t^4)_inf^12` and `(-t^2; t^4)_inf^12`, but on the current hero
   tail-family ladder they still give `0` hits after the first direct-template,
   eta / modular-unit, and plus-Pochhammer correction passes.
+- That same Weber pair is now tied together by an exact bridge
+  `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+  This lets the project keep `G_g12_ws` as the current primary eta-side
+  residual, treat `G_p12_ws` as the constrained companion, and focus the next
+  positive-recognition step on the quotient
+  `R_gp_ws = G_p12_ws / G_g12_ws`, which still gives `0` hits in the first
+  narrow self-polynomial, self-fractional-linear, self-quotient finite-product,
+  eta / modular-unit, and plus-Pochhammer boxes.
+  The same lane now also keeps a normalized follow-up
+  `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` under watch, and that follow-up also
+  remains outside the first theorem-shaped closure boxes.
 - That direct Weber companion obstruction is now also packaged in Lean under
   `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean`, so this is no longer
   only a notebook-level negative result.
+- The new focused Weber residual bridge is likewise packaged under
+  `proofs/Proofs/HeroCaseWeberClassInvariantBridgeWaypoint.lean` and exposed
+  from `Proofs/HeroCaseFinalIdentity.lean` as the current theorem-shaped
+  hand-off after the `g/p` compression.
 
 ## What Has Not Been Claimed
 

@@ -3,6 +3,7 @@ import Proofs.GeneralizedCF
 import Proofs.HeroCaseObjects
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
 import Proofs.HeroCaseGGWeightedCorrectionWaypoint
+import Proofs.HeroCaseWeberClassInvariantBridgeWaypoint
 import Proofs.HeroCaseLocal
 import Proofs.HeroCaseHeineCor2cf
 import Proofs.HeroCasePage43

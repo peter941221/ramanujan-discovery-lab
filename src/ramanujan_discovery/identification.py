@@ -379,6 +379,7 @@ class TailFamilySourceEtaSample:
     morton_periodic_point_scan: MortonPeriodicPointScan | None = None
     weber_g_class_invariant_scan: WeberClassInvariantScan | None = None
     weber_p_class_invariant_scan: WeberClassInvariantScan | None = None
+    weber_residual_bridge_scan: WeberResidualBridgeScan | None = None
 
 
 @dataclass(frozen=True)
@@ -754,6 +755,51 @@ class WeberClassInvariantScan:
     direct_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
     correction_self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     correction_self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+
+
+@dataclass(frozen=True)
+class WeberResidualBridgeScan:
+    """A focused bridge between the two Weber class-invariant residuals."""
+
+    primary_label: str
+    primary_expression: str
+    primary_reason: str
+    companion_label: str
+    companion_expression: str
+    exact_bridge_expression: str
+    exact_bridge_holds: bool
+    exact_bridge_first_failure_power: int | None
+    exact_bridge_first_failure_coeff: sp.Expr | None
+    residual_bridge_expression: str
+    quotient_label: str
+    quotient_expression: str
+    quotient_first_failure_power: int | None
+    quotient_first_failure_coeff: sp.Expr | None
+    quotient_self_polynomial_scan: SelfPolynomialUniquenessScan
+    quotient_self_fractional_linear_scan: SelfFractionalLinearUniquenessScan
+    quotient_self_quotient_product_scans: tuple[SelfQuotientProductRelationScan, ...]
+    quotient_eta_scans: tuple[EtaQuotientRelationScan, ...]
+    quotient_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
+    quotient_self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
+    quotient_self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+    normalized_followup: "NormalizedResidualFollowupScan | None" = None
+
+
+@dataclass(frozen=True)
+class NormalizedResidualFollowupScan:
+    """A gap-normalized follow-up object after the first residual failure term."""
+
+    label: str
+    expression: str
+    first_failure_power: int | None
+    first_failure_coeff: sp.Expr | None
+    self_polynomial_scan: SelfPolynomialUniquenessScan
+    self_fractional_linear_scan: SelfFractionalLinearUniquenessScan
+    self_quotient_product_scans: tuple[SelfQuotientProductRelationScan, ...]
+    eta_scans: tuple[EtaQuotientRelationScan, ...]
+    modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
+    self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
+    self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
 
 
 @dataclass(frozen=True)
@@ -2558,6 +2604,13 @@ def scan_tail_family_source_eta_ladder(
                 moduli=powers,
                 max_abs_exponent=max_abs_exponent,
             )
+            weber_residual_bridge_scan = scan_weber_class_invariant_bridge_box(
+                target_series=current_series[:morton_scan_order],
+                order=morton_scan_order,
+                eta_levels=eta_levels,
+                moduli=powers,
+                max_abs_exponent=max_abs_exponent,
+            )
             samples.append(
                 TailFamilySourceEtaSample(
                     label=current_label,
@@ -2573,6 +2626,7 @@ def scan_tail_family_source_eta_ladder(
                     morton_periodic_point_scan=morton_scan,
                     weber_g_class_invariant_scan=weber_g_class_invariant_scan,
                     weber_p_class_invariant_scan=weber_p_class_invariant_scan,
+                    weber_residual_bridge_scan=weber_residual_bridge_scan,
                 )
             )
             if gap_depth == max_gap_depth:
@@ -5975,6 +6029,230 @@ def scan_weber_p_class_invariant_box(
                 max_abs_exponent=max_abs_exponent,
             )
         ),
+    )
+
+
+def scan_weber_class_invariant_bridge_box(
+    *,
+    target_series: Series,
+    order: int,
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    moduli: tuple[int, ...] = (2, 3, 4),
+    max_abs_exponent: int = 8,
+) -> WeberResidualBridgeScan | None:
+    g_coordinate_series = _normalized_weber_g_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    p_coordinate_series = _normalized_weber_p_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if g_coordinate_series is None or p_coordinate_series is None:
+        return None
+
+    g_template_series = _normalized_weber_g_template_series(order=order)
+    p_template_series = _normalized_weber_p_template_series(order=order)
+    g_correction_series = series_div(g_coordinate_series, g_template_series)
+    p_correction_series = series_div(p_coordinate_series, p_template_series)
+
+    g_squared = series_pow(g_coordinate_series, 2)
+    g_fourth = series_pow(g_squared, 2)
+    p_squared = series_pow(p_coordinate_series, 2)
+    p_fourth = series_pow(p_squared, 2)
+    bridge_series = series_mul(g_fourth, p_squared)
+    subtrahend = series_mul(g_squared, p_fourth)
+    bridge_series = [
+        sp.simplify(bridge_series[index] - subtrahend[index])
+        for index in range(order)
+    ]
+    t_squared_series: Series = [sp.Integer(0) for _ in range(order)]
+    if order > 2:
+        t_squared_series[2] = sp.Integer(1)
+    t_sixth_series: Series = [sp.Integer(0) for _ in range(order)]
+    if order > 6:
+        t_sixth_series[6] = sp.Integer(1)
+    mixed_term = [
+        sp.simplify(48 * value)
+        for value in series_mul(t_squared_series, series_mul(g_squared, p_squared))
+    ]
+    bridge_series = [
+        sp.simplify(bridge_series[index] + mixed_term[index] + 4096 * t_sixth_series[index])
+        for index in range(order)
+    ]
+    bridge_first_failure_power, bridge_first_failure_coeff = _first_nonzero_residual_term(bridge_series)
+
+    quotient_series = series_div(p_correction_series, g_correction_series)
+    quotient_residual = [sp.simplify(value) for value in quotient_series]
+    quotient_residual[0] = sp.simplify(quotient_residual[0] - 1)
+    quotient_first_failure_power, quotient_first_failure_coeff = _first_nonzero_residual_term(
+        quotient_residual
+    )
+    quotient_self_polynomial_scan = scan_self_polynomial_uniqueness_relations(
+        target_series=quotient_series,
+        moduli=moduli,
+        order=order,
+        fg_degree_values=(1, 2),
+        t_degree_values=(1, 2, 3),
+    )
+    quotient_self_fractional_linear_scan = scan_self_fractional_linear_uniqueness_relations(
+        target_series=quotient_series,
+        moduli=moduli,
+        order=order,
+        t_degree_values=(1, 2, 3),
+    )
+    quotient_self_quotient_product_scans = tuple(
+        scan_ratio_self_quotient_product_relations(
+            ratio_series=quotient_series,
+            moduli=moduli,
+            order=order,
+            max_abs_exponent=max_abs_exponent,
+        )
+    )
+    normalized_followup: NormalizedResidualFollowupScan | None = None
+    if quotient_first_failure_power is not None and quotient_first_failure_coeff is not None:
+        followup_series: Series = [sp.Integer(0) for _ in range(order)]
+        for index in range(order):
+            source_index = index + quotient_first_failure_power
+            if source_index >= order:
+                break
+            followup_series[index] = sp.simplify(
+                quotient_residual[source_index] / quotient_first_failure_coeff
+            )
+        followup_residual = [sp.simplify(value) for value in followup_series]
+        followup_residual[0] = sp.simplify(followup_residual[0] - 1)
+        followup_first_failure_power, followup_first_failure_coeff = _first_nonzero_residual_term(
+            followup_residual
+        )
+        normalized_followup = NormalizedResidualFollowupScan(
+            label="H_gp_ws",
+            expression=(
+                f"H_gp_ws = (R_gp_ws - 1) / "
+                f"({_format_expr(quotient_first_failure_coeff)}*t^{quotient_first_failure_power})"
+            ),
+            first_failure_power=followup_first_failure_power,
+            first_failure_coeff=followup_first_failure_coeff,
+            self_polynomial_scan=scan_self_polynomial_uniqueness_relations(
+                target_series=followup_series,
+                moduli=moduli,
+                order=order,
+                fg_degree_values=(1, 2),
+                t_degree_values=(1, 2, 3),
+            ),
+            self_fractional_linear_scan=scan_self_fractional_linear_uniqueness_relations(
+                target_series=followup_series,
+                moduli=moduli,
+                order=order,
+                t_degree_values=(1, 2, 3),
+            ),
+            self_quotient_product_scans=tuple(
+                scan_ratio_self_quotient_product_relations(
+                    ratio_series=followup_series,
+                    moduli=moduli,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            eta_scans=tuple(
+                scan_ratio_eta_quotient_relations(
+                    ratio_series=followup_series,
+                    levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            modular_unit_eta_scans=tuple(
+                scan_ratio_modular_unit_eta_relations(
+                    ratio_series=followup_series,
+                    moduli=moduli,
+                    eta_levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            self_plus_pochhammer_scans=tuple(
+                scan_ratio_self_plus_pochhammer_relations(
+                    ratio_series=followup_series,
+                    moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            self_plus_pochhammer_eta_scans=tuple(
+                scan_ratio_self_plus_pochhammer_eta_relations(
+                    ratio_series=followup_series,
+                    moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                    eta_levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+        )
+
+    return WeberResidualBridgeScan(
+        primary_label="G_g12_ws",
+        primary_expression="G_g12_ws = g12_ws / (t^2; t^4)_inf^12",
+        primary_reason=(
+            "The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, "
+            "so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its "
+            "algebraically constrained companion."
+        ),
+        companion_label="G_p12_ws",
+        companion_expression="G_p12_ws = p12_ws / (-t^2; t^4)_inf^12",
+        exact_bridge_expression=(
+            "g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0"
+        ),
+        exact_bridge_holds=bridge_first_failure_power is None,
+        exact_bridge_first_failure_power=bridge_first_failure_power,
+        exact_bridge_first_failure_coeff=bridge_first_failure_coeff,
+        residual_bridge_expression=(
+            "(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2"
+            " - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4"
+            " + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2"
+            " + 4096*t^6 = 0"
+        ),
+        quotient_label="R_gp_ws",
+        quotient_expression="R_gp_ws = G_p12_ws / G_g12_ws",
+        quotient_first_failure_power=quotient_first_failure_power,
+        quotient_first_failure_coeff=quotient_first_failure_coeff,
+        quotient_self_polynomial_scan=quotient_self_polynomial_scan,
+        quotient_self_fractional_linear_scan=quotient_self_fractional_linear_scan,
+        quotient_self_quotient_product_scans=quotient_self_quotient_product_scans,
+        quotient_eta_scans=tuple(
+            scan_ratio_eta_quotient_relations(
+                ratio_series=quotient_series,
+                levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        quotient_modular_unit_eta_scans=tuple(
+            scan_ratio_modular_unit_eta_relations(
+                ratio_series=quotient_series,
+                moduli=moduli,
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        quotient_self_plus_pochhammer_scans=tuple(
+            scan_ratio_self_plus_pochhammer_relations(
+                ratio_series=quotient_series,
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        quotient_self_plus_pochhammer_eta_scans=tuple(
+            scan_ratio_self_plus_pochhammer_eta_relations(
+                ratio_series=quotient_series,
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        normalized_followup=normalized_followup,
     )
 
 
@@ -11887,7 +12165,13 @@ def build_candidate_tail_family_note(
             "p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)",
             "g12_ws ?= (t^2; t^4)_inf^12",
             "p12_ws ?= (-t^2; t^4)_inf^12",
+            "R_gp_ws = G_p12_ws / G_g12_ws",
+            "g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0",
             "```",
+            "",
+            "- Phase 4 now treats the eta-side residual `G_g12_ws` as the primary Weber hand-off, "
+            "uses the exact algebraic bridge between `g12_ws` and `p12_ws` to keep `G_p12_ws` as a constrained companion, "
+            "and then probes the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws` before reopening any broader search box.",
             "",
         ]
     )
@@ -12135,6 +12419,182 @@ def build_candidate_tail_family_note(
                             f"  - plus box `m={scan.modulus}`, `N={scan.level}`: "
                             f"`{_format_self_plus_pochhammer_eta_relation(scan.relation, modulus=scan.modulus, target_variable=weber_scan.correction_label, series_symbol=series_symbol)}`"
                         )
+            if sample.weber_residual_bridge_scan is not None:
+                bridge_scan = sample.weber_residual_bridge_scan
+                quotient_eta_hits = [
+                    scan for scan in bridge_scan.quotient_eta_scans if scan.relation is not None
+                ]
+                quotient_modular_hits = [
+                    scan
+                    for scan in bridge_scan.quotient_modular_unit_eta_scans
+                    if scan.relation is not None
+                ]
+                quotient_plus_hits = [
+                    scan
+                    for scan in bridge_scan.quotient_self_plus_pochhammer_scans
+                    if scan.relation is not None
+                ]
+                quotient_plus_eta_hits = [
+                    scan
+                    for scan in bridge_scan.quotient_self_plus_pochhammer_eta_scans
+                    if scan.relation is not None
+                ]
+                quotient_self_product_hits = [
+                    scan
+                    for scan in bridge_scan.quotient_self_quotient_product_scans
+                    if scan.relation is not None
+                ]
+                lines.append(
+                    f"- Weber residual bridge keeps `{bridge_scan.primary_label}` as the current primary residual: "
+                    f"`{bridge_scan.primary_expression}`."
+                )
+                lines.append(f"- Weber residual bridge reason: {bridge_scan.primary_reason}")
+                lines.append(
+                    f"- Weber residual companion `{bridge_scan.companion_label}`: "
+                    f"`{bridge_scan.companion_expression}`."
+                )
+                lines.append(
+                    f"- Weber residual exact coordinate bridge: `{bridge_scan.exact_bridge_expression}`."
+                )
+                if bridge_scan.exact_bridge_holds:
+                    lines.append(
+                        "- Weber residual exact coordinate bridge verdict: matches through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        "- Weber residual exact coordinate bridge verdict: "
+                        f"first fails at `{series_symbol}^{bridge_scan.exact_bridge_first_failure_power}` "
+                        f"with coefficient `{_format_expr(bridge_scan.exact_bridge_first_failure_coeff)}`."
+                    )
+                lines.append(
+                    f"- Weber residual exact residual bridge: `{bridge_scan.residual_bridge_expression}`."
+                )
+                lines.append(
+                    f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "
+                    f"`{bridge_scan.quotient_expression}`."
+                )
+                if (
+                    bridge_scan.quotient_first_failure_power is None
+                    or bridge_scan.quotient_first_failure_coeff is None
+                ):
+                    lines.append(
+                        f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "
+                        "matches `1` through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "
+                        f"`{bridge_scan.quotient_expression} - 1` first fails at "
+                        f"`{series_symbol}^{bridge_scan.quotient_first_failure_power}` with coefficient "
+                        f"`{_format_expr(bridge_scan.quotient_first_failure_coeff)}`."
+                    )
+                lines.append(
+                    f"- Weber residual quotient self-polynomial uniqueness boxes: "
+                    f"`{len(bridge_scan.quotient_self_polynomial_scan.hits)}` / "
+                    f"`{len(bridge_scan.quotient_self_polynomial_scan.moduli_checked) * len(bridge_scan.quotient_self_polynomial_scan.fg_degree_values) * len(bridge_scan.quotient_self_polynomial_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber residual quotient self-fractional-linear uniqueness boxes: "
+                    f"`{len(bridge_scan.quotient_self_fractional_linear_scan.hits)}` / "
+                    f"`{len(bridge_scan.quotient_self_fractional_linear_scan.moduli_checked) * len(bridge_scan.quotient_self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber residual quotient self-quotient finite-product boxes: "
+                    f"`{len(quotient_self_product_hits)}` / "
+                    f"`{len(bridge_scan.quotient_self_quotient_product_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber residual quotient eta templates: `{len(quotient_eta_hits)}` / "
+                    f"`{len(bridge_scan.quotient_eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber residual quotient modular-unit / eta templates: "
+                    f"`{len(quotient_modular_hits)}` / `{len(bridge_scan.quotient_modular_unit_eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber residual quotient plus-Pochhammer templates: "
+                    f"`{len(quotient_plus_hits)}` / `{len(bridge_scan.quotient_self_plus_pochhammer_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber residual quotient plus-Pochhammer + eta templates: "
+                    f"`{len(quotient_plus_eta_hits)}` / "
+                    f"`{len(bridge_scan.quotient_self_plus_pochhammer_eta_scans)}` hit boxes."
+                )
+                if bridge_scan.normalized_followup is not None:
+                    followup_scan = bridge_scan.normalized_followup
+                    followup_self_product_hits = [
+                        scan
+                        for scan in followup_scan.self_quotient_product_scans
+                        if scan.relation is not None
+                    ]
+                    followup_eta_hits = [
+                        scan for scan in followup_scan.eta_scans if scan.relation is not None
+                    ]
+                    followup_modular_hits = [
+                        scan
+                        for scan in followup_scan.modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    followup_plus_hits = [
+                        scan
+                        for scan in followup_scan.self_plus_pochhammer_scans
+                        if scan.relation is not None
+                    ]
+                    followup_plus_eta_hits = [
+                        scan
+                        for scan in followup_scan.self_plus_pochhammer_eta_scans
+                        if scan.relation is not None
+                    ]
+                    lines.append(
+                        f"- Weber residual normalized follow-up `{followup_scan.label}`: "
+                        f"`{followup_scan.expression}`."
+                    )
+                    if (
+                        followup_scan.first_failure_power is None
+                        or followup_scan.first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Weber residual normalized follow-up `{followup_scan.label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weber residual normalized follow-up `{followup_scan.label}`: "
+                            f"`{followup_scan.label} - 1` first fails at "
+                            f"`{series_symbol}^{followup_scan.first_failure_power}` with coefficient "
+                            f"`{_format_expr(followup_scan.first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Weber residual normalized self-polynomial uniqueness boxes: "
+                        f"`{len(followup_scan.self_polynomial_scan.hits)}` / "
+                        f"`{len(followup_scan.self_polynomial_scan.moduli_checked) * len(followup_scan.self_polynomial_scan.fg_degree_values) * len(followup_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber residual normalized self-fractional-linear uniqueness boxes: "
+                        f"`{len(followup_scan.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(followup_scan.self_fractional_linear_scan.moduli_checked) * len(followup_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber residual normalized self-quotient finite-product boxes: "
+                        f"`{len(followup_self_product_hits)}` / "
+                        f"`{len(followup_scan.self_quotient_product_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber residual normalized eta templates: `{len(followup_eta_hits)}` / "
+                        f"`{len(followup_scan.eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber residual normalized modular-unit / eta templates: "
+                        f"`{len(followup_modular_hits)}` / `{len(followup_scan.modular_unit_eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber residual normalized plus-Pochhammer templates: "
+                        f"`{len(followup_plus_hits)}` / `{len(followup_scan.self_plus_pochhammer_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber residual normalized plus-Pochhammer + eta templates: "
+                        f"`{len(followup_plus_eta_hits)}` / `{len(followup_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                    )
             if sample.gg_modular_equation_scan is not None:
                 gg_scan = sample.gg_modular_equation_scan
                 direct_prefix_summary = "; ".join(
@@ -12466,6 +12926,62 @@ def build_candidate_tail_family_note(
             if sample.weber_p_class_invariant_scan is not None
             and _weber_class_invariant_scan_has_hit(sample.weber_p_class_invariant_scan)
         )
+        weber_residual_quotient_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.weber_residual_bridge_scan is not None
+            and (
+                any(scan.relation is not None for scan in sample.weber_residual_bridge_scan.quotient_eta_scans)
+                or bool(sample.weber_residual_bridge_scan.quotient_self_polynomial_scan.hits)
+                or bool(sample.weber_residual_bridge_scan.quotient_self_fractional_linear_scan.hits)
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.quotient_self_quotient_product_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.quotient_modular_unit_eta_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.quotient_self_plus_pochhammer_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.quotient_self_plus_pochhammer_eta_scans
+                )
+            )
+        )
+        weber_residual_followup_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.weber_residual_bridge_scan is not None
+            and sample.weber_residual_bridge_scan.normalized_followup is not None
+            and (
+                bool(sample.weber_residual_bridge_scan.normalized_followup.self_polynomial_scan.hits)
+                or bool(sample.weber_residual_bridge_scan.normalized_followup.self_fractional_linear_scan.hits)
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.normalized_followup.self_quotient_product_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.normalized_followup.eta_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.normalized_followup.modular_unit_eta_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.normalized_followup.self_plus_pochhammer_scans
+                )
+                or any(
+                    scan.relation is not None
+                    for scan in sample.weber_residual_bridge_scan.normalized_followup.self_plus_pochhammer_eta_scans
+                )
+            )
+        )
         lines.extend(
             [
                 "## Tail Verdict",
@@ -12480,7 +12996,9 @@ def build_candidate_tail_family_note(
                 f"- Morton Weber-Schlafli sample hits found: `{morton_weber_hit_count}`",
                 f"- Weber g-class-invariant sample hits found: `{weber_g_class_invariant_hit_count}`",
                 f"- Weber G-class-invariant sample hits found: `{weber_p_class_invariant_hit_count}`",
-                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, or the first literature-driven GG/Weber modular-equation boxes.",
+                f"- Weber residual-quotient sample hits found: `{weber_residual_quotient_hit_count}`",
+                f"- Weber residual-follow-up sample hits found: `{weber_residual_followup_hit_count}`",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.",
                 "",
                 f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
                 "",

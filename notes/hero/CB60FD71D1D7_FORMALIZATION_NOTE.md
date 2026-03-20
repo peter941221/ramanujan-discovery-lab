@@ -274,5 +274,6 @@ beta_n = 1 - a*t + b*m*t
 - Award-track target module (Lean scaffold): `proofs/Proofs/HeroCaseFinalIdentity.lean`
 - Current state: the module compiles, carries status marker `exclusion_waypoint`, and now exposes the current exact waypoint as a certificate object `currentExactWaypointCertificate`, whose two fields are proved by `finiteConvergentReductionWaypoint_true` and `knownSourceOrbitExclusionWaypoint_true` and then repackaged by `exactWaypointStatement_true`.
 - Current modular-coordinate waypoint: `proofs/Proofs/HeroCaseGGWeightedCorrectionWaypoint.lean` records the first failure of `F / W_34`, the normalized probe `G_W34`, the deeper follow-up `G2_W34`, and the current empty small correction boxes at both normalized layers.
+- Current Weber residual waypoint: `proofs/Proofs/HeroCaseWeberClassInvariantBridgeWaypoint.lean` records the primary residual choice `G_g12_ws`, the exact coordinate bridge tying `G_p12_ws` back to it, the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws`, the normalized follow-up `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`, and the current empty theorem-shaped uniqueness / closure boxes on both follow-up objects.
 - `finalIdentityStatement` is still a placeholder because no final closed form is identified yet.
 - Only replace the placeholder after a concrete closed form is identified.

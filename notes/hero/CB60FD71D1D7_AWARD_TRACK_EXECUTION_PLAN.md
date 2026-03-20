@@ -154,6 +154,20 @@ Working interpretation:
 - that means the project has now completed Step 1 and the constructive part of
   Step 2 in a source-faithful way: the next move is no longer "find any named
   coordinate", but "explain the residual after the `g/p` Weber compression"
+- the focused Phase-4 continuation now chooses the eta-side residual
+  `G_g12_ws = g12_ws / (t^2; t^4)_inf^12` as the primary Weber hand-off,
+  keeps `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12` as its algebraically
+  constrained companion through the exact bridge
+  `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`,
+  and narrows the next residual object to the quotient
+  `R_gp_ws = G_p12_ws / G_g12_ws`
+- on the hero tail-family ladder, that focused quotient still gives `0` hits in
+  the first self-polynomial, self-fractional-linear, self-quotient
+  finite-product, eta / modular-unit, and plus-Pochhammer boxes, and first
+  differs from `1` at `t^3` with coefficient `96`
+- the same lane now also tracks the normalized follow-up
+  `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`, which still gives `0` hits in the same
+  first theorem-shaped closure boxes
 
 ## Gap Map
 
@@ -355,8 +369,9 @@ Current Phase 2 result:
   more reusable theorem style
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
-  the next implementation should move to another literature-backed named Weber
-  coordinate, not widen anonymous prefix boxes again
+  the next implementation should first explain the focused residual quotient
+  `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named Weber
+  coordinate or widening anonymous prefix boxes again
 
 Success condition:
 

@@ -52,6 +52,7 @@ from ramanujan_discovery.identification import (
     scan_ratio_self_quotient_product_relations,
     scan_morton_periodic_point_box,
     scan_weber_class_invariant_box,
+    scan_weber_class_invariant_bridge_box,
     scan_weber_p_class_invariant_box,
     search_modular_unit_eta_relation,
     search_eta_quotient_relation,
@@ -2067,6 +2068,76 @@ def test_scan_weber_p_class_invariant_box_identifies_true_gg_coordinate():
     assert scan.correction_expression == "G_p12_ws = p12_ws / (-t^2; t^4)_inf^12"
 
 
+def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
+    order = 24
+    gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
+    gg_series = continued_fraction_series_coeffs(gg_template, depth=40, order=order)
+
+    scan = scan_weber_class_invariant_bridge_box(
+        target_series=gg_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.primary_label == "G_g12_ws"
+    assert scan.companion_label == "G_p12_ws"
+    assert scan.exact_bridge_holds
+    assert scan.exact_bridge_first_failure_power is None
+    assert scan.exact_bridge_first_failure_coeff is None
+    assert scan.quotient_label == "R_gp_ws"
+    assert scan.quotient_expression == "R_gp_ws = G_p12_ws / G_g12_ws"
+    assert scan.quotient_first_failure_power is None
+    assert scan.quotient_first_failure_coeff is None
+    assert len(scan.quotient_self_polynomial_scan.hits) >= 1
+    assert scan.normalized_followup is None
+
+
+def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scan = scan_weber_class_invariant_bridge_box(
+        target_series=hero_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.exact_bridge_holds
+    assert scan.quotient_first_failure_power == 3
+    assert scan.quotient_first_failure_coeff == 96
+    assert not scan.quotient_self_polynomial_scan.hits
+    assert not scan.quotient_self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in scan.quotient_self_quotient_product_scans)
+    assert scan.normalized_followup is not None
+    assert scan.normalized_followup.label == "H_gp_ws"
+    assert scan.normalized_followup.expression == "H_gp_ws = (R_gp_ws - 1) / (96*t^3)"
+    assert scan.normalized_followup.first_failure_power == 1
+    assert scan.normalized_followup.first_failure_coeff == sp.Rational(9, 2)
+    assert not scan.normalized_followup.self_polynomial_scan.hits
+    assert not scan.normalized_followup.self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in scan.normalized_followup.self_quotient_product_scans)
+    assert all(item.relation is None for item in scan.normalized_followup.eta_scans)
+    assert all(item.relation is None for item in scan.normalized_followup.modular_unit_eta_scans)
+    assert all(item.relation is None for item in scan.normalized_followup.self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in scan.normalized_followup.self_plus_pochhammer_eta_scans)
+    assert all(item.relation is None for item in scan.quotient_eta_scans)
+    assert all(item.relation is None for item in scan.quotient_modular_unit_eta_scans)
+    assert all(item.relation is None for item in scan.quotient_self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in scan.quotient_self_plus_pochhammer_eta_scans)
+
+
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
     order = 24
     gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
@@ -2821,6 +2892,18 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber class-invariant correction plus-Pochhammer + eta templates" in text
     assert "Weber class-invariant coordinate `p12_ws`" in text
     assert "Weber class-invariant correction `G_p12_ws`" in text
+    assert "Weber residual bridge keeps `G_g12_ws` as the current primary residual" in text
+    assert "Weber residual exact coordinate bridge" in text
+    assert "g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0" in text
+    assert "Weber residual quotient diagnostic `R_gp_ws`" in text
+    assert "Weber residual quotient self-polynomial uniqueness boxes" in text
+    assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text
+    assert "Weber residual quotient self-quotient finite-product boxes" in text
+    assert "Weber residual normalized follow-up `H_gp_ws`" in text
+    assert "Weber residual normalized self-polynomial uniqueness boxes" in text
+    assert "Weber residual normalized self-fractional-linear uniqueness boxes" in text
+    assert "Weber residual normalized self-quotient finite-product boxes" in text
+    assert "Weber residual quotient plus-Pochhammer + eta templates" in text
     assert "GG direct / reciprocal / quotient templates" in text
     assert "GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4`" in text
     assert "GG exact quotient-coordinate obstruction witnesses" in text
@@ -2842,6 +2925,8 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton Weber-Schlafli sample hits found" in text
     assert "Weber g-class-invariant sample hits found" in text
     assert "Weber G-class-invariant sample hits found" in text
+    assert "Weber residual-quotient sample hits found" in text
+    assert "Weber residual-follow-up sample hits found" in text
 
 
 def test_cli_tail_operator_note_writes_tail_operator_note(tmp_path: Path):

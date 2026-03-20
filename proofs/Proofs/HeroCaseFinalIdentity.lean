@@ -2,6 +2,7 @@ import Proofs.HeroCaseObjects
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
 import Proofs.HeroCaseWeberCompanionObstruction
 import Proofs.HeroCaseGGWeightedCorrectionWaypoint
+import Proofs.HeroCaseWeberClassInvariantBridgeWaypoint
 import Proofs.HeroCaseHeineCor2cf
 import Proofs.HeroCaseLocal
 import Proofs.HeroCasePage43Equivalence
@@ -103,6 +104,15 @@ Current source-family-specific exact lane:
   `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)` still misses across all `12`
   sampled tail-family objects and in fact collapses to one universal
   constant-term obstruction class
+- `Proofs/HeroCaseWeberClassInvariantBridgeWaypoint.lean` now packages the
+  next focused hand-off after the Ramanujan-Weber class-invariant compression:
+  the eta-side residual `G_g12_ws` is the current primary residual, the
+  plus-side residual `G_p12_ws` is kept as its algebraically constrained
+  companion through the exact coordinate bridge, and the focused quotient
+  `R_gp_ws = G_p12_ws / G_g12_ws` plus the normalized follow-up
+  `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` still have `0` hits in the first
+  checked self-polynomial / self-fractional-linear / self-quotient-product /
+  eta / modular-unit / plus-Pochhammer boxes
 - `Proofs/HeroCaseTailOperatorWaypoint.lean` now records the current sampled
   tail-operator lane (`12` sampled tail objects, Mahler-style moduli `2,3`,
   recurrence depths `2,3`, and `t`-degrees `1,2,3`) as a proof-workspace
@@ -384,6 +394,13 @@ def ggWeightedCorrectionResearchWaypoint : Prop :=
 theorem ggWeightedCorrectionResearchWaypoint_true : ggWeightedCorrectionResearchWaypoint := by
   exact Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
 
+def weberClassInvariantBridgeResearchWaypoint : Prop :=
+  Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
+
+theorem weberClassInvariantBridgeResearchWaypoint_true :
+    weberClassInvariantBridgeResearchWaypoint := by
+  exact Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
+
 /-!
 TODO (award track, endgame):
 
@@ -399,9 +416,10 @@ TODO (award track, endgame):
 5. Upgrade the current `GG` quotient-coordinate waypoint shell into actual
    exact modular-equation obstruction theorems, and either absorb or replace
    the current weighted-correction research waypoint with an exact theorem.
-6. Upgrade the current Weber companion obstruction shell into exact modular-
-   function obstruction theorems or move to the next named Weber coordinate
-   shell if that route proves cleaner.
+6. Upgrade the current Weber companion and Weber class-invariant bridge shells
+   into exact modular-function obstruction theorems or a positive source bridge,
+   depending on which side of the same named orbit yields the first true
+   uniqueness theorem.
 7. Prove the final identity in Lean and remove this placeholder.
 -/
 

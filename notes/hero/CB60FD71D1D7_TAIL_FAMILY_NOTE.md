@@ -61,7 +61,11 @@ g12_ws = 4*t*(Z_g - 1/Z_g)
 p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)
 g12_ws ?= (t^2; t^4)_inf^12
 p12_ws ?= (-t^2; t^4)_inf^12
+R_gp_ws = G_p12_ws / G_g12_ws
+g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0
 ```
+
+- Phase 4 now treats the eta-side residual `G_g12_ws` as the primary Weber hand-off, uses the exact algebraic bridge between `g12_ws` and `p12_ws` to keep `G_p12_ws` as a constrained companion, and then probes the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws` before reopening any broader search box.
 
 - We also check a `GG/Weber modular-equation` lane on the same sampled `U(x)` objects and their gap residuals:
 
@@ -117,6 +121,30 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -176,6 +204,30 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (192*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `11/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -235,6 +287,30 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-192`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (-192*t^4)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -294,6 +370,30 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `288`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (288*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `47/6`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -353,6 +453,30 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -412,6 +536,30 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `11/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -471,6 +619,30 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (-96*t^4)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `6`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -530,6 +702,30 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (192*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `7`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -589,6 +785,30 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -648,6 +868,30 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (96*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -707,6 +951,30 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (-96*t^4)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `5`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -766,6 +1034,30 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual exact coordinate bridge verdict: matches through the checked truncation.
+- Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
+- Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
+- Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual quotient eta templates: `0` / `4` hit boxes.
+- Weber residual quotient modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual quotient plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws = (R_gp_ws - 1) / (192*t^3)`.
+- Weber residual normalized follow-up `H_gp_ws`: `H_gp_ws - 1` first fails at `t^1` with coefficient `13/2`.
+- Weber residual normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber residual normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber residual normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber residual normalized eta templates: `0` / `4` hit boxes.
+- Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -800,6 +1092,8 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton Weber-Schlafli sample hits found: `0`
 - Weber g-class-invariant sample hits found: `0`
 - Weber G-class-invariant sample hits found: `0`
-- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, or the first literature-driven GG/Weber modular-equation boxes.
+- Weber residual-quotient sample hits found: `0`
+- Weber residual-follow-up sample hits found: `0`
+- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `330.36`
+- Build elapsed seconds: `370.13`
