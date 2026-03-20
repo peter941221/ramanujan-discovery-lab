@@ -134,6 +134,12 @@ Literature status
   `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`, and on the hero sample it first
   differs from `1` at `t^1` with coefficient `2` while still giving `0` hits
   in the first theorem-shaped closure boxes.
+  That quotient-follow-up lane is now also compared back to the
+  template-normalized branch:
+  `D_XK_ws = K_XR_ws - H_X_ws` and `Q_XK_ws = K_XR_ws / H_X_ws` both first
+  fail at `t^1` with coefficient `-5/2`, and their stripped quotient follow-up
+  `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)` still gives `0` hits in the same
+  first theorem-shaped closure boxes.
   After that, the bridge still probes the residual quotient
   `R_gp_ws = G_p12_ws / G_g12_ws`; that quotient still gives `0` hits in the
   first self-polynomial, self-fractional-linear, self-quotient finite-product,

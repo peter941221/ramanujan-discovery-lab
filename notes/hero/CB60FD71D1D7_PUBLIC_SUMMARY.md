@@ -86,6 +86,12 @@ has been found in the primary sources checked so far.
   differs from `1` at `t^1` with coefficient `2` and still gives `0` hits in
   the first self-polynomial, self-fractional-linear, self-quotient
   finite-product, eta / modular-unit, and plus-Pochhammer boxes.
+  That stripped quotient lane is now also compared back to the
+  template-normalized branch:
+  `D_XK_ws = K_XR_ws - H_X_ws` and `Q_XK_ws = K_XR_ws / H_X_ws` both first
+  differ at `t^1` with coefficient `-5/2`, and the next quotient follow-up
+  `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)` still gives `0` hits in the same
+  first narrow theorem-shaped closure boxes.
   After that compression, the next positive-recognition step still stays
   focused on the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which
   still gives `0` hits in the first narrow self-polynomial,

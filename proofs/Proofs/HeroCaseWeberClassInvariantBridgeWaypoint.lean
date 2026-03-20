@@ -30,6 +30,11 @@ class-invariant compression lane:
 - the quotient-bridge follow-up
   `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)` is the next stripped constant-1 object
   on that comparison lane
+- the same quotient-follow-up lane is now also compared back to the
+  template-normalized branch:
+  `D_XK_ws = K_XR_ws - H_X_ws` and `Q_XK_ws = K_XR_ws / H_X_ws`
+- the quotient-follow-up bridge now also has its own stripped quotient object
+  `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)`
 - the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws` is the next narrow
   diagnostic object
 - the normalized follow-up `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` is the current
@@ -125,6 +130,27 @@ def followupBridgeQuotientFollowupExpression : String :=
 
 def followupBridgeQuotientFollowupFirstFailure : FirstFailureWitness := ⟨1, 2⟩
 
+def quotientFollowupBridgeDifferenceLabel : String := "D_XK_ws"
+
+def quotientFollowupBridgeDifferenceExpression : String :=
+  "D_XK_ws = K_XR_ws - H_X_ws"
+
+def quotientFollowupBridgeDifferenceFirstFailure : FirstFailureWitness := ⟨1, (-5 : Rat) / 2⟩
+
+def quotientFollowupBridgeQuotientLabel : String := "Q_XK_ws"
+
+def quotientFollowupBridgeQuotientExpression : String :=
+  "Q_XK_ws = K_XR_ws / H_X_ws"
+
+def quotientFollowupBridgeQuotientFirstFailure : FirstFailureWitness := ⟨1, (-5 : Rat) / 2⟩
+
+def quotientFollowupBridgeQuotientFollowupLabel : String := "L_XK_ws"
+
+def quotientFollowupBridgeQuotientFollowupExpression : String :=
+  "L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)"
+
+def quotientFollowupBridgeQuotientFollowupFirstFailure : FirstFailureWitness := ⟨1, (563 : Rat) / 30⟩
+
 def followupBridgePolynomialDegrees : List Nat := [1, 2, 3]
 
 def followupBridgePolynomialHitCount : Nat := 0
@@ -134,6 +160,16 @@ def followupBridgeFractionalLinearHit : Bool := false
 def followupBridgeQuotientSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
 def followupBridgeQuotientFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def quotientFollowupBridgePolynomialDegrees : List Nat := [1, 2, 3]
+
+def quotientFollowupBridgePolynomialHitCount : Nat := 0
+
+def quotientFollowupBridgeFractionalLinearHit : Bool := false
+
+def quotientFollowupBridgeQuotientSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def quotientFollowupBridgeQuotientFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
 def focusedQuotientLabel : String := "R_gp_ws"
 
@@ -211,6 +247,12 @@ def primaryResidualSelectionProp : Prop :=
     followupBridgeQuotientExpression = "Q_XR_ws = H_gp_ws / H_X_ws" ∧
     followupBridgeQuotientFollowupLabel = "K_XR_ws" ∧
     followupBridgeQuotientFollowupExpression = "K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)" ∧
+    quotientFollowupBridgeDifferenceLabel = "D_XK_ws" ∧
+    quotientFollowupBridgeDifferenceExpression = "D_XK_ws = K_XR_ws - H_X_ws" ∧
+    quotientFollowupBridgeQuotientLabel = "Q_XK_ws" ∧
+    quotientFollowupBridgeQuotientExpression = "Q_XK_ws = K_XR_ws / H_X_ws" ∧
+    quotientFollowupBridgeQuotientFollowupLabel = "L_XK_ws" ∧
+    quotientFollowupBridgeQuotientFollowupExpression = "L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)" ∧
     focusedQuotientLabel = "R_gp_ws" ∧
     focusedQuotientExpression = "R_gp_ws = G_p12_ws / G_g12_ws" ∧
     normalizedFollowupLabel = "H_gp_ws" ∧
@@ -235,6 +277,12 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     followupBridgeQuotientExpression,
     followupBridgeQuotientFollowupLabel,
     followupBridgeQuotientFollowupExpression,
+    quotientFollowupBridgeDifferenceLabel,
+    quotientFollowupBridgeDifferenceExpression,
+    quotientFollowupBridgeQuotientLabel,
+    quotientFollowupBridgeQuotientExpression,
+    quotientFollowupBridgeQuotientFollowupLabel,
+    quotientFollowupBridgeQuotientFollowupExpression,
     focusedQuotientLabel,
     focusedQuotientExpression,
     normalizedFollowupLabel,
@@ -282,6 +330,39 @@ theorem followupBridgeQuotientFollowupFirstFailure_true :
   simp [
     followupBridgeQuotientFollowupFirstFailureProp,
     followupBridgeQuotientFollowupFirstFailure
+  ]
+
+def quotientFollowupBridgeDifferenceFirstFailureProp : Prop :=
+  quotientFollowupBridgeDifferenceFirstFailure.power = 1 ∧
+    quotientFollowupBridgeDifferenceFirstFailure.coeff = (-5 : Rat) / 2
+
+theorem quotientFollowupBridgeDifferenceFirstFailure_true :
+    quotientFollowupBridgeDifferenceFirstFailureProp := by
+  simp [
+    quotientFollowupBridgeDifferenceFirstFailureProp,
+    quotientFollowupBridgeDifferenceFirstFailure
+  ]
+
+def quotientFollowupBridgeQuotientFirstFailureProp : Prop :=
+  quotientFollowupBridgeQuotientFirstFailure.power = 1 ∧
+    quotientFollowupBridgeQuotientFirstFailure.coeff = (-5 : Rat) / 2
+
+theorem quotientFollowupBridgeQuotientFirstFailure_true :
+    quotientFollowupBridgeQuotientFirstFailureProp := by
+  simp [
+    quotientFollowupBridgeQuotientFirstFailureProp,
+    quotientFollowupBridgeQuotientFirstFailure
+  ]
+
+def quotientFollowupBridgeQuotientFollowupFirstFailureProp : Prop :=
+  quotientFollowupBridgeQuotientFollowupFirstFailure.power = 1 ∧
+    quotientFollowupBridgeQuotientFollowupFirstFailure.coeff = (563 : Rat) / 30
+
+theorem quotientFollowupBridgeQuotientFollowupFirstFailure_true :
+    quotientFollowupBridgeQuotientFollowupFirstFailureProp := by
+  simp [
+    quotientFollowupBridgeQuotientFollowupFirstFailureProp,
+    quotientFollowupBridgeQuotientFollowupFirstFailure
   ]
 
 def focusedQuotientFirstFailureProp : Prop :=
@@ -366,6 +447,51 @@ theorem followupBridgeQuotientFollowupSmallBoxStatus_true :
     followupBridgeQuotientFollowupSmallBoxStatus
   ]
 
+def quotientFollowupBridgeStatusProp : Prop :=
+  quotientFollowupBridgePolynomialDegrees = [1, 2, 3] ∧
+    quotientFollowupBridgePolynomialHitCount = 0 ∧
+    quotientFollowupBridgeFractionalLinearHit = false
+
+theorem quotientFollowupBridgeStatus_true : quotientFollowupBridgeStatusProp := by
+  simp [
+    quotientFollowupBridgeStatusProp,
+    quotientFollowupBridgePolynomialDegrees,
+    quotientFollowupBridgePolynomialHitCount,
+    quotientFollowupBridgeFractionalLinearHit
+  ]
+
+def quotientFollowupBridgeQuotientSmallBoxStatusProp : Prop :=
+  quotientFollowupBridgeQuotientSmallBoxStatus.etaHits = 0 ∧
+    quotientFollowupBridgeQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    quotientFollowupBridgeQuotientSmallBoxStatus.selfPolynomialHits = 0 ∧
+    quotientFollowupBridgeQuotientSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    quotientFollowupBridgeQuotientSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    quotientFollowupBridgeQuotientSmallBoxStatus.plusPochhammerHits = 0 ∧
+    quotientFollowupBridgeQuotientSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem quotientFollowupBridgeQuotientSmallBoxStatus_true :
+    quotientFollowupBridgeQuotientSmallBoxStatusProp := by
+  simp [
+    quotientFollowupBridgeQuotientSmallBoxStatusProp,
+    quotientFollowupBridgeQuotientSmallBoxStatus
+  ]
+
+def quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp : Prop :=
+  quotientFollowupBridgeQuotientFollowupSmallBoxStatus.etaHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true :
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp := by
+  simp [
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp,
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus
+  ]
+
 def focusedQuotientSmallBoxStatusProp : Prop :=
   focusedQuotientSmallBoxStatus.etaHits = 0 ∧
     focusedQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
@@ -400,6 +526,9 @@ structure WaypointCertificate where
   followupBridgeDifference : followupBridgeDifferenceFirstFailureProp
   followupBridgeQuotient : followupBridgeQuotientFirstFailureProp
   followupBridgeQuotientFollowup : followupBridgeQuotientFollowupFirstFailureProp
+  quotientFollowupBridgeDifference : quotientFollowupBridgeDifferenceFirstFailureProp
+  quotientFollowupBridgeQuotient : quotientFollowupBridgeQuotientFirstFailureProp
+  quotientFollowupBridgeQuotientFollowup : quotientFollowupBridgeQuotientFollowupFirstFailureProp
   firstFailure : focusedQuotientFirstFailureProp
   searchParameters : checkedSearchParametersProp
   templateSmallBoxes : templateNormalizedCoordinateSmallBoxStatusProp
@@ -407,6 +536,10 @@ structure WaypointCertificate where
   followupBridgeStatus : followupBridgeStatusProp
   followupBridgeQuotientSmallBoxes : followupBridgeQuotientSmallBoxStatusProp
   followupBridgeQuotientFollowupSmallBoxes : followupBridgeQuotientFollowupSmallBoxStatusProp
+  quotientFollowupBridgeStatus : quotientFollowupBridgeStatusProp
+  quotientFollowupBridgeQuotientSmallBoxes : quotientFollowupBridgeQuotientSmallBoxStatusProp
+  quotientFollowupBridgeQuotientFollowupSmallBoxes :
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp
   smallBoxes : focusedQuotientSmallBoxStatusProp
   normalizedSmallBoxes : normalizedFollowupSmallBoxStatusProp
 
@@ -420,6 +553,9 @@ def currentWaypointCertificate : WaypointCertificate where
   followupBridgeDifference := followupBridgeDifferenceFirstFailure_true
   followupBridgeQuotient := followupBridgeQuotientFirstFailure_true
   followupBridgeQuotientFollowup := followupBridgeQuotientFollowupFirstFailure_true
+  quotientFollowupBridgeDifference := quotientFollowupBridgeDifferenceFirstFailure_true
+  quotientFollowupBridgeQuotient := quotientFollowupBridgeQuotientFirstFailure_true
+  quotientFollowupBridgeQuotientFollowup := quotientFollowupBridgeQuotientFollowupFirstFailure_true
   firstFailure := focusedQuotientFirstFailure_true
   searchParameters := checkedSearchParameters_true
   templateSmallBoxes := templateNormalizedCoordinateSmallBoxStatus_true
@@ -427,6 +563,10 @@ def currentWaypointCertificate : WaypointCertificate where
   followupBridgeStatus := followupBridgeStatus_true
   followupBridgeQuotientSmallBoxes := followupBridgeQuotientSmallBoxStatus_true
   followupBridgeQuotientFollowupSmallBoxes := followupBridgeQuotientFollowupSmallBoxStatus_true
+  quotientFollowupBridgeStatus := quotientFollowupBridgeStatus_true
+  quotientFollowupBridgeQuotientSmallBoxes := quotientFollowupBridgeQuotientSmallBoxStatus_true
+  quotientFollowupBridgeQuotientFollowupSmallBoxes :=
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true
   smallBoxes := focusedQuotientSmallBoxStatus_true
   normalizedSmallBoxes := normalizedFollowupSmallBoxStatus_true
 
@@ -440,6 +580,9 @@ def currentWaypoint : Prop :=
     followupBridgeDifferenceFirstFailureProp ∧
     followupBridgeQuotientFirstFailureProp ∧
     followupBridgeQuotientFollowupFirstFailureProp ∧
+    quotientFollowupBridgeDifferenceFirstFailureProp ∧
+    quotientFollowupBridgeQuotientFirstFailureProp ∧
+    quotientFollowupBridgeQuotientFollowupFirstFailureProp ∧
     focusedQuotientFirstFailureProp ∧
     checkedSearchParametersProp ∧
     templateNormalizedCoordinateSmallBoxStatusProp ∧
@@ -447,6 +590,9 @@ def currentWaypoint : Prop :=
     followupBridgeStatusProp ∧
     followupBridgeQuotientSmallBoxStatusProp ∧
     followupBridgeQuotientFollowupSmallBoxStatusProp ∧
+    quotientFollowupBridgeStatusProp ∧
+    quotientFollowupBridgeQuotientSmallBoxStatusProp ∧
+    quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp ∧
     focusedQuotientSmallBoxStatusProp ∧
     normalizedFollowupSmallBoxStatusProp
 
@@ -461,6 +607,9 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.followupBridgeDifference,
     currentWaypointCertificate.followupBridgeQuotient,
     currentWaypointCertificate.followupBridgeQuotientFollowup,
+    currentWaypointCertificate.quotientFollowupBridgeDifference,
+    currentWaypointCertificate.quotientFollowupBridgeQuotient,
+    currentWaypointCertificate.quotientFollowupBridgeQuotientFollowup,
     currentWaypointCertificate.firstFailure,
     currentWaypointCertificate.searchParameters,
     currentWaypointCertificate.templateSmallBoxes,
@@ -468,6 +617,9 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.followupBridgeStatus,
     currentWaypointCertificate.followupBridgeQuotientSmallBoxes,
     currentWaypointCertificate.followupBridgeQuotientFollowupSmallBoxes,
+    currentWaypointCertificate.quotientFollowupBridgeStatus,
+    currentWaypointCertificate.quotientFollowupBridgeQuotientSmallBoxes,
+    currentWaypointCertificate.quotientFollowupBridgeQuotientFollowupSmallBoxes,
     currentWaypointCertificate.smallBoxes,
     currentWaypointCertificate.normalizedSmallBoxes
   ⟩

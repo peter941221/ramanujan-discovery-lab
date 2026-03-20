@@ -171,6 +171,28 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `587/30`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -298,6 +320,28 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-3/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-3/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-3/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `575/18`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -425,6 +469,28 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-4`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-4`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-4*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `259/24`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -552,6 +618,28 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-11/6`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-11/6`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-11/6*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `1553/66`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `288`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -679,6 +767,28 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `115/6`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -806,6 +916,28 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-7/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-7/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-7/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `515/42`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -933,6 +1065,28 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-6`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-6`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-6*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `43/9`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1060,6 +1214,28 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-3`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-3`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-3*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `131/9`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1187,6 +1363,28 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `115/6`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1314,6 +1512,28 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `587/30`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1441,6 +1661,28 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-5`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-5*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `113/15`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1568,6 +1810,28 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
+- Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws - 1` first fails at `t^1` with coefficient `-5/2`.
+- Weber quotient-follow-up bridge polynomial boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge fractional-linear box: `0` / `1` hit boxes.
+- Weber quotient-follow-up bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`: `L_XK_ws - 1` first fails at `t^1` with coefficient `557/30`.
+- Weber quotient-follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized eta templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1624,4 +1888,4 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual-follow-up sample hits found: `0`
 - Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `565.03`
+- Build elapsed seconds: `544.75`

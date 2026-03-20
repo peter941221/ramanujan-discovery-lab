@@ -184,6 +184,13 @@ Working interpretation:
   first differs from `1` at `t^1` with coefficient `2` and still reports `0`
   hits in the same first self-polynomial, self-fractional-linear,
   self-quotient finite-product, eta / modular-unit, and plus-Pochhammer boxes
+- that stripped quotient lane is now also compared back to the
+  template-normalized branch:
+  `D_XK_ws = K_XR_ws - H_X_ws` and `Q_XK_ws = K_XR_ws / H_X_ws` both first fail
+  at `t^1` with coefficient `-5/2`, and the next quotient follow-up
+  `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)` still reports `0` hits in the same
+  first self-polynomial, self-fractional-linear, self-quotient finite-product,
+  eta / modular-unit, and plus-Pochhammer boxes
 - on the hero tail-family ladder, that focused quotient still gives `0` hits in
   the first self-polynomial, self-fractional-linear, self-quotient
   finite-product, eta / modular-unit, and plus-Pochhammer boxes, and first
