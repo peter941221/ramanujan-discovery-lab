@@ -860,6 +860,8 @@ class ConstantOnePairBridgeScan:
     polynomial_scans: tuple[PolynomialBridgeRelationScan, ...]
     fractional_linear_relation: FractionalLinearRelation | None
     fractional_linear_error: str | None = None
+    quotient_named_gg_modular_equation_scan: GGModularEquationScan | None = None
+    quotient_followup_named_gg_modular_equation_scan: GGModularEquationScan | None = None
     quotient_followup_bridge_scan: "ConstantOnePairBridgeScan | None" = None
 
 
@@ -1590,6 +1592,15 @@ def _scan_constant_one_series_pair_bridge(
     quotient_followup_bridge_difference_label: str | None = None,
     quotient_followup_bridge_quotient_label: str | None = None,
     quotient_followup_bridge_quotient_followup_label: str | None = None,
+    named_gg_benchmark_name: str | None = None,
+    named_gg_series: Series | None = None,
+    named_gg_degree_values: tuple[int, ...] = (1, 2),
+    named_gg_max_abs_exponent: int = 8,
+    named_gg_solve_order: int | None = None,
+    named_gg_supplemental_powers: tuple[int, ...] = (),
+    named_gg_target_quotient_label: str | None = None,
+    named_gg_target_followup_label: str | None = None,
+    named_gg_include_weighted_coordinate_diagnostics: bool = False,
 ) -> ConstantOnePairBridgeScan:
     if len(left_series) < order or len(right_series) < order:
         raise ValueError("series are shorter than requested order")
@@ -1665,6 +1676,50 @@ def _scan_constant_one_series_pair_bridge(
     except ValueError as exc:
         fractional_linear_error = str(exc)
 
+    quotient_named_gg_modular_equation_scan: GGModularEquationScan | None = None
+    quotient_followup_named_gg_modular_equation_scan: GGModularEquationScan | None = None
+    named_gg_matches_target = (
+        named_gg_benchmark_name is not None
+        and named_gg_series is not None
+        and named_gg_target_quotient_label is not None
+        and named_gg_target_followup_label is not None
+        and quotient_label == named_gg_target_quotient_label
+        and quotient_followup_label == named_gg_target_followup_label
+    )
+    if named_gg_matches_target:
+        quotient_named_gg_modular_equation_scan = scan_gg_modular_equation_box(
+            target_series=quotient_series,
+            benchmark_name=named_gg_benchmark_name,
+            gg_series=named_gg_series,
+            order=order,
+            degree_values=named_gg_degree_values,
+            max_abs_exponent=named_gg_max_abs_exponent,
+            solve_order=named_gg_solve_order,
+            supplemental_powers=named_gg_supplemental_powers,
+            include_weighted_coordinate_diagnostics=named_gg_include_weighted_coordinate_diagnostics,
+        )
+        if quotient_scan.normalized_followup is not None:
+            quotient_followup_series: Series = [sp.Integer(0) for _ in range(order)]
+            quotient_followup_series[0] = sp.Integer(1)
+            for index in range(order):
+                source_index = index + quotient_first_failure_power
+                if source_index >= order:
+                    break
+                quotient_followup_series[index] = sp.simplify(
+                    quotient_residual[source_index] / quotient_first_failure_coeff
+                )
+            quotient_followup_named_gg_modular_equation_scan = scan_gg_modular_equation_box(
+                target_series=quotient_followup_series,
+                benchmark_name=named_gg_benchmark_name,
+                gg_series=named_gg_series,
+                order=order,
+                degree_values=named_gg_degree_values,
+                max_abs_exponent=named_gg_max_abs_exponent,
+                solve_order=named_gg_solve_order,
+                supplemental_powers=named_gg_supplemental_powers,
+                include_weighted_coordinate_diagnostics=named_gg_include_weighted_coordinate_diagnostics,
+            )
+
     quotient_followup_bridge_scan: ConstantOnePairBridgeScan | None = None
     if (
         quotient_followup_bridge_left_label is not None
@@ -1693,6 +1748,15 @@ def _scan_constant_one_series_pair_bridge(
             difference_label=quotient_followup_bridge_difference_label,
             quotient_label=quotient_followup_bridge_quotient_label,
             quotient_followup_label=quotient_followup_bridge_quotient_followup_label,
+            named_gg_benchmark_name=named_gg_benchmark_name,
+            named_gg_series=named_gg_series,
+            named_gg_degree_values=named_gg_degree_values,
+            named_gg_max_abs_exponent=named_gg_max_abs_exponent,
+            named_gg_solve_order=named_gg_solve_order,
+            named_gg_supplemental_powers=named_gg_supplemental_powers,
+            named_gg_target_quotient_label=named_gg_target_quotient_label,
+            named_gg_target_followup_label=named_gg_target_followup_label,
+            named_gg_include_weighted_coordinate_diagnostics=named_gg_include_weighted_coordinate_diagnostics,
         )
 
     return ConstantOnePairBridgeScan(
@@ -1710,6 +1774,8 @@ def _scan_constant_one_series_pair_bridge(
         polynomial_scans=tuple(polynomial_scans),
         fractional_linear_relation=fractional_linear_relation,
         fractional_linear_error=fractional_linear_error,
+        quotient_named_gg_modular_equation_scan=quotient_named_gg_modular_equation_scan,
+        quotient_followup_named_gg_modular_equation_scan=quotient_followup_named_gg_modular_equation_scan,
         quotient_followup_bridge_scan=quotient_followup_bridge_scan,
     )
 
@@ -4363,6 +4429,136 @@ def _format_weighted_coordinate_obstruction(
     return f"`{lhs}` first fails at `{series_symbol}^{power}` with coefficient `{_format_expr(coeff)}`"
 
 
+def _append_named_gg_bridge_lines(
+    lines: list[str],
+    *,
+    prefix: str,
+    gg_scan: GGModularEquationScan,
+    series_symbol: str,
+) -> None:
+    direct_prefix_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                gg_scan.polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.two_layer_fractional_linear_scans,
+                label="two-layer fractional-linear",
+                hit_predicate=lambda item: item.total_hits > 0,
+            ),
+        )
+    )
+    quotient_prefix_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                gg_scan.quotient_polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.quotient_multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.quotient_fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.quotient_two_layer_fractional_linear_scans,
+                label="two-layer fractional-linear",
+                hit_predicate=lambda item: item.total_hits > 0,
+            ),
+        )
+    )
+    mixed_prefix_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                gg_scan.mixed_quotient_polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.mixed_quotient_multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.mixed_quotient_fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                gg_scan.mixed_quotient_two_layer_fractional_linear_scans,
+                label="two-layer fractional-linear",
+                hit_predicate=lambda item: item.total_hits > 0,
+            ),
+        )
+    )
+    exact_template_summary = (
+        f"`{len(gg_scan.hit_templates)}` / `{len(gg_scan.checked_templates)}` exact template hits"
+    )
+    if gg_scan.hit_templates:
+        exact_template_summary += (
+            f" ({', '.join(f'`{label}`' for label in gg_scan.hit_templates)})"
+        )
+    direct_exact_summary = (
+        f"`{len(gg_scan.exact_polynomial_template_hits)}` / `{len(gg_scan.exact_polynomial_template_labels)}` exact direct Chan--Huang hits"
+    )
+    if gg_scan.exact_polynomial_template_hits:
+        direct_exact_summary += (
+            f" ({', '.join(f'`{label}`' for label in gg_scan.exact_polynomial_template_hits)})"
+        )
+    quotient_exact_summary = (
+        f"`{len(gg_scan.quotient_exact_polynomial_template_hits)}` / `{len(gg_scan.quotient_exact_polynomial_template_labels)}` exact quotient-coordinate Chan--Huang hits"
+    )
+    if gg_scan.quotient_exact_polynomial_template_hits:
+        quotient_exact_summary += (
+            f" ({', '.join(f'`{label}`' for label in gg_scan.quotient_exact_polynomial_template_hits)})"
+        )
+    lines.extend(
+        [
+            f"- {prefix} named `GG` exact templates: {exact_template_summary}.",
+            f"- {prefix} named `GG` direct prefixes: {direct_prefix_summary}.",
+            f"- {prefix} named `GG` quotient prefixes: {quotient_prefix_summary}.",
+            f"- {prefix} named `GG` mixed quotient prefixes: {mixed_prefix_summary}.",
+            f"- {prefix} named `GG` direct exact modular-equation templates: {direct_exact_summary}.",
+            f"- {prefix} named `GG` quotient exact modular-equation templates: {quotient_exact_summary}.",
+            f"- {prefix} named `GG` direct exact obstruction witnesses: "
+            + "; ".join(
+                _format_exact_polynomial_obstruction(
+                    obstruction,
+                    series_symbol=series_symbol,
+                )
+                for obstruction in gg_scan.exact_polynomial_template_obstructions
+            )
+            + ".",
+            f"- {prefix} named `GG` quotient exact obstruction witnesses: "
+            + "; ".join(
+                _format_exact_polynomial_obstruction(
+                    obstruction,
+                    series_symbol=series_symbol,
+                )
+                for obstruction in gg_scan.quotient_exact_polynomial_template_obstructions
+            )
+            + ".",
+        ]
+    )
+
+
 def _format_self_eta_correction(
     *,
     relation: MultiplicativeRelation,
@@ -6465,6 +6661,11 @@ def scan_weber_class_invariant_bridge_box(
     p_template_series = _normalized_weber_p_template_series(order=order)
     g_correction_series = series_div(g_coordinate_series, g_template_series)
     p_correction_series = series_div(p_coordinate_series, p_template_series)
+    gg_series = continued_fraction_series_coeffs(
+        get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized(),
+        depth=order,
+        order=order,
+    )
 
     g_squared = series_pow(g_coordinate_series, 2)
     g_fourth = series_pow(g_squared, 2)
@@ -6702,6 +6903,14 @@ def scan_weber_class_invariant_bridge_box(
             quotient_followup_bridge_difference_label="D_XK_ws",
             quotient_followup_bridge_quotient_label="Q_XK_ws",
             quotient_followup_bridge_quotient_followup_label="L_XK_ws",
+            named_gg_benchmark_name="gollnitz_gordon_normalized",
+            named_gg_series=gg_series,
+            named_gg_degree_values=(1, 2),
+            named_gg_max_abs_exponent=max_abs_exponent,
+            named_gg_solve_order=min(order, 24),
+            named_gg_target_quotient_label="Q_XK_ws",
+            named_gg_target_followup_label="L_XK_ws",
+            named_gg_include_weighted_coordinate_diagnostics=False,
         )
 
     return WeberResidualBridgeScan(
@@ -7462,6 +7671,7 @@ def scan_gg_modular_equation_box(
     weighted_correction_source_families: tuple[tuple[str, str, Series], ...] = (),
     weighted_correction_source_powers: tuple[int, ...] = (2, 3, 4),
     weighted_correction_source_supplemental_powers_by_family: dict[str, tuple[int, ...]] | None = None,
+    include_weighted_coordinate_diagnostics: bool = True,
 ) -> GGModularEquationScan:
     ordered_basis_entries = _gg_modular_equation_ordered_basis_series(
         base_series=gg_series,
@@ -7518,22 +7728,24 @@ def scan_gg_modular_equation_box(
         quotient_basis_entries=quotient_basis_series,
         order=order,
     )
-    weighted_coordinate_diagnostics = _gg_weighted_coordinate_diagnostics(
-        target_series=target_series,
-        benchmark_name=benchmark_name,
-        gg_series=gg_series,
-        quotient_basis_entries=quotient_basis_series,
-        order=order,
-        coordinate_degree_values=degree_values,
-        coordinate_max_abs_exponent=max_abs_exponent,
-        coordinate_solve_order=solve_order,
-        correction_eta_levels=weighted_correction_eta_levels,
-        correction_moduli=weighted_correction_moduli,
-        correction_max_abs_exponent=weighted_correction_max_abs_exponent,
-        correction_source_families=weighted_correction_source_families,
-        correction_source_powers=weighted_correction_source_powers,
-        correction_source_supplemental_powers_by_family=weighted_correction_source_supplemental_powers_by_family,
-    )
+    weighted_coordinate_diagnostics: tuple[GGWeightedCoordinateDiagnostic, ...] = ()
+    if include_weighted_coordinate_diagnostics:
+        weighted_coordinate_diagnostics = _gg_weighted_coordinate_diagnostics(
+            target_series=target_series,
+            benchmark_name=benchmark_name,
+            gg_series=gg_series,
+            quotient_basis_entries=quotient_basis_series,
+            order=order,
+            coordinate_degree_values=degree_values,
+            coordinate_max_abs_exponent=max_abs_exponent,
+            coordinate_solve_order=solve_order,
+            correction_eta_levels=weighted_correction_eta_levels,
+            correction_moduli=weighted_correction_moduli,
+            correction_max_abs_exponent=weighted_correction_max_abs_exponent,
+            correction_source_families=weighted_correction_source_families,
+            correction_source_powers=weighted_correction_source_powers,
+            correction_source_supplemental_powers_by_family=weighted_correction_source_supplemental_powers_by_family,
+        )
 
     checked_templates: list[str] = []
     hit_templates: list[str] = []
@@ -13648,6 +13860,15 @@ def build_candidate_tail_family_note(
                             f"`{len(quotient_followup_bridge_plus_eta_hits)}` / "
                             f"`{len(quotient_followup_bridge_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                         )
+                        if quotient_followup_bridge.quotient_named_gg_modular_equation_scan is not None:
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    f"Weber quotient-follow-up bridge quotient `{quotient_followup_bridge.quotient_label}`"
+                                ),
+                                gg_scan=quotient_followup_bridge.quotient_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
+                            )
                         if quotient_followup_bridge_scan.normalized_followup is not None:
                             quotient_followup_bridge_followup = quotient_followup_bridge_scan.normalized_followup
                             quotient_followup_bridge_followup_self_product_hits = [
@@ -13728,6 +13949,16 @@ def build_candidate_tail_family_note(
                                 f"- Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: "
                                 f"`{len(quotient_followup_bridge_followup_plus_eta_hits)}` / "
                                 f"`{len(quotient_followup_bridge_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
+                            )
+                        if quotient_followup_bridge.quotient_followup_named_gg_modular_equation_scan is not None:
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    "Weber quotient-follow-up bridge quotient normalized follow-up "
+                                    f"`{quotient_followup_bridge.quotient_scan.normalized_followup.label}`"
+                                ),
+                                gg_scan=quotient_followup_bridge.quotient_followup_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
                             )
                 lines.append(
                     f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "

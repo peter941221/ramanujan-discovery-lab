@@ -2321,6 +2321,42 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
         for item in scan.followup_bridge_scan.quotient_followup_bridge_scan.polynomial_scans
     )
     assert scan.followup_bridge_scan.quotient_followup_bridge_scan.fractional_linear_relation is None
+    quotient_gg_scan = scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan
+    assert quotient_gg_scan is not None
+    assert quotient_gg_scan.benchmark_name == "gollnitz_gordon_normalized"
+    assert not quotient_gg_scan.hit_templates
+    assert not quotient_gg_scan.exact_polynomial_template_hits
+    assert not quotient_gg_scan.quotient_exact_polynomial_template_hits
+    assert tuple(label for label, _, _ in quotient_gg_scan.exact_polynomial_template_obstructions) == (
+        "Chan--Huang Cor. 3.2(i) on (F, GG3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, GG4)",
+    )
+    assert tuple(label for label, _, _ in quotient_gg_scan.quotient_exact_polynomial_template_obstructions) == (
+        "Chan--Huang Cor. 3.2(i) on (F, Q_3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, Q_4)",
+    )
+    assert all(scan_item.relation is None for scan_item in quotient_gg_scan.polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in quotient_gg_scan.quotient_polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in quotient_gg_scan.mixed_quotient_polynomial_scans)
+    followup_gg_scan = (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_followup_named_gg_modular_equation_scan
+    )
+    assert followup_gg_scan is not None
+    assert followup_gg_scan.benchmark_name == "gollnitz_gordon_normalized"
+    assert not followup_gg_scan.hit_templates
+    assert not followup_gg_scan.exact_polynomial_template_hits
+    assert not followup_gg_scan.quotient_exact_polynomial_template_hits
+    assert tuple(label for label, _, _ in followup_gg_scan.exact_polynomial_template_obstructions) == (
+        "Chan--Huang Cor. 3.2(i) on (F, GG3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, GG4)",
+    )
+    assert tuple(label for label, _, _ in followup_gg_scan.quotient_exact_polynomial_template_obstructions) == (
+        "Chan--Huang Cor. 3.2(i) on (F, Q_3)",
+        "Chan--Huang Cor. 3.2(ii) on (F, Q_4)",
+    )
+    assert all(scan_item.relation is None for scan_item in followup_gg_scan.polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in followup_gg_scan.quotient_polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in followup_gg_scan.mixed_quotient_polynomial_scans)
 
 
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
@@ -3103,6 +3139,10 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber quotient-follow-up bridge quotient `Q_XK_ws`" in text
     assert "Q_XK_ws = K_XR_ws / H_X_ws" in text
     assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`" in text
+    assert "Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes" in text
+    assert "Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact obstruction witnesses" in text
+    assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes" in text
+    assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses" in text
     assert "Weber residual quotient diagnostic `R_gp_ws`" in text
     assert "Weber residual quotient self-polynomial uniqueness boxes" in text
     assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text
