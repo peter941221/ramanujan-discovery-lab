@@ -1,5 +1,6 @@
 import Proofs.HeroCaseObjects
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
+import Proofs.HeroCaseWeberCompanionObstruction
 import Proofs.HeroCaseGGWeightedCorrectionWaypoint
 import Proofs.HeroCaseHeineCor2cf
 import Proofs.HeroCaseLocal
@@ -96,6 +97,12 @@ Current source-family-specific exact lane:
   `G_W34`, the deeper follow-up `G2_W34`, and the checked small eta /
   modular-unit / RR-GG source-family correction boxes at both normalized
   layers
+- `Proofs/HeroCaseWeberCompanionObstruction.lean` now packages the direct
+  Weber companion lane after `P_ws = (1/F - F) / 2`, recording that the
+  first `B = b(4τ)` closure
+  `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)` still misses across all `12`
+  sampled tail-family objects and in fact collapses to one universal
+  constant-term obstruction class
 - `Proofs/HeroCaseTailOperatorWaypoint.lean` now records the current sampled
   tail-operator lane (`12` sampled tail objects, Mahler-style moduli `2,3`,
   recurrence depths `2,3`, and `t`-degrees `1,2,3`) as a proof-workspace
@@ -328,10 +335,11 @@ def knownSourceOrbitExclusionWaypoint : Prop :=
     nearestArithmeticSubsequenceSourcesExcludedProp stride offset) ∧
   directLocalObstructionsProp ∧
   (∀ b lam : Int, lam ≠ 0 → simpleCor2cfBranchesExcludedProp b lam) ∧
-  Proofs.HeroCase.GGQ34.currentWaypoint
+  Proofs.HeroCase.GGQ34.currentWaypoint ∧
+  Proofs.HeroCase.WeberCompanion.currentWaypoint
 
 theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoint := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro shiftA shiftB shiftLambda
     exact page43NearestShiftCubeExcluded shiftA shiftB shiftLambda
   · exact page43PolynomialPrefactorExcluded
@@ -342,6 +350,7 @@ theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoi
   · intro b lam h
     exact simpleCor2cfBranchesExcluded b lam h
   · exact Proofs.HeroCase.GGQ34.currentWaypoint_true
+  · exact Proofs.HeroCase.WeberCompanion.currentWaypoint_true
 
 def exactWaypointStatement : Prop :=
   finiteConvergentReductionWaypoint ∧ knownSourceOrbitExclusionWaypoint
@@ -390,7 +399,10 @@ TODO (award track, endgame):
 5. Upgrade the current `GG` quotient-coordinate waypoint shell into actual
    exact modular-equation obstruction theorems, and either absorb or replace
    the current weighted-correction research waypoint with an exact theorem.
-6. Prove the final identity in Lean and remove this placeholder.
+6. Upgrade the current Weber companion obstruction shell into exact modular-
+   function obstruction theorems or move to the next named Weber coordinate
+   shell if that route proves cleaner.
+7. Prove the final identity in Lean and remove this placeholder.
 -/
 
 def finalIdentityStatement : Prop :=

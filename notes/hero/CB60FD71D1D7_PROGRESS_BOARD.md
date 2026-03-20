@@ -38,6 +38,7 @@ Lean status
 ├─ Rational-equivalence layer: present
 ├─ Exact exclusion waypoint: present
 ├─ GG quotient-coordinate waypoint: present
+├─ Weber companion waypoint: present
 ├─ GG weighted-correction waypoint: present
 ├─ Tail-operator waypoint: present
 └─ Final positive identity theorem: absent
@@ -46,6 +47,8 @@ Lean status
 - Status: `in progress`
 - Main hub:
   `proofs/Proofs/HeroCaseFinalIdentity.lean`
+- Current phase board:
+  `notes/hero/CB60FD71D1D7_PHASE4_SPRINT_BOARD.md`
 - Current marker:
   `AwardTrackStatus: exclusion_waypoint`
 
@@ -76,6 +79,8 @@ Literature status
 
 - Obstruction note:
   `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`
+- Lean waypoint:
+  `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean`
 - Current verdict:
   the direct companion coordinate `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`
   also gives `0` hits across all `12` sampled tail-family objects, and the

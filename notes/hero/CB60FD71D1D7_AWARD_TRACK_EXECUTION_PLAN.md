@@ -316,11 +316,15 @@ Current Phase 2 result:
   now collapses to one uniform constant-term obstruction class
   `(-2, 16)` recorded in
   `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`
+- Phase 4 exact-waypoint outcome:
+  the same direct companion obstruction is now packaged in
+  `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean` and imported into
+  `proofs/Proofs/HeroCaseFinalIdentity.lean`, so the current exact award-track
+  waypoint now explicitly contains the full direct `P/B` Weber branch
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
   the next implementation should move to another literature-backed named Weber
-  coordinate or package the new companion obstruction in theorem form, not
-  widen anonymous prefix boxes again
+  coordinate, not widen anonymous prefix boxes again
 
 Success condition:
 
@@ -329,7 +333,8 @@ Success condition:
 - current reading:
   achieved in the narrowing sense; the `P = p(8τ)` pass and the direct
   companion `B = b(4τ)` pass now both close with reusable exact negative
-  results and a narrower named-coordinate handoff
+  results, and the same branch now also sits inside the Lean exact waypoint as
+  a narrower named-coordinate handoff
 
 ### Sprint 3 — Theorem Conversion
 

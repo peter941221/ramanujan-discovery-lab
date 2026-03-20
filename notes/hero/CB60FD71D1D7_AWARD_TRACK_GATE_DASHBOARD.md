@@ -20,7 +20,7 @@ What is the next non-noisy move?
 | Gate | Status | What is already true | Main blocker | Next best move |
 | --- | --- | --- | --- | --- |
 | Theorem gate | `yellow` | Exact stationary tail law exists; many nearby named or semi-named lanes are excluded | No positive final source object or uniqueness-grade characterization | Stay in source-faithful modular / eta and named `GG/Weber` coordinate lanes |
-| Lean gate | `yellow` | `HeroCaseFinalIdentity` packages the current exclusion waypoint and research waypoints | No final positive identity theorem to formalize | Upgrade from waypoint shells to a positive source theorem once recognition lands |
+| Lean gate | `yellow` | `HeroCaseFinalIdentity` now packages the current exclusion waypoint, including the new Weber companion shell | No final positive identity theorem to formalize | Upgrade from waypoint shells to a positive source theorem once recognition lands |
 | Literature gate | `yellow` | Core RR / cubic / GG / S spine is logged, plus recent modularity and periodic-point sources | Not enough closure for a prize-grade novelty claim | Close only the winning source orbit after positive recognition, not the whole universe first |
 
 ## 1. Theorem Gate
@@ -53,6 +53,7 @@ Lean ladder
 ├─ Rational equivalence: yes
 ├─ Exact exclusion waypoint: yes
 ├─ `GG Q_3/Q_4` obstruction waypoint: yes
+├─ Weber companion obstruction waypoint: yes
 ├─ Weighted `GG` correction waypoint: yes
 ├─ Tail-operator waypoint: yes
 └─ Final positive identity theorem: no
@@ -119,6 +120,8 @@ Literature closure
 ### Lane E. Weber-Schlafli coordinate hand-off
 
 - Status: `implemented P/B first pass; still 0-hit`
+- Lean waypoint:
+  `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean`
 - Literature trigger:
   Akkarapakam--Morton rewrites the relevant Ramanujan continued-fraction object
   through Weber-Schlafli coordinates, with `2*p(8τ) = 1/v(τ) - v(τ)`.
@@ -140,8 +143,9 @@ Literature closure
   `B_ws` companion lane closes even harder as a uniform constant-term
   obstruction recorded in
   `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`.
-  The next move inside the same orbit should therefore be another named Weber
-  coordinate or a theorem-grade obstruction package, not anonymous box growth.
+  That companion obstruction is now also packaged in Lean, so the next move
+  inside the same orbit should therefore be another named Weber coordinate,
+  not anonymous box growth.
 
 ### Lane D. Operator-first scaffold
 
