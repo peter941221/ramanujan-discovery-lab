@@ -852,6 +852,7 @@ class ConstantOnePairBridgeScan:
     quotient_expression: str
     quotient_first_failure_power: int | None
     quotient_first_failure_coeff: sp.Expr | None
+    quotient_scan: ConstantOneSeriesScan
     polynomial_scans: tuple[PolynomialBridgeRelationScan, ...]
     fractional_linear_relation: FractionalLinearRelation | None
     fractional_linear_error: str | None = None
@@ -1597,6 +1598,16 @@ def _scan_constant_one_series_pair_bridge(
     quotient_first_failure_power, quotient_first_failure_coeff = _first_nonzero_residual_term(
         quotient_residual
     )
+    quotient_scan = _scan_constant_one_series(
+        label="Q_XR_ws",
+        expression=f"Q_XR_ws = {right_label} / {left_label}",
+        target_series=quotient_series,
+        order=order,
+        eta_levels=(1, 2, 4),
+        moduli=(2, 3, 4),
+        max_abs_exponent=8,
+        followup_label="K_XR_ws",
+    )
 
     checked_order = min(order, solve_order or order)
     variable_series: Series = [sp.Integer(0) for _ in range(checked_order)]
@@ -1653,6 +1664,7 @@ def _scan_constant_one_series_pair_bridge(
         quotient_expression=f"Q_XR_ws = {right_label} / {left_label}",
         quotient_first_failure_power=quotient_first_failure_power,
         quotient_first_failure_coeff=quotient_first_failure_coeff,
+        quotient_scan=quotient_scan,
         polynomial_scans=tuple(polynomial_scans),
         fractional_linear_relation=fractional_linear_relation,
         fractional_linear_error=fractional_linear_error,
@@ -13138,6 +13150,30 @@ def build_candidate_tail_family_note(
                             f"`{series_symbol}^{followup_bridge.quotient_first_failure_power}` with coefficient "
                             f"`{_format_expr(followup_bridge.quotient_first_failure_coeff)}`."
                         )
+                    quotient_bridge_scan = followup_bridge.quotient_scan
+                    quotient_bridge_self_product_hits = [
+                        scan
+                        for scan in quotient_bridge_scan.self_quotient_product_scans
+                        if scan.relation is not None
+                    ]
+                    quotient_bridge_eta_hits = [
+                        scan for scan in quotient_bridge_scan.eta_scans if scan.relation is not None
+                    ]
+                    quotient_bridge_modular_hits = [
+                        scan
+                        for scan in quotient_bridge_scan.modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    quotient_bridge_plus_hits = [
+                        scan
+                        for scan in quotient_bridge_scan.self_plus_pochhammer_scans
+                        if scan.relation is not None
+                    ]
+                    quotient_bridge_plus_eta_hits = [
+                        scan
+                        for scan in quotient_bridge_scan.self_plus_pochhammer_eta_scans
+                        if scan.relation is not None
+                    ]
                     lines.append(
                         f"- Weber normalized follow-up bridge polynomial boxes: "
                         f"`{len(polynomial_bridge_hits)}` / `{len(followup_bridge.polynomial_scans)}` hit boxes."
@@ -13146,6 +13182,114 @@ def build_candidate_tail_family_note(
                         "- Weber normalized follow-up bridge fractional-linear box: "
                         + ("`1` / `1` hit boxes." if followup_bridge.fractional_linear_relation is not None else "`0` / `1` hit boxes.")
                     )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient self-polynomial uniqueness boxes: "
+                        f"`{len(quotient_bridge_scan.self_polynomial_scan.hits)}` / "
+                        f"`{len(quotient_bridge_scan.self_polynomial_scan.moduli_checked) * len(quotient_bridge_scan.self_polynomial_scan.fg_degree_values) * len(quotient_bridge_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient self-fractional-linear uniqueness boxes: "
+                        f"`{len(quotient_bridge_scan.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(quotient_bridge_scan.self_fractional_linear_scan.moduli_checked) * len(quotient_bridge_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient self-quotient finite-product boxes: "
+                        f"`{len(quotient_bridge_self_product_hits)}` / "
+                        f"`{len(quotient_bridge_scan.self_quotient_product_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient eta templates: `{len(quotient_bridge_eta_hits)}` / "
+                        f"`{len(quotient_bridge_scan.eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient modular-unit / eta templates: "
+                        f"`{len(quotient_bridge_modular_hits)}` / `{len(quotient_bridge_scan.modular_unit_eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient plus-Pochhammer templates: "
+                        f"`{len(quotient_bridge_plus_hits)}` / `{len(quotient_bridge_scan.self_plus_pochhammer_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: "
+                        f"`{len(quotient_bridge_plus_eta_hits)}` / "
+                        f"`{len(quotient_bridge_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                    )
+                    if quotient_bridge_scan.normalized_followup is not None:
+                        quotient_bridge_followup = quotient_bridge_scan.normalized_followup
+                        quotient_bridge_followup_self_product_hits = [
+                            scan
+                            for scan in quotient_bridge_followup.self_quotient_product_scans
+                            if scan.relation is not None
+                        ]
+                        quotient_bridge_followup_eta_hits = [
+                            scan for scan in quotient_bridge_followup.eta_scans if scan.relation is not None
+                        ]
+                        quotient_bridge_followup_modular_hits = [
+                            scan
+                            for scan in quotient_bridge_followup.modular_unit_eta_scans
+                            if scan.relation is not None
+                        ]
+                        quotient_bridge_followup_plus_hits = [
+                            scan
+                            for scan in quotient_bridge_followup.self_plus_pochhammer_scans
+                            if scan.relation is not None
+                        ]
+                        quotient_bridge_followup_plus_eta_hits = [
+                            scan
+                            for scan in quotient_bridge_followup.self_plus_pochhammer_eta_scans
+                            if scan.relation is not None
+                        ]
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized follow-up `{quotient_bridge_followup.label}`: "
+                            f"`{quotient_bridge_followup.expression}`."
+                        )
+                        if (
+                            quotient_bridge_followup.first_failure_power is None
+                            or quotient_bridge_followup.first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Weber normalized follow-up bridge quotient normalized follow-up `{quotient_bridge_followup.label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Weber normalized follow-up bridge quotient normalized follow-up `{quotient_bridge_followup.label}`: "
+                                f"`{quotient_bridge_followup.label} - 1` first fails at "
+                                f"`{series_symbol}^{quotient_bridge_followup.first_failure_power}` with coefficient "
+                                f"`{_format_expr(quotient_bridge_followup.first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: "
+                            f"`{len(quotient_bridge_followup.self_polynomial_scan.hits)}` / "
+                            f"`{len(quotient_bridge_followup.self_polynomial_scan.moduli_checked) * len(quotient_bridge_followup.self_polynomial_scan.fg_degree_values) * len(quotient_bridge_followup.self_polynomial_scan.t_degree_values)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized self-fractional-linear uniqueness boxes: "
+                            f"`{len(quotient_bridge_followup.self_fractional_linear_scan.hits)}` / "
+                            f"`{len(quotient_bridge_followup.self_fractional_linear_scan.moduli_checked) * len(quotient_bridge_followup.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized self-quotient finite-product boxes: "
+                            f"`{len(quotient_bridge_followup_self_product_hits)}` / "
+                            f"`{len(quotient_bridge_followup.self_quotient_product_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized eta templates: `{len(quotient_bridge_followup_eta_hits)}` / "
+                            f"`{len(quotient_bridge_followup.eta_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: "
+                            f"`{len(quotient_bridge_followup_modular_hits)}` / `{len(quotient_bridge_followup.modular_unit_eta_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: "
+                            f"`{len(quotient_bridge_followup_plus_hits)}` / `{len(quotient_bridge_followup.self_plus_pochhammer_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: "
+                            f"`{len(quotient_bridge_followup_plus_eta_hits)}` / "
+                            f"`{len(quotient_bridge_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
+                        )
                 lines.append(
                     f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "
                     f"`{bridge_scan.quotient_expression}`."

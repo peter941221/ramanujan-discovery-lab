@@ -129,6 +129,11 @@ Literature status
   fail at `t^2` with coefficient `-24`; even after checking degree-`<= 3`
   polynomial bridges and a one-coordinate fractional-linear bridge, that
   comparison lane still gives `0` hits.
+  The quotient side of that comparison bridge now also has its own normalized
+  follow-up
+  `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`, and on the hero sample it first
+  differs from `1` at `t^1` with coefficient `2` while still giving `0` hits
+  in the first theorem-shaped closure boxes.
   After that, the bridge still probes the residual quotient
   `R_gp_ws = G_p12_ws / G_g12_ws`; that quotient still gives `0` hits in the
   first self-polynomial, self-fractional-linear, self-quotient finite-product,

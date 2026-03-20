@@ -81,6 +81,11 @@ has been found in the primary sources checked so far.
   differ at `t^2` with coefficient `-24`, and no degree-`<= 3` polynomial or
   one-coordinate fractional-linear bridge was found in that first comparison
   box.
+  The quotient side of that same bridge now also carries a stripped follow-up
+  `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`, which on the hero sample first
+  differs from `1` at `t^1` with coefficient `2` and still gives `0` hits in
+  the first self-polynomial, self-fractional-linear, self-quotient
+  finite-product, eta / modular-unit, and plus-Pochhammer boxes.
   After that compression, the next positive-recognition step still stays
   focused on the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which
   still gives `0` hits in the first narrow self-polynomial,

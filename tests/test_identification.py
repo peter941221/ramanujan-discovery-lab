@@ -2192,6 +2192,23 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert scan.followup_bridge_scan.quotient_expression == "Q_XR_ws = H_gp_ws / H_X_ws"
     assert scan.followup_bridge_scan.quotient_first_failure_power == 2
     assert scan.followup_bridge_scan.quotient_first_failure_coeff == -24
+    assert scan.followup_bridge_scan.quotient_scan.label == "Q_XR_ws"
+    assert scan.followup_bridge_scan.quotient_scan.first_failure_power == 2
+    assert scan.followup_bridge_scan.quotient_scan.first_failure_coeff == -24
+    assert not scan.followup_bridge_scan.quotient_scan.self_polynomial_scan.hits
+    assert not scan.followup_bridge_scan.quotient_scan.self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in scan.followup_bridge_scan.quotient_scan.self_quotient_product_scans)
+    assert all(item.relation is None for item in scan.followup_bridge_scan.quotient_scan.eta_scans)
+    assert all(item.relation is None for item in scan.followup_bridge_scan.quotient_scan.modular_unit_eta_scans)
+    assert all(item.relation is None for item in scan.followup_bridge_scan.quotient_scan.self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in scan.followup_bridge_scan.quotient_scan.self_plus_pochhammer_eta_scans)
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup is not None
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.label == "K_XR_ws"
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.expression == (
+        "K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)"
+    )
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.first_failure_power == 1
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.first_failure_coeff == 2
     assert len(scan.followup_bridge_scan.polynomial_scans) == 3
     assert all(item.relation is None for item in scan.followup_bridge_scan.polynomial_scans)
     assert scan.followup_bridge_scan.fractional_linear_relation is None
@@ -2967,6 +2984,7 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "D_XR_ws = H_gp_ws - H_X_ws" in text
     assert "Weber normalized follow-up bridge quotient `Q_XR_ws`" in text
     assert "Q_XR_ws = H_gp_ws / H_X_ws" in text
+    assert "Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`" in text
     assert "Weber residual quotient diagnostic `R_gp_ws`" in text
     assert "Weber residual quotient self-polynomial uniqueness boxes" in text
     assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text

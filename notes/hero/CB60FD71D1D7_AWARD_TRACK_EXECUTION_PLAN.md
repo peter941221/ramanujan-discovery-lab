@@ -179,6 +179,11 @@ Working interpretation:
   at `t^2` with coefficient `-24`, and the first degree-`<= 3` polynomial
   bridge box plus the one-coordinate fractional-linear bridge box still both
   report `0` hits
+- the quotient side of that bridge now also has the normalized follow-up
+  `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`, which on the hero tail-family ladder
+  first differs from `1` at `t^1` with coefficient `2` and still reports `0`
+  hits in the same first self-polynomial, self-fractional-linear,
+  self-quotient finite-product, eta / modular-unit, and plus-Pochhammer boxes
 - on the hero tail-family ladder, that focused quotient still gives `0` hits in
   the first self-polynomial, self-fractional-linear, self-quotient
   finite-product, eta / modular-unit, and plus-Pochhammer boxes, and first
