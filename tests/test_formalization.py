@@ -106,6 +106,9 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "namedWeberOrbitResearchWaypoint_true" in text
     assert "currentRecognitionFrontierCertificate" in text
     assert "currentRecognitionFrontierWaypoint_true" in text
+    assert "exact Chan--Huang obstruction quartets" in text
+    assert "(-9/2, -6)" in text
+    assert "(593/10, 1186/15)" in text
     assert "not ready" in text
 
     lean_text = lean_output_path.read_text(encoding="utf-8")

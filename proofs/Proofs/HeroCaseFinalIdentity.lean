@@ -118,7 +118,11 @@ Current source-family-specific exact lane:
   `R_gp_ws = G_p12_ws / G_g12_ws` plus the normalized follow-up
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` still have `0` hits in the first
   checked self-polynomial / self-fractional-linear / self-quotient-product /
-  eta / modular-unit / plus-Pochhammer boxes
+  eta / modular-unit / plus-Pochhammer boxes;
+  the same shell now also upgrades the later return-bridge `Q_XK_ws` /
+  `L_XK_ws` lane from a pure hit-count shell to an exact Chan--Huang
+  obstruction package, recording the first direct and quotient
+  modular-equation failure witnesses against `GG3`, `GG4`, `Q_3`, and `Q_4`
 - `Proofs/HeroCaseTailOperatorWaypoint.lean` now records the current sampled
   tail-operator lane (`12` sampled tail objects, Mahler-style moduli `2,3`,
   recurrence depths `2,3`, and `t`-degrees `1,2,3`) as a proof-workspace
@@ -477,10 +481,10 @@ TODO (award track, endgame):
 5. Upgrade the current `GG` quotient-coordinate waypoint shell into actual
    exact modular-equation obstruction theorems, and either absorb or replace
    the current weighted-correction research waypoint with an exact theorem.
-6. Upgrade the current Weber companion and Weber class-invariant bridge shells
-   into exact modular-function obstruction theorems or a positive source bridge,
-   depending on which side of the same named orbit yields the first true
-   uniqueness theorem.
+6. Upgrade the current Weber companion shell and the remaining non-exact parts
+   of the Weber class-invariant bridge shell into exact modular-function
+   obstruction theorems or a positive source bridge, depending on which side
+   of the same named orbit yields the first true uniqueness theorem.
 7. Prove the final identity in Lean and remove this placeholder.
 -/
 

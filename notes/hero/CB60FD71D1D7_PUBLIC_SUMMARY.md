@@ -116,9 +116,22 @@ has been found in the primary sources checked so far.
   Even after pushing `Q_XK_ws` and `L_XK_ws` back through the named
   Chan--Huang `GG` modular-equation basis, both objects still give `0` hits in
   the checked direct, quotient, and mixed quotient-coordinate boxes.
+  The exact first-failure fingerprints are now also explicit:
+  `Q_XK_ws` misses the direct `GG3/GG4` templates with coefficients
+  `(-9/2, -6)` and the quotient `Q_3/Q_4` templates with coefficients
+  `(-3, -9/2)`;
+  `L_XK_ws` misses the same direct templates with
+  `(593/10, 1186/15)` and the quotient templates with
+  `(593/15, 593/10)`.
+  That is a strong hint that the return bridge has not yet settled onto the
+  present Chan--Huang basis itself.
   So the current honest reading is:
   these are derived return-bridge coordinates, not recovered named
   literature coordinates.
+  In plainer terms: we have a bridge back into the right city, but not yet the
+  street address. The next constructive guess should therefore be a deeper
+  Weber / modular-function coordinate, not a wider re-scan of the same
+  `GG3/GG4/Q_3/Q_4` box.
   After that compression, the next positive-recognition step still stays
   focused on the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which
   still gives `0` hits in the first narrow self-polynomial,

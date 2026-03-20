@@ -938,8 +938,14 @@ together with their direct, quotient, and mixed quotient-coordinate templates.
     boxes: all `0`
   - mixed quotient polynomial / multiplicative / fractional-linear / two-layer
     boxes: all `0`
+  - exact Chan--Huang obstruction witnesses now pin the first failure quartet:
+    - direct `GG3/GG4`: `(-9/2, -6)`
+    - quotient `Q_3/Q_4`: `(-3, -9/2)`
 - `L_XK_ws` gives the same verdict: every checked named `GG` modular-equation
   box remains at `0` hits
+  - exact Chan--Huang obstruction witnesses now pin its first failure quartet:
+    - direct `GG3/GG4`: `(593/10, 1186/15)`
+    - quotient `Q_3/Q_4`: `(593/15, 593/10)`
 
 ### Updated interpretation
 
@@ -947,6 +953,11 @@ together with their direct, quotient, and mixed quotient-coordinate templates.
 - it does say the current return-bridge objects are still best read as
   **derived bridge coordinates**, not as recovered named literature
   coordinates
+- the witness pattern is also directional:
+  - the current bridge does not collapse onto `GG3/GG4/Q_3/Q_4`
+  - it therefore looks more like a return map that still needs one deeper
+    Weber / modular-function coordinate, not like a hidden rename of the
+    present Chan--Huang basis
 - in particular, the honest label for `Q_XK_ws` and `L_XK_ws` is now:
 
 ```text
@@ -967,3 +978,6 @@ step deeper:
 - either another named Weber coordinate
 - or a theorem-grade obstruction package that explains why the return bridge
   fails to close back inside the current named `GG` coordinates
+- in practice, the new exact witness quartets strengthen the case for the
+  first option: move deeper in the Weber / modular-curve orbit before widening
+  anonymous `GG` prefix boxes again

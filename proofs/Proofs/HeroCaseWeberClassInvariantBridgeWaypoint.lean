@@ -216,9 +216,36 @@ structure NamedGGClosureStatus where
   mixedQuotientHits : Nat
 deriving Repr, DecidableEq
 
+structure NamedGGExactObstructionQuartet where
+  directGG3 : FirstFailureWitness
+  directGG4 : FirstFailureWitness
+  quotientQ3 : FirstFailureWitness
+  quotientQ4 : FirstFailureWitness
+deriving Repr, DecidableEq
+
+def namedGGDirectGG3Label : String := "Chan--Huang Cor. 3.2(i) on (F, GG3)"
+
+def namedGGDirectGG4Label : String := "Chan--Huang Cor. 3.2(ii) on (F, GG4)"
+
+def namedGGQuotientQ3Label : String := "Chan--Huang Cor. 3.2(i) on (F, Q_3)"
+
+def namedGGQuotientQ4Label : String := "Chan--Huang Cor. 3.2(ii) on (F, Q_4)"
+
 def quotientFollowupBridgeNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
 
 def quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def quotientFollowupBridgeNamedGGExactObstructions : NamedGGExactObstructionQuartet :=
+  ⟨⟨1, (-9 : Rat) / 2⟩, ⟨1, -6⟩, ⟨1, -3⟩, ⟨1, (-9 : Rat) / 2⟩⟩
+
+def quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions :
+    NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (593 : Rat) / 10⟩,
+    ⟨1, (1186 : Rat) / 15⟩,
+    ⟨1, (593 : Rat) / 15⟩,
+    ⟨1, (593 : Rat) / 10⟩
+  ⟩
 
 def focusedQuotientLabel : String := "R_gp_ws"
 
@@ -632,6 +659,60 @@ theorem quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true :
     quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus
   ]
 
+def quotientFollowupBridgeNamedGGExactObstructionProp : Prop :=
+  namedGGDirectGG3Label = "Chan--Huang Cor. 3.2(i) on (F, GG3)" ∧
+    namedGGDirectGG4Label = "Chan--Huang Cor. 3.2(ii) on (F, GG4)" ∧
+    namedGGQuotientQ3Label = "Chan--Huang Cor. 3.2(i) on (F, Q_3)" ∧
+    namedGGQuotientQ4Label = "Chan--Huang Cor. 3.2(ii) on (F, Q_4)" ∧
+    quotientFollowupBridgeNamedGGExactObstructions.directGG3.power = 1 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.directGG3.coeff = (-9 : Rat) / 2 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.directGG4.power = 1 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.directGG4.coeff = -6 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.quotientQ3.coeff = -3 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    quotientFollowupBridgeNamedGGExactObstructions.quotientQ4.coeff = (-9 : Rat) / 2
+
+theorem quotientFollowupBridgeNamedGGExactObstruction_true :
+    quotientFollowupBridgeNamedGGExactObstructionProp := by
+  simp [
+    quotientFollowupBridgeNamedGGExactObstructionProp,
+    namedGGDirectGG3Label,
+    namedGGDirectGG4Label,
+    namedGGQuotientQ3Label,
+    namedGGQuotientQ4Label,
+    quotientFollowupBridgeNamedGGExactObstructions
+  ]
+
+def quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp : Prop :=
+  namedGGDirectGG3Label = "Chan--Huang Cor. 3.2(i) on (F, GG3)" ∧
+    namedGGDirectGG4Label = "Chan--Huang Cor. 3.2(ii) on (F, GG4)" ∧
+    namedGGQuotientQ3Label = "Chan--Huang Cor. 3.2(i) on (F, Q_3)" ∧
+    namedGGQuotientQ4Label = "Chan--Huang Cor. 3.2(ii) on (F, Q_4)" ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.directGG3.power = 1 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.directGG3.coeff =
+      (593 : Rat) / 10 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.directGG4.power = 1 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.directGG4.coeff =
+      (1186 : Rat) / 15 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.quotientQ3.coeff =
+      (593 : Rat) / 15 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions.quotientQ4.coeff =
+      (593 : Rat) / 10
+
+theorem quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true :
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp := by
+  simp [
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp,
+    namedGGDirectGG3Label,
+    namedGGDirectGG4Label,
+    namedGGQuotientQ3Label,
+    namedGGQuotientQ4Label,
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions
+  ]
+
 def quotientFollowupReturnBridgeProp : Prop :=
   quotientFollowupBridgeDifferenceLabel = "D_XK_ws" ∧
     quotientFollowupBridgeDifferenceExpression = "D_XK_ws = K_XR_ws - H_X_ws" ∧
@@ -647,7 +728,9 @@ def quotientFollowupReturnBridgeProp : Prop :=
     quotientFollowupBridgeQuotientSmallBoxStatusProp ∧
     quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp ∧
     quotientFollowupBridgeNamedGGClosureStatusProp ∧
-    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp ∧
+    quotientFollowupBridgeNamedGGExactObstructionProp ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp
 
 theorem quotientFollowupReturnBridge_true : quotientFollowupReturnBridgeProp := by
   simp [
@@ -665,7 +748,9 @@ theorem quotientFollowupReturnBridge_true : quotientFollowupReturnBridgeProp := 
     quotientFollowupBridgeQuotientSmallBoxStatus_true,
     quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true,
     quotientFollowupBridgeNamedGGClosureStatus_true,
-    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true,
+    quotientFollowupBridgeNamedGGExactObstruction_true,
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true
   ]
 
 def focusedQuotientSmallBoxStatusProp : Prop :=
@@ -719,6 +804,10 @@ structure WaypointCertificate where
   quotientFollowupBridgeQuotientSmallBoxes : quotientFollowupBridgeQuotientSmallBoxStatusProp
   quotientFollowupBridgeQuotientFollowupSmallBoxes :
     quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp
+  quotientFollowupBridgeNamedGGExactObstructions :
+    quotientFollowupBridgeNamedGGExactObstructionProp
+  quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions :
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp
   smallBoxes : focusedQuotientSmallBoxStatusProp
   normalizedSmallBoxes : normalizedFollowupSmallBoxStatusProp
 
@@ -749,6 +838,10 @@ def currentWaypointCertificate : WaypointCertificate where
   quotientFollowupBridgeQuotientSmallBoxes := quotientFollowupBridgeQuotientSmallBoxStatus_true
   quotientFollowupBridgeQuotientFollowupSmallBoxes :=
     quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true
+  quotientFollowupBridgeNamedGGExactObstructions :=
+    quotientFollowupBridgeNamedGGExactObstruction_true
+  quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions :=
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true
   smallBoxes := focusedQuotientSmallBoxStatus_true
   normalizedSmallBoxes := normalizedFollowupSmallBoxStatus_true
 
@@ -778,6 +871,8 @@ def currentWaypoint : Prop :=
     quotientFollowupBridgeStatusProp ∧
     quotientFollowupBridgeQuotientSmallBoxStatusProp ∧
     quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp ∧
+    quotientFollowupBridgeNamedGGExactObstructionProp ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp ∧
     focusedQuotientSmallBoxStatusProp ∧
     normalizedFollowupSmallBoxStatusProp
 
@@ -808,6 +903,8 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.quotientFollowupBridgeStatus,
     currentWaypointCertificate.quotientFollowupBridgeQuotientSmallBoxes,
     currentWaypointCertificate.quotientFollowupBridgeQuotientFollowupSmallBoxes,
+    currentWaypointCertificate.quotientFollowupBridgeNamedGGExactObstructions,
+    currentWaypointCertificate.quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions,
     currentWaypointCertificate.smallBoxes,
     currentWaypointCertificate.normalizedSmallBoxes
   ⟩
