@@ -75,6 +75,12 @@ has been found in the primary sources checked so far.
   `1` at `t^1` with coefficient `4`, and its first follow-up
   `H_X_ws = (G_X_ws - 1) / (4*t^1)` still stays outside the same first
   theorem-shaped closure boxes.
+  The same lane now also compares the two hero-side normalized follow-ups
+  directly:
+  `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws` both first
+  differ at `t^2` with coefficient `-24`, and no degree-`<= 3` polynomial or
+  one-coordinate fractional-linear bridge was found in that first comparison
+  box.
   After that compression, the next positive-recognition step still stays
   focused on the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which
   still gives `0` hits in the first narrow self-polynomial,

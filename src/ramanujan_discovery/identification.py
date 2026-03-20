@@ -791,6 +791,7 @@ class WeberResidualBridgeScan:
     quotient_self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     quotient_self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
     normalized_followup: "NormalizedResidualFollowupScan | None" = None
+    followup_bridge_scan: "ConstantOnePairBridgeScan | None" = None
 
 
 @dataclass(frozen=True)
@@ -826,6 +827,34 @@ class ConstantOneSeriesScan:
     self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
     normalized_followup: "NormalizedResidualFollowupScan | None" = None
+
+
+@dataclass(frozen=True)
+class PolynomialBridgeRelationScan:
+    """A bounded polynomial bridge search between two constant-1 series."""
+
+    degree: int
+    relation: PolynomialRelation | None
+    error: str | None = None
+
+
+@dataclass(frozen=True)
+class ConstantOnePairBridgeScan:
+    """A focused comparison between two normalized constant-1 follow-up objects."""
+
+    left_label: str
+    right_label: str
+    difference_label: str
+    difference_expression: str
+    difference_first_failure_power: int | None
+    difference_first_failure_coeff: sp.Expr | None
+    quotient_label: str
+    quotient_expression: str
+    quotient_first_failure_power: int | None
+    quotient_first_failure_coeff: sp.Expr | None
+    polynomial_scans: tuple[PolynomialBridgeRelationScan, ...]
+    fractional_linear_relation: FractionalLinearRelation | None
+    fractional_linear_error: str | None = None
 
 
 @dataclass(frozen=True)
@@ -1060,6 +1089,48 @@ def search_polynomial_relation(
         order=order,
         max_total_degree=max_total_degree,
         required_variable=required_variable,
+    )
+
+
+def search_polynomial_bridge_relation(
+    *,
+    series_by_variable: dict[str, Series],
+    order: int,
+    max_total_degree: int,
+    required_variables: tuple[str, ...],
+) -> PolynomialRelation | None:
+    """Find a bounded polynomial relation that genuinely uses each required variable."""
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    if max_total_degree < 1:
+        raise ValueError("max_total_degree must be at least 1")
+    if len(series_by_variable) < 2:
+        raise ValueError("need at least two variables for a relation search")
+    if any(len(series) < order for series in series_by_variable.values()):
+        raise ValueError("series are shorter than requested order")
+    if not required_variables:
+        raise ValueError("required_variables must be non-empty")
+    if any(required not in series_by_variable for required in required_variables):
+        raise ValueError("required_variables must be series variable names")
+
+    variables = tuple(series_by_variable.keys())
+    exponent_tuples: list[tuple[int, ...]] = []
+
+    def _recurse(idx: int, remaining: int, current: list[int]) -> None:
+        if idx == len(variables):
+            exponent_tuples.append(tuple(current))
+            return
+        for exp in range(remaining + 1):
+            current.append(exp)
+            _recurse(idx + 1, remaining - exp, current)
+            current.pop()
+
+    _recurse(0, max_total_degree, [])
+    return _guess_polynomial_relation_from_exponent_tuples(
+        series_by_variable=series_by_variable,
+        order=order,
+        exponent_tuples=tuple(exponent_tuples),
+        required_variables=required_variables,
     )
 
 
@@ -1494,6 +1565,97 @@ def _scan_constant_one_series(
             )
         ),
         normalized_followup=normalized_followup,
+    )
+
+
+def _scan_constant_one_series_pair_bridge(
+    *,
+    left_label: str,
+    left_series: Series,
+    right_label: str,
+    right_series: Series,
+    order: int,
+    polynomial_degree_values: tuple[int, ...] = (1, 2, 3),
+    solve_order: int | None = 24,
+) -> ConstantOnePairBridgeScan:
+    if len(left_series) < order or len(right_series) < order:
+        raise ValueError("series are shorter than requested order")
+    if sp.simplify(left_series[0] - 1) != 0 or sp.simplify(right_series[0] - 1) != 0:
+        raise ValueError("pair-bridge scan requires constant-1 series")
+
+    difference_series = [
+        sp.simplify(right_series[index] - left_series[index])
+        for index in range(order)
+    ]
+    (
+        difference_first_failure_power,
+        difference_first_failure_coeff,
+    ) = _first_nonzero_residual_term(difference_series)
+    quotient_series = series_div(right_series, left_series)
+    quotient_residual = [sp.simplify(value) for value in quotient_series]
+    quotient_residual[0] = sp.simplify(quotient_residual[0] - 1)
+    quotient_first_failure_power, quotient_first_failure_coeff = _first_nonzero_residual_term(
+        quotient_residual
+    )
+
+    checked_order = min(order, solve_order or order)
+    variable_series: Series = [sp.Integer(0) for _ in range(checked_order)]
+    if checked_order > 1:
+        variable_series[1] = sp.Integer(1)
+
+    polynomial_scans: list[PolynomialBridgeRelationScan] = []
+    for degree in polynomial_degree_values:
+        try:
+            relation = search_polynomial_bridge_relation(
+                series_by_variable={
+                    "HX": left_series[:checked_order],
+                    "HR": right_series[:checked_order],
+                    "T": variable_series,
+                },
+                order=checked_order,
+                max_total_degree=degree,
+                required_variables=("HX", "HR"),
+            )
+            polynomial_scans.append(
+                PolynomialBridgeRelationScan(
+                    degree=degree,
+                    relation=relation,
+                )
+            )
+        except ValueError as exc:
+            polynomial_scans.append(
+                PolynomialBridgeRelationScan(
+                    degree=degree,
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+
+    fractional_linear_relation = None
+    fractional_linear_error = None
+    try:
+        fractional_linear_relation = search_fractional_linear_relation(
+            target_series=right_series[:checked_order],
+            basis_series_by_variable={"HX": left_series[:checked_order]},
+            order=checked_order,
+        )
+    except ValueError as exc:
+        fractional_linear_error = str(exc)
+
+    return ConstantOnePairBridgeScan(
+        left_label=left_label,
+        right_label=right_label,
+        difference_label="D_XR_ws",
+        difference_expression=f"D_XR_ws = {right_label} - {left_label}",
+        difference_first_failure_power=difference_first_failure_power,
+        difference_first_failure_coeff=difference_first_failure_coeff,
+        quotient_label="Q_XR_ws",
+        quotient_expression=f"Q_XR_ws = {right_label} / {left_label}",
+        quotient_first_failure_power=quotient_first_failure_power,
+        quotient_first_failure_coeff=quotient_first_failure_coeff,
+        polynomial_scans=tuple(polynomial_scans),
+        fractional_linear_relation=fractional_linear_relation,
+        fractional_linear_error=fractional_linear_error,
     )
 
 
@@ -6427,6 +6589,46 @@ def scan_weber_class_invariant_bridge_box(
             ),
         )
 
+    followup_bridge_scan: ConstantOnePairBridgeScan | None = None
+    coordinate_followup = quotient_coordinate_template_scan.normalized_followup
+    if coordinate_followup is not None and normalized_followup is not None:
+        coordinate_followup_series = [sp.Integer(0) for _ in range(order)]
+        coordinate_followup_series[0] = sp.Integer(1)
+        if (
+            quotient_coordinate_template_scan.first_failure_power is not None
+            and quotient_coordinate_template_scan.first_failure_coeff is not None
+        ):
+            coordinate_template_residual = [
+                sp.simplify(value - (sp.Integer(1) if index == 0 else sp.Integer(0)))
+                for index, value in enumerate(quotient_coordinate_template_series)
+            ]
+            for index in range(order):
+                source_index = index + quotient_coordinate_template_scan.first_failure_power
+                if source_index >= order:
+                    break
+                coordinate_followup_series[index] = sp.simplify(
+                    coordinate_template_residual[source_index]
+                    / quotient_coordinate_template_scan.first_failure_coeff
+                )
+
+        residual_followup_series = [sp.Integer(0) for _ in range(order)]
+        residual_followup_series[0] = sp.Integer(1)
+        for index in range(order):
+            source_index = index + quotient_first_failure_power
+            if source_index >= order:
+                break
+            residual_followup_series[index] = sp.simplify(
+                quotient_residual[source_index] / quotient_first_failure_coeff
+            )
+
+        followup_bridge_scan = _scan_constant_one_series_pair_bridge(
+            left_label=coordinate_followup.label,
+            left_series=coordinate_followup_series,
+            right_label=normalized_followup.label,
+            right_series=residual_followup_series,
+            order=order,
+        )
+
     return WeberResidualBridgeScan(
         primary_label="G_g12_ws",
         primary_expression="G_g12_ws = g12_ws / (t^2; t^4)_inf^12",
@@ -6502,6 +6704,7 @@ def scan_weber_class_invariant_bridge_box(
             )
         ),
         normalized_followup=normalized_followup,
+        followup_bridge_scan=followup_bridge_scan,
     )
 
 
@@ -12892,6 +13095,56 @@ def build_candidate_tail_family_note(
                         f"- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: "
                         f"`{len(coordinate_followup_plus_eta_hits)}` / "
                         f"`{len(coordinate_followup_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                    )
+                if bridge_scan.followup_bridge_scan is not None:
+                    followup_bridge = bridge_scan.followup_bridge_scan
+                    polynomial_bridge_hits = [
+                        scan for scan in followup_bridge.polynomial_scans if scan.relation is not None
+                    ]
+                    lines.append(
+                        f"- Weber normalized follow-up bridge difference `{followup_bridge.difference_label}`: "
+                        f"`{followup_bridge.difference_expression}`."
+                    )
+                    if (
+                        followup_bridge.difference_first_failure_power is None
+                        or followup_bridge.difference_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Weber normalized follow-up bridge difference `{followup_bridge.difference_label}`: "
+                            "matches `0` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weber normalized follow-up bridge difference `{followup_bridge.difference_label}`: "
+                            f"first fails at `{series_symbol}^{followup_bridge.difference_first_failure_power}` "
+                            f"with coefficient `{_format_expr(followup_bridge.difference_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge quotient `{followup_bridge.quotient_label}`: "
+                        f"`{followup_bridge.quotient_expression}`."
+                    )
+                    if (
+                        followup_bridge.quotient_first_failure_power is None
+                        or followup_bridge.quotient_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient `{followup_bridge.quotient_label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weber normalized follow-up bridge quotient `{followup_bridge.quotient_label}`: "
+                            f"`{followup_bridge.quotient_label} - 1` first fails at "
+                            f"`{series_symbol}^{followup_bridge.quotient_first_failure_power}` with coefficient "
+                            f"`{_format_expr(followup_bridge.quotient_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Weber normalized follow-up bridge polynomial boxes: "
+                        f"`{len(polynomial_bridge_hits)}` / `{len(followup_bridge.polynomial_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        "- Weber normalized follow-up bridge fractional-linear box: "
+                        + ("`1` / `1` hit boxes." if followup_bridge.fractional_linear_relation is not None else "`0` / `1` hit boxes.")
                     )
                 lines.append(
                     f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "

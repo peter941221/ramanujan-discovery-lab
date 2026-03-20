@@ -24,6 +24,9 @@ class-invariant compression lane:
   is the current source-faithful positive-recognition object
 - the normalized follow-up `H_X_ws = (G_X_ws - 1) / (4*t^1)` is the next
   stripped version of that template-normalized coordinate on the hero side
+- the first direct bridge between the two normalized hero-side follow-ups is
+  now also recorded:
+  `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws`
 - the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws` is the next narrow
   diagnostic object
 - the normalized follow-up `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` is the current
@@ -98,6 +101,26 @@ def templateNormalizedFollowupExpression : String :=
 
 def templateNormalizedFollowupFirstFailure : FirstFailureWitness := ⟨1, (9 : Rat) / 2⟩
 
+def followupBridgeDifferenceLabel : String := "D_XR_ws"
+
+def followupBridgeDifferenceExpression : String :=
+  "D_XR_ws = H_gp_ws - H_X_ws"
+
+def followupBridgeDifferenceFirstFailure : FirstFailureWitness := ⟨2, -24⟩
+
+def followupBridgeQuotientLabel : String := "Q_XR_ws"
+
+def followupBridgeQuotientExpression : String :=
+  "Q_XR_ws = H_gp_ws / H_X_ws"
+
+def followupBridgeQuotientFirstFailure : FirstFailureWitness := ⟨2, -24⟩
+
+def followupBridgePolynomialDegrees : List Nat := [1, 2, 3]
+
+def followupBridgePolynomialHitCount : Nat := 0
+
+def followupBridgeFractionalLinearHit : Bool := false
+
 def focusedQuotientLabel : String := "R_gp_ws"
 
 def focusedQuotientExpression : String := "R_gp_ws = G_p12_ws / G_g12_ws"
@@ -168,6 +191,10 @@ def primaryResidualSelectionProp : Prop :=
       "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2" ∧
     templateNormalizedFollowupLabel = "H_X_ws" ∧
     templateNormalizedFollowupExpression = "H_X_ws = (G_X_ws - 1) / (4*t^1)" ∧
+    followupBridgeDifferenceLabel = "D_XR_ws" ∧
+    followupBridgeDifferenceExpression = "D_XR_ws = H_gp_ws - H_X_ws" ∧
+    followupBridgeQuotientLabel = "Q_XR_ws" ∧
+    followupBridgeQuotientExpression = "Q_XR_ws = H_gp_ws / H_X_ws" ∧
     focusedQuotientLabel = "R_gp_ws" ∧
     focusedQuotientExpression = "R_gp_ws = G_p12_ws / G_g12_ws" ∧
     normalizedFollowupLabel = "H_gp_ws" ∧
@@ -186,6 +213,10 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     templateNormalizedCoordinateExpression,
     templateNormalizedFollowupLabel,
     templateNormalizedFollowupExpression,
+    followupBridgeDifferenceLabel,
+    followupBridgeDifferenceExpression,
+    followupBridgeQuotientLabel,
+    followupBridgeQuotientExpression,
     focusedQuotientLabel,
     focusedQuotientExpression,
     normalizedFollowupLabel,
@@ -207,6 +238,22 @@ def templateNormalizedFollowupFirstFailureProp : Prop :=
 theorem templateNormalizedFollowupFirstFailure_true :
     templateNormalizedFollowupFirstFailureProp := by
   simp [templateNormalizedFollowupFirstFailureProp, templateNormalizedFollowupFirstFailure]
+
+def followupBridgeDifferenceFirstFailureProp : Prop :=
+  followupBridgeDifferenceFirstFailure.power = 2 ∧
+    followupBridgeDifferenceFirstFailure.coeff = -24
+
+theorem followupBridgeDifferenceFirstFailure_true :
+    followupBridgeDifferenceFirstFailureProp := by
+  simp [followupBridgeDifferenceFirstFailureProp, followupBridgeDifferenceFirstFailure]
+
+def followupBridgeQuotientFirstFailureProp : Prop :=
+  followupBridgeQuotientFirstFailure.power = 2 ∧
+    followupBridgeQuotientFirstFailure.coeff = -24
+
+theorem followupBridgeQuotientFirstFailure_true :
+    followupBridgeQuotientFirstFailureProp := by
+  simp [followupBridgeQuotientFirstFailureProp, followupBridgeQuotientFirstFailure]
 
 def focusedQuotientFirstFailureProp : Prop :=
   focusedQuotientFirstFailure.power = 3 ∧
@@ -248,6 +295,19 @@ theorem templateNormalizedFollowupSmallBoxStatus_true :
     templateNormalizedFollowupSmallBoxStatusProp := by
   simp [templateNormalizedFollowupSmallBoxStatusProp, templateNormalizedFollowupSmallBoxStatus]
 
+def followupBridgeStatusProp : Prop :=
+  followupBridgePolynomialDegrees = [1, 2, 3] ∧
+    followupBridgePolynomialHitCount = 0 ∧
+    followupBridgeFractionalLinearHit = false
+
+theorem followupBridgeStatus_true : followupBridgeStatusProp := by
+  simp [
+    followupBridgeStatusProp,
+    followupBridgePolynomialDegrees,
+    followupBridgePolynomialHitCount,
+    followupBridgeFractionalLinearHit
+  ]
+
 def focusedQuotientSmallBoxStatusProp : Prop :=
   focusedQuotientSmallBoxStatus.etaHits = 0 ∧
     focusedQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
@@ -279,10 +339,13 @@ structure WaypointCertificate where
   selection : primaryResidualSelectionProp
   templateFirstFailure : templateNormalizedCoordinateFirstFailureProp
   templateFollowupFirstFailure : templateNormalizedFollowupFirstFailureProp
+  followupBridgeDifference : followupBridgeDifferenceFirstFailureProp
+  followupBridgeQuotient : followupBridgeQuotientFirstFailureProp
   firstFailure : focusedQuotientFirstFailureProp
   searchParameters : checkedSearchParametersProp
   templateSmallBoxes : templateNormalizedCoordinateSmallBoxStatusProp
   templateFollowupSmallBoxes : templateNormalizedFollowupSmallBoxStatusProp
+  followupBridgeStatus : followupBridgeStatusProp
   smallBoxes : focusedQuotientSmallBoxStatusProp
   normalizedSmallBoxes : normalizedFollowupSmallBoxStatusProp
 
@@ -293,10 +356,13 @@ def currentWaypointCertificate : WaypointCertificate where
   selection := primaryResidualSelection_true
   templateFirstFailure := templateNormalizedCoordinateFirstFailure_true
   templateFollowupFirstFailure := templateNormalizedFollowupFirstFailure_true
+  followupBridgeDifference := followupBridgeDifferenceFirstFailure_true
+  followupBridgeQuotient := followupBridgeQuotientFirstFailure_true
   firstFailure := focusedQuotientFirstFailure_true
   searchParameters := checkedSearchParameters_true
   templateSmallBoxes := templateNormalizedCoordinateSmallBoxStatus_true
   templateFollowupSmallBoxes := templateNormalizedFollowupSmallBoxStatus_true
+  followupBridgeStatus := followupBridgeStatus_true
   smallBoxes := focusedQuotientSmallBoxStatus_true
   normalizedSmallBoxes := normalizedFollowupSmallBoxStatus_true
 
@@ -307,10 +373,13 @@ def currentWaypoint : Prop :=
     primaryResidualSelectionProp ∧
     templateNormalizedCoordinateFirstFailureProp ∧
     templateNormalizedFollowupFirstFailureProp ∧
+    followupBridgeDifferenceFirstFailureProp ∧
+    followupBridgeQuotientFirstFailureProp ∧
     focusedQuotientFirstFailureProp ∧
     checkedSearchParametersProp ∧
     templateNormalizedCoordinateSmallBoxStatusProp ∧
     templateNormalizedFollowupSmallBoxStatusProp ∧
+    followupBridgeStatusProp ∧
     focusedQuotientSmallBoxStatusProp ∧
     normalizedFollowupSmallBoxStatusProp
 
@@ -322,10 +391,13 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.selection,
     currentWaypointCertificate.templateFirstFailure,
     currentWaypointCertificate.templateFollowupFirstFailure,
+    currentWaypointCertificate.followupBridgeDifference,
+    currentWaypointCertificate.followupBridgeQuotient,
     currentWaypointCertificate.firstFailure,
     currentWaypointCertificate.searchParameters,
     currentWaypointCertificate.templateSmallBoxes,
     currentWaypointCertificate.templateFollowupSmallBoxes,
+    currentWaypointCertificate.followupBridgeStatus,
     currentWaypointCertificate.smallBoxes,
     currentWaypointCertificate.normalizedSmallBoxes
   ⟩

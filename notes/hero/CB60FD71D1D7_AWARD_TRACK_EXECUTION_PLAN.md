@@ -173,6 +173,12 @@ Working interpretation:
   `H_X_ws = (G_X_ws - 1) / (4*t^1)` still gives `0` hits in the first
   self-polynomial, self-fractional-linear, self-quotient finite-product,
   eta / modular-unit, and plus-Pochhammer boxes
+- the same lane now also keeps the first direct comparison bridge between the
+  two normalized hero-side follow-ups:
+  `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws` both first fail
+  at `t^2` with coefficient `-24`, and the first degree-`<= 3` polynomial
+  bridge box plus the one-coordinate fractional-linear bridge box still both
+  report `0` hits
 - on the hero tail-family ladder, that focused quotient still gives `0` hits in
   the first self-polynomial, self-fractional-linear, self-quotient
   finite-product, eta / modular-unit, and plus-Pochhammer boxes, and first
@@ -383,9 +389,10 @@ Current Phase 2 result:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
   the next implementation should first exploit the new
   `X_g_ws` / `Q_gp_ws` exact bridge together with the template-normalized lane
-  `G_X_ws = 1 / G_g12_ws^2`, and only then explain the focused residual
-  quotient `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named
-  Weber coordinate or widening anonymous prefix boxes again
+  `G_X_ws = 1 / G_g12_ws^2` and the direct follow-up bridge
+  `D_XR_ws` / `Q_XR_ws`, and only then explain the focused residual quotient
+  `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named Weber
+  coordinate or widening anonymous prefix boxes again
 
 Success condition:
 

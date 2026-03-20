@@ -2181,6 +2181,20 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert all(item.relation is None for item in scan.quotient_modular_unit_eta_scans)
     assert all(item.relation is None for item in scan.quotient_self_plus_pochhammer_scans)
     assert all(item.relation is None for item in scan.quotient_self_plus_pochhammer_eta_scans)
+    assert scan.followup_bridge_scan is not None
+    assert scan.followup_bridge_scan.left_label == "H_X_ws"
+    assert scan.followup_bridge_scan.right_label == "H_gp_ws"
+    assert scan.followup_bridge_scan.difference_label == "D_XR_ws"
+    assert scan.followup_bridge_scan.difference_expression == "D_XR_ws = H_gp_ws - H_X_ws"
+    assert scan.followup_bridge_scan.difference_first_failure_power == 2
+    assert scan.followup_bridge_scan.difference_first_failure_coeff == -24
+    assert scan.followup_bridge_scan.quotient_label == "Q_XR_ws"
+    assert scan.followup_bridge_scan.quotient_expression == "Q_XR_ws = H_gp_ws / H_X_ws"
+    assert scan.followup_bridge_scan.quotient_first_failure_power == 2
+    assert scan.followup_bridge_scan.quotient_first_failure_coeff == -24
+    assert len(scan.followup_bridge_scan.polynomial_scans) == 3
+    assert all(item.relation is None for item in scan.followup_bridge_scan.polynomial_scans)
+    assert scan.followup_bridge_scan.fractional_linear_relation is None
 
 
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
@@ -2949,6 +2963,10 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber quotient-coordinate template bridge" in text
     assert "G_X_ws*G_g12_ws^2 - 1 = 0" in text
     assert "Weber quotient-coordinate normalized follow-up `H_X_ws`" in text
+    assert "Weber normalized follow-up bridge difference `D_XR_ws`" in text
+    assert "D_XR_ws = H_gp_ws - H_X_ws" in text
+    assert "Weber normalized follow-up bridge quotient `Q_XR_ws`" in text
+    assert "Q_XR_ws = H_gp_ws / H_X_ws" in text
     assert "Weber residual quotient diagnostic `R_gp_ws`" in text
     assert "Weber residual quotient self-polynomial uniqueness boxes" in text
     assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text
