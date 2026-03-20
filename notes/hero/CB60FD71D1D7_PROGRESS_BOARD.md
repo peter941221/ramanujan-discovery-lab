@@ -129,5 +129,5 @@ Literature status
 ## Priority Queue
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
-2. Push the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`.
+2. Push the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`, starting with the Weber-Schlafli coordinate `P = p(8τ)`.
 3. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.

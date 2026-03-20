@@ -116,6 +116,17 @@ Literature closure
   not collapse into the checked small eta / modular-unit / one-core correction
   boxes.
 
+### Lane E. Weber-Schlafli coordinate hand-off
+
+- Status: `new preferred Phase-2 target`
+- Literature trigger:
+  Akkarapakam--Morton rewrites the relevant Ramanujan continued-fraction object
+  through Weber-Schlafli coordinates, with `2*p(8τ) = 1/v(τ) - v(τ)`.
+- Current practical meaning:
+  after the raw `Q_3`, `Q_4` and weighted `W_34` ladders all miss, the next
+  exact source-faithful move should be a coordinate change, not a wider prefix
+  box.
+
 ### Lane D. Operator-first scaffold
 
 - Status: `keep, but do not over-promote`
@@ -141,6 +152,6 @@ Literature closure
 
 1. Source-faithful modular-function / eta recognition.
 2. Deeper named `GG/Weber` coordinates beyond `Q_3`, `Q_4`, `W_34`, `G_W34`,
-   and `G2_W34`.
+   and `G2_W34`, starting with the Weber-Schlafli lane `P = p(8τ)`.
 3. Operator / factorization conversion only after a stronger source object is
    in hand.

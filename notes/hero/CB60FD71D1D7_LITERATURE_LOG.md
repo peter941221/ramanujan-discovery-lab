@@ -681,3 +681,104 @@ So the literature-driven reading stays the same:
 - do move the next positive-recognition attempt deeper than the first weighted
   coordinate `W_34` and its first two normalized corrections `G_W34`,
   `G2_W34`
+
+## 2026-03-20 Update: Phase-1 Literature Exit And The Weber-Schlafli Hand-Off
+
+This pass asked the exact Phase-1 question from the execution plan:
+
+```text
+after freezing the local tail-family conclusion,
+which primary-source spine most sharply determines the next coding target?
+```
+
+### Verified source spine
+
+1. Chan, Huang, 1997
+   - link:
+     `https://mrc.sdu.edu.cn/ziliao/8.pdf`
+   - verified role:
+     the exact `GG` quotient-coordinate source spine around the `q^3` and
+     `q^4` lanes.
+
+2. Cho, Koo, Park, 2009
+   - link:
+     `https://doi.org/10.1016/j.jnt.2008.09.018`
+   - verified role:
+     extends the same orbit to all odd primes by computing affine models of
+     modular curves `X(Γ)` with `Γ = Γ_1(8) ∩ Γ_0(16p)`, and treats `v(τ)` as a
+     modular unit over `Z`.
+   - direction consequence:
+     the next lane should look like a modular-curve coordinate lane, not an
+     anonymous prefix fit.
+
+3. Akkarapakam, Morton, 2024
+   - link:
+     `https://nyjm.albany.edu/j/2024/30-36.html`
+   - verified role:
+     gives a deeper Weber-Schlafli coordinate change for the relevant
+     continued-fraction object.
+   - the key exact coordinate relation recorded there is:
+
+```text
+2*p(8τ) = 1/v(τ) - v(τ)
+```
+
+   - the same paper then gives low-degree exact relations in the deeper
+     coordinates, including:
+
+```text
+p(τ)^2 p(2τ)^2 + p(τ)^2 - 2 p(2τ) = 0
+b(τ)^4 = p(τ)^8 + 16 p(τ)^4
+b(τ/2)^2 = b(τ) + 4
+```
+
+   - direction consequence:
+     after the misses on the raw `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`
+     lane, the first literature-backed next coordinate should be `p(8τ)`, not
+     another raw quotient combination.
+
+4. Yui, Zagier, 1997
+   - link:
+     `https://people.mpim-bonn.mpg.de/zagier/files/doi/10.1090/S0025-5718-97-00854-5/fulltext.pdf`
+   - verified role:
+     classical Weber modular-function singular-value anchor behind the later
+     modular-curve and class-invariant story.
+   - direction consequence:
+     moving from raw `GG` quotient coordinates to Weber-style modular-function
+     coordinates is a source-backed shift, not a random coordinate trick.
+
+### Phase-1 exit conclusion
+
+Phase 1 now exits with a sharper local target:
+
+```text
+keep the GG / Weber neighborhood
+stop widening anonymous boxes
+move next to the Weber-Schlafli coordinate lane
+```
+
+Concretely, the next implementation target should start with:
+
+```text
+P = p(8τ), where 2P = 1/v - v
+```
+
+and only pull in the companion coordinate
+
+```text
+B = b(4τ)
+```
+
+if the one-coordinate `P` lane still misses.
+
+### Why this beats another quotient-box widening step
+
+Analogy:
+
+- the raw `Q_3 / Q_4` lane was like checking the front-facing symmetry of a
+  machine
+- the Weber-Schlafli lane is like opening the casing and reading the gearbox
+  coordinates directly
+
+The current literature now says the gearbox view is the more faithful next
+representation.

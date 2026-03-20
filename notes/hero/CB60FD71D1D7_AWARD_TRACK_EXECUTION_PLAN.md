@@ -1,6 +1,6 @@
 # `cb60fd71d1d7` Award-Track Execution Plan
 
-Status date: `2026-03-19`
+Status date: `2026-03-20`
 
 ## Goal
 
@@ -86,6 +86,47 @@ Working interpretation:
 - another generic box widening step is now even lower value unless it is
   explicitly motivated by the tail-transfer law, quotient coordinates, or by a
   literature source
+
+## Phase 1 Sprint Exit (`2026-03-20`)
+
+The document-defined deep-research sprint is now sharp enough to freeze as a
+completed Phase 1 hand-off.
+
+Phase-1 deliverables now in hand:
+
+```text
+1. frozen local tail-family conclusion
+2. verified primary-source spine for nonlinear GG / Weber lanes
+3. refreshed bibliography and literature notes
+4. one sharper next implementation target
+```
+
+The most important new narrowing is on deliverable `4`.
+
+Phase 1 no longer points to:
+
+- broader anonymous prefix growth
+- the raw `Q_3`, `Q_4` pair alone as the next positive-recognition target
+
+Phase 1 now points to:
+
+```text
+Weber-Schlafli coordinate lane
+P = p(8τ), with 2P = 1/v - v
+and, if needed, the companion coordinate B = b(4τ)
+```
+
+Reason:
+
+- Chan--Huang still anchors the exact `Q_3` / `Q_4` quotient-coordinate lane
+- Cho--Koo--Park upgrades the same orbit to a modular-curve / modular-unit
+  setting over odd-prime levels
+- Akkarapakam--Morton then gives a deeper Weber-flavored coordinate change
+  where the GG object `v(τ)` is rewritten through the Weber-Schlafli function
+  `p` by the exact relation `2*p(8τ) = 1/v(τ) - v(τ)`
+- that is the first literature-backed coordinate change in the current spine
+  that goes **deeper** than the already-failed raw `Q_3`, `Q_4`,
+  `W_34`, `G_W34`, and `G2_W34` lane
 
 ## Gap Map
 
@@ -230,6 +271,12 @@ Success condition:
 - end the sprint with one clearly prioritized next recognition lane that is
   either tail-family-derived or explicitly source-driven from the literature
 
+Current exit status:
+
+- achieved
+- winning lane: Weber-Schlafli coordinate lane rooted at
+  `P = p(8τ)` and optionally `B = b(4τ)`
+
 ### Sprint 2 — Local Recognition Upgrade
 
 Focus:
@@ -248,6 +295,18 @@ Current expected target:
   a deeper Weber / modular-curve parameter compatible with the same `3:2`
   weighting, such as a `Q_3^3 / Q_4^2`-type coordinate rather than the raw
   quotient pair alone
+
+Refined `2026-03-20` target:
+
+- start directly with the first literature-backed deeper Weber coordinate
+  rather than with another generic quotient combination
+- current preferred coding object:
+  `P = p(8τ)` with `2P = 1/v - v`
+- current preferred fallback companion coordinate:
+  `B = b(4τ)`
+- current preferred first exact template:
+  the Morton periodic-point / Weber-Schlafli polynomial relation linking
+  `P(τ)` and `P(2τ)`
 
 Success condition:
 
