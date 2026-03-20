@@ -782,3 +782,56 @@ Analogy:
 
 The current literature now says the gearbox view is the more faithful next
 representation.
+
+## 2026-03-20 Update: Companion `B = b(4τ)` Pass Closes Too
+
+The first `P = p(8τ)` pass was already enough to justify staying in the named
+`GG / Weber` orbit.
+
+This follow-up asks the next natural literature-backed question:
+
+```text
+if P_ws = (1/Y - Y) / 2 still misses,
+does the direct companion coordinate B = b(4τ)
+stabilize the same tail-family ladder?
+```
+
+The same Akkarapakam--Morton formulas give the coding bridge:
+
+```text
+b(τ)^4 = p(τ)^8 + 16 p(τ)^4
+b(τ/2)^2 = b(τ) + 4
+```
+
+so the local companion coordinate is:
+
+```text
+B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)
+```
+
+and the first exact companion templates are:
+
+```text
+B_ws^2 - B_ws,2 - 4 = 0
+B_ws,2^4 - P_ws^8 - 16*P_ws^4 = 0
+```
+
+Current exact outcome:
+
+- all `12` sampled tail-family objects still give `0` hits
+- unlike the `P_ws` lane, the `B_ws` lane does not spread into several
+  low-order classes
+- instead, it collapses immediately to one universal constant-term
+  obstruction:
+
+```text
+B_ws^2 - B_ws,2 - 4 -> (t^0, -2)
+B_ws,2^4 - P_ws^8 - 16*P_ws^4 -> (t^0, 16)
+```
+
+Direction consequence:
+
+- this keeps the same named `GG / Weber` orbit active
+- but it says the direct `P -> B` companion closure is already exact-blocked
+- so the next source-faithful step should be another named Weber coordinate or
+  a theorem-grade obstruction package, not a wider anonymous scan

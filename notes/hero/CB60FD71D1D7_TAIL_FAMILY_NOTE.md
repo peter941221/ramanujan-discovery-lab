@@ -47,7 +47,10 @@ f(Y, Y_2) = 0,   g(Y^2, Y_2^2) = 0,   f(Y, (1-Y_2)/(1+Y_2)) = 0
 
 ```text
 P_ws = (1/Y - Y) / 2
+B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)
 P_ws^2 * P_ws,2^2 + P_ws^2 - 2*P_ws,2 = 0
+B_ws^2 - B_ws,2 - 4 = 0
+B_ws,2^4 - P_ws^8 - 16*P_ws^4 = 0
 ```
 
 - We also check a `GG/Weber modular-equation` lane on the same sampled `U(x)` objects and their gap residuals:
@@ -85,6 +88,9 @@ U_t2 = T(t^2) / (1 + t^2)
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -125,6 +131,9 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -165,6 +174,9 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -205,6 +217,9 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `8`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -245,6 +260,9 @@ U_t3 = T(t^3) / (1 + t^3)
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^8` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -285,6 +303,9 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^4` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -325,6 +346,9 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -365,6 +389,9 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -405,6 +432,9 @@ U_t4 = T(t^4) / (1 + t^4)
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^10` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -445,6 +475,9 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -485,6 +518,9 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -525,6 +561,9 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
+- Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
+- Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
+- Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -557,6 +596,6 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - GG exact quotient-coordinate sample hits found: `0`
 - Morton periodic-point / algebraic-function sample hits found: `0`
 - Morton Weber-Schlafli sample hits found: `0`
-- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate template, or the first literature-driven GG/Weber modular-equation boxes.
+- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `336.70`
+- Build elapsed seconds: `344.15`

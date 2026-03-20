@@ -5554,6 +5554,29 @@ def _morton_weber_schlafli_relations(order: int) -> tuple[tuple[str, PolynomialR
     )
 
 
+@lru_cache(maxsize=None)
+def _morton_weber_companion_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
+    b, b2, p = sp.symbols("B B_2 P")
+    return (
+        (
+            "Morton Weber companion template `B^2 - B_2 - 4`",
+            _polynomial_relation_from_sympy_expr(
+                expr=b**2 - b2 - 4,
+                variables=("B", "B_2"),
+                order=order,
+            ),
+        ),
+        (
+            "Morton Weber companion template `B_2^4 - P^8 - 16*P^4`",
+            _polynomial_relation_from_sympy_expr(
+                expr=b2**4 - p**8 - 16 * p**4,
+                variables=("B_2", "P"),
+                order=order,
+            ),
+        ),
+    )
+
+
 def _first_nonzero_residual_term(
     residual: Series,
 ) -> tuple[int | None, sp.Expr | None]:
@@ -5562,6 +5585,38 @@ def _first_nonzero_residual_term(
         if simplified != 0:
             return power, simplified
     return None, None
+
+
+def _series_fractional_power_nonzero_constant(
+    *,
+    base: Series,
+    exponent: sp.Rational,
+) -> Series:
+    order = len(base)
+    if order < 1:
+        raise ValueError("series must be non-empty")
+    constant = sp.simplify(base[0])
+    if constant == 0:
+        raise ValueError("series constant term must be nonzero for fractional powers")
+
+    delta = [sp.Integer(0) for _ in range(order)]
+    for index in range(1, order):
+        delta[index] = sp.simplify(base[index] / constant)
+
+    result = [sp.Integer(0) for _ in range(order)]
+    result[0] = sp.Integer(1)
+    delta_power = delta[:]
+    for degree in range(1, order):
+        coefficient = sp.simplify(sp.binomial(exponent, degree))
+        if coefficient != 0:
+            result = series_add(
+                result,
+                [sp.simplify(coefficient * value) for value in delta_power],
+            )
+        delta_power = series_mul(delta_power, delta)
+
+    scale = sp.simplify(constant**exponent)
+    return [sp.simplify(scale * value) for value in result]
 
 
 def _weber_schlafli_coordinate_series(
@@ -5580,6 +5635,35 @@ def _weber_schlafli_coordinate_series(
         sp.simplify((inverse_series[index] - target_series[index]) / 2)
         for index in range(order)
     ]
+
+
+def _weber_companion_coordinate_series(
+    *,
+    p_series: Series,
+    order: int,
+) -> Series | None:
+    if order < 1:
+        return None
+    if len(p_series) < order:
+        raise ValueError("p_series is shorter than requested order")
+
+    p_trunc = p_series[:order]
+    p_fourth = series_pow(p_trunc, 4)
+    b2_source = p_fourth[:]
+    b2_source[0] = sp.simplify(b2_source[0] + 16)
+    b2_series = series_mul(
+        p_trunc,
+        _series_fractional_power_nonzero_constant(
+            base=b2_source,
+            exponent=sp.Rational(1, 4),
+        ),
+    )
+    b_source = b2_series[:]
+    b_source[0] = sp.simplify(b_source[0] + 4)
+    return _series_fractional_power_nonzero_constant(
+        base=b_source,
+        exponent=sp.Rational(1, 2),
+    )
 
 
 def scan_morton_periodic_point_box(
@@ -5678,6 +5762,51 @@ def scan_morton_periodic_point_box(
                 template_results=tuple(weber_template_results),
             )
         )
+        weber_companion_series = _weber_companion_coordinate_series(
+            p_series=weber_coordinate_series,
+            order=order,
+        )
+        if weber_companion_series is not None:
+            weber_companion_q2 = benchmark_power_substitution_series(
+                weber_companion_series,
+                power=2,
+                order=order,
+            )
+            companion_template_results: list[MortonPeriodicPointTemplateResult] = []
+            for label, relation in _morton_weber_companion_relations(order):
+                if relation.variables == ("B", "B_2"):
+                    variable_map = {
+                        "B": weber_companion_series,
+                        "B_2": weber_companion_q2,
+                    }
+                elif relation.variables == ("B_2", "P"):
+                    variable_map = {
+                        "B_2": weber_companion_q2,
+                        "P": weber_coordinate_series,
+                    }
+                else:
+                    raise ValueError(f"unexpected Weber companion variables: {relation.variables}")
+                residual = _relation_residual_series(
+                    relation,
+                    series_by_variable=variable_map,
+                    order=order,
+                )
+                power, coeff = _first_nonzero_residual_term(residual)
+                companion_template_results.append(
+                    MortonPeriodicPointTemplateResult(
+                        label=label,
+                        first_failure_power=power,
+                        first_failure_coeff=coeff,
+                        hit=all(sp.simplify(value) == 0 for value in residual),
+                    )
+                )
+            weber_coordinate_scans.append(
+                MortonWeberCoordinateScan(
+                    label="B_ws",
+                    expression="B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)",
+                    template_results=tuple(companion_template_results),
+                )
+            )
     return MortonPeriodicPointScan(
         template_results=tuple(template_results),
         weber_coordinate_scans=tuple(weber_coordinate_scans),
@@ -11432,7 +11561,10 @@ def build_candidate_tail_family_note(
             "",
             "```text",
             "P_ws = (1/Y - Y) / 2",
+            "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)",
             "P_ws^2 * P_ws,2^2 + P_ws^2 - 2*P_ws,2 = 0",
+            "B_ws^2 - B_ws,2 - 4 = 0",
+            "B_ws,2^4 - P_ws^8 - 16*P_ws^4 = 0",
             "```",
             "",
         ]
@@ -11935,7 +12067,7 @@ def build_candidate_tail_family_note(
                 f"- GG exact quotient-coordinate sample hits found: `{gg_exact_quotient_hit_count}`",
                 f"- Morton periodic-point / algebraic-function sample hits found: `{morton_hit_count}`",
                 f"- Morton Weber-Schlafli sample hits found: `{morton_weber_hit_count}`",
-                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate template, or the first literature-driven GG/Weber modular-equation boxes.",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, or the first literature-driven GG/Weber modular-equation boxes.",
                 "",
                 f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
                 "",

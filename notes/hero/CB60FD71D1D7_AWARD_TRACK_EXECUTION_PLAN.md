@@ -307,19 +307,29 @@ Current Phase 2 result:
   all sampled objects still give `0` exact hits in this first Weber lane, so
   the result is a sharper source-faithful obstruction rather than a positive
   identification
+- Phase 3 companion follow-up:
+  the source-faithful companion coordinate `B = b(4τ)` is now also coded as
+  `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)` and tested against the first
+  two exact companion templates
+- Phase 3 companion outcome:
+  all sampled objects still give `0` exact hits there, and the companion lane
+  now collapses to one uniform constant-term obstruction class
+  `(-2, 16)` recorded in
+  `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
-  the next implementation should bring in the companion coordinate
-  `B = b(4τ)` or another literature-backed Weber coordinate, not widen
-  anonymous prefix boxes again
+  the next implementation should move to another literature-backed named Weber
+  coordinate or package the new companion obstruction in theorem form, not
+  widen anonymous prefix boxes again
 
 Success condition:
 
 - either a new positive candidate relation appears, or this precise orbit is
   narrowed enough to justify moving to the next named source class
 - current reading:
-  achieved in the narrowing sense; Sprint 2 now closes the first `P = p(8τ)`
-  pass with a reusable negative result and a clearer next coordinate choice
+  achieved in the narrowing sense; the `P = p(8τ)` pass and the direct
+  companion `B = b(4τ)` pass now both close with reusable exact negative
+  results and a narrower named-coordinate handoff
 
 ### Sprint 3 — Theorem Conversion
 

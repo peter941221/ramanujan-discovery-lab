@@ -2001,14 +2001,26 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
 
     assert scan.template_results
     assert scan.weber_coordinate_scans
-    weber_scan = scan.weber_coordinate_scans[0]
-    assert weber_scan.label == "P_ws"
-    assert weber_scan.expression == "P_ws = (1/F - F) / 2"
-    assert len(weber_scan.template_results) == 1
-    assert weber_scan.template_results[0].label == "Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`"
-    assert weber_scan.template_results[0].hit
-    assert weber_scan.template_results[0].first_failure_power is None
-    assert weber_scan.template_results[0].first_failure_coeff is None
+    p_scan, b_scan = scan.weber_coordinate_scans
+    assert p_scan.label == "P_ws"
+    assert p_scan.expression == "P_ws = (1/F - F) / 2"
+    assert len(p_scan.template_results) == 1
+    assert p_scan.template_results[0].label == "Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`"
+    assert p_scan.template_results[0].hit
+    assert p_scan.template_results[0].first_failure_power is None
+    assert p_scan.template_results[0].first_failure_coeff is None
+
+    assert b_scan.label == "B_ws"
+    assert b_scan.expression == "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)"
+    assert len(b_scan.template_results) == 2
+    assert b_scan.template_results[0].label == "Morton Weber companion template `B^2 - B_2 - 4`"
+    assert not b_scan.template_results[0].hit
+    assert b_scan.template_results[0].first_failure_power == 0
+    assert b_scan.template_results[0].first_failure_coeff == -2
+    assert b_scan.template_results[1].label == "Morton Weber companion template `B_2^4 - P^8 - 16*P^4`"
+    assert not b_scan.template_results[1].hit
+    assert b_scan.template_results[1].first_failure_power == 0
+    assert b_scan.template_results[1].first_failure_coeff == 16
 
 
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
@@ -2750,9 +2762,12 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton periodic-point / algebraic-function templates" in text
     assert "Morton obstruction witnesses" in text
     assert "P_ws = (1/Y - Y) / 2" in text
+    assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
     assert "Morton Weber-Schlafli coordinate `P_ws`" in text
     assert "Morton Weber-Schlafli templates on `P_ws`" in text
     assert "Morton Weber-Schlafli obstruction witnesses" in text
+    assert "Morton Weber-Schlafli coordinate `B_ws`" in text
+    assert "Morton Weber-Schlafli templates on `B_ws`" in text
     assert "GG direct / reciprocal / quotient templates" in text
     assert "GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4`" in text
     assert "GG exact quotient-coordinate obstruction witnesses" in text

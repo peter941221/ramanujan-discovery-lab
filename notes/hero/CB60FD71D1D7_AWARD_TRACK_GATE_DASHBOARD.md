@@ -118,7 +118,7 @@ Literature closure
 
 ### Lane E. Weber-Schlafli coordinate hand-off
 
-- Status: `implemented first pass; still 0-hit`
+- Status: `implemented P/B first pass; still 0-hit`
 - Literature trigger:
   Akkarapakam--Morton rewrites the relevant Ramanujan continued-fraction object
   through Weber-Schlafli coordinates, with `2*p(8τ) = 1/v(τ) - v(τ)`.
@@ -126,15 +126,22 @@ Literature closure
   `P_ws = (1/F - F) / 2`
 - First coded exact template:
   `P_ws^2 * P_ws,2^2 + P_ws^2 - 2*P_ws,2 = 0`
+- Companion coded coordinate:
+  `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`
+- Companion exact templates:
+  `B_ws^2 - B_ws,2 - 4 = 0`, `B_ws,2^4 - P_ws^8 - 16*P_ws^4 = 0`
 - Current practical meaning:
   after the raw `Q_3`, `Q_4` and weighted `W_34` ladders all miss, the first
-  exact source-faithful coordinate change has now also been tested and still
-  gives `0` hits across the sampled tail-family objects.
+  exact source-faithful coordinate change and its direct companion closure
+  have now both been tested and still give `0` hits across the sampled
+  tail-family objects.
 - Current verdict:
-  Phase 2 successfully closes the first Weber-Schlafli pass as a sharper
-  obstruction layer; the next move inside the same orbit should add the
-  companion coordinate `B = b(4τ)` or another named Weber coordinate rather
-  than reopen anonymous box growth.
+  the `P_ws` lane closes as a repeated low-order obstruction layer, while the
+  `B_ws` companion lane closes even harder as a uniform constant-term
+  obstruction recorded in
+  `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`.
+  The next move inside the same orbit should therefore be another named Weber
+  coordinate or a theorem-grade obstruction package, not anonymous box growth.
 
 ### Lane D. Operator-first scaffold
 
@@ -155,18 +162,18 @@ Literature closure
 - Full tail-family refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery tail-note --in results/verified.jsonl --candidate-id cb60fd71d1d7 --tail-stages 3,4,5 --max-gap-depth 3 --out notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
 - Full tail-family note timing:
-  about `340s`
+  about `344s`
 - Full tail-operator refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery tail-operator-note --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 36 --tail-stages 3,4,5 --max-gap-depth 3 --out notes/hero/CB60FD71D1D7_TAIL_OPERATOR_NOTE.md`
-- Targeted Phase 2 Python validation:
+- Targeted Weber Python validation:
   `$env:PYTHONPATH='src'; pytest tests/test_identification.py -q -k "weber_schlafli or tail_note or morton_periodic_point"`
 
 ## Priority Order
 
 1. Source-faithful modular-function / eta recognition.
 2. Deeper named `GG/Weber` coordinates beyond `Q_3`, `Q_4`, `W_34`, `G_W34`,
-   and `G2_W34`; the first Weber-Schlafli pass `P = p(8τ)` is now done, so the
-   next source-faithful companion is `B = b(4τ)` or another named Weber
-   coordinate.
+   and `G2_W34`; the direct `P = p(8τ)` and `B = b(4τ)` passes are now both
+   done, so the next source-faithful move is another named Weber coordinate or
+   a theorem-grade package of the new companion obstruction.
 3. Operator / factorization conversion only after a stronger source object is
    in hand.

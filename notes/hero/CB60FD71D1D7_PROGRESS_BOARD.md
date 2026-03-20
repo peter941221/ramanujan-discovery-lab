@@ -70,7 +70,18 @@ Literature status
 - Exact tail-family note:
   `notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
 - Current verdict:
-  the sampled `U_t2`, `U_t3`, `U_t4` ladder and their gap-normalized residuals still give `0` hits in the checked one-core source-family eta boxes, direct eta boxes, direct modular-unit / eta boxes, Morton periodic-point templates, the first Weber-Schlafli coordinate template, and the current `GG/Weber` modular-equation templates.
+  the sampled `U_t2`, `U_t3`, `U_t4` ladder and their gap-normalized residuals still give `0` hits in the checked one-core source-family eta boxes, direct eta boxes, direct modular-unit / eta boxes, Morton periodic-point templates, the first Weber-Schlafli coordinate template, the direct Weber companion templates, and the current `GG/Weber` modular-equation templates.
+
+### A2. Weber companion obstruction
+
+- Obstruction note:
+  `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`
+- Current verdict:
+  the direct companion coordinate `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`
+  also gives `0` hits across all `12` sampled tail-family objects, and the
+  misses compress to one universal constant-term class:
+  `B_ws^2 - B_ws,2 - 4 -> (t^0, -2)`,
+  `B_ws,2^4 - P_ws^8 - 16*P_ws^4 -> (t^0, 16)`.
 
 ### B. `GG` quotient-coordinate obstruction
 
@@ -129,5 +140,5 @@ Literature status
 ## Priority Queue
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
-2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the first Weber-Schlafli pass `P = p(8τ)` is now complete, so the next source-faithful companion should be `B = b(4τ)` or another named Weber coordinate.
+2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the direct `P = p(8τ)` and companion `B = b(4τ)` passes are now complete, so the next source-faithful move should be another named Weber coordinate or a theorem-grade package of the new companion obstruction.
 3. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.
