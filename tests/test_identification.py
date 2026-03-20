@@ -2003,8 +2003,21 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
     )
 
     assert scan.template_results
-    assert scan.weber_coordinate_scans
-    p_scan, b_scan = scan.weber_coordinate_scans
+    assert scan.named_coordinate_scans
+    x_scan, p_scan, b_scan = scan.named_coordinate_scans
+    assert x_scan.family_label == "squared"
+    assert x_scan.label == "X_mt"
+    assert x_scan.expression == "X_mt = F^2"
+    assert len(x_scan.template_results) == 1
+    assert (
+        x_scan.template_results[0].label
+        == "Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`"
+    )
+    assert not x_scan.template_results[0].hit
+    assert x_scan.template_results[0].first_failure_power == 0
+    assert x_scan.template_results[0].first_failure_coeff == 4
+
+    assert p_scan.family_label == "Weber-Schlafli"
     assert p_scan.label == "P_ws"
     assert p_scan.expression == "P_ws = (1/F - F) / 2"
     assert len(p_scan.template_results) == 1
@@ -2013,6 +2026,7 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
     assert p_scan.template_results[0].first_failure_power is None
     assert p_scan.template_results[0].first_failure_coeff is None
 
+    assert b_scan.family_label == "Weber-Schlafli"
     assert b_scan.label == "B_ws"
     assert b_scan.expression == "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)"
     assert len(b_scan.template_results) == 2
@@ -3097,15 +3111,19 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Direct modular-unit / eta templates" in text
     assert "Morton periodic-point / algebraic-function templates" in text
     assert "Morton obstruction witnesses" in text
+    assert "X_mt = Y^2" in text
     assert "P_ws = (1/Y - Y) / 2" in text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
     assert "g12_ws = 4*t*(Z_g - 1/Z_g)" in text
     assert "p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)" in text
+    assert "Morton squared coordinate `X_mt`" in text
+    assert "Morton squared coordinate templates on `X_mt`" in text
+    assert "Morton squared coordinate obstruction witnesses" in text
     assert "Morton Weber-Schlafli coordinate `P_ws`" in text
-    assert "Morton Weber-Schlafli templates on `P_ws`" in text
-    assert "Morton Weber-Schlafli obstruction witnesses" in text
+    assert "Morton Weber-Schlafli coordinate templates on `P_ws`" in text
+    assert "Morton Weber-Schlafli coordinate obstruction witnesses" in text
     assert "Morton Weber-Schlafli coordinate `B_ws`" in text
-    assert "Morton Weber-Schlafli templates on `B_ws`" in text
+    assert "Morton Weber-Schlafli coordinate templates on `B_ws`" in text
     assert "Weber class-invariant coordinate `g12_ws`" in text
     assert "Weber class-invariant template on `g12_ws`" in text
     assert "Weber class-invariant correction `G_g12_ws`" in text
@@ -3170,7 +3188,7 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "GG/Weber modular-equation sample hits found" in text
     assert "GG exact quotient-coordinate sample hits found" in text
     assert "Morton periodic-point / algebraic-function sample hits found" in text
-    assert "Morton Weber-Schlafli sample hits found" in text
+    assert "Morton named-coordinate sample hits found" in text
     assert "Weber g-class-invariant sample hits found" in text
     assert "Weber G-class-invariant sample hits found" in text
     assert "Classical Weber `f2` tri-product sample hits found" in text

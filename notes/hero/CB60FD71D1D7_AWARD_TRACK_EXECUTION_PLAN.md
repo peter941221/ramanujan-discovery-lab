@@ -375,6 +375,14 @@ Refined `2026-03-20` target:
 
 Current Phase 2 result:
 
+- implemented the explicit Morton squared-coordinate lane directly on the
+  sampled tail-family objects and their gap-normalized residuals via
+  `X_mt = F^2`
+- tested the source-faithful Proposition 3.2 exact template
+  `X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0`
+- squared-coordinate outcome:
+  all sampled objects still give `0` exact hits there, and the lane already
+  collapses to one universal constant-term obstruction class `(t^0, 4)`
 - implemented the first deeper Weber-Schlafli coordinate lane directly on the
   sampled tail-family objects and their gap-normalized residuals via
   `P_ws = (1/F - F) / 2`

@@ -47,6 +47,13 @@ has been found in the primary sources checked so far.
   `q^4` lanes also still give `0` hits, both in the direct
   `F` vs. `GG(q^{3m})` form and in the quotient-coordinate
   `F` vs. `GG(q^{3m})/GG(q^3)` form.
+- The Morton 2024 tail-family lane now also isolates the explicit squared
+  coordinate from Proposition 3.2 / Theorem B:
+  `X_mt = F^2`.
+  On all `12` sampled tail-family objects, the first exact template
+  `X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0`
+  still gives `0` hits and already fails in one uniform constant-term class
+  with coefficient `4`.
 - The next source-faithful Weber-Schlafli `P/B` branch also still gives `0`
   hits:
   `P_ws = (1/F - F) / 2` misses in repeated low-order classes, while the

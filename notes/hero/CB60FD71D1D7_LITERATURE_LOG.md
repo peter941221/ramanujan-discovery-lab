@@ -981,3 +981,40 @@ step deeper:
 - in practice, the new exact witness quartets strengthen the case for the
   first option: move deeper in the Weber / modular-curve orbit before widening
   anonymous `GG` prefix boxes again
+
+## 2026-03-21 Update: Explicit Morton Squared Coordinate `X_mt`
+
+This pass asked whether the paper's explicit square-level coordinate should be
+treated as a first-class named object, rather than only as the generic
+periodic-point template `g(Y^2, Y_2^2)`.
+
+The source-backed coordinate is the Proposition 3.2 / Theorem B square lane:
+
+```text
+X_mt = Y^2
+X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0
+```
+
+This is the same algebraic map that Akkarapakam--Morton attach to
+`v(τ)^2` and `v(2τ)^2`, but now exposed in the code and tail note as its own
+named coordinate layer.
+
+### Outcome
+
+- all `12` sampled tail-family objects still give `0` hits in this explicit
+  square lane
+- unlike the `P_ws` lane, the failure does not move around by sample:
+  it already collapses at the constant term
+
+```text
+X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 -> (t^0, 4)
+```
+
+### Direction consequence
+
+- this strengthens the reading that the Morton 2024 orbit is being checked in
+  source order, not only through one anonymous template box
+- it also means the first visible square-level coordinate is already exact
+  obstruction data, not the positive closure we need
+- so the next constructive move still sits deeper in the named Weber /
+  modular-function orbit, rather than back in wider anonymous scans

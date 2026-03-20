@@ -722,9 +722,10 @@ class MortonPeriodicPointTemplateResult:
 
 
 @dataclass(frozen=True)
-class MortonWeberCoordinateScan:
-    """A deeper Weber-Schlafli coordinate scan inside the Morton lane."""
+class MortonNamedCoordinateScan:
+    """A named Morton-source coordinate scan inside the periodic-point lane."""
 
+    family_label: str
     label: str
     expression: str
     template_results: tuple[MortonPeriodicPointTemplateResult, ...]
@@ -735,7 +736,7 @@ class MortonPeriodicPointScan:
     """A small exact template box inspired by Morton's periodic-point algebraic functions."""
 
     template_results: tuple[MortonPeriodicPointTemplateResult, ...]
-    weber_coordinate_scans: tuple[MortonWeberCoordinateScan, ...] = ()
+    named_coordinate_scans: tuple[MortonNamedCoordinateScan, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -4349,7 +4350,7 @@ def _gg_modular_equation_scan_has_exact_quotient_hit(scan: GGModularEquationScan
 def _morton_periodic_point_scan_has_hit(scan: MortonPeriodicPointScan) -> bool:
     return any(item.hit for item in scan.template_results) or any(
         item.hit
-        for coordinate_scan in scan.weber_coordinate_scans
+        for coordinate_scan in scan.named_coordinate_scans
         for item in coordinate_scan.template_results
     )
 
@@ -6262,6 +6263,21 @@ def _morton_periodic_point_relations(order: int) -> tuple[tuple[str, PolynomialR
 
 
 @lru_cache(maxsize=None)
+def _morton_squared_coordinate_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
+    x, x2 = sp.symbols("X X_2")
+    return (
+        (
+            "Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`",
+            _polynomial_relation_from_sympy_expr(
+                expr=x2**2 - (x**2 - 4 * x + 1) * x2 + x**2,
+                variables=("X", "X_2"),
+                order=order,
+            ),
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
 def _morton_weber_schlafli_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
     p, p2 = sp.symbols("P P_2")
     return (
@@ -7061,7 +7077,31 @@ def scan_morton_periodic_point_box(
                 hit=all(sp.simplify(value) == 0 for value in residual),
             )
         )
-    weber_coordinate_scans: list[MortonWeberCoordinateScan] = []
+    named_coordinate_scans: list[MortonNamedCoordinateScan] = []
+    squared_coordinate_template_results: list[MortonPeriodicPointTemplateResult] = []
+    for label, relation in _morton_squared_coordinate_relations(order):
+        residual = _relation_residual_series(
+            relation,
+            series_by_variable={"X": target_sq, "X_2": target_q2_sq},
+            order=order,
+        )
+        power, coeff = _first_nonzero_residual_term(residual)
+        squared_coordinate_template_results.append(
+            MortonPeriodicPointTemplateResult(
+                label=label,
+                first_failure_power=power,
+                first_failure_coeff=coeff,
+                hit=all(sp.simplify(value) == 0 for value in residual),
+            )
+        )
+    named_coordinate_scans.append(
+        MortonNamedCoordinateScan(
+            family_label="squared",
+            label="X_mt",
+            expression="X_mt = F^2",
+            template_results=tuple(squared_coordinate_template_results),
+        )
+    )
     weber_coordinate_series = _weber_schlafli_coordinate_series(
         target_series=target_trunc,
         order=order,
@@ -7088,8 +7128,9 @@ def scan_morton_periodic_point_box(
                     hit=all(sp.simplify(value) == 0 for value in residual),
                 )
             )
-        weber_coordinate_scans.append(
-            MortonWeberCoordinateScan(
+        named_coordinate_scans.append(
+            MortonNamedCoordinateScan(
+                family_label="Weber-Schlafli",
                 label="P_ws",
                 expression="P_ws = (1/F - F) / 2",
                 template_results=tuple(weber_template_results),
@@ -7133,8 +7174,9 @@ def scan_morton_periodic_point_box(
                         hit=all(sp.simplify(value) == 0 for value in residual),
                     )
                 )
-            weber_coordinate_scans.append(
-                MortonWeberCoordinateScan(
+            named_coordinate_scans.append(
+                MortonNamedCoordinateScan(
+                    family_label="Weber-Schlafli",
                     label="B_ws",
                     expression="B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)",
                     template_results=tuple(companion_template_results),
@@ -7142,7 +7184,7 @@ def scan_morton_periodic_point_box(
             )
     return MortonPeriodicPointScan(
         template_results=tuple(template_results),
-        weber_coordinate_scans=tuple(weber_coordinate_scans),
+        named_coordinate_scans=tuple(named_coordinate_scans),
     )
 
 
@@ -12893,6 +12935,13 @@ def build_candidate_tail_family_note(
             "",
             "- The first is a direct modular-unit / eta lane.",
             "- The second is a Morton-2024-inspired periodic-point / algebraic-function lane built from the exact low-degree polynomials attached to the GG/Weber orbit.",
+            "- Phase 2 now also isolates the source-faithful squared coordinate from Morton Prop. 3.2 / Theorem B:",
+            "",
+            "```text",
+            "X_mt = Y^2",
+            "X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0",
+            "```",
+            "",
             "- Phase 2 now also opens the first deeper Weber-Schlafli coordinate lane on the same sampled objects:",
             "",
             "```text",
@@ -13068,17 +13117,17 @@ def build_candidate_tail_family_note(
                         )
                         + "."
                     )
-                for coordinate_scan in morton_scan.weber_coordinate_scans:
+                for coordinate_scan in morton_scan.named_coordinate_scans:
                     weber_hits = [item for item in coordinate_scan.template_results if item.hit]
                     lines.append(
-                        f"- Morton Weber-Schlafli coordinate `{coordinate_scan.label}`: `{coordinate_scan.expression}`."
+                        f"- Morton {coordinate_scan.family_label} coordinate `{coordinate_scan.label}`: `{coordinate_scan.expression}`."
                     )
                     lines.append(
-                        f"- Morton Weber-Schlafli templates on `{coordinate_scan.label}`: `{len(weber_hits)}` / `{len(coordinate_scan.template_results)}` exact hits."
+                        f"- Morton {coordinate_scan.family_label} coordinate templates on `{coordinate_scan.label}`: `{len(weber_hits)}` / `{len(coordinate_scan.template_results)}` exact hits."
                     )
                     if coordinate_scan.template_results:
                         lines.append(
-                            "- Morton Weber-Schlafli obstruction witnesses: "
+                            f"- Morton {coordinate_scan.family_label} coordinate obstruction witnesses: "
                             + "; ".join(
                                 _format_exact_polynomial_obstruction(
                                     (item.label, item.first_failure_power, item.first_failure_coeff),
@@ -14401,7 +14450,7 @@ def build_candidate_tail_family_note(
             if sample.morton_periodic_point_scan is not None
             and any(
                 item.hit
-                for coordinate_scan in sample.morton_periodic_point_scan.weber_coordinate_scans
+                for coordinate_scan in sample.morton_periodic_point_scan.named_coordinate_scans
                 for item in coordinate_scan.template_results
             )
         )
@@ -14513,7 +14562,7 @@ def build_candidate_tail_family_note(
                 f"- GG/Weber modular-equation sample hits found: `{gg_hit_count}`",
                 f"- GG exact quotient-coordinate sample hits found: `{gg_exact_quotient_hit_count}`",
                 f"- Morton periodic-point / algebraic-function sample hits found: `{morton_hit_count}`",
-                f"- Morton Weber-Schlafli sample hits found: `{morton_weber_hit_count}`",
+                f"- Morton named-coordinate sample hits found: `{morton_weber_hit_count}`",
                 f"- Weber g-class-invariant sample hits found: `{weber_g_class_invariant_hit_count}`",
                 f"- Weber G-class-invariant sample hits found: `{weber_p_class_invariant_hit_count}`",
                 f"- Classical Weber `f2` tri-product sample hits found: `{weber_classical_product_hit_count}`",

@@ -74,7 +74,10 @@ Literature status
 - Exact tail-family note:
   `notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
 - Current verdict:
-  the sampled `U_t2`, `U_t3`, `U_t4` ladder and their gap-normalized residuals still give `0` hits in the checked one-core source-family eta boxes, direct eta boxes, direct modular-unit / eta boxes, Morton periodic-point templates, the first Weber-Schlafli coordinate template, the direct Weber companion templates, and the current `GG/Weber` modular-equation templates.
+  the sampled `U_t2`, `U_t3`, `U_t4` ladder and their gap-normalized residuals still give `0` hits in the checked one-core source-family eta boxes, direct eta boxes, direct modular-unit / eta boxes, Morton periodic-point templates, the explicit squared Morton coordinate `X_mt = F^2`, the first Weber-Schlafli coordinate template, the direct Weber companion templates, and the current `GG/Weber` modular-equation templates.
+  The new squared-coordinate lane is already exact-blocked by one shared
+  constant-term obstruction:
+  `X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 -> (t^0, 4)`.
 
 ### A2. Weber companion obstruction
 
