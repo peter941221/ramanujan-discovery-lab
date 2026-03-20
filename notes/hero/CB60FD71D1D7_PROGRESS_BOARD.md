@@ -103,6 +103,10 @@ Literature status
 
 ## Latest Verified Commands
 
+- Full identify refresh:
+  `$env:PYTHONPATH='src'; python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --benchmark-powers 2,3,4,5,6,12,20 --out notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md`
+- Latest identify timing:
+  `Build elapsed seconds before final render: 2091.88`
 - Full tail-family refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery tail-note --in results/verified.jsonl --candidate-id cb60fd71d1d7 --tail-stages 3,4,5 --max-gap-depth 3 --out notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
 - Full tail-operator refresh:
