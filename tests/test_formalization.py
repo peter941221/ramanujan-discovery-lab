@@ -102,6 +102,10 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "finiteConvergentReductionWaypoint_true" in text
     assert "knownSourceOrbitExclusionWaypoint_true" in text
     assert "exactWaypointStatement_true" in text
+    assert "currentNamedWeberOrbitResearchCertificate" in text
+    assert "namedWeberOrbitResearchWaypoint_true" in text
+    assert "currentRecognitionFrontierCertificate" in text
+    assert "currentRecognitionFrontierWaypoint_true" in text
     assert "not ready" in text
 
     lean_text = lean_output_path.read_text(encoding="utf-8")
@@ -116,6 +120,10 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "finiteConvergentReductionWaypoint_true" in lean_text
     assert "knownSourceOrbitExclusionWaypoint_true" in lean_text
     assert "exactWaypointStatement_true" in lean_text
+    assert "currentNamedWeberOrbitResearchCertificate" in lean_text
+    assert "namedWeberOrbitResearchWaypoint_true" in lean_text
+    assert "currentRecognitionFrontierCertificate" in lean_text
+    assert "currentRecognitionFrontierWaypoint_true" in lean_text
     assert "reverseEquivalenceRecoversHeroData" in lean_text
     assert "nearestArithmeticSubsequenceSourcesExcluded" in lean_text
     assert "directLocalObstructions" in lean_text

@@ -440,6 +440,28 @@ theorem namedWeberOrbitResearchWaypoint_true :
     namedWeberOrbitResearchWaypoint := by
   exact currentNamedWeberOrbitResearchCertificate_sound
 
+def currentRecognitionFrontierWaypoint : Prop :=
+  exactWaypointStatement ∧ namedWeberOrbitResearchWaypoint
+
+structure RecognitionFrontierCertificate where
+  exactWaypoint : exactWaypointStatement
+  namedWeberOrbit : namedWeberOrbitResearchWaypoint
+
+def currentRecognitionFrontierCertificate : RecognitionFrontierCertificate where
+  exactWaypoint := exactWaypointStatement_true
+  namedWeberOrbit := namedWeberOrbitResearchWaypoint_true
+
+theorem currentRecognitionFrontierCertificate_sound :
+    currentRecognitionFrontierWaypoint := by
+  exact ⟨
+    currentRecognitionFrontierCertificate.exactWaypoint,
+    currentRecognitionFrontierCertificate.namedWeberOrbit
+  ⟩
+
+theorem currentRecognitionFrontierWaypoint_true :
+    currentRecognitionFrontierWaypoint := by
+  exact currentRecognitionFrontierCertificate_sound
+
 /-!
 TODO (award track, endgame):
 
