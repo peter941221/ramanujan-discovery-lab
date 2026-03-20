@@ -48,7 +48,7 @@ Lean status
 - Main hub:
   `proofs/Proofs/HeroCaseFinalIdentity.lean`
 - Current phase board:
-  `notes/hero/CB60FD71D1D7_PHASE4_SPRINT_BOARD.md`
+  `notes/hero/CB60FD71D1D7_PHASE5_SPRINT_BOARD.md`
 - Current marker:
   `AwardTrackStatus: exclusion_waypoint`
 
@@ -87,6 +87,8 @@ Literature status
   misses compress to one universal constant-term class:
   `B_ws^2 - B_ws,2 - 4 -> (t^0, -2)`,
   `B_ws,2^4 - P_ws^8 - 16*P_ws^4 -> (t^0, 16)`.
+  The Lean shell now also exposes this as explicit sample-indexed
+  first-failure theorem families rather than only as a packaged witness table.
 
 ### B. `GG` quotient-coordinate obstruction
 
@@ -145,5 +147,5 @@ Literature status
 ## Priority Queue
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
-2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the direct `P = p(8τ)` and companion `B = b(4τ)` passes are now complete, so the next source-faithful move should be another named Weber coordinate or a theorem-grade package of the new companion obstruction.
+2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the direct `P = p(8τ)` and companion `B = b(4τ)` passes are now complete, their obstruction shell now carries explicit first-failure theorem families in Lean, and the next source-faithful move should be another named Weber coordinate.
 3. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.

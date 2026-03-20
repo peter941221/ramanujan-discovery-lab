@@ -111,6 +111,29 @@ theorem witnessTable_true : witnessTableProp := by
   have h : witnessTableCheck = true := by native_decide
   simpa [witnessTableCheck, witnessTableProp, and_assoc] using h
 
+def squareFirstFailureProp (sample : TailSample) : Prop :=
+  (squareWitnessFor sample).power = 0 ∧
+    (squareWitnessFor sample).coeff = -2
+
+theorem squareFirstFailure_true (sample : TailSample) : squareFirstFailureProp sample := by
+  cases sample <;>
+    simp [squareFirstFailureProp, squareWitnessFor, GGQ34.TailSample.label]
+
+def quarticFirstFailureProp (sample : TailSample) : Prop :=
+  (quarticWitnessFor sample).power = 0 ∧
+    (quarticWitnessFor sample).coeff = 16
+
+theorem quarticFirstFailure_true (sample : TailSample) : quarticFirstFailureProp sample := by
+  cases sample <;>
+    simp [quarticFirstFailureProp, quarticWitnessFor, GGQ34.TailSample.label]
+
+def pairedFirstFailureProp (sample : TailSample) : Prop :=
+  squareFirstFailureProp sample ∧
+    quarticFirstFailureProp sample
+
+theorem pairedFirstFailure_true (sample : TailSample) : pairedFirstFailureProp sample := by
+  exact ⟨squareFirstFailure_true sample, quarticFirstFailure_true sample⟩
+
 def universalClassProp (sample : TailSample) : Prop :=
   classFor sample = universalClass
 
@@ -147,18 +170,21 @@ theorem coordinateWaypoint_true : coordinateWaypoint := by
 structure WaypointCertificate where
   coordinate : coordinateWaypoint
   witnessTable : witnessTableProp
+  pairFailure : ∀ sample : TailSample, pairedFirstFailureProp sample
   classCoverage : classCoverageProp
   sampleUniversal : ∀ sample : TailSample, universalClassProp sample
 
 def currentWaypointCertificate : WaypointCertificate where
   coordinate := coordinateWaypoint_true
   witnessTable := witnessTable_true
+  pairFailure := pairedFirstFailure_true
   classCoverage := classCoverage_true
   sampleUniversal := universalClass_true
 
 def currentWaypoint : Prop :=
   coordinateWaypoint ∧
     witnessTableProp ∧
+    (∀ sample : TailSample, pairedFirstFailureProp sample) ∧
     classCoverageProp ∧
     (∀ sample : TailSample, universalClassProp sample)
 
@@ -166,6 +192,7 @@ theorem currentWaypoint_true : currentWaypoint := by
   exact ⟨
     currentWaypointCertificate.coordinate,
     currentWaypointCertificate.witnessTable,
+    currentWaypointCertificate.pairFailure,
     currentWaypointCertificate.classCoverage,
     currentWaypointCertificate.sampleUniversal
   ⟩

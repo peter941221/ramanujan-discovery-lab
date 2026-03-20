@@ -58,6 +58,11 @@ The proof layer currently focuses on theorem-grade local statements:
    the current exact waypoint as named theorems and a reusable
    `currentExactWaypointCertificate`, instead of acting as a purely
    comment-only placeholder.
+6. Weber companion obstruction packaging:
+   the direct Weber `P/B` branch is now represented not only in the research
+   notes but also in a dedicated Lean shell
+   `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean`, where the companion
+   lane records explicit sample-indexed first-failure theorem families.
 
 The repository's Lean files reflect this scope (finite convergents and exact
 coefficient equalities), not a final analytic identity.
@@ -137,6 +142,14 @@ their ratio objects:
    low-degree polynomial, multiplicative, fractional-linear, two-layer
    fractional-linear, quotient-coordinate, mixed quotient-coordinate, and
    exact Chan--Huang direct / quotient polynomial scans.
+   A still narrower Weber-Schlafli follow-up now also treats the first deeper
+   coordinate `P_ws = (1/F - F) / 2` and its direct companion
+   `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)` as named source-faithful
+   objects. That branch also still gives `0` hits. More sharply, the `B_ws`
+   companion lane collapses to one universal constant-term obstruction across
+   all `12` sampled tail-family objects, and the current Lean shell now
+   packages that failure pattern as reusable theorem-shaped facts rather than
+   as a free-form table.
 
 These are not impossibility theorems. They only remove a class of "too simple"
 closed forms.

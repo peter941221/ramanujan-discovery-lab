@@ -321,6 +321,11 @@ Current Phase 2 result:
   `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean` and imported into
   `proofs/Proofs/HeroCaseFinalIdentity.lean`, so the current exact award-track
   waypoint now explicitly contains the full direct `P/B` Weber branch
+- Phase 5 theorem-family outcome:
+  the same Weber companion shell now exposes explicit sample-indexed
+  first-failure theorem families for the square and quartic companion
+  templates, so the branch is not just recorded in Lean but labeled there in a
+  more reusable theorem style
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
   the next implementation should move to another literature-backed named Weber
@@ -334,7 +339,8 @@ Success condition:
   achieved in the narrowing sense; the `P = p(8τ)` pass and the direct
   companion `B = b(4τ)` pass now both close with reusable exact negative
   results, and the same branch now also sits inside the Lean exact waypoint as
-  a narrower named-coordinate handoff
+  a narrower named-coordinate handoff with explicit first-failure theorem
+  labels
 
 ### Sprint 3 — Theorem Conversion
 

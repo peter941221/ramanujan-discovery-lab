@@ -143,7 +143,8 @@ Literature closure
   `B_ws` companion lane closes even harder as a uniform constant-term
   obstruction recorded in
   `notes/hero/CB60FD71D1D7_WEBER_COMPANION_OBSTRUCTION_NOTE.md`.
-  That companion obstruction is now also packaged in Lean, so the next move
+  That companion obstruction is now also packaged in Lean and exposed there as
+  explicit sample-indexed first-failure theorem families, so the next move
   inside the same orbit should therefore be another named Weber coordinate,
   not anonymous box growth.
 
