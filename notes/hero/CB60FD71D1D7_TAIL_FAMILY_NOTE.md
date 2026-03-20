@@ -53,6 +53,16 @@ B_ws^2 - B_ws,2 - 4 = 0
 B_ws,2^4 - P_ws^8 - 16*P_ws^4 = 0
 ```
 
+- Phase 3 now adds the first Ramanujan-Weber class-invariant compression on the same normalized `GG` variable:
+
+```text
+Z_g = ((1 - t*Y^2)^2) / (4*t*Y^2)
+g12_ws = 4*t*(Z_g - 1/Z_g)
+p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)
+g12_ws ?= (t^2; t^4)_inf^12
+p12_ws ?= (-t^2; t^4)_inf^12
+```
+
 - We also check a `GG/Weber modular-equation` lane on the same sampled `U(x)` objects and their gap residuals:
 
 ```text
@@ -91,6 +101,22 @@ U_t2 = T(t^2) / (1 + t^2)
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -134,6 +160,22 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -177,6 +219,22 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^2` with coefficient `4`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^2` with coefficient `4`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -220,6 +278,22 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-6`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-6`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -263,6 +337,22 @@ U_t3 = T(t^3) / (1 + t^3)
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -306,6 +396,22 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -349,6 +455,22 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^2` with coefficient `2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^2` with coefficient `2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -392,6 +514,22 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -435,6 +573,22 @@ U_t4 = T(t^4) / (1 + t^4)
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -478,6 +632,22 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -521,6 +691,22 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^2` with coefficient `2`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^2` with coefficient `2`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -564,6 +750,22 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
+- Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
+- Weber class-invariant correction `G_g12_ws`: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber class-invariant coordinate `p12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`.
+- Weber class-invariant template on `p12_ws`: `(-t^2; t^4)_inf^12`.
+- Weber class-invariant obstruction witness: `Chan--Huang Weber G-coordinate template` first differs from `(-t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
+- Weber class-invariant correction `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
+- Weber class-invariant correction eta templates: `0` / `4` hit boxes.
+- Weber class-invariant correction modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber class-invariant correction plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -596,6 +798,8 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - GG exact quotient-coordinate sample hits found: `0`
 - Morton periodic-point / algebraic-function sample hits found: `0`
 - Morton Weber-Schlafli sample hits found: `0`
-- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, or the first literature-driven GG/Weber modular-equation boxes.
+- Weber g-class-invariant sample hits found: `0`
+- Weber G-class-invariant sample hits found: `0`
+- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `344.15`
+- Build elapsed seconds: `330.36`

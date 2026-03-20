@@ -51,6 +51,8 @@ from ramanujan_discovery.identification import (
     scan_ratio_eta_quotient_relations,
     scan_ratio_self_quotient_product_relations,
     scan_morton_periodic_point_box,
+    scan_weber_class_invariant_box,
+    scan_weber_p_class_invariant_box,
     search_modular_unit_eta_relation,
     search_eta_quotient_relation,
     search_fractional_linear_relation,
@@ -2023,6 +2025,48 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
     assert b_scan.template_results[1].first_failure_coeff == 16
 
 
+def test_scan_weber_class_invariant_box_identifies_true_gg_coordinate():
+    order = 24
+    gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
+    gg_series = continued_fraction_series_coeffs(gg_template, depth=40, order=order)
+
+    scan = scan_weber_class_invariant_box(
+        target_series=gg_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.label == "g12_ws"
+    assert scan.template_label == "Chan--Huang Weber g-coordinate template"
+    assert scan.template_expression == "(t^2; t^4)_inf^12"
+    assert scan.template_hit
+    assert scan.template_first_failure_power is None
+    assert scan.template_first_failure_coeff is None
+    assert scan.correction_label == "G_g12_ws"
+    assert scan.correction_expression == "G_g12_ws = g12_ws / (t^2; t^4)_inf^12"
+
+
+def test_scan_weber_p_class_invariant_box_identifies_true_gg_coordinate():
+    order = 24
+    gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
+    gg_series = continued_fraction_series_coeffs(gg_template, depth=40, order=order)
+
+    scan = scan_weber_p_class_invariant_box(
+        target_series=gg_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.label == "p12_ws"
+    assert scan.template_label == "Chan--Huang Weber G-coordinate template"
+    assert scan.template_expression == "(-t^2; t^4)_inf^12"
+    assert scan.template_hit
+    assert scan.template_first_failure_power is None
+    assert scan.template_first_failure_coeff is None
+    assert scan.correction_label == "G_p12_ws"
+    assert scan.correction_expression == "G_p12_ws = p12_ws / (-t^2; t^4)_inf^12"
+
+
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
     order = 24
     gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
@@ -2763,11 +2807,20 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton obstruction witnesses" in text
     assert "P_ws = (1/Y - Y) / 2" in text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
+    assert "g12_ws = 4*t*(Z_g - 1/Z_g)" in text
+    assert "p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)" in text
     assert "Morton Weber-Schlafli coordinate `P_ws`" in text
     assert "Morton Weber-Schlafli templates on `P_ws`" in text
     assert "Morton Weber-Schlafli obstruction witnesses" in text
     assert "Morton Weber-Schlafli coordinate `B_ws`" in text
     assert "Morton Weber-Schlafli templates on `B_ws`" in text
+    assert "Weber class-invariant coordinate `g12_ws`" in text
+    assert "Weber class-invariant template on `g12_ws`" in text
+    assert "Weber class-invariant correction `G_g12_ws`" in text
+    assert "Weber class-invariant correction plus-Pochhammer templates" in text
+    assert "Weber class-invariant correction plus-Pochhammer + eta templates" in text
+    assert "Weber class-invariant coordinate `p12_ws`" in text
+    assert "Weber class-invariant correction `G_p12_ws`" in text
     assert "GG direct / reciprocal / quotient templates" in text
     assert "GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4`" in text
     assert "GG exact quotient-coordinate obstruction witnesses" in text
@@ -2787,6 +2840,8 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "GG exact quotient-coordinate sample hits found" in text
     assert "Morton periodic-point / algebraic-function sample hits found" in text
     assert "Morton Weber-Schlafli sample hits found" in text
+    assert "Weber g-class-invariant sample hits found" in text
+    assert "Weber G-class-invariant sample hits found" in text
 
 
 def test_cli_tail_operator_note_writes_tail_operator_note(tmp_path: Path):

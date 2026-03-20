@@ -53,6 +53,15 @@ has been found in the primary sources checked so far.
   direct companion
   `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)` already fails in one uniform
   constant-term class across all `12` sampled tail-family objects.
+- A deeper Ramanujan-Weber class-invariant compression now also exists on the
+  same normalized `GG` variable:
+  `g12_ws = 4*t*(Z_g - 1/Z_g)` and
+  `p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`, with
+  `Z_g = ((1 - t*F^2)^2) / (4*t*F^2)`.
+  On the true `GG` source these recover the explicit named objects
+  `(t^2; t^4)_inf^12` and `(-t^2; t^4)_inf^12`, but on the current hero
+  tail-family ladder they still give `0` hits after the first direct-template,
+  eta / modular-unit, and plus-Pochhammer correction passes.
 - That direct Weber companion obstruction is now also packaged in Lean under
   `proofs/Proofs/HeroCaseWeberCompanionObstruction.lean`, so this is no longer
   only a notebook-level negative result.

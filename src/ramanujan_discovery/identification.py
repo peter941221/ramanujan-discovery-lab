@@ -377,6 +377,8 @@ class TailFamilySourceEtaSample:
     direct_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...] = ()
     gg_modular_equation_scan: GGModularEquationScan | None = None
     morton_periodic_point_scan: MortonPeriodicPointScan | None = None
+    weber_g_class_invariant_scan: WeberClassInvariantScan | None = None
+    weber_p_class_invariant_scan: WeberClassInvariantScan | None = None
 
 
 @dataclass(frozen=True)
@@ -733,6 +735,25 @@ class MortonPeriodicPointScan:
 
     template_results: tuple[MortonPeriodicPointTemplateResult, ...]
     weber_coordinate_scans: tuple[MortonWeberCoordinateScan, ...] = ()
+
+
+@dataclass(frozen=True)
+class WeberClassInvariantScan:
+    """A literature-backed Weber class-invariant coordinate scan."""
+
+    label: str
+    expression: str
+    template_label: str
+    template_expression: str
+    template_hit: bool
+    template_first_failure_power: int | None
+    template_first_failure_coeff: sp.Expr | None
+    correction_label: str
+    correction_expression: str
+    direct_eta_scans: tuple[EtaQuotientRelationScan, ...]
+    direct_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
+    correction_self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
+    correction_self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
 
 
 @dataclass(frozen=True)
@@ -2523,6 +2544,20 @@ def scan_tail_family_source_eta_ladder(
                 target_series=current_series[:morton_scan_order],
                 order=morton_scan_order,
             )
+            weber_g_class_invariant_scan = scan_weber_class_invariant_box(
+                target_series=current_series[:morton_scan_order],
+                order=morton_scan_order,
+                eta_levels=eta_levels,
+                moduli=powers,
+                max_abs_exponent=max_abs_exponent,
+            )
+            weber_p_class_invariant_scan = scan_weber_p_class_invariant_box(
+                target_series=current_series[:morton_scan_order],
+                order=morton_scan_order,
+                eta_levels=eta_levels,
+                moduli=powers,
+                max_abs_exponent=max_abs_exponent,
+            )
             samples.append(
                 TailFamilySourceEtaSample(
                     label=current_label,
@@ -2536,6 +2571,8 @@ def scan_tail_family_source_eta_ladder(
                     source_family_eta_scans=source_scans,
                     gg_modular_equation_scan=gg_scan,
                     morton_periodic_point_scan=morton_scan,
+                    weber_g_class_invariant_scan=weber_g_class_invariant_scan,
+                    weber_p_class_invariant_scan=weber_p_class_invariant_scan,
                 )
             )
             if gap_depth == max_gap_depth:
@@ -3787,6 +3824,16 @@ def _morton_periodic_point_scan_has_hit(scan: MortonPeriodicPointScan) -> bool:
     )
 
 
+def _weber_class_invariant_scan_has_hit(scan: WeberClassInvariantScan) -> bool:
+    return (
+        scan.template_hit
+        or any(item.relation is not None for item in scan.direct_eta_scans)
+        or any(item.relation is not None for item in scan.direct_modular_unit_eta_scans)
+        or any(item.relation is not None for item in scan.correction_self_plus_pochhammer_scans)
+        or any(item.relation is not None for item in scan.correction_self_plus_pochhammer_eta_scans)
+    )
+
+
 def _gg_weighted_coordinate_diagnostic_has_hit(diagnostic: GGWeightedCoordinateDiagnostic) -> bool:
     return (
         (diagnostic.first_difference_power is None and diagnostic.first_difference_coeff is None)
@@ -3823,6 +3870,21 @@ def _format_exact_polynomial_obstruction(
     if power is None or coeff is None:
         return f"`{label}` matches through the checked truncation"
     return f"`{label}` first fails at `{series_symbol}^{power}` with coefficient `{_format_expr(coeff)}`"
+
+
+def _format_weber_class_invariant_obstruction(
+    scan: WeberClassInvariantScan,
+    *,
+    series_symbol: str,
+) -> str:
+    power = scan.template_first_failure_power
+    coeff = scan.template_first_failure_coeff
+    if power is None or coeff is None:
+        return f"`{scan.template_label}` matches through the checked truncation"
+    return (
+        f"`{scan.template_label}` first differs from `{scan.template_expression}` "
+        f"at `{series_symbol}^{power}` with coefficient `{_format_expr(coeff)}`"
+    )
 
 
 def _format_weighted_coordinate_obstruction(
@@ -5663,6 +5725,256 @@ def _weber_companion_coordinate_series(
     return _series_fractional_power_nonzero_constant(
         base=b_source,
         exponent=sp.Rational(1, 2),
+    )
+
+
+def _normalized_weber_g_coordinate_series(
+    *,
+    target_series: Series,
+    order: int,
+) -> Series | None:
+    """Build the normalized Weber-g class-invariant coordinate on a GG-style series.
+
+    Chan--Huang's `g_n^12` coordinate is naturally Laurent in `t`. Multiplying by
+    `8 t` yields a constant-1 series which, on the true GG source, equals the
+    eta product `(t^2; t^4)_inf^12`.
+    """
+
+    if order < 2:
+        return None
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        return None
+
+    one_series: Series = [sp.Integer(0) for _ in range(order)]
+    one_series[0] = sp.Integer(1)
+    t_series: Series = [sp.Integer(0) for _ in range(order)]
+    if order > 1:
+        t_series[1] = sp.Integer(1)
+    t_squared_series: Series = [sp.Integer(0) for _ in range(order)]
+    if order > 2:
+        t_squared_series[2] = sp.Integer(1)
+
+    target_squared = series_pow(target_series[:order], 2)
+    t_target_squared = series_mul(t_series, target_squared)
+    numerator = [sp.simplify(one_series[index] - t_target_squared[index]) for index in range(order)]
+    numerator_squared = series_pow(numerator, 2)
+    first_term = series_div(numerator_squared, target_squared)
+    second_term = series_div(
+        [sp.simplify(16 * value) for value in series_mul(t_squared_series, target_squared)],
+        numerator_squared,
+    )
+    return [sp.simplify(first_term[index] - second_term[index]) for index in range(order)]
+
+
+@lru_cache(maxsize=None)
+def _normalized_weber_g_template_series_tuple(*, order: int) -> tuple[sp.Expr, ...]:
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    e2 = _eta_pochhammer_series(divisor=2, order=order)
+    e4 = _eta_pochhammer_series(divisor=4, order=order)
+    template = series_mul(series_pow(e2, 12), series_invert(series_pow(e4, 12)))
+    return tuple(sp.simplify(value) for value in template)
+
+
+def _normalized_weber_g_template_series(*, order: int) -> Series:
+    return list(_normalized_weber_g_template_series_tuple(order=order))
+
+
+def _normalized_weber_p_coordinate_series(
+    *,
+    target_series: Series,
+    order: int,
+) -> Series | None:
+    """Build the normalized Weber-G class-invariant coordinate on a GG-style series."""
+
+    if order < 2:
+        return None
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        return None
+
+    one_series: Series = [sp.Integer(0) for _ in range(order)]
+    one_series[0] = sp.Integer(1)
+    t_series: Series = [sp.Integer(0) for _ in range(order)]
+    if order > 1:
+        t_series[1] = sp.Integer(1)
+    t_squared_series: Series = [sp.Integer(0) for _ in range(order)]
+    if order > 2:
+        t_squared_series[2] = sp.Integer(1)
+
+    target_squared = series_pow(target_series[:order], 2)
+    t_target_squared = series_mul(t_series, target_squared)
+    numerator = [sp.simplify(one_series[index] - t_target_squared[index]) for index in range(order)]
+    w_series = series_div(series_pow(numerator, 2), target_squared)
+    w_squared = series_pow(w_series, 2)
+    sqrt_argument = [
+        sp.simplify(w_squared[index] - 16 * t_squared_series[index])
+        for index in range(order)
+    ]
+    return series_div(
+        w_squared,
+        _series_fractional_power_nonzero_constant(
+            base=sqrt_argument,
+            exponent=sp.Rational(1, 2),
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def _normalized_weber_p_template_series_tuple(*, order: int) -> tuple[sp.Expr, ...]:
+    if order < 2:
+        raise ValueError("order must be at least 2")
+    pp2 = _plus_residue_pochhammer_series(residue=2, modulus=4, order=order)
+    template = series_pow(pp2, 12)
+    return tuple(sp.simplify(value) for value in template)
+
+
+def _normalized_weber_p_template_series(*, order: int) -> Series:
+    return list(_normalized_weber_p_template_series_tuple(order=order))
+
+
+def scan_weber_class_invariant_box(
+    *,
+    target_series: Series,
+    order: int,
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    moduli: tuple[int, ...] = (2, 3, 4),
+    max_abs_exponent: int = 8,
+) -> WeberClassInvariantScan | None:
+    coordinate_series = _normalized_weber_g_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if coordinate_series is None:
+        return None
+
+    template_series = _normalized_weber_g_template_series(order=order)
+    correction_series = series_div(coordinate_series, template_series)
+    correction_residual = [sp.simplify(value) for value in correction_series]
+    correction_residual[0] = sp.simplify(correction_residual[0] - 1)
+    first_failure_power, first_failure_coeff = _first_nonzero_residual_term(correction_residual)
+
+    return WeberClassInvariantScan(
+        label="g12_ws",
+        expression=(
+            "Z_g = ((1 - t*F^2)^2) / (4*t*F^2), "
+            "g12_ws = 4*t*(Z_g - 1/Z_g)"
+        ),
+        template_label="Chan--Huang Weber g-coordinate template",
+        template_expression="(t^2; t^4)_inf^12",
+        template_hit=all(sp.simplify(value) == 0 for value in correction_residual),
+        template_first_failure_power=first_failure_power,
+        template_first_failure_coeff=first_failure_coeff,
+        correction_label="G_g12_ws",
+        correction_expression="G_g12_ws = g12_ws / (t^2; t^4)_inf^12",
+        direct_eta_scans=tuple(
+            scan_ratio_eta_quotient_relations(
+                ratio_series=correction_series,
+                levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        direct_modular_unit_eta_scans=tuple(
+            scan_ratio_modular_unit_eta_relations(
+                ratio_series=correction_series,
+                moduli=moduli,
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        correction_self_plus_pochhammer_scans=tuple(
+            scan_ratio_self_plus_pochhammer_relations(
+                ratio_series=correction_series,
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        correction_self_plus_pochhammer_eta_scans=tuple(
+            scan_ratio_self_plus_pochhammer_eta_relations(
+                ratio_series=correction_series,
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+    )
+
+
+def scan_weber_p_class_invariant_box(
+    *,
+    target_series: Series,
+    order: int,
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    moduli: tuple[int, ...] = (2, 3, 4),
+    max_abs_exponent: int = 8,
+) -> WeberClassInvariantScan | None:
+    coordinate_series = _normalized_weber_p_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if coordinate_series is None:
+        return None
+
+    template_series = _normalized_weber_p_template_series(order=order)
+    correction_series = series_div(coordinate_series, template_series)
+    correction_residual = [sp.simplify(value) for value in correction_series]
+    correction_residual[0] = sp.simplify(correction_residual[0] - 1)
+    first_failure_power, first_failure_coeff = _first_nonzero_residual_term(correction_residual)
+
+    return WeberClassInvariantScan(
+        label="p12_ws",
+        expression=(
+            "Z_g = ((1 - t*F^2)^2) / (4*t*F^2), "
+            "p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)"
+        ),
+        template_label="Chan--Huang Weber G-coordinate template",
+        template_expression="(-t^2; t^4)_inf^12",
+        template_hit=all(sp.simplify(value) == 0 for value in correction_residual),
+        template_first_failure_power=first_failure_power,
+        template_first_failure_coeff=first_failure_coeff,
+        correction_label="G_p12_ws",
+        correction_expression="G_p12_ws = p12_ws / (-t^2; t^4)_inf^12",
+        direct_eta_scans=tuple(
+            scan_ratio_eta_quotient_relations(
+                ratio_series=correction_series,
+                levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        direct_modular_unit_eta_scans=tuple(
+            scan_ratio_modular_unit_eta_relations(
+                ratio_series=correction_series,
+                moduli=moduli,
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        correction_self_plus_pochhammer_scans=tuple(
+            scan_ratio_self_plus_pochhammer_relations(
+                ratio_series=correction_series,
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        correction_self_plus_pochhammer_eta_scans=tuple(
+            scan_ratio_self_plus_pochhammer_eta_relations(
+                ratio_series=correction_series,
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
     )
 
 
@@ -11567,6 +11879,16 @@ def build_candidate_tail_family_note(
             "B_ws,2^4 - P_ws^8 - 16*P_ws^4 = 0",
             "```",
             "",
+            "- Phase 3 now adds the first Ramanujan-Weber class-invariant compression on the same normalized `GG` variable:",
+            "",
+            "```text",
+            "Z_g = ((1 - t*Y^2)^2) / (4*t*Y^2)",
+            "g12_ws = 4*t*(Z_g - 1/Z_g)",
+            "p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)",
+            "g12_ws ?= (t^2; t^4)_inf^12",
+            "p12_ws ?= (-t^2; t^4)_inf^12",
+            "```",
+            "",
         ]
     )
 
@@ -11735,6 +12057,83 @@ def build_candidate_tail_family_note(
                                 for item in coordinate_scan.template_results
                             )
                             + "."
+                        )
+            for weber_scan in (
+                sample.weber_g_class_invariant_scan,
+                sample.weber_p_class_invariant_scan,
+            ):
+                if weber_scan is None:
+                    continue
+                eta_hits = [scan for scan in weber_scan.direct_eta_scans if scan.relation is not None]
+                modular_hits = [
+                    scan for scan in weber_scan.direct_modular_unit_eta_scans if scan.relation is not None
+                ]
+                plus_hits = [
+                    scan for scan in weber_scan.correction_self_plus_pochhammer_scans if scan.relation is not None
+                ]
+                plus_eta_hits = [
+                    scan
+                    for scan in weber_scan.correction_self_plus_pochhammer_eta_scans
+                    if scan.relation is not None
+                ]
+                lines.append(
+                    f"- Weber class-invariant coordinate `{weber_scan.label}`: `{weber_scan.expression}`."
+                )
+                lines.append(
+                    f"- Weber class-invariant template on `{weber_scan.label}`: "
+                    f"`{weber_scan.template_expression}`."
+                )
+                lines.append(
+                    "- Weber class-invariant obstruction witness: "
+                    + _format_weber_class_invariant_obstruction(
+                        weber_scan,
+                        series_symbol=series_symbol,
+                    )
+                    + "."
+                )
+                lines.append(
+                    f"- Weber class-invariant correction `{weber_scan.correction_label}`: "
+                    f"`{weber_scan.correction_expression}`."
+                )
+                lines.append(
+                    f"- Weber class-invariant correction eta templates: `{len(eta_hits)}` / "
+                    f"`{len(weber_scan.direct_eta_scans)}` hit boxes."
+                )
+                if eta_hits:
+                    for scan in eta_hits:
+                        lines.append(
+                            f"  - eta level `N={scan.level}`: "
+                            f"`{_format_eta_quotient_relation(scan.relation, target_variable=weber_scan.correction_label, series_symbol=series_symbol)}`"
+                        )
+                lines.append(
+                    f"- Weber class-invariant correction modular-unit / eta templates: "
+                    f"`{len(modular_hits)}` / `{len(weber_scan.direct_modular_unit_eta_scans)}` hit boxes."
+                )
+                if modular_hits:
+                    for scan in modular_hits:
+                        lines.append(
+                            f"  - modular box `m={scan.modulus}`, `N={scan.level}`: "
+                            f"`{_format_modular_unit_eta_relation(scan.relation, target_variable=weber_scan.correction_label, series_symbol=series_symbol)}`"
+                        )
+                lines.append(
+                    f"- Weber class-invariant correction plus-Pochhammer templates: "
+                    f"`{len(plus_hits)}` / `{len(weber_scan.correction_self_plus_pochhammer_scans)}` hit boxes."
+                )
+                if plus_hits:
+                    for scan in plus_hits:
+                        lines.append(
+                            f"  - plus box `m={scan.modulus}`: "
+                            f"`{_format_self_plus_pochhammer_relation(scan.relation, target_variable=weber_scan.correction_label, series_symbol=series_symbol)}`"
+                        )
+                lines.append(
+                    f"- Weber class-invariant correction plus-Pochhammer + eta templates: "
+                    f"`{len(plus_eta_hits)}` / `{len(weber_scan.correction_self_plus_pochhammer_eta_scans)}` hit boxes."
+                )
+                if plus_eta_hits:
+                    for scan in plus_eta_hits:
+                        lines.append(
+                            f"  - plus box `m={scan.modulus}`, `N={scan.level}`: "
+                            f"`{_format_self_plus_pochhammer_eta_relation(scan.relation, modulus=scan.modulus, target_variable=weber_scan.correction_label, series_symbol=series_symbol)}`"
                         )
             if sample.gg_modular_equation_scan is not None:
                 gg_scan = sample.gg_modular_equation_scan
@@ -12055,6 +12454,18 @@ def build_candidate_tail_family_note(
                 for item in coordinate_scan.template_results
             )
         )
+        weber_g_class_invariant_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.weber_g_class_invariant_scan is not None
+            and _weber_class_invariant_scan_has_hit(sample.weber_g_class_invariant_scan)
+        )
+        weber_p_class_invariant_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.weber_p_class_invariant_scan is not None
+            and _weber_class_invariant_scan_has_hit(sample.weber_p_class_invariant_scan)
+        )
         lines.extend(
             [
                 "## Tail Verdict",
@@ -12067,7 +12478,9 @@ def build_candidate_tail_family_note(
                 f"- GG exact quotient-coordinate sample hits found: `{gg_exact_quotient_hit_count}`",
                 f"- Morton periodic-point / algebraic-function sample hits found: `{morton_hit_count}`",
                 f"- Morton Weber-Schlafli sample hits found: `{morton_weber_hit_count}`",
-                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, or the first literature-driven GG/Weber modular-equation boxes.",
+                f"- Weber g-class-invariant sample hits found: `{weber_g_class_invariant_hit_count}`",
+                f"- Weber G-class-invariant sample hits found: `{weber_p_class_invariant_hit_count}`",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, or the first literature-driven GG/Weber modular-equation boxes.",
                 "",
                 f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
                 "",

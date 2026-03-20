@@ -128,6 +128,33 @@ Reason:
   that goes **deeper** than the already-failed raw `Q_3`, `Q_4`,
   `W_34`, `G_W34`, and `G2_W34` lane
 
+## Phase 3 Update (`2026-03-20`)
+
+The same `GG/Weber` narrowing now has a second named hand-off beyond the direct
+`P/B` branch:
+
+```text
+Ramanujan-Weber class-invariant compression
+g12_ws = 4*t*(Z_g - 1/Z_g)
+p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)
+Z_g = ((1 - t*F^2)^2) / (4*t*F^2)
+```
+
+Working interpretation:
+
+- on the true normalized `GG` source, these two coordinates recover explicit
+  named objects:
+  - `g12_ws = (t^2; t^4)_inf^12`
+  - `p12_ws = (-t^2; t^4)_inf^12`
+- this is stronger than a negative `P/B` shell alone because it gives a genuine
+  positive compression on the source family, not just another obstruction
+- on the sampled hero tail-family ladder, both new coordinates still give `0`
+  hits after the direct template check, the first eta / modular-unit correction
+  pass, and the first narrower plus-Pochhammer correction pass
+- that means the project has now completed Step 1 and the constructive part of
+  Step 2 in a source-faithful way: the next move is no longer "find any named
+  coordinate", but "explain the residual after the `g/p` Weber compression"
+
 ## Gap Map
 
 ### 1. Theorem Gate

@@ -90,6 +90,24 @@ Literature status
   The Lean shell now also exposes this as explicit sample-indexed
   first-failure theorem families rather than only as a packaged witness table.
 
+### A3. Weber class-invariant compression
+
+- Main note:
+  `notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
+- Current coordinates:
+  `g12_ws = 4*t*(Z_g - 1/Z_g)`,
+  `p12_ws = (4*t*Z_g^2) / sqrt(Z_g^2 - 1)`,
+  where
+  `Z_g = ((1 - t*F^2)^2) / (4*t*F^2)`.
+- Current verdict:
+  on the true normalized `GG` source these compress exactly to the named
+  Ramanujan-Weber objects
+  `(t^2; t^4)_inf^12` and `(-t^2; t^4)_inf^12`, so the lane is now a real
+  positive-recognition lane rather than only a negative obstruction lane.
+  On the hero tail-family samples, both coordinates still give `0` hits after
+  the direct template check, the first eta / modular-unit correction check, and
+  the first narrower plus-Pochhammer correction check.
+
 ### B. `GG` quotient-coordinate obstruction
 
 - Obstruction note:
@@ -148,4 +166,5 @@ Literature status
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
 2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the direct `P = p(8τ)` and companion `B = b(4τ)` passes are now complete, their obstruction shell now carries explicit first-failure theorem families in Lean, and the next source-faithful move should be another named Weber coordinate.
-3. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.
+3. Treat the new Weber class-invariant pair `g12_ws` / `p12_ws` as the current best constructive hand-off: the next narrowing step should try to explain `G_g12_ws` or `G_p12_ws`, not reopen broader anonymous search boxes.
+4. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.
