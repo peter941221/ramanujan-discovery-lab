@@ -92,6 +92,12 @@ has been found in the primary sources checked so far.
   differ at `t^1` with coefficient `-5/2`, and the next quotient follow-up
   `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)` still gives `0` hits in the same
   first narrow theorem-shaped closure boxes.
+  Even after pushing `Q_XK_ws` and `L_XK_ws` back through the named
+  Chan--Huang `GG` modular-equation basis, both objects still give `0` hits in
+  the checked direct, quotient, and mixed quotient-coordinate boxes.
+  So the current honest reading is:
+  these are derived return-bridge coordinates, not recovered named
+  literature coordinates.
   After that compression, the next positive-recognition step still stays
   focused on the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which
   still gives `0` hits in the first narrow self-polynomial,
@@ -127,3 +133,6 @@ candidate = RR(q^3) * (1 - q^12 + 2 q^15 - q^18) + O(q^31)
 - Bowman, Mc Laughlin, Wyshinski, 2006: https://arxiv.org/abs/1901.00584
 - Lee, Mc Laughlin, Sohn, 2020: https://arxiv.org/abs/1906.11991
 - Chan, Huang, 1997: https://mrc.sdu.edu.cn/ziliao/8.pdf
+- Akkarapakam, Morton, 2024: https://nyjm.albany.edu/j/2024/30-36.html
+- Adiga, Kim, et al., 2017: https://www.filomat.org/index.php/filomat/article/download/4026/4026/31-13-2-4026.pdf
+- Yui, Zagier, 1997: https://people.mpim-bonn.mpg.de/zagier/files/doi/10.1090/S0025-5718-97-00854-5/fulltext.pdf

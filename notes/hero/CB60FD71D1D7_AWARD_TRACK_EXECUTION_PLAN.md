@@ -405,6 +405,15 @@ Current Phase 2 result:
   `D_XR_ws` / `Q_XR_ws`, and only then explain the focused residual quotient
   `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named Weber
   coordinate or widening anonymous prefix boxes again
+- latest literature-closure refinement inside that same branch:
+  even after pushing the later return-bridge objects
+  `Q_XK_ws = K_XR_ws / H_X_ws` and
+  `L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)` back through the named
+  Chan--Huang `GG` modular-equation basis, the checked direct, quotient, and
+  mixed quotient-coordinate boxes still all report `0` hits
+- interpretation:
+  this narrows the honest label for those two objects to
+  `derived return bridge`, not `identified named coordinate`
 
 Success condition:
 
@@ -415,7 +424,10 @@ Success condition:
   companion `B = b(4τ)` pass now both close with reusable exact negative
   results, and the same branch now also sits inside the Lean exact waypoint as
   a narrower named-coordinate handoff with explicit first-failure theorem
-  labels
+  labels.
+  The follow-up return-bridge literature closure now sharpens that handoff one
+  step further: `Q_XK_ws` / `L_XK_ws` are useful bridge coordinates, but they
+  are still not identified named `GG` modular-equation coordinates.
 
 ### Sprint 3 — Theorem Conversion
 

@@ -835,3 +835,74 @@ Direction consequence:
 - but it says the direct `P -> B` companion closure is already exact-blocked
 - so the next source-faithful step should be another named Weber coordinate or
   a theorem-grade obstruction package, not a wider anonymous scan
+
+## 2026-03-20 Update: Return-Bridge Literature Closure On `Q_XK_ws` / `L_XK_ws`
+
+This pass asked a narrower closure question inside the same named orbit:
+
+```text
+after the Weber class-invariant compression and the direct return bridge
+K_XR_ws -> H_X_ws,
+do the derived return-bridge objects Q_XK_ws or L_XK_ws
+fall back into the named GG modular-equation coordinates?
+```
+
+The exact local objects checked were:
+
+```text
+D_XK_ws = K_XR_ws - H_X_ws
+Q_XK_ws = K_XR_ws / H_X_ws
+L_XK_ws = (Q_XK_ws - 1) / (-5/2*t^1)
+```
+
+and the source-faithful comparison box was the same literature-driven `GG`
+modular-equation lane built from the named Chan--Huang coordinates:
+
+```text
+GG(t), GG(-t), GG(t^2), GG(t^3), GG(t^4)
+```
+
+together with their direct, quotient, and mixed quotient-coordinate templates.
+
+### Outcome
+
+- `Q_XK_ws` still gives `0` hits in the checked named `GG` modular-equation
+  box:
+  - exact templates: `0`
+  - exact polynomial templates: `0`
+  - quotient exact polynomial templates: `0`
+  - direct polynomial / multiplicative / fractional-linear / two-layer boxes:
+    all `0`
+  - quotient polynomial / multiplicative / fractional-linear / two-layer
+    boxes: all `0`
+  - mixed quotient polynomial / multiplicative / fractional-linear / two-layer
+    boxes: all `0`
+- `L_XK_ws` gives the same verdict: every checked named `GG` modular-equation
+  box remains at `0` hits
+
+### Updated interpretation
+
+- this does **not** say the `GG / Weber` orbit is exhausted
+- it does say the current return-bridge objects are still best read as
+  **derived bridge coordinates**, not as recovered named literature
+  coordinates
+- in particular, the honest label for `Q_XK_ws` and `L_XK_ws` is now:
+
+```text
+derived return bridge
+```
+
+rather than:
+
+```text
+identified GG modular-equation coordinate
+```
+
+### Practical consequence
+
+The next source-faithful move should stay in the same named orbit but push one
+step deeper:
+
+- either another named Weber coordinate
+- or a theorem-grade obstruction package that explains why the return bridge
+  fails to close back inside the current named `GG` coordinates
