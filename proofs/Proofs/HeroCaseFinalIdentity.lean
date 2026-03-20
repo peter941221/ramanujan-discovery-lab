@@ -1,6 +1,7 @@
 import Proofs.HeroCaseObjects
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
 import Proofs.HeroCaseMortonSquaredCoordinateObstruction
+import Proofs.HeroCaseMortonNamedCoordinateWaypoint
 import Proofs.HeroCaseWeberCompanionObstruction
 import Proofs.HeroCaseGGWeightedCorrectionWaypoint
 import Proofs.HeroCaseWeberClassInvariantBridgeWaypoint
@@ -99,18 +100,22 @@ Current source-family-specific exact lane:
   `G_W34`, the deeper follow-up `G2_W34`, and the checked small eta /
   modular-unit / RR-GG source-family correction boxes at both normalized
   layers
-- `Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean` now packages the
-  explicit Morton square-coordinate lane `X_mt = F^2`, recording that the
-  Proposition 3.2 template
+- `Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean` now packages the current
+  unified Morton named-coordinate stack:
+  the square lane `X_mt = F^2`, the transported square follow-up
+  `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)`,
+  the Weber-Schlafli coordinate `P_ws = (1/F - F) / 2`,
+  and the direct Weber companion
+  `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`;
+  at the current waypoint `X_mt`, `T_mt`, and `B_ws` collapse to universal
+  obstruction classes, while `P_ws` remains a small exact witness table across
+  the `12` sampled tail-family objects
+- `Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean` still packages the
+  theorem-shaped exact shell for the explicit square lane `X_mt = F^2`,
+  recording that the Proposition 3.2 template
   `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`
   still misses across all `12` sampled tail-family objects and collapses to
   one universal constant-term obstruction class `(t^0, 4)`
-- `Proofs/HeroCaseWeberCompanionObstruction.lean` now packages the direct
-  Weber companion lane after `P_ws = (1/F - F) / 2`, recording that the
-  first `B = b(4τ)` closure
-  `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)` still misses across all `12`
-  sampled tail-family objects and in fact collapses to one universal
-  constant-term obstruction class
 - `Proofs/HeroCaseWeberClassInvariantBridgeWaypoint.lean` now packages the
   next focused hand-off after the Ramanujan-Weber class-invariant compression:
   the eta-side residual `G_g12_ws` is the current primary residual, the
@@ -364,7 +369,7 @@ def knownSourceOrbitExclusionWaypoint : Prop :=
   (∀ b lam : Int, lam ≠ 0 → simpleCor2cfBranchesExcludedProp b lam) ∧
   Proofs.HeroCase.GGQ34.currentWaypoint ∧
   Proofs.HeroCase.MortonSquaredCoordinate.currentWaypoint ∧
-  Proofs.HeroCase.WeberCompanion.currentWaypoint ∧
+  Proofs.HeroCase.MortonNamedCoordinate.currentWaypoint ∧
   Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
 
 theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoint := by
@@ -380,7 +385,7 @@ theorem knownSourceOrbitExclusionWaypoint_true : knownSourceOrbitExclusionWaypoi
     exact simpleCor2cfBranchesExcluded b lam h
   · exact Proofs.HeroCase.GGQ34.currentWaypoint_true
   · exact Proofs.HeroCase.MortonSquaredCoordinate.currentWaypoint_true
-  · exact Proofs.HeroCase.WeberCompanion.currentWaypoint_true
+  · exact Proofs.HeroCase.MortonNamedCoordinate.currentWaypoint_true
   · exact Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
 
 def exactWaypointStatement : Prop :=
@@ -421,6 +426,13 @@ def mortonSquaredCoordinateExcludedProp : Prop :=
 theorem mortonSquaredCoordinateExcluded : mortonSquaredCoordinateExcludedProp := by
   exact Proofs.HeroCase.MortonSquaredCoordinate.currentWaypoint_true
 
+def mortonNamedCoordinateResearchWaypoint : Prop :=
+  Proofs.HeroCase.MortonNamedCoordinate.currentWaypoint
+
+theorem mortonNamedCoordinateResearchWaypoint_true :
+    mortonNamedCoordinateResearchWaypoint := by
+  exact Proofs.HeroCase.MortonNamedCoordinate.currentWaypoint_true
+
 def weberClassInvariantBridgeResearchWaypoint : Prop :=
   Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
 
@@ -430,19 +442,19 @@ theorem weberClassInvariantBridgeResearchWaypoint_true :
 
 def namedWeberOrbitResearchWaypoint : Prop :=
   Proofs.HeroCase.GGQ34.currentWaypoint ∧
-    Proofs.HeroCase.WeberCompanion.currentWaypoint ∧
+    mortonNamedCoordinateResearchWaypoint ∧
     Proofs.HeroCase.GGWeightedCorrection.currentWaypoint ∧
     Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
 
 structure NamedWeberOrbitResearchCertificate where
   ggQ34 : Proofs.HeroCase.GGQ34.currentWaypoint
-  weberCompanion : Proofs.HeroCase.WeberCompanion.currentWaypoint
+  mortonNamedCoordinate : mortonNamedCoordinateResearchWaypoint
   ggWeightedCorrection : Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
   weberClassInvariantBridge : Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
 
 def currentNamedWeberOrbitResearchCertificate : NamedWeberOrbitResearchCertificate where
   ggQ34 := Proofs.HeroCase.GGQ34.currentWaypoint_true
-  weberCompanion := Proofs.HeroCase.WeberCompanion.currentWaypoint_true
+  mortonNamedCoordinate := mortonNamedCoordinateResearchWaypoint_true
   ggWeightedCorrection := Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
   weberClassInvariantBridge := Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
 
@@ -450,7 +462,7 @@ theorem currentNamedWeberOrbitResearchCertificate_sound :
     namedWeberOrbitResearchWaypoint := by
   exact ⟨
     currentNamedWeberOrbitResearchCertificate.ggQ34,
-    currentNamedWeberOrbitResearchCertificate.weberCompanion,
+    currentNamedWeberOrbitResearchCertificate.mortonNamedCoordinate,
     currentNamedWeberOrbitResearchCertificate.ggWeightedCorrection,
     currentNamedWeberOrbitResearchCertificate.weberClassInvariantBridge
   ⟩
