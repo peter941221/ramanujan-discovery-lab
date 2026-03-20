@@ -1,6 +1,6 @@
 # `cb60fd71d1d7` Literature Log
 
-Audit date: `2026-03-17`
+Audit date: `2026-03-19`
 
 ## Goal
 
@@ -480,3 +480,204 @@ catalog again.
 It should start by encoding a small source-faithful modular template family
 whose variables are drawn directly from the Chan--Huang / Cho--Koo--Park
 objects.
+
+## 2026-03-19 Update: Tail-Family-First `GG` Quotient Coordinates
+
+This pass asked a more local question:
+
+```text
+if the reduced coefficients force a stationary tail family T(x),
+do the first concrete tail objects U(t^2), U(t^3), U(t^4)
+or their gap-normalized residuals fall into the exact GG quotient coordinates
+highlighted by Chan--Huang?
+```
+
+### Local objects checked
+
+- exact tail-family ladder:
+  - `U_t2 = T(t^2)/(1+t^2)`
+  - `U_t3 = T(t^3)/(1+t^3)`
+  - `U_t4 = T(t^4)/(1+t^4)`
+- gap-normalized residual ladder through depth `3`
+- explicit `GG` quotient coordinates:
+  - `Q_neg = GG(-t) / GG(t)`
+  - `Q_2 = GG(t^2) / GG(t)`
+  - `Q_3 = GG(t^3) / GG(t)`
+  - `Q_4 = GG(t^4) / GG(t)`
+
+### Outcome
+
+- all `12` sampled tail-family objects still give `0` hits in the current
+  `GG/Weber modular-equation` lane
+- the narrowest exact quotient-coordinate sublane also gives `0` hits:
+  - no exact Chan--Huang hit on `Q_3`
+  - no exact Chan--Huang hit on `Q_4`
+- the note now records obstruction witnesses rather than only a yes/no result:
+  each sampled tail object reports the first visible residual coefficient where
+  the exact `Q_3` / `Q_4` modular-equation template fails
+
+### Updated interpretation
+
+- this does **not** weaken the `GG` direction
+- it does weaken the idea that the next gain comes from a broader `GG` prefix
+  box
+- the current best local move is now:
+
+```text
+keep the GG / Weber orbit
+but narrow the next lane toward exact quotient-coordinate elimination
+```
+
+In other words:
+
+- stay in the same mathematical neighborhood
+- switch from a wider hallway scan
+- to a smaller number of more theorem-shaped locks
+
+### Weighted modular-curve follow-up
+
+The new weighted local diagnostic is:
+
+```text
+W_34 = Q_3^3 / Q_4^2
+```
+
+This still does **not** identify the tail-family ladder, but it sharpens the
+literature reading:
+
+- Chan--Huang gives exact quotient coordinates `Q_3`, `Q_4`
+- Cho--Koo--Park treats the GG object through arithmetic / modular-curve style
+  structure at odd-prime levels
+- computational modular-polynomial notes around the same orbit suggest that the
+  right coordinates can require a level shift before they become clean modular
+  functions, rather than appearing directly in the raw `Q_3`, `Q_4` pair
+
+So the best literature-driven next step is no longer “search wider over GG
+prefixes,” but “look for a deeper Weber / modular-curve Hauptmodul-like
+parameter compatible with the observed `3:2` weighting.”
+
+## 2026-03-19 Update: Latest Literature Cross-Check On Direction
+
+This pass asked a simpler strategic question:
+
+```text
+after the new three-lane implementation
+(direct modular-unit / eta, periodic-point, tail-operator),
+does the latest primary literature support the current direction,
+or should the project pivot?
+```
+
+### Latest primary-source signals
+
+1. RR modular-unit / eta signal
+   - Russelle Guadalupe, 2024 / 2025:
+     *Modularity of certain products of the Rogers-Ramanujan continued fraction*
+     (`https://arxiv.org/abs/2405.06678`)
+   - Main signal:
+     products built from `r(t)` and `r(2t)` can generate full modular-function
+     fields and are proved with `eta`-quotient / generalized `eta`-quotient
+     methods.
+   - Direction implication:
+     the direct modular-unit / eta lane is not an arbitrary box; it matches the
+     way recent RR literature actually compresses continued fractions into
+     theorem-grade modular objects.
+
+2. RR modular-function / modular-equation signal
+   - Russelle Guadalupe, 2024 / 2026:
+     *Ramanujan's continued fractions of order 10 as modular functions*
+     (`https://arxiv.org/abs/2404.05756`)
+   - Nayandeep Deka Baruah, Pranjal Talukdar, 2024:
+     *Identities for the Rogers-Ramanujan Continued Fraction*
+     (`https://arxiv.org/abs/2410.17110`)
+   - Russelle Guadalupe, 2024:
+     *A remark on modular equations involving the Rogers-Ramanujan continued
+     fraction via 5-dissections* (`https://arxiv.org/abs/2410.14149`)
+   - Main signal:
+     recent RR papers keep pushing toward exact modular equations among
+     explicitly named coordinates such as `R(q)`, `R(q^2)`, `R(q^3)`, `R(q^4)`,
+     `R(q^6)`, `R(q^8)`, `R(q^16)`, `R(q^20)`, rather than toward anonymous
+     low-degree fit boxes.
+   - Direction implication:
+     keep explicit RR / GG quotient-coordinate and modular-curve lanes active;
+     do not let broad generic prefix growth become the main bet again.
+
+3. Ramanujan periodic-point / algebraic-function signal
+   - Akkarapakam, Morton, 2024:
+     *Periodic points of algebraic functions related to a continued fraction of
+     Ramanujan* (`https://nyjm.albany.edu/j/2024/30-36.html`)
+   - Main signal:
+     a Ramanujan continued fraction can be characterized through periodic points
+     of a fixed algebraic function.
+   - Direction implication:
+     the new Morton-inspired periodic-point lane is literature-faithful and
+     worth keeping, but its current `0` hits on the sampled tail-family ladder
+     mean it is a diagnostic obstruction lane for now, not the main positive
+     recognition trunk.
+
+4. Machine-discovery proof-method signal
+   - Yamamoto, 2024:
+     *Proof and generalization of conjectures of Ramanujan Machine*
+     (`https://arxiv.org/abs/2403.09729`)
+   - Chao Wang, 2026:
+     *A Formal Proof of a Continued Fraction Conjecture for π Originating from
+     the Ramanujan Machine* (`https://arxiv.org/abs/2601.08461`)
+   - Chao Wang, 2026:
+     *Analytic Proof of a Quartic Continued Fraction Identity for 8/pi^2 via
+     Operator Decoupling* (`https://arxiv.org/abs/2602.03027`)
+   - Main signal:
+     recent proof workflows do use recurrences, differential equations,
+     equivalence transformations, and operator decompositions, but usually after
+     the right analytic kernel or structural source object is already in hand.
+   - Direction implication:
+     the tail-operator lane is still worth keeping, but mainly as a theorem /
+     proof scaffold; it should not replace source-recognition lanes as the main
+     local priority after the current `0`-hit affine q-difference pass.
+
+### Updated direction verdict
+
+The latest literature does **not** support a pivot away from the current
+award-track road.
+
+It supports a more precise ordering:
+
+1. keep direct modular-unit / eta recognition as the main positive-recognition
+   trunk
+2. keep exact RR / GG quotient-coordinate and modular-curve lanes as the main
+   named-family refinement
+3. keep periodic-point / algebraic-function lanes as literature-driven
+   diagnostic obstructions
+4. keep operator lanes as theorem / proof scaffolding, not as the main
+   replacement for source recognition
+
+### 2026-03-19 Addendum: Published-status cross-check after `G2_W34`
+
+The latest local result on the deeper weighted `GG` lane is:
+
+```text
+F / W_34 - 1 first fails at t^1 with coefficient -1
+G_W34 = (1 - F / W_34) / t
+G2_W34 = (G_W34 - 1) / (-4*t^2)
+```
+
+and both `G_W34` and `G2_W34` still give `0` hits in the checked small
+eta-quotient, modular-unit / eta, and one-core `RR/GG` source-family
+eta-correction boxes.
+
+That result is still consistent with the newest primary-source picture:
+
+- Guadalupe's `2405.06678` was revised on `2025-09-16` and published in
+  `Ramanujan J. 68 (2025)`; it still points toward eta-quotient /
+  generalized-eta modular recognition rather than anonymous fit boxes
+- Aricheta--Guadalupe's `2404.05756` was revised on `2025-03-13` and published
+  in `J. Number Theory 278 (2026)`; it still points toward named modular
+  coordinates and modular equations at many levels
+- Deka Baruah--Talukdar's `2410.17110` (submitted `2024-10-22`) still points
+  toward explicit RR coordinate identities among named powers and levels
+
+So the literature-driven reading stays the same:
+
+- do **not** pivot away from modular-unit / eta plus named coordinate lanes
+- do **not** promote the current operator lane above source recognition
+- do move the next positive-recognition attempt deeper than the first weighted
+  coordinate `W_34` and its first two normalized corrections `G_W34`,
+  `G2_W34`

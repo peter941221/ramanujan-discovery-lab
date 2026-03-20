@@ -1,6 +1,6 @@
 # `cb60fd71d1d7` Award-Track Execution Plan
 
-Status date: `2026-03-18`
+Status date: `2026-03-19`
 
 ## Goal
 
@@ -32,6 +32,8 @@ What already exists:
   Bauer--Muir neighborhoods
 - a broad family of bounded identification scans around `RR`, `cubic`, `GG`,
   and `S`
+- exact tail-derived residual objects through a second visible gap strip
+  together with source-core recognition checks on those residuals
 
 What still does **not** exist:
 
@@ -39,6 +41,51 @@ What still does **not** exist:
 - a final theorem of the shape `C(t) = known_object(t)` or an equivalent
   uniqueness-grade characterization
 - literature closure strong enough to support a prize-caliber novelty claim
+
+## Status Refresh (`2026-03-19`)
+
+The local identification layer was deepened again in the most source-aware
+nearby lanes that were still cheap enough to test.
+
+New bounded outcomes:
+
+```text
+Reduced-ratio plus-Pochhammer + eta boxes: 0 hits
+One-core reduced-ratio plus-Pochhammer + eta boxes: 0 hits
+First-gap tail source-core eta boxes: 0 hits
+Second-gap tail source-core eta boxes: 0 hits
+Tail-family GG/Weber modular-equation boxes: 0 hits
+Tail-family exact GG quotient-coordinate boxes: 0 hits
+```
+
+Working interpretation:
+
+- the reverse-scale story is still informative, but the surviving RHS is not
+  yet showing up as a nearby named source core times a small eta tail
+- the tail family remains the most natural structured intermediate object
+- the `GG/Weber` neighborhood still looks like the best nearby named orbit, but
+  the next move should be narrower: exact quotient coordinates before broader
+  prefix growth
+- inside that narrow lane, the current `Q_3 / Q_4` obstructions already
+  compress to a shared leading form
+  `R_Q3 = 2*rho*t^m + ...`, `R_Q4 = 3*rho*t^m + ...`
+- this gives a useful diagnostic tail-derived coordinate
+  `Theta_tail = (m, rho)`, but not yet a final source coordinate, so the next
+  positive attempt should target a deeper Weber / modular-curve parameter that
+  respects the same `3:2` weighting
+- the first weighted follow-up `W_34 = Q_3^3 / Q_4^2` (and its logarithmic
+  form) has now also been checked on the sampled tail-family ladder and still
+  gives `0` low-complexity closures
+- the first weighted correction `F / W_34` and the normalized residual
+  `G_W34` now also still give `0` hits in the checked small eta-quotient,
+  modular-unit / eta, and one-core `RR/GG` source-family eta-correction boxes
+- the refreshed hero note now also shows the deeper residual
+  `G2_W34 = (G_W34 - 1) / (-4*t^2)`, and that second-normalized layer still
+  gives `0` hits in the same checked small eta-quotient, modular-unit / eta,
+  and one-core `RR/GG` source-family eta-correction boxes
+- another generic box widening step is now even lower value unless it is
+  explicitly motivated by the tail-transfer law, quotient coordinates, or by a
+  literature source
 
 ## Gap Map
 
@@ -145,13 +192,18 @@ Immediate rule:
   named orbit
 - precise literature logging with primary-source links
 - ratio-object diagnostics that preserve direct source-family meaning
+- tail-family-derived renormalizations when they are immediately tied to
+  source-core recognition rather than another anonymous catalog scan
 
 ### Start Now
 
-- a literature-driven modular-equation recognition lane for the `GG` orbit
-- a transform-aware Weber / class-invariant recognition pass
-- a shortlist of theorem-grade source candidates rather than another catalog of
-  excluded boxes
+- a tail-family-first recognition lane that treats `T(x)` and its deeper
+  renormalized residuals as the main intermediate objects
+- a one-core source-aware reverse-scale transfer lane rather than another raw
+  reduced-ratio box expansion
+- a literature-driven modular-equation recognition lane for the `GG` orbit,
+  now centered on exact quotient coordinates like `Q_3` and `Q_4` rather than
+  a broader prefix appetite
 
 ## Immediate Sprint
 
@@ -159,31 +211,43 @@ Immediate rule:
 
 Focus:
 
-- the Gordon / Hirschhorn / `GG` / Weber orbit
+- the tail-family object together with the Gordon / Hirschhorn / `GG` / Weber
+  orbit
 
 Deliverables:
 
-1. verify missing primary sources that explicitly encode nonlinear relations for
-   `GG`
-2. update the bibliography and literature notes with those sources
-3. distill the next local implementation target from the literature rather than
+1. freeze the current local conclusion that first-gap and second-gap tail
+   residuals still do not look like one nearby source core times a small eta
+   tail
+2. verify missing primary sources that explicitly encode nonlinear relations for
+   `GG`, especially quotient-coordinate modular equations
+3. update the bibliography and literature notes with those sources
+4. distill the next local implementation target from the literature rather than
    from generic scan appetite
 
 Success condition:
 
-- end the sprint with one clearly prioritized next recognition lane
+- end the sprint with one clearly prioritized next recognition lane that is
+  either tail-family-derived or explicitly source-driven from the literature
 
 ### Sprint 2 — Local Recognition Upgrade
 
 Focus:
 
-- implement only the highest-value literature-driven lane from Sprint 1
+- implement only the highest-value lane from Sprint 1, with tail-family-derived
+  objects preferred if the literature still does not name a stronger orbit
 
 Current expected target:
 
-- explicit modular-equation-style relations involving `GG(q)`, `GG(-q)`,
-  `GG(q^2)`, `GG(q^3)`, and `GG(q^4)` or their normalized reciprocal / quotient
-  variants
+- exact or near-exact quotient-coordinate relations involving
+  `Q_3 = GG(q^3)/GG(q)` and `Q_4 = GG(q^4)/GG(q)`, with `GG(q)`, `GG(-q)`,
+  and `GG(q^2)` used only as supporting coordinates when needed
+- first the diagnostic coordinate `Theta_tail = (m, rho)` extracted from the
+  shared leading `Q_3 / Q_4` obstruction term
+- then, if that coordinate still does not stabilize the next residual layer,
+  a deeper Weber / modular-curve parameter compatible with the same `3:2`
+  weighting, such as a `Q_3^3 / Q_4^2`-type coordinate rather than the raw
+  quotient pair alone
 
 Success condition:
 
@@ -263,5 +327,6 @@ Checks for this document:
 
 - `notes/hero/CB60FD71D1D7_LITERATURE_LOG.md`
 - `notes/hero/CB60FD71D1D7_BIBLIOGRAPHY_MATRIX.md`
+- `notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
 - `notes/hero/CB60FD71D1D7_FORMALIZATION_NOTE.md`
 - `proofs/Proofs/HeroCaseFinalIdentity.lean`
