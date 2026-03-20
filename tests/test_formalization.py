@@ -103,13 +103,17 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "knownSourceOrbitExclusionWaypoint_true" in text
     assert "exactWaypointStatement_true" in text
     assert "mortonSquaredCoordinateExcluded" in text
+    assert "weberSchlafliCoordinateExcluded" in text
     assert "mortonNamedCoordinateResearchWaypoint_true" in text
+    assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in text
     assert "X_mt = F^2" in text
     assert "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)" in text
     assert "P_ws = (1/F - F) / 2" in text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
+    assert "(2,-1)" in text
+    assert "(10,3)" in text
     assert "currentNamedWeberOrbitResearchCertificate" in text
     assert "namedWeberOrbitResearchWaypoint_true" in text
     assert "currentRecognitionFrontierCertificate" in text
@@ -132,13 +136,17 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "knownSourceOrbitExclusionWaypoint_true" in lean_text
     assert "exactWaypointStatement_true" in lean_text
     assert "mortonSquaredCoordinateExcluded" in lean_text
+    assert "weberSchlafliCoordinateExcluded" in lean_text
     assert "mortonNamedCoordinateResearchWaypoint_true" in lean_text
+    assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in lean_text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in lean_text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in lean_text
     assert "X_mt = F^2" in lean_text
     assert "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)" in lean_text
     assert "P_ws = (1/F - F) / 2" in lean_text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in lean_text
+    assert "(2,-1)" in lean_text
+    assert "(10,3)" in lean_text
     assert "currentNamedWeberOrbitResearchCertificate" in lean_text
     assert "namedWeberOrbitResearchWaypoint_true" in lean_text
     assert "currentRecognitionFrontierCertificate" in lean_text

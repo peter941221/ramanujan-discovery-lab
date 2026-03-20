@@ -33,6 +33,9 @@ Current scope:
   Morton named-coordinate stack `X_mt -> T_mt -> P_ws -> B_ws`, so the proof
   workspace keeps the square lane, transported square lane, Weber-Schlafli
   lane, and direct Weber companion lane in one theorem-shaped waypoint
+- `Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean` packages the
+  `P_ws` Weber-Schlafli lane itself as an exact obstruction shell with a small
+  repeated witness-class table
 - `Proofs/HeroCaseSubsequence.lean` mirrors the bounded arithmetic subsequence
   contraction scan (stride ≤ 4) as a computation-checked theorem over exact
   rational sample points
@@ -44,9 +47,10 @@ Current scope:
   now also packages the current exact waypoint as a finite-convergent reduction
   layer plus a known-source-orbit exclusion layer, covering rational-equivalence,
   page-43 nearest-shift-cube exclusions, the explicit Morton square-coordinate
-  obstruction, the unified Morton named-coordinate waypoint, exact RR/cubic
-  arithmetic-subsequence obstructions, and the current direct / `cor2cf`
-  local mismatch layer; the current handoff is exposed there as
+  obstruction, the exact Weber-Schlafli `P_ws` shell, the unified Morton
+  named-coordinate waypoint, exact RR/cubic arithmetic-subsequence
+  obstructions, and the current direct / `cor2cf` local mismatch layer; the
+  current handoff is exposed there as
   `currentExactWaypointCertificate`
 - `Proofs/HeroCaseBauerMuir.lean` mirrors the bounded 1/2/3-step Bauer–Muir scan
   (fixed low-complexity `wₙ` templates) as a computation-checked theorem over
@@ -77,6 +81,7 @@ Primary file:
 - `Proofs/HeroCasePage43Equivalence.lean`
 - `Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean`
 - `Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean`
+- `Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean`
 - `Proofs/HeroCaseSubsequence.lean`
 - `Proofs/HeroCaseSubsequenceExact.lean`
 - `Proofs/HeroCaseFinalIdentity.lean`

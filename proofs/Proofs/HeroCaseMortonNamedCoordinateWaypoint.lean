@@ -1,6 +1,7 @@
 import Mathlib
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
 import Proofs.HeroCaseMortonSquaredCoordinateObstruction
+import Proofs.HeroCaseWeberSchlafliCoordinateObstruction
 import Proofs.HeroCaseWeberCompanionObstruction
 
 namespace Proofs
@@ -23,8 +24,8 @@ The current research picture is:
 
 - `X_mt` already collapses to one universal constant-term obstruction `(t^0, 4)`
 - `T_mt` already collapses to one universal constant-term obstruction `(t^0, 8)`
-- `P_ws` still has a small multi-class witness table across the `12` sampled
-  tail-family objects
+- `P_ws` now lives as its own exact obstruction shell, still with a small
+  multi-class witness table across the `12` sampled tail-family objects
 - `B_ws` collapses back to one universal constant-term obstruction class
   through `Proofs.HeroCase.WeberCompanion.currentWaypoint`
 
@@ -112,69 +113,6 @@ theorem transformedClassCoverage_true : transformedClassCoverageProp := by
   have h : transformedClassCoverageCheck = true := by native_decide
   simpa [transformedClassCoverageCheck, transformedClassCoverageProp] using h
 
-def pCoordinateLabel : String := "P_ws"
-
-def pCoordinateExpression : String :=
-  "P_ws = (1/F - F) / 2"
-
-def pTemplateLabel : String :=
-  "Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`"
-
-def pWitnessFor : TailSample → FirstFailureWitness
-  | .u_t2 => ⟨"U_t2", 6, 3⟩
-  | .u_t2_g1 => ⟨"U_t2_g1", 2, 3⟩
-  | .u_t2_g2 => ⟨"U_t2_g2", 2, -1⟩
-  | .u_t2_g3 => ⟨"U_t2_g3", 2, 8⟩
-  | .u_t3 => ⟨"U_t3", 8, 3⟩
-  | .u_t3_g1 => ⟨"U_t3_g1", 4, 3⟩
-  | .u_t3_g2 => ⟨"U_t3_g2", 2, -1⟩
-  | .u_t3_g3 => ⟨"U_t3_g3", 2, 3⟩
-  | .u_t4 => ⟨"U_t4", 10, 3⟩
-  | .u_t4_g1 => ⟨"U_t4_g1", 6, 3⟩
-  | .u_t4_g2 => ⟨"U_t4_g2", 2, -1⟩
-  | .u_t4_g3 => ⟨"U_t4_g3", 2, 3⟩
-
-def pWitnesses : List FirstFailureWitness :=
-  tailSamples.map pWitnessFor
-
-def pWitnessClasses : List ObstructionClass :=
-  pWitnesses.map fun witness => ⟨witness.power, witness.coeff⟩
-
-def pExpectedClasses : List ObstructionClass :=
-  [
-    ⟨2, -1⟩,
-    ⟨2, 3⟩,
-    ⟨2, 8⟩,
-    ⟨4, 3⟩,
-    ⟨6, 3⟩,
-    ⟨8, 3⟩,
-    ⟨10, 3⟩
-  ]
-
-def pWitnessTableProp : Prop :=
-  pWitnesses.map FirstFailureWitness.sampleLabel = tailSampleLabels ∧
-    pWitnesses.length = 12
-
-def pWitnessTableCheck : Bool :=
-  decide (pWitnesses.map FirstFailureWitness.sampleLabel = tailSampleLabels) &&
-    decide (pWitnesses.length = 12)
-
-theorem pWitnessTable_true : pWitnessTableProp := by
-  have h : pWitnessTableCheck = true := by native_decide
-  simpa [pWitnessTableCheck, pWitnessTableProp] using h
-
-def pWitnessClassCoverageProp : Prop :=
-  pWitnessClasses.all (fun obstruction => decide (obstruction ∈ pExpectedClasses)) = true ∧
-    pExpectedClasses.all (fun obstruction => decide (obstruction ∈ pWitnessClasses)) = true
-
-def pWitnessClassCoverageCheck : Bool :=
-  pWitnessClasses.all (fun obstruction => decide (obstruction ∈ pExpectedClasses)) &&
-    pExpectedClasses.all (fun obstruction => decide (obstruction ∈ pWitnessClasses))
-
-theorem pWitnessClassCoverage_true : pWitnessClassCoverageProp := by
-  have h : pWitnessClassCoverageCheck = true := by native_decide
-  simpa [pWitnessClassCoverageCheck, pWitnessClassCoverageProp] using h
-
 def transformedCoordinateWaypoint : Prop :=
   transformedCoordinateLabel = "T_mt" ∧
     transformedCoordinateExpression =
@@ -186,23 +124,13 @@ theorem transformedCoordinateWaypoint_true : transformedCoordinateWaypoint := by
   simp [transformedCoordinateWaypoint, transformedCoordinateLabel,
     transformedCoordinateExpression, transformedTemplateLabel]
 
-def pCoordinateWaypoint : Prop :=
-  pCoordinateLabel = "P_ws" ∧
-    pCoordinateExpression = "P_ws = (1/F - F) / 2" ∧
-    pTemplateLabel = "Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`"
-
-theorem pCoordinateWaypoint_true : pCoordinateWaypoint := by
-  simp [pCoordinateWaypoint, pCoordinateLabel, pCoordinateExpression, pTemplateLabel]
-
 structure WaypointCertificate where
   xCoordinate : Proofs.HeroCase.MortonSquaredCoordinate.currentWaypoint
   transformedCoordinate : transformedCoordinateWaypoint
   transformedWitnessTable : transformedWitnessTableProp
   transformedFailure : ∀ sample : TailSample, transformedFirstFailureProp sample
   transformedCoverage : transformedClassCoverageProp
-  pCoordinate : pCoordinateWaypoint
-  pWitnessTable : pWitnessTableProp
-  pWitnessClassCoverage : pWitnessClassCoverageProp
+  pCoordinate : Proofs.HeroCase.WeberSchlafliCoordinate.currentWaypoint
   bCoordinate : Proofs.HeroCase.WeberCompanion.currentWaypoint
 
 def currentWaypointCertificate : WaypointCertificate where
@@ -211,9 +139,7 @@ def currentWaypointCertificate : WaypointCertificate where
   transformedWitnessTable := transformedWitnessTable_true
   transformedFailure := transformedFirstFailure_true
   transformedCoverage := transformedClassCoverage_true
-  pCoordinate := pCoordinateWaypoint_true
-  pWitnessTable := pWitnessTable_true
-  pWitnessClassCoverage := pWitnessClassCoverage_true
+  pCoordinate := Proofs.HeroCase.WeberSchlafliCoordinate.currentWaypoint_true
   bCoordinate := Proofs.HeroCase.WeberCompanion.currentWaypoint_true
 
 def currentWaypoint : Prop :=
@@ -222,9 +148,7 @@ def currentWaypoint : Prop :=
     transformedWitnessTableProp ∧
     (∀ sample : TailSample, transformedFirstFailureProp sample) ∧
     transformedClassCoverageProp ∧
-    pCoordinateWaypoint ∧
-    pWitnessTableProp ∧
-    pWitnessClassCoverageProp ∧
+    Proofs.HeroCase.WeberSchlafliCoordinate.currentWaypoint ∧
     Proofs.HeroCase.WeberCompanion.currentWaypoint
 
 theorem currentWaypoint_true : currentWaypoint := by
@@ -235,8 +159,6 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.transformedFailure,
     currentWaypointCertificate.transformedCoverage,
     currentWaypointCertificate.pCoordinate,
-    currentWaypointCertificate.pWitnessTable,
-    currentWaypointCertificate.pWitnessClassCoverage,
     currentWaypointCertificate.bCoordinate
   ⟩
 

@@ -4,6 +4,7 @@ import Proofs.HeroCaseObjects
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
 import Proofs.HeroCaseMortonSquaredCoordinateObstruction
 import Proofs.HeroCaseMortonNamedCoordinateWaypoint
+import Proofs.HeroCaseWeberSchlafliCoordinateObstruction
 import Proofs.HeroCaseGGWeightedCorrectionWaypoint
 import Proofs.HeroCaseWeberClassInvariantBridgeWaypoint
 import Proofs.HeroCaseLocal
