@@ -469,19 +469,19 @@ def namedWeberOrbitResearchWaypoint : Prop :=
   Proofs.HeroCase.GGQ34.currentWaypoint ∧
     mortonNamedCoordinateResearchWaypoint ∧
     Proofs.HeroCase.GGWeightedCorrection.currentWaypoint ∧
-    Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
+    weberSchlafliBridgeResearchWaypoint
 
 structure NamedWeberOrbitResearchCertificate where
   ggQ34 : Proofs.HeroCase.GGQ34.currentWaypoint
   mortonNamedCoordinate : mortonNamedCoordinateResearchWaypoint
   ggWeightedCorrection : Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
-  weberClassInvariantBridge : Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint
+  weberSchlafliBridge : weberSchlafliBridgeResearchWaypoint
 
 def currentNamedWeberOrbitResearchCertificate : NamedWeberOrbitResearchCertificate where
   ggQ34 := Proofs.HeroCase.GGQ34.currentWaypoint_true
   mortonNamedCoordinate := mortonNamedCoordinateResearchWaypoint_true
   ggWeightedCorrection := Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
-  weberClassInvariantBridge := Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
+  weberSchlafliBridge := weberSchlafliBridgeResearchWaypoint_true
 
 theorem currentNamedWeberOrbitResearchCertificate_sound :
     namedWeberOrbitResearchWaypoint := by
@@ -489,7 +489,7 @@ theorem currentNamedWeberOrbitResearchCertificate_sound :
     currentNamedWeberOrbitResearchCertificate.ggQ34,
     currentNamedWeberOrbitResearchCertificate.mortonNamedCoordinate,
     currentNamedWeberOrbitResearchCertificate.ggWeightedCorrection,
-    currentNamedWeberOrbitResearchCertificate.weberClassInvariantBridge
+    currentNamedWeberOrbitResearchCertificate.weberSchlafliBridge
   ⟩
 
 theorem namedWeberOrbitResearchWaypoint_true :
