@@ -1018,3 +1018,50 @@ X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 -> (t^0, 4)
   obstruction data, not the positive closure we need
 - so the next constructive move still sits deeper in the named Weber /
   modular-function orbit, rather than back in wider anonymous scans
+
+## 2026-03-21 Update: Linear-Fractional Follow-Up `T_mt`
+
+The same square-level Morton lane also carries a source-backed linear-fractional
+follow-up. In the paper's notation, equation `(3.5)` defines
+
+```text
+t(x) = (x - sigma^2) / (sigma^2*x - 1), sigma = -1 + sqrt(2)
+```
+
+and equation `(3.6)` implies that the square-lane relation is transported by
+argument reversal:
+
+```text
+g(x, y) = 0  =>  g(t(y), t(x)) = 0
+```
+
+So the next named local coordinate after `X_mt = Y^2` is:
+
+```text
+T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)
+```
+
+with exact template
+
+```text
+T_mt^2 - (T_mt,2^2 - 4*T_mt,2 + 1)*T_mt + T_mt,2^2 = 0
+```
+
+### Outcome
+
+- all `12` sampled tail-family objects still give `0` hits in this transformed
+  square lane
+- again the miss is not diffuse; it already collapses at the constant term
+
+```text
+T_mt^2 - (T_mt,2^2 - 4*T_mt,2 + 1)*T_mt + T_mt,2^2 -> (t^0, 8)
+```
+
+### Direction consequence
+
+- this is useful because it means the first two source-faithful square-level
+  Morton coordinates are both now packaged as exact obstruction data
+- in other words, the obstruction is not just in `X_mt`; it survives the
+  paper's first linear-fractional square-coordinate transport as well
+- so the honest next constructive move still lies deeper in the named Weber /
+  modular-function orbit, not in the first square-level Morton closures

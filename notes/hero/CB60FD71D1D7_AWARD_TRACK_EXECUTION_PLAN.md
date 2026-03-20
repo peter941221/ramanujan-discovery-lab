@@ -383,6 +383,14 @@ Current Phase 2 result:
 - squared-coordinate outcome:
   all sampled objects still give `0` exact hits there, and the lane already
   collapses to one universal constant-term obstruction class `(t^0, 4)`
+- implemented the next source-backed linear-fractional square follow-up from
+  Morton equation `(3.6)`:
+  `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)`,
+  `sigma = -1 + sqrt(2)`
+- transformed-square outcome:
+  all sampled objects still give `0` exact hits there too, and this next
+  named lane also collapses immediately to one universal constant-term
+  obstruction class `(t^0, 8)`
 - implemented the first deeper Weber-Schlafli coordinate lane directly on the
   sampled tail-family objects and their gap-normalized residuals via
   `P_ws = (1/F - F) / 2`

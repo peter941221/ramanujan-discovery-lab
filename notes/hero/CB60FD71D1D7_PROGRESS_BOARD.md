@@ -78,6 +78,10 @@ Literature status
   The new squared-coordinate lane is already exact-blocked by one shared
   constant-term obstruction:
   `X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 -> (t^0, 4)`.
+  Its literature-backed linear-fractional follow-up
+  `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)` is now also checked and is
+  already exact-blocked by the same kind of uniform constant-term miss:
+  `T_mt^2 - (T_mt,2^2 - 4*T_mt,2 + 1)*T_mt + T_mt,2^2 -> (t^0, 8)`.
 
 ### A2. Weber companion obstruction
 

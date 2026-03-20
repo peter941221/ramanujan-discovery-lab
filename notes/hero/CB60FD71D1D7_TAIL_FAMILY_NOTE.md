@@ -48,6 +48,8 @@ f(Y, Y_2) = 0,   g(Y^2, Y_2^2) = 0,   f(Y, (1-Y_2)/(1+Y_2)) = 0
 ```text
 X_mt = Y^2
 X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0
+T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)
+T_mt^2 - (T_mt,2^2 - 4*T_mt,2 + 1)*T_mt + T_mt,2^2 = 0
 ```
 
 - Phase 2 now also opens the first deeper Weber-Schlafli coordinate lane on the same sampled objects:
@@ -109,6 +111,9 @@ U_t2 = T(t^2) / (1 + t^2)
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
@@ -298,6 +303,9 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
@@ -487,6 +495,9 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
@@ -676,6 +687,9 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `8`.
@@ -865,6 +879,9 @@ U_t3 = T(t^3) / (1 + t^3)
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^8` with coefficient `3`.
@@ -1054,6 +1071,9 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^4` with coefficient `3`.
@@ -1243,6 +1263,9 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
@@ -1432,6 +1455,9 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
@@ -1621,6 +1647,9 @@ U_t4 = T(t^4) / (1 + t^4)
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^10` with coefficient `3`.
@@ -1810,6 +1839,9 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
@@ -1999,6 +2031,9 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
@@ -2188,6 +2223,9 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton squared coordinate `X_mt`: `X_mt = F^2`.
 - Morton squared coordinate templates on `X_mt`: `0` / `1` exact hits.
 - Morton squared coordinate obstruction witnesses: `Morton Prop. 3.2 squared-coordinate template `X_2^2 - (X^2 - 4*X + 1)*X_2 + X^2`` first fails at `t^0` with coefficient `4`.
+- Morton transformed squared coordinate `T_mt`: `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)`.
+- Morton transformed squared coordinate templates on `T_mt`: `0` / `1` exact hits.
+- Morton transformed squared coordinate obstruction witnesses: `Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`` first fails at `t^0` with coefficient `8`.
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
@@ -2376,5 +2414,5 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual-follow-up sample hits found: `0`
 - Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `1587.52`
+- Build elapsed seconds: `2478.11`
 

@@ -6278,6 +6278,23 @@ def _morton_squared_coordinate_relations(order: int) -> tuple[tuple[str, Polynom
 
 
 @lru_cache(maxsize=None)
+def _morton_transformed_squared_coordinate_relations(
+    order: int,
+) -> tuple[tuple[str, PolynomialRelation], ...]:
+    t_coord, t_coord2 = sp.symbols("T T_2")
+    return (
+        (
+            "Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`",
+            _polynomial_relation_from_sympy_expr(
+                expr=t_coord**2 - (t_coord2**2 - 4 * t_coord2 + 1) * t_coord + t_coord2**2,
+                variables=("T", "T_2"),
+                order=order,
+            ),
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
 def _morton_weber_schlafli_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
     p, p2 = sp.symbols("P P_2")
     return (
@@ -6402,6 +6419,26 @@ def _weber_companion_coordinate_series(
         base=b_source,
         exponent=sp.Rational(1, 2),
     )
+
+
+def _morton_transformed_squared_coordinate_series(
+    *,
+    squared_coordinate_series: Series,
+    order: int,
+) -> Series | None:
+    if order < 1:
+        return None
+    if len(squared_coordinate_series) < order:
+        raise ValueError("squared_coordinate_series is shorter than requested order")
+
+    sigma_squared = sp.expand((-1 + sp.sqrt(2)) ** 2)
+    numerator = squared_coordinate_series[:order]
+    numerator[0] = sp.simplify(numerator[0] - sigma_squared)
+    denominator = [sp.simplify(sigma_squared * value) for value in squared_coordinate_series[:order]]
+    denominator[0] = sp.simplify(denominator[0] - 1)
+    if sp.simplify(denominator[0]) == 0:
+        return None
+    return series_div(numerator, denominator)
 
 
 def _normalized_weber_g_coordinate_series(
@@ -7102,6 +7139,40 @@ def scan_morton_periodic_point_box(
             template_results=tuple(squared_coordinate_template_results),
         )
     )
+    transformed_squared_coordinate_series = _morton_transformed_squared_coordinate_series(
+        squared_coordinate_series=target_sq,
+        order=order,
+    )
+    if transformed_squared_coordinate_series is not None:
+        transformed_squared_coordinate_q2 = benchmark_power_substitution_series(
+            transformed_squared_coordinate_series,
+            power=2,
+            order=order,
+        )
+        transformed_squared_template_results: list[MortonPeriodicPointTemplateResult] = []
+        for label, relation in _morton_transformed_squared_coordinate_relations(order):
+            residual = _relation_residual_series(
+                relation,
+                series_by_variable={"T": transformed_squared_coordinate_series, "T_2": transformed_squared_coordinate_q2},
+                order=order,
+            )
+            power, coeff = _first_nonzero_residual_term(residual)
+            transformed_squared_template_results.append(
+                MortonPeriodicPointTemplateResult(
+                    label=label,
+                    first_failure_power=power,
+                    first_failure_coeff=coeff,
+                    hit=all(sp.simplify(value) == 0 for value in residual),
+                )
+            )
+        named_coordinate_scans.append(
+            MortonNamedCoordinateScan(
+                family_label="transformed squared",
+                label="T_mt",
+                expression="T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)",
+                template_results=tuple(transformed_squared_template_results),
+            )
+        )
     weber_coordinate_series = _weber_schlafli_coordinate_series(
         target_series=target_trunc,
         order=order,
@@ -12940,6 +13011,8 @@ def build_candidate_tail_family_note(
             "```text",
             "X_mt = Y^2",
             "X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0",
+            "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)",
+            "T_mt^2 - (T_mt,2^2 - 4*T_mt,2 + 1)*T_mt + T_mt,2^2 = 0",
             "```",
             "",
             "- Phase 2 now also opens the first deeper Weber-Schlafli coordinate lane on the same sampled objects:",

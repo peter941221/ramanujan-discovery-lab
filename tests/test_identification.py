@@ -2004,7 +2004,7 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
 
     assert scan.template_results
     assert scan.named_coordinate_scans
-    x_scan, p_scan, b_scan = scan.named_coordinate_scans
+    x_scan, t_scan, p_scan, b_scan = scan.named_coordinate_scans
     assert x_scan.family_label == "squared"
     assert x_scan.label == "X_mt"
     assert x_scan.expression == "X_mt = F^2"
@@ -2016,6 +2016,18 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
     assert not x_scan.template_results[0].hit
     assert x_scan.template_results[0].first_failure_power == 0
     assert x_scan.template_results[0].first_failure_coeff == 4
+
+    assert t_scan.family_label == "transformed squared"
+    assert t_scan.label == "T_mt"
+    assert t_scan.expression == "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)"
+    assert len(t_scan.template_results) == 1
+    assert (
+        t_scan.template_results[0].label
+        == "Morton Eq. (3.6) transformed squared-coordinate template `T^2 - (T_2^2 - 4*T_2 + 1)*T + T_2^2`"
+    )
+    assert not t_scan.template_results[0].hit
+    assert t_scan.template_results[0].first_failure_power == 0
+    assert t_scan.template_results[0].first_failure_coeff == 8
 
     assert p_scan.family_label == "Weber-Schlafli"
     assert p_scan.label == "P_ws"
@@ -3112,6 +3124,7 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton periodic-point / algebraic-function templates" in text
     assert "Morton obstruction witnesses" in text
     assert "X_mt = Y^2" in text
+    assert "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1), sigma = -1 + sqrt(2)" in text
     assert "P_ws = (1/Y - Y) / 2" in text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
     assert "g12_ws = 4*t*(Z_g - 1/Z_g)" in text
@@ -3119,6 +3132,9 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton squared coordinate `X_mt`" in text
     assert "Morton squared coordinate templates on `X_mt`" in text
     assert "Morton squared coordinate obstruction witnesses" in text
+    assert "Morton transformed squared coordinate `T_mt`" in text
+    assert "Morton transformed squared coordinate templates on `T_mt`" in text
+    assert "Morton transformed squared coordinate obstruction witnesses" in text
     assert "Morton Weber-Schlafli coordinate `P_ws`" in text
     assert "Morton Weber-Schlafli coordinate templates on `P_ws`" in text
     assert "Morton Weber-Schlafli coordinate obstruction witnesses" in text

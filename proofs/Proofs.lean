@@ -2,6 +2,7 @@
 import Proofs.GeneralizedCF
 import Proofs.HeroCaseObjects
 import Proofs.HeroCaseGGQuotientCoordinateObstruction
+import Proofs.HeroCaseMortonSquaredCoordinateObstruction
 import Proofs.HeroCaseGGWeightedCorrectionWaypoint
 import Proofs.HeroCaseWeberClassInvariantBridgeWaypoint
 import Proofs.HeroCaseLocal

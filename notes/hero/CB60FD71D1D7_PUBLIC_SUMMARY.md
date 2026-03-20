@@ -54,6 +54,12 @@ has been found in the primary sources checked so far.
   `X_mt,2^2 - (X_mt^2 - 4*X_mt + 1)*X_mt,2 + X_mt^2 = 0`
   still gives `0` hits and already fails in one uniform constant-term class
   with coefficient `4`.
+- The same Morton square lane now also carries the paper's linear-fractional
+  transformed square coordinate from equation `(3.6)`:
+  `T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)`, `sigma = -1 + sqrt(2)`.
+  That transformed square lane also gives `0` hits on all `12` sampled
+  tail-family objects, and it likewise collapses immediately to one uniform
+  constant-term obstruction, now with coefficient `8`.
 - The next source-faithful Weber-Schlafli `P/B` branch also still gives `0`
   hits:
   `P_ws = (1/F - F) / 2` misses in repeated low-order classes, while the

@@ -26,6 +26,9 @@ Current scope:
   `phi in {1, 1+t, 1/(1+t)}` (with the reciprocal slice handled by
   cross-multiplied coefficient identities), plus the full nearest-shift cube
   and its Bool-parameterized theorem family over the shift bits
+- `Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean` packages the
+  explicit Morton square-coordinate lane `X_mt = F^2` and its current
+  universal constant-term obstruction class on the sampled tail-family objects
 - `Proofs/HeroCaseSubsequence.lean` mirrors the bounded arithmetic subsequence
   contraction scan (stride ≤ 4) as a computation-checked theorem over exact
   rational sample points
@@ -36,9 +39,10 @@ Current scope:
   final closed-form identity (once identified) will be stated and proved; it
   now also packages the current exact waypoint as a finite-convergent reduction
   layer plus a known-source-orbit exclusion layer, covering rational-equivalence,
-  page-43 nearest-shift-cube exclusions, exact RR/cubic arithmetic-subsequence
-  obstructions, and the current direct / `cor2cf` local mismatch layer; the
-  current handoff is exposed there as `currentExactWaypointCertificate`
+  page-43 nearest-shift-cube exclusions, the explicit Morton square-coordinate
+  obstruction, exact RR/cubic arithmetic-subsequence obstructions, and the
+  current direct / `cor2cf` local mismatch layer; the current handoff is
+  exposed there as `currentExactWaypointCertificate`
 - `Proofs/HeroCaseBauerMuir.lean` mirrors the bounded 1/2/3-step Bauer–Muir scan
   (fixed low-complexity `wₙ` templates) as a computation-checked theorem over
   exact rational sample points
@@ -66,6 +70,7 @@ Primary file:
 - `Proofs/HeroCaseHeineCor2cf.lean`
 - `Proofs/HeroCasePage43.lean`
 - `Proofs/HeroCasePage43Equivalence.lean`
+- `Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean`
 - `Proofs/HeroCaseSubsequence.lean`
 - `Proofs/HeroCaseSubsequenceExact.lean`
 - `Proofs/HeroCaseFinalIdentity.lean`
