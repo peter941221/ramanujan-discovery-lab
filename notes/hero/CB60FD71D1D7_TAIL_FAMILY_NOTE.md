@@ -127,6 +127,9 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -210,6 +213,9 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -293,6 +299,9 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -376,6 +385,9 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `288`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -459,6 +471,9 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -542,6 +557,9 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -625,6 +643,9 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -708,6 +729,9 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -791,6 +815,9 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -874,6 +901,9 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -957,6 +987,9 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1040,6 +1073,9 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
 - Weber residual exact residual bridge: `(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0`.
+- Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
+- Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
+- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1096,4 +1132,4 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual-follow-up sample hits found: `0`
 - Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `370.13`
+- Build elapsed seconds: `436.97`

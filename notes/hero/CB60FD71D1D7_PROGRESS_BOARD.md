@@ -113,10 +113,14 @@ Literature status
   The next focused bridge now keeps `G_g12_ws` as the primary eta-side
   residual, ties `G_p12_ws` to it through the exact coordinate identity
   `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`,
-  and then probes the quotient `R_gp_ws = G_p12_ws / G_g12_ws`; that quotient
-  still gives `0` hits in the first self-polynomial, self-fractional-linear,
-  self-quotient finite-product, eta / modular-unit, and plus-Pochhammer boxes,
-  and first differs from `1` at `t^3` with coefficient `96`.
+  compresses that bridge further through
+  `X_g_ws = 16*t^2 / g12_ws^2` and
+  `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0`
+  with `Q_gp_ws = p12_ws / g12_ws`, and then probes the residual quotient
+  `R_gp_ws = G_p12_ws / G_g12_ws`; that quotient still gives `0` hits in the
+  first self-polynomial, self-fractional-linear, self-quotient finite-product,
+  eta / modular-unit, and plus-Pochhammer boxes, and first differs from `1`
+  at `t^3` with coefficient `96`.
   The next normalized follow-up
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` is now also tracked explicitly; it still
   gives `0` hits in the same first theorem-shaped closure boxes.
@@ -182,5 +186,5 @@ Literature status
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
 2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, and `G2_W34`; the direct `P = p(8τ)` and companion `B = b(4τ)` passes are now complete, their obstruction shell now carries explicit first-failure theorem families in Lean, and the next source-faithful move should be another named Weber coordinate.
 3. Treat the new Weber class-invariant pair `g12_ws` / `p12_ws` as the current best constructive hand-off: the next narrowing step should try to explain `G_g12_ws` or `G_p12_ws`, not reopen broader anonymous search boxes.
-4. Prefer the new bridge-normalized reading of that hand-off: use `G_g12_ws` as the primary residual, treat `G_p12_ws` as the algebraically constrained companion, and explain `R_gp_ws = G_p12_ws / G_g12_ws` before inventing another named coordinate.
+4. Prefer the new bridge-normalized reading of that hand-off: use `G_g12_ws` as the primary residual, treat `G_p12_ws` as the algebraically constrained companion, keep `X_g_ws = 16*t^2 / g12_ws^2` and the exact raw quotient bridge `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0` in the foreground, and explain `R_gp_ws = G_p12_ws / G_g12_ws` before widening anonymous boxes again.
 5. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.

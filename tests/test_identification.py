@@ -2084,6 +2084,15 @@ def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
     assert scan.exact_bridge_holds
     assert scan.exact_bridge_first_failure_power is None
     assert scan.exact_bridge_first_failure_coeff is None
+    assert scan.quotient_coordinate_label == "X_g_ws"
+    assert scan.quotient_coordinate_expression == "X_g_ws = 16*t^2 / g12_ws^2"
+    assert scan.quotient_coordinate_bridge_expression == (
+        "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, "
+        "Q_gp_ws = p12_ws / g12_ws"
+    )
+    assert scan.quotient_coordinate_bridge_holds
+    assert scan.quotient_coordinate_bridge_first_failure_power is None
+    assert scan.quotient_coordinate_bridge_first_failure_coeff is None
     assert scan.quotient_label == "R_gp_ws"
     assert scan.quotient_expression == "R_gp_ws = G_p12_ws / G_g12_ws"
     assert scan.quotient_first_failure_power is None
@@ -2115,6 +2124,7 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
 
     assert scan is not None
     assert scan.exact_bridge_holds
+    assert scan.quotient_coordinate_bridge_holds
     assert scan.quotient_first_failure_power == 3
     assert scan.quotient_first_failure_coeff == 96
     assert not scan.quotient_self_polynomial_scan.hits
@@ -2895,6 +2905,10 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber residual bridge keeps `G_g12_ws` as the current primary residual" in text
     assert "Weber residual exact coordinate bridge" in text
     assert "g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0" in text
+    assert "Weber residual quotient-coordinate `X_g_ws`" in text
+    assert "X_g_ws = 16*t^2 / g12_ws^2" in text
+    assert "Weber residual exact quotient-coordinate bridge" in text
+    assert "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws" in text
     assert "Weber residual quotient diagnostic `R_gp_ws`" in text
     assert "Weber residual quotient self-polynomial uniqueness boxes" in text
     assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text

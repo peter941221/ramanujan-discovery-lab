@@ -159,8 +159,11 @@ Working interpretation:
   keeps `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12` as its algebraically
   constrained companion through the exact bridge
   `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`,
-  and narrows the next residual object to the quotient
-  `R_gp_ws = G_p12_ws / G_g12_ws`
+  adds the tighter quotient-coordinate
+  `X_g_ws = 16*t^2 / g12_ws^2` with exact raw quotient bridge
+  `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0`,
+  `Q_gp_ws = p12_ws / g12_ws`, and narrows the next residual object to the
+  quotient `R_gp_ws = G_p12_ws / G_g12_ws`
 - on the hero tail-family ladder, that focused quotient still gives `0` hits in
   the first self-polynomial, self-fractional-linear, self-quotient
   finite-product, eta / modular-unit, and plus-Pochhammer boxes, and first
@@ -369,9 +372,10 @@ Current Phase 2 result:
   more reusable theorem style
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
-  the next implementation should first explain the focused residual quotient
-  `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named Weber
-  coordinate or widening anonymous prefix boxes again
+  the next implementation should first exploit the new
+  `X_g_ws` / `Q_gp_ws` exact bridge and then explain the focused residual
+  quotient `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named
+  Weber coordinate or widening anonymous prefix boxes again
 
 Success condition:
 

@@ -771,6 +771,12 @@ class WeberResidualBridgeScan:
     exact_bridge_first_failure_power: int | None
     exact_bridge_first_failure_coeff: sp.Expr | None
     residual_bridge_expression: str
+    quotient_coordinate_label: str
+    quotient_coordinate_expression: str
+    quotient_coordinate_bridge_expression: str
+    quotient_coordinate_bridge_holds: bool
+    quotient_coordinate_bridge_first_failure_power: int | None
+    quotient_coordinate_bridge_first_failure_coeff: sp.Expr | None
     quotient_label: str
     quotient_expression: str
     quotient_first_failure_power: int | None
@@ -6082,6 +6088,34 @@ def scan_weber_class_invariant_bridge_box(
     ]
     bridge_first_failure_power, bridge_first_failure_coeff = _first_nonzero_residual_term(bridge_series)
 
+    raw_quotient_series = series_div(p_coordinate_series, g_coordinate_series)
+    raw_quotient_squared = series_pow(raw_quotient_series, 2)
+    raw_quotient_fourth = series_pow(raw_quotient_squared, 2)
+    quotient_coordinate_series = series_div(
+        [sp.Integer(16) * value for value in t_squared_series],
+        g_squared,
+    )
+    quotient_coordinate_cubic = series_pow(quotient_coordinate_series, 3)
+    quotient_coordinate_bridge_series = [
+        sp.simplify(raw_quotient_fourth[index] - raw_quotient_squared[index])
+        for index in range(order)
+    ]
+    quotient_coordinate_mixed_term = series_mul(
+        quotient_coordinate_series,
+        raw_quotient_squared,
+    )
+    quotient_coordinate_bridge_series = [
+        sp.simplify(
+            quotient_coordinate_bridge_series[index]
+            - 3 * quotient_coordinate_mixed_term[index]
+            - quotient_coordinate_cubic[index]
+        )
+        for index in range(order)
+    ]
+    (
+        quotient_coordinate_bridge_first_failure_power,
+        quotient_coordinate_bridge_first_failure_coeff,
+    ) = _first_nonzero_residual_term(quotient_coordinate_bridge_series)
     quotient_series = series_div(p_correction_series, g_correction_series)
     quotient_residual = [sp.simplify(value) for value in quotient_series]
     quotient_residual[0] = sp.simplify(quotient_residual[0] - 1)
@@ -6211,6 +6245,15 @@ def scan_weber_class_invariant_bridge_box(
             " + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2"
             " + 4096*t^6 = 0"
         ),
+        quotient_coordinate_label="X_g_ws",
+        quotient_coordinate_expression="X_g_ws = 16*t^2 / g12_ws^2",
+        quotient_coordinate_bridge_expression=(
+            "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, "
+            "Q_gp_ws = p12_ws / g12_ws"
+        ),
+        quotient_coordinate_bridge_holds=quotient_coordinate_bridge_first_failure_power is None,
+        quotient_coordinate_bridge_first_failure_power=quotient_coordinate_bridge_first_failure_power,
+        quotient_coordinate_bridge_first_failure_coeff=quotient_coordinate_bridge_first_failure_coeff,
         quotient_label="R_gp_ws",
         quotient_expression="R_gp_ws = G_p12_ws / G_g12_ws",
         quotient_first_failure_power=quotient_first_failure_power,
@@ -12469,6 +12512,24 @@ def build_candidate_tail_family_note(
                 lines.append(
                     f"- Weber residual exact residual bridge: `{bridge_scan.residual_bridge_expression}`."
                 )
+                lines.append(
+                    f"- Weber residual quotient-coordinate `{bridge_scan.quotient_coordinate_label}`: "
+                    f"`{bridge_scan.quotient_coordinate_expression}`."
+                )
+                lines.append(
+                    f"- Weber residual exact quotient-coordinate bridge: "
+                    f"`{bridge_scan.quotient_coordinate_bridge_expression}`."
+                )
+                if bridge_scan.quotient_coordinate_bridge_holds:
+                    lines.append(
+                        "- Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        "- Weber residual exact quotient-coordinate bridge verdict: "
+                        f"first fails at `{series_symbol}^{bridge_scan.quotient_coordinate_bridge_first_failure_power}` "
+                        f"with coefficient `{_format_expr(bridge_scan.quotient_coordinate_bridge_first_failure_coeff)}`."
+                    )
                 lines.append(
                     f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "
                     f"`{bridge_scan.quotient_expression}`."

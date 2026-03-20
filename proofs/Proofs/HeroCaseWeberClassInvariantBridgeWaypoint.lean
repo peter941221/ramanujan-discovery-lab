@@ -14,6 +14,11 @@ class-invariant compression lane:
 - the eta-side residual `G_g12_ws` is treated as the current primary residual
 - the plus-side residual `G_p12_ws` is kept as an algebraically constrained
   companion through the exact coordinate bridge
+- the derived quotient-coordinate `X_g_ws = 16*t^2 / g12_ws^2` compresses the
+  bridge into a smaller algebraic lane next to the quotient
+- the exact quotient-coordinate bridge
+  `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0` with
+  `Q_gp_ws = p12_ws / g12_ws` is the current tighter elimination relation
 - the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws` is the next narrow
   diagnostic object
 - the normalized follow-up `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` is the current
@@ -63,6 +68,14 @@ def exactCoordinateBridgeExpression : String :=
 def exactResidualBridgeExpression : String :=
   "(t^2; t^4)_inf^48*(-t^2; t^4)_inf^24*G_g12_ws^4*G_p12_ws^2 - (t^2; t^4)_inf^24*(-t^2; t^4)_inf^48*G_g12_ws^2*G_p12_ws^4 + 48*t^2*(t^2; t^4)_inf^24*(-t^2; t^4)_inf^24*G_g12_ws^2*G_p12_ws^2 + 4096*t^6 = 0"
 
+def focusedQuotientCoordinateLabel : String := "X_g_ws"
+
+def focusedQuotientCoordinateExpression : String :=
+  "X_g_ws = 16*t^2 / g12_ws^2"
+
+def exactQuotientCoordinateBridgeExpression : String :=
+  "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws"
+
 def focusedQuotientLabel : String := "R_gp_ws"
 
 def focusedQuotientExpression : String := "R_gp_ws = G_p12_ws / G_g12_ws"
@@ -89,11 +102,27 @@ def exactCoordinateBridgeProp : Prop :=
 theorem exactCoordinateBridge_true : exactCoordinateBridgeProp := by
   simp [exactCoordinateBridgeProp, exactCoordinateBridgeExpression]
 
+def exactQuotientCoordinateBridgeProp : Prop :=
+  focusedQuotientCoordinateLabel = "X_g_ws" ∧
+    focusedQuotientCoordinateExpression = "X_g_ws = 16*t^2 / g12_ws^2" ∧
+    exactQuotientCoordinateBridgeExpression =
+      "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws"
+
+theorem exactQuotientCoordinateBridge_true : exactQuotientCoordinateBridgeProp := by
+  simp [
+    exactQuotientCoordinateBridgeProp,
+    focusedQuotientCoordinateLabel,
+    focusedQuotientCoordinateExpression,
+    exactQuotientCoordinateBridgeExpression
+  ]
+
 def primaryResidualSelectionProp : Prop :=
   primaryResidualLabel = "G_g12_ws" ∧
     primaryResidualExpression = "G_g12_ws = g12_ws / (t^2; t^4)_inf^12" ∧
     companionResidualLabel = "G_p12_ws" ∧
     companionResidualExpression = "G_p12_ws = p12_ws / (-t^2; t^4)_inf^12" ∧
+    focusedQuotientCoordinateLabel = "X_g_ws" ∧
+    focusedQuotientCoordinateExpression = "X_g_ws = 16*t^2 / g12_ws^2" ∧
     focusedQuotientLabel = "R_gp_ws" ∧
     focusedQuotientExpression = "R_gp_ws = G_p12_ws / G_g12_ws" ∧
     normalizedFollowupLabel = "H_gp_ws" ∧
@@ -106,6 +135,8 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     primaryResidualExpression,
     companionResidualLabel,
     companionResidualExpression,
+    focusedQuotientCoordinateLabel,
+    focusedQuotientCoordinateExpression,
     focusedQuotientLabel,
     focusedQuotientExpression,
     normalizedFollowupLabel,
@@ -152,6 +183,7 @@ theorem normalizedFollowupSmallBoxStatus_true : normalizedFollowupSmallBoxStatus
 
 structure WaypointCertificate where
   bridge : exactCoordinateBridgeProp
+  quotientCoordinateBridge : exactQuotientCoordinateBridgeProp
   selection : primaryResidualSelectionProp
   firstFailure : focusedQuotientFirstFailureProp
   searchParameters : checkedSearchParametersProp
@@ -160,6 +192,7 @@ structure WaypointCertificate where
 
 def currentWaypointCertificate : WaypointCertificate where
   bridge := exactCoordinateBridge_true
+  quotientCoordinateBridge := exactQuotientCoordinateBridge_true
   selection := primaryResidualSelection_true
   firstFailure := focusedQuotientFirstFailure_true
   searchParameters := checkedSearchParameters_true
@@ -168,6 +201,7 @@ def currentWaypointCertificate : WaypointCertificate where
 
 def currentWaypoint : Prop :=
   exactCoordinateBridgeProp ∧
+    exactQuotientCoordinateBridgeProp ∧
     primaryResidualSelectionProp ∧
     focusedQuotientFirstFailureProp ∧
     checkedSearchParametersProp ∧
@@ -177,6 +211,7 @@ def currentWaypoint : Prop :=
 theorem currentWaypoint_true : currentWaypoint := by
   exact ⟨
     currentWaypointCertificate.bridge,
+    currentWaypointCertificate.quotientCoordinateBridge,
     currentWaypointCertificate.selection,
     currentWaypointCertificate.firstFailure,
     currentWaypointCertificate.searchParameters,
