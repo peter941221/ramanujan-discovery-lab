@@ -19,6 +19,11 @@ class-invariant compression lane:
 - the exact quotient-coordinate bridge
   `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0` with
   `Q_gp_ws = p12_ws / g12_ws` is the current tighter elimination relation
+- the template-normalized coordinate
+  `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`
+  is the current source-faithful positive-recognition object
+- the normalized follow-up `H_X_ws = (G_X_ws - 1) / (4*t^1)` is the next
+  stripped version of that template-normalized coordinate on the hero side
 - the focused quotient `R_gp_ws = G_p12_ws / G_g12_ws` is the next narrow
   diagnostic object
 - the normalized follow-up `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` is the current
@@ -36,7 +41,7 @@ identity theorem.
 
 structure FirstFailureWitness where
   power : Nat
-  coeff : Int
+  coeff : Rat
 deriving Repr, DecidableEq
 
 structure SmallBoxStatus where
@@ -76,6 +81,23 @@ def focusedQuotientCoordinateExpression : String :=
 def exactQuotientCoordinateBridgeExpression : String :=
   "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws"
 
+def templateNormalizedCoordinateLabel : String := "G_X_ws"
+
+def templateNormalizedCoordinateExpression : String :=
+  "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2"
+
+def templateNormalizedCoordinateBridgeExpression : String :=
+  "G_X_ws*G_g12_ws^2 - 1 = 0"
+
+def templateNormalizedCoordinateFirstFailure : FirstFailureWitness := ⟨1, 4⟩
+
+def templateNormalizedFollowupLabel : String := "H_X_ws"
+
+def templateNormalizedFollowupExpression : String :=
+  "H_X_ws = (G_X_ws - 1) / (4*t^1)"
+
+def templateNormalizedFollowupFirstFailure : FirstFailureWitness := ⟨1, (9 : Rat) / 2⟩
+
 def focusedQuotientLabel : String := "R_gp_ws"
 
 def focusedQuotientExpression : String := "R_gp_ws = G_p12_ws / G_g12_ws"
@@ -90,6 +112,10 @@ def normalizedFollowupExpression : String :=
 def checkedEtaLevels : List Nat := [1, 2, 4]
 
 def checkedModuli : List Nat := [2, 3, 4]
+
+def templateNormalizedCoordinateSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def templateNormalizedFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
 def focusedQuotientSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
@@ -116,6 +142,20 @@ theorem exactQuotientCoordinateBridge_true : exactQuotientCoordinateBridgeProp :
     exactQuotientCoordinateBridgeExpression
   ]
 
+def templateNormalizedCoordinateProp : Prop :=
+  templateNormalizedCoordinateLabel = "G_X_ws" ∧
+    templateNormalizedCoordinateExpression =
+      "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2" ∧
+    templateNormalizedCoordinateBridgeExpression = "G_X_ws*G_g12_ws^2 - 1 = 0"
+
+theorem templateNormalizedCoordinate_true : templateNormalizedCoordinateProp := by
+  simp [
+    templateNormalizedCoordinateProp,
+    templateNormalizedCoordinateLabel,
+    templateNormalizedCoordinateExpression,
+    templateNormalizedCoordinateBridgeExpression
+  ]
+
 def primaryResidualSelectionProp : Prop :=
   primaryResidualLabel = "G_g12_ws" ∧
     primaryResidualExpression = "G_g12_ws = g12_ws / (t^2; t^4)_inf^12" ∧
@@ -123,6 +163,11 @@ def primaryResidualSelectionProp : Prop :=
     companionResidualExpression = "G_p12_ws = p12_ws / (-t^2; t^4)_inf^12" ∧
     focusedQuotientCoordinateLabel = "X_g_ws" ∧
     focusedQuotientCoordinateExpression = "X_g_ws = 16*t^2 / g12_ws^2" ∧
+    templateNormalizedCoordinateLabel = "G_X_ws" ∧
+    templateNormalizedCoordinateExpression =
+      "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2" ∧
+    templateNormalizedFollowupLabel = "H_X_ws" ∧
+    templateNormalizedFollowupExpression = "H_X_ws = (G_X_ws - 1) / (4*t^1)" ∧
     focusedQuotientLabel = "R_gp_ws" ∧
     focusedQuotientExpression = "R_gp_ws = G_p12_ws / G_g12_ws" ∧
     normalizedFollowupLabel = "H_gp_ws" ∧
@@ -137,11 +182,31 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     companionResidualExpression,
     focusedQuotientCoordinateLabel,
     focusedQuotientCoordinateExpression,
+    templateNormalizedCoordinateLabel,
+    templateNormalizedCoordinateExpression,
+    templateNormalizedFollowupLabel,
+    templateNormalizedFollowupExpression,
     focusedQuotientLabel,
     focusedQuotientExpression,
     normalizedFollowupLabel,
     normalizedFollowupExpression
   ]
+
+def templateNormalizedCoordinateFirstFailureProp : Prop :=
+  templateNormalizedCoordinateFirstFailure.power = 1 ∧
+    templateNormalizedCoordinateFirstFailure.coeff = 4
+
+theorem templateNormalizedCoordinateFirstFailure_true :
+    templateNormalizedCoordinateFirstFailureProp := by
+  simp [templateNormalizedCoordinateFirstFailureProp, templateNormalizedCoordinateFirstFailure]
+
+def templateNormalizedFollowupFirstFailureProp : Prop :=
+  templateNormalizedFollowupFirstFailure.power = 1 ∧
+    templateNormalizedFollowupFirstFailure.coeff = (9 : Rat) / 2
+
+theorem templateNormalizedFollowupFirstFailure_true :
+    templateNormalizedFollowupFirstFailureProp := by
+  simp [templateNormalizedFollowupFirstFailureProp, templateNormalizedFollowupFirstFailure]
 
 def focusedQuotientFirstFailureProp : Prop :=
   focusedQuotientFirstFailure.power = 3 ∧
@@ -156,6 +221,32 @@ def checkedSearchParametersProp : Prop :=
 
 theorem checkedSearchParameters_true : checkedSearchParametersProp := by
   simp [checkedSearchParametersProp, checkedEtaLevels, checkedModuli]
+
+def templateNormalizedCoordinateSmallBoxStatusProp : Prop :=
+  templateNormalizedCoordinateSmallBoxStatus.etaHits = 0 ∧
+    templateNormalizedCoordinateSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    templateNormalizedCoordinateSmallBoxStatus.selfPolynomialHits = 0 ∧
+    templateNormalizedCoordinateSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    templateNormalizedCoordinateSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    templateNormalizedCoordinateSmallBoxStatus.plusPochhammerHits = 0 ∧
+    templateNormalizedCoordinateSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem templateNormalizedCoordinateSmallBoxStatus_true :
+    templateNormalizedCoordinateSmallBoxStatusProp := by
+  simp [templateNormalizedCoordinateSmallBoxStatusProp, templateNormalizedCoordinateSmallBoxStatus]
+
+def templateNormalizedFollowupSmallBoxStatusProp : Prop :=
+  templateNormalizedFollowupSmallBoxStatus.etaHits = 0 ∧
+    templateNormalizedFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    templateNormalizedFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    templateNormalizedFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    templateNormalizedFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    templateNormalizedFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    templateNormalizedFollowupSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem templateNormalizedFollowupSmallBoxStatus_true :
+    templateNormalizedFollowupSmallBoxStatusProp := by
+  simp [templateNormalizedFollowupSmallBoxStatusProp, templateNormalizedFollowupSmallBoxStatus]
 
 def focusedQuotientSmallBoxStatusProp : Prop :=
   focusedQuotientSmallBoxStatus.etaHits = 0 ∧
@@ -184,27 +275,42 @@ theorem normalizedFollowupSmallBoxStatus_true : normalizedFollowupSmallBoxStatus
 structure WaypointCertificate where
   bridge : exactCoordinateBridgeProp
   quotientCoordinateBridge : exactQuotientCoordinateBridgeProp
+  templateCoordinate : templateNormalizedCoordinateProp
   selection : primaryResidualSelectionProp
+  templateFirstFailure : templateNormalizedCoordinateFirstFailureProp
+  templateFollowupFirstFailure : templateNormalizedFollowupFirstFailureProp
   firstFailure : focusedQuotientFirstFailureProp
   searchParameters : checkedSearchParametersProp
+  templateSmallBoxes : templateNormalizedCoordinateSmallBoxStatusProp
+  templateFollowupSmallBoxes : templateNormalizedFollowupSmallBoxStatusProp
   smallBoxes : focusedQuotientSmallBoxStatusProp
   normalizedSmallBoxes : normalizedFollowupSmallBoxStatusProp
 
 def currentWaypointCertificate : WaypointCertificate where
   bridge := exactCoordinateBridge_true
   quotientCoordinateBridge := exactQuotientCoordinateBridge_true
+  templateCoordinate := templateNormalizedCoordinate_true
   selection := primaryResidualSelection_true
+  templateFirstFailure := templateNormalizedCoordinateFirstFailure_true
+  templateFollowupFirstFailure := templateNormalizedFollowupFirstFailure_true
   firstFailure := focusedQuotientFirstFailure_true
   searchParameters := checkedSearchParameters_true
+  templateSmallBoxes := templateNormalizedCoordinateSmallBoxStatus_true
+  templateFollowupSmallBoxes := templateNormalizedFollowupSmallBoxStatus_true
   smallBoxes := focusedQuotientSmallBoxStatus_true
   normalizedSmallBoxes := normalizedFollowupSmallBoxStatus_true
 
 def currentWaypoint : Prop :=
   exactCoordinateBridgeProp ∧
     exactQuotientCoordinateBridgeProp ∧
+    templateNormalizedCoordinateProp ∧
     primaryResidualSelectionProp ∧
+    templateNormalizedCoordinateFirstFailureProp ∧
+    templateNormalizedFollowupFirstFailureProp ∧
     focusedQuotientFirstFailureProp ∧
     checkedSearchParametersProp ∧
+    templateNormalizedCoordinateSmallBoxStatusProp ∧
+    templateNormalizedFollowupSmallBoxStatusProp ∧
     focusedQuotientSmallBoxStatusProp ∧
     normalizedFollowupSmallBoxStatusProp
 
@@ -212,9 +318,14 @@ theorem currentWaypoint_true : currentWaypoint := by
   exact ⟨
     currentWaypointCertificate.bridge,
     currentWaypointCertificate.quotientCoordinateBridge,
+    currentWaypointCertificate.templateCoordinate,
     currentWaypointCertificate.selection,
+    currentWaypointCertificate.templateFirstFailure,
+    currentWaypointCertificate.templateFollowupFirstFailure,
     currentWaypointCertificate.firstFailure,
     currentWaypointCertificate.searchParameters,
+    currentWaypointCertificate.templateSmallBoxes,
+    currentWaypointCertificate.templateFollowupSmallBoxes,
     currentWaypointCertificate.smallBoxes,
     currentWaypointCertificate.normalizedSmallBoxes
   ⟩

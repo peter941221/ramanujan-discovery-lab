@@ -130,6 +130,25 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -216,6 +235,25 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `8`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (8*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `11/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -302,6 +340,25 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^2` with coefficient `-8`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (-8*t^2)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -388,6 +445,25 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `12`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (12*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `47/6`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `288`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -474,6 +550,25 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -560,6 +655,25 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `11/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -646,6 +760,25 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^2` with coefficient `-4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (-4*t^2)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `6`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -732,6 +865,25 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `8`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (8*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `7`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -818,6 +970,25 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -904,6 +1075,25 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -990,6 +1180,25 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^2` with coefficient `-4`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (-4*t^2)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `5`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^4` with coefficient `-96`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1076,6 +1285,25 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`.
+- Weber quotient-coordinate template bridge: `G_X_ws*G_g12_ws^2 - 1 = 0`.
+- Weber quotient-coordinate template normalization `G_X_ws`: `G_X_ws - 1` first fails at `t^1` with coefficient `8`.
+- Weber quotient-coordinate template self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate template self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate template eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (8*t^1)`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `13/2`.
+- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Weber quotient-coordinate normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized eta templates: `0` / `4` hit boxes.
+- Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws`.
 - Weber residual quotient diagnostic `R_gp_ws`: `R_gp_ws = G_p12_ws / G_g12_ws - 1` first fails at `t^3` with coefficient `192`.
 - Weber residual quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1132,4 +1360,4 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual-follow-up sample hits found: `0`
 - Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `436.97`
+- Build elapsed seconds: `502.39`

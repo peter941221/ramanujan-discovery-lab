@@ -777,6 +777,8 @@ class WeberResidualBridgeScan:
     quotient_coordinate_bridge_holds: bool
     quotient_coordinate_bridge_first_failure_power: int | None
     quotient_coordinate_bridge_first_failure_coeff: sp.Expr | None
+    quotient_coordinate_template_bridge_expression: str
+    quotient_coordinate_template_scan: "ConstantOneSeriesScan"
     quotient_label: str
     quotient_expression: str
     quotient_first_failure_power: int | None
@@ -806,6 +808,24 @@ class NormalizedResidualFollowupScan:
     modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
     self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+
+
+@dataclass(frozen=True)
+class ConstantOneSeriesScan:
+    """A constant-1 diagnostic object together with its first gap-normalized follow-up."""
+
+    label: str
+    expression: str
+    first_failure_power: int | None
+    first_failure_coeff: sp.Expr | None
+    self_polynomial_scan: SelfPolynomialUniquenessScan
+    self_fractional_linear_scan: SelfFractionalLinearUniquenessScan
+    self_quotient_product_scans: tuple[SelfQuotientProductRelationScan, ...]
+    eta_scans: tuple[EtaQuotientRelationScan, ...]
+    modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
+    self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
+    self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+    normalized_followup: "NormalizedResidualFollowupScan | None" = None
 
 
 @dataclass(frozen=True)
@@ -1307,6 +1327,173 @@ def build_gap_normalized_series(
         shift=shift,
         leading_coefficient=leading_coefficient,
         normalized_series=tuple(normalized),
+    )
+
+
+def _scan_constant_one_series(
+    *,
+    label: str,
+    expression: str,
+    target_series: Series,
+    order: int,
+    eta_levels: tuple[int, ...],
+    moduli: tuple[int, ...],
+    max_abs_exponent: int,
+    followup_label: str | None = None,
+) -> ConstantOneSeriesScan:
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1")
+
+    residual = [sp.simplify(value - (1 if index == 0 else 0)) for index, value in enumerate(target_series[:order])]
+    first_failure_power, first_failure_coeff = _first_nonzero_residual_term(residual)
+
+    normalized_followup: NormalizedResidualFollowupScan | None = None
+    if (
+        followup_label is not None
+        and first_failure_power is not None
+        and first_failure_coeff is not None
+    ):
+        followup_series: Series = [sp.Integer(0) for _ in range(order)]
+        for index in range(order):
+            source_index = index + first_failure_power
+            if source_index >= order:
+                break
+            followup_series[index] = sp.simplify(
+                residual[source_index] / first_failure_coeff
+            )
+        followup_residual = [sp.simplify(value) for value in followup_series]
+        followup_residual[0] = sp.simplify(followup_residual[0] - 1)
+        followup_first_failure_power, followup_first_failure_coeff = _first_nonzero_residual_term(
+            followup_residual
+        )
+        normalized_followup = NormalizedResidualFollowupScan(
+            label=followup_label,
+            expression=(
+                f"{followup_label} = ({label} - 1) / "
+                f"({_format_expr(first_failure_coeff)}*t^{first_failure_power})"
+            ),
+            first_failure_power=followup_first_failure_power,
+            first_failure_coeff=followup_first_failure_coeff,
+            self_polynomial_scan=scan_self_polynomial_uniqueness_relations(
+                target_series=followup_series,
+                moduli=moduli,
+                order=order,
+                fg_degree_values=(1, 2),
+                t_degree_values=(1, 2, 3),
+            ),
+            self_fractional_linear_scan=scan_self_fractional_linear_uniqueness_relations(
+                target_series=followup_series,
+                moduli=moduli,
+                order=order,
+                t_degree_values=(1, 2, 3),
+            ),
+            self_quotient_product_scans=tuple(
+                scan_ratio_self_quotient_product_relations(
+                    ratio_series=followup_series,
+                    moduli=moduli,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            eta_scans=tuple(
+                scan_ratio_eta_quotient_relations(
+                    ratio_series=followup_series,
+                    levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            modular_unit_eta_scans=tuple(
+                scan_ratio_modular_unit_eta_relations(
+                    ratio_series=followup_series,
+                    moduli=moduli,
+                    eta_levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            self_plus_pochhammer_scans=tuple(
+                scan_ratio_self_plus_pochhammer_relations(
+                    ratio_series=followup_series,
+                    moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+            self_plus_pochhammer_eta_scans=tuple(
+                scan_ratio_self_plus_pochhammer_eta_relations(
+                    ratio_series=followup_series,
+                    moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                    eta_levels=eta_levels,
+                    order=order,
+                    max_abs_exponent=max_abs_exponent,
+                )
+            ),
+        )
+
+    return ConstantOneSeriesScan(
+        label=label,
+        expression=expression,
+        first_failure_power=first_failure_power,
+        first_failure_coeff=first_failure_coeff,
+        self_polynomial_scan=scan_self_polynomial_uniqueness_relations(
+            target_series=target_series[:order],
+            moduli=moduli,
+            order=order,
+            fg_degree_values=(1, 2),
+            t_degree_values=(1, 2, 3),
+        ),
+        self_fractional_linear_scan=scan_self_fractional_linear_uniqueness_relations(
+            target_series=target_series[:order],
+            moduli=moduli,
+            order=order,
+            t_degree_values=(1, 2, 3),
+        ),
+        self_quotient_product_scans=tuple(
+            scan_ratio_self_quotient_product_relations(
+                ratio_series=target_series[:order],
+                moduli=moduli,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        eta_scans=tuple(
+            scan_ratio_eta_quotient_relations(
+                ratio_series=target_series[:order],
+                levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        modular_unit_eta_scans=tuple(
+            scan_ratio_modular_unit_eta_relations(
+                ratio_series=target_series[:order],
+                moduli=moduli,
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        self_plus_pochhammer_scans=tuple(
+            scan_ratio_self_plus_pochhammer_relations(
+                ratio_series=target_series[:order],
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        self_plus_pochhammer_eta_scans=tuple(
+            scan_ratio_self_plus_pochhammer_eta_relations(
+                ratio_series=target_series[:order],
+                moduli=tuple(modulus for modulus in moduli if modulus <= 4),
+                eta_levels=eta_levels,
+                order=order,
+                max_abs_exponent=max_abs_exponent,
+            )
+        ),
+        normalized_followup=normalized_followup,
     )
 
 
@@ -6116,6 +6303,23 @@ def scan_weber_class_invariant_bridge_box(
         quotient_coordinate_bridge_first_failure_power,
         quotient_coordinate_bridge_first_failure_coeff,
     ) = _first_nonzero_residual_term(quotient_coordinate_bridge_series)
+    quotient_coordinate_template_series = series_div(
+        [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)],
+        series_pow(g_correction_series, 2),
+    )
+    quotient_coordinate_template_scan = _scan_constant_one_series(
+        label="G_X_ws",
+        expression=(
+            "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2)"
+            " = 1 / G_g12_ws^2"
+        ),
+        target_series=quotient_coordinate_template_series,
+        order=order,
+        eta_levels=eta_levels,
+        moduli=moduli,
+        max_abs_exponent=max_abs_exponent,
+        followup_label="H_X_ws",
+    )
     quotient_series = series_div(p_correction_series, g_correction_series)
     quotient_residual = [sp.simplify(value) for value in quotient_series]
     quotient_residual[0] = sp.simplify(quotient_residual[0] - 1)
@@ -6254,6 +6458,8 @@ def scan_weber_class_invariant_bridge_box(
         quotient_coordinate_bridge_holds=quotient_coordinate_bridge_first_failure_power is None,
         quotient_coordinate_bridge_first_failure_power=quotient_coordinate_bridge_first_failure_power,
         quotient_coordinate_bridge_first_failure_coeff=quotient_coordinate_bridge_first_failure_coeff,
+        quotient_coordinate_template_bridge_expression="G_X_ws*G_g12_ws^2 - 1 = 0",
+        quotient_coordinate_template_scan=quotient_coordinate_template_scan,
         quotient_label="R_gp_ws",
         quotient_expression="R_gp_ws = G_p12_ws / G_g12_ws",
         quotient_first_failure_power=quotient_first_failure_power,
@@ -12529,6 +12735,163 @@ def build_candidate_tail_family_note(
                         "- Weber residual exact quotient-coordinate bridge verdict: "
                         f"first fails at `{series_symbol}^{bridge_scan.quotient_coordinate_bridge_first_failure_power}` "
                         f"with coefficient `{_format_expr(bridge_scan.quotient_coordinate_bridge_first_failure_coeff)}`."
+                    )
+                coordinate_scan = bridge_scan.quotient_coordinate_template_scan
+                coordinate_eta_hits = [
+                    scan for scan in coordinate_scan.eta_scans if scan.relation is not None
+                ]
+                coordinate_modular_hits = [
+                    scan
+                    for scan in coordinate_scan.modular_unit_eta_scans
+                    if scan.relation is not None
+                ]
+                coordinate_plus_hits = [
+                    scan
+                    for scan in coordinate_scan.self_plus_pochhammer_scans
+                    if scan.relation is not None
+                ]
+                coordinate_plus_eta_hits = [
+                    scan
+                    for scan in coordinate_scan.self_plus_pochhammer_eta_scans
+                    if scan.relation is not None
+                ]
+                coordinate_self_product_hits = [
+                    scan
+                    for scan in coordinate_scan.self_quotient_product_scans
+                    if scan.relation is not None
+                ]
+                lines.append(
+                    f"- Weber quotient-coordinate template normalization `{coordinate_scan.label}`: "
+                    f"`{coordinate_scan.expression}`."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template bridge: "
+                    f"`{bridge_scan.quotient_coordinate_template_bridge_expression}`."
+                )
+                if (
+                    coordinate_scan.first_failure_power is None
+                    or coordinate_scan.first_failure_coeff is None
+                ):
+                    lines.append(
+                        f"- Weber quotient-coordinate template normalization `{coordinate_scan.label}`: "
+                        "matches `1` through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        f"- Weber quotient-coordinate template normalization `{coordinate_scan.label}`: "
+                        f"`{coordinate_scan.label} - 1` first fails at "
+                        f"`{series_symbol}^{coordinate_scan.first_failure_power}` with coefficient "
+                        f"`{_format_expr(coordinate_scan.first_failure_coeff)}`."
+                    )
+                lines.append(
+                    f"- Weber quotient-coordinate template self-polynomial uniqueness boxes: "
+                    f"`{len(coordinate_scan.self_polynomial_scan.hits)}` / "
+                    f"`{len(coordinate_scan.self_polynomial_scan.moduli_checked) * len(coordinate_scan.self_polynomial_scan.fg_degree_values) * len(coordinate_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template self-fractional-linear uniqueness boxes: "
+                    f"`{len(coordinate_scan.self_fractional_linear_scan.hits)}` / "
+                    f"`{len(coordinate_scan.self_fractional_linear_scan.moduli_checked) * len(coordinate_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template self-quotient finite-product boxes: "
+                    f"`{len(coordinate_self_product_hits)}` / "
+                    f"`{len(coordinate_scan.self_quotient_product_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template eta templates: `{len(coordinate_eta_hits)}` / "
+                    f"`{len(coordinate_scan.eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template modular-unit / eta templates: "
+                    f"`{len(coordinate_modular_hits)}` / `{len(coordinate_scan.modular_unit_eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template plus-Pochhammer templates: "
+                    f"`{len(coordinate_plus_hits)}` / `{len(coordinate_scan.self_plus_pochhammer_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Weber quotient-coordinate template plus-Pochhammer + eta templates: "
+                    f"`{len(coordinate_plus_eta_hits)}` / "
+                    f"`{len(coordinate_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                )
+                if coordinate_scan.normalized_followup is not None:
+                    coordinate_followup_scan = coordinate_scan.normalized_followup
+                    coordinate_followup_self_product_hits = [
+                        scan
+                        for scan in coordinate_followup_scan.self_quotient_product_scans
+                        if scan.relation is not None
+                    ]
+                    coordinate_followup_eta_hits = [
+                        scan
+                        for scan in coordinate_followup_scan.eta_scans
+                        if scan.relation is not None
+                    ]
+                    coordinate_followup_modular_hits = [
+                        scan
+                        for scan in coordinate_followup_scan.modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    coordinate_followup_plus_hits = [
+                        scan
+                        for scan in coordinate_followup_scan.self_plus_pochhammer_scans
+                        if scan.relation is not None
+                    ]
+                    coordinate_followup_plus_eta_hits = [
+                        scan
+                        for scan in coordinate_followup_scan.self_plus_pochhammer_eta_scans
+                        if scan.relation is not None
+                    ]
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized follow-up `{coordinate_followup_scan.label}`: "
+                        f"`{coordinate_followup_scan.expression}`."
+                    )
+                    if (
+                        coordinate_followup_scan.first_failure_power is None
+                        or coordinate_followup_scan.first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Weber quotient-coordinate normalized follow-up `{coordinate_followup_scan.label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Weber quotient-coordinate normalized follow-up `{coordinate_followup_scan.label}`: "
+                            f"`{coordinate_followup_scan.label} - 1` first fails at "
+                            f"`{series_symbol}^{coordinate_followup_scan.first_failure_power}` with coefficient "
+                            f"`{_format_expr(coordinate_followup_scan.first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized self-polynomial uniqueness boxes: "
+                        f"`{len(coordinate_followup_scan.self_polynomial_scan.hits)}` / "
+                        f"`{len(coordinate_followup_scan.self_polynomial_scan.moduli_checked) * len(coordinate_followup_scan.self_polynomial_scan.fg_degree_values) * len(coordinate_followup_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized self-fractional-linear uniqueness boxes: "
+                        f"`{len(coordinate_followup_scan.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(coordinate_followup_scan.self_fractional_linear_scan.moduli_checked) * len(coordinate_followup_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized self-quotient finite-product boxes: "
+                        f"`{len(coordinate_followup_self_product_hits)}` / "
+                        f"`{len(coordinate_followup_scan.self_quotient_product_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized eta templates: `{len(coordinate_followup_eta_hits)}` / "
+                        f"`{len(coordinate_followup_scan.eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized modular-unit / eta templates: "
+                        f"`{len(coordinate_followup_modular_hits)}` / `{len(coordinate_followup_scan.modular_unit_eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized plus-Pochhammer templates: "
+                        f"`{len(coordinate_followup_plus_hits)}` / `{len(coordinate_followup_scan.self_plus_pochhammer_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Weber quotient-coordinate normalized plus-Pochhammer + eta templates: "
+                        f"`{len(coordinate_followup_plus_eta_hits)}` / "
+                        f"`{len(coordinate_followup_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                     )
                 lines.append(
                     f"- Weber residual quotient diagnostic `{bridge_scan.quotient_label}`: "

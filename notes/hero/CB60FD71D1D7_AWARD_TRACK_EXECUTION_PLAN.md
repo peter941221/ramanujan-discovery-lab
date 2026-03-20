@@ -162,8 +162,17 @@ Working interpretation:
   adds the tighter quotient-coordinate
   `X_g_ws = 16*t^2 / g12_ws^2` with exact raw quotient bridge
   `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0`,
-  `Q_gp_ws = p12_ws / g12_ws`, and narrows the next residual object to the
-  quotient `R_gp_ws = G_p12_ws / G_g12_ws`
+  `Q_gp_ws = p12_ws / g12_ws`, and now also keeps the template-normalized
+  coordinate
+  `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`
+  as the first source-faithful positive-recognition object before narrowing
+  again to the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`
+- on true normalized `GG`, that template-normalized coordinate is exactly `1`;
+  on the hero tail-family ladder it first differs from `1` at `t^1` with
+  coefficient `4`, and its first normalized follow-up
+  `H_X_ws = (G_X_ws - 1) / (4*t^1)` still gives `0` hits in the first
+  self-polynomial, self-fractional-linear, self-quotient finite-product,
+  eta / modular-unit, and plus-Pochhammer boxes
 - on the hero tail-family ladder, that focused quotient still gives `0` hits in
   the first self-polynomial, self-fractional-linear, self-quotient
   finite-product, eta / modular-unit, and plus-Pochhammer boxes, and first
@@ -373,7 +382,8 @@ Current Phase 2 result:
 - refined next move:
   keep the same named `GG/Weber` orbit, but if we stay in this neighborhood
   the next implementation should first exploit the new
-  `X_g_ws` / `Q_gp_ws` exact bridge and then explain the focused residual
+  `X_g_ws` / `Q_gp_ws` exact bridge together with the template-normalized lane
+  `G_X_ws = 1 / G_g12_ws^2`, and only then explain the focused residual
   quotient `R_gp_ws = G_p12_ws / G_g12_ws` before moving to yet another named
   Weber coordinate or widening anonymous prefix boxes again
 

@@ -69,10 +69,17 @@ has been found in the primary sources checked so far.
   tighter quotient-coordinate `X_g_ws = 16*t^2 / g12_ws^2` together with the
   exact bridge `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0`,
   `Q_gp_ws = p12_ws / g12_ws`.
-  After that compression, the next positive-recognition step stays focused on
-  the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which still gives `0`
-  hits in the first narrow self-polynomial, self-fractional-linear,
-  self-quotient finite-product, eta / modular-unit, and plus-Pochhammer boxes.
+  The same compression now also exposes the template-normalized coordinate
+  `G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2`, which is
+  exact `1` on true normalized `GG`; on the hero sample it first differs from
+  `1` at `t^1` with coefficient `4`, and its first follow-up
+  `H_X_ws = (G_X_ws - 1) / (4*t^1)` still stays outside the same first
+  theorem-shaped closure boxes.
+  After that compression, the next positive-recognition step still stays
+  focused on the residual quotient `R_gp_ws = G_p12_ws / G_g12_ws`, which
+  still gives `0` hits in the first narrow self-polynomial,
+  self-fractional-linear, self-quotient finite-product, eta / modular-unit,
+  and plus-Pochhammer boxes.
   The same lane now also keeps a normalized follow-up
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` under watch, and that follow-up also
   remains outside the first theorem-shaped closure boxes.

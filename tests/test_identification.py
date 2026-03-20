@@ -2093,6 +2093,16 @@ def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
     assert scan.quotient_coordinate_bridge_holds
     assert scan.quotient_coordinate_bridge_first_failure_power is None
     assert scan.quotient_coordinate_bridge_first_failure_coeff is None
+    assert scan.quotient_coordinate_template_bridge_expression == "G_X_ws*G_g12_ws^2 - 1 = 0"
+    assert scan.quotient_coordinate_template_scan.label == "G_X_ws"
+    assert (
+        scan.quotient_coordinate_template_scan.expression
+        == "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2"
+    )
+    assert scan.quotient_coordinate_template_scan.first_failure_power is None
+    assert scan.quotient_coordinate_template_scan.first_failure_coeff is None
+    assert len(scan.quotient_coordinate_template_scan.self_polynomial_scan.hits) >= 1
+    assert scan.quotient_coordinate_template_scan.normalized_followup is None
     assert scan.quotient_label == "R_gp_ws"
     assert scan.quotient_expression == "R_gp_ws = G_p12_ws / G_g12_ws"
     assert scan.quotient_first_failure_power is None
@@ -2125,6 +2135,31 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert scan is not None
     assert scan.exact_bridge_holds
     assert scan.quotient_coordinate_bridge_holds
+    assert scan.quotient_coordinate_template_scan.first_failure_power == 1
+    assert scan.quotient_coordinate_template_scan.first_failure_coeff == 4
+    assert not scan.quotient_coordinate_template_scan.self_polynomial_scan.hits
+    assert not scan.quotient_coordinate_template_scan.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None for item in scan.quotient_coordinate_template_scan.self_quotient_product_scans
+    )
+    assert all(item.relation is None for item in scan.quotient_coordinate_template_scan.eta_scans)
+    assert all(
+        item.relation is None for item in scan.quotient_coordinate_template_scan.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None for item in scan.quotient_coordinate_template_scan.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.quotient_coordinate_template_scan.self_plus_pochhammer_eta_scans
+    )
+    assert scan.quotient_coordinate_template_scan.normalized_followup is not None
+    assert scan.quotient_coordinate_template_scan.normalized_followup.label == "H_X_ws"
+    assert scan.quotient_coordinate_template_scan.normalized_followup.expression == (
+        "H_X_ws = (G_X_ws - 1) / (4*t^1)"
+    )
+    assert scan.quotient_coordinate_template_scan.normalized_followup.first_failure_power == 1
+    assert scan.quotient_coordinate_template_scan.normalized_followup.first_failure_coeff == sp.Rational(9, 2)
     assert scan.quotient_first_failure_power == 3
     assert scan.quotient_first_failure_coeff == 96
     assert not scan.quotient_self_polynomial_scan.hits
@@ -2909,6 +2944,11 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "X_g_ws = 16*t^2 / g12_ws^2" in text
     assert "Weber residual exact quotient-coordinate bridge" in text
     assert "Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws" in text
+    assert "Weber quotient-coordinate template normalization `G_X_ws`" in text
+    assert "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2" in text
+    assert "Weber quotient-coordinate template bridge" in text
+    assert "G_X_ws*G_g12_ws^2 - 1 = 0" in text
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws`" in text
     assert "Weber residual quotient diagnostic `R_gp_ws`" in text
     assert "Weber residual quotient self-polynomial uniqueness boxes" in text
     assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text
