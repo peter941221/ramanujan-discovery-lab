@@ -106,7 +106,9 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "weberSchlafliCoordinateExcluded" in text
     assert "mortonNamedCoordinateResearchWaypoint_true" in text
     assert "weberSchlafliBridgeResearchWaypoint_true" in text
-    assert "stores that tighter `P_ws -> Weber` bridge directly" in text
+    assert "namedWeberCoordinateBridgeResearchWaypoint_true" in text
+    assert "currentNamedWeberCoordinateBridgeResearchCertificate" in text
+    assert "dedicated coordinate-bridge certificate" in text
     assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in text
@@ -143,7 +145,9 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "weberSchlafliCoordinateExcluded" in lean_text
     assert "mortonNamedCoordinateResearchWaypoint_true" in lean_text
     assert "weberSchlafliBridgeResearchWaypoint_true" in lean_text
-    assert "stores that tighter `P_ws -> Weber` bridge directly" in lean_text
+    assert "namedWeberCoordinateBridgeResearchWaypoint_true" in lean_text
+    assert "currentNamedWeberCoordinateBridgeResearchCertificate" in lean_text
+    assert "dedicated coordinate-bridge certificate" in lean_text
     assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in lean_text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in lean_text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in lean_text

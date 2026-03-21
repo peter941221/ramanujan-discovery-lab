@@ -465,31 +465,51 @@ theorem weberSchlafliBridgeResearchWaypoint_true :
     weberSchlafliBridgeResearchWaypoint := by
   exact ⟨weberSchlafliCoordinateExcluded, weberClassInvariantBridgeResearchWaypoint_true⟩
 
+def namedWeberCoordinateBridgeResearchWaypoint : Prop :=
+  mortonNamedCoordinateResearchWaypoint ∧
+    weberSchlafliBridgeResearchWaypoint
+
+structure NamedWeberCoordinateBridgeResearchCertificate where
+  mortonNamedCoordinate : mortonNamedCoordinateResearchWaypoint
+  weberSchlafliBridge : weberSchlafliBridgeResearchWaypoint
+
+def currentNamedWeberCoordinateBridgeResearchCertificate :
+    NamedWeberCoordinateBridgeResearchCertificate where
+  mortonNamedCoordinate := mortonNamedCoordinateResearchWaypoint_true
+  weberSchlafliBridge := weberSchlafliBridgeResearchWaypoint_true
+
+theorem currentNamedWeberCoordinateBridgeResearchCertificate_sound :
+    namedWeberCoordinateBridgeResearchWaypoint := by
+  exact ⟨
+    currentNamedWeberCoordinateBridgeResearchCertificate.mortonNamedCoordinate,
+    currentNamedWeberCoordinateBridgeResearchCertificate.weberSchlafliBridge
+  ⟩
+
+theorem namedWeberCoordinateBridgeResearchWaypoint_true :
+    namedWeberCoordinateBridgeResearchWaypoint := by
+  exact currentNamedWeberCoordinateBridgeResearchCertificate_sound
+
 def namedWeberOrbitResearchWaypoint : Prop :=
   Proofs.HeroCase.GGQ34.currentWaypoint ∧
-    mortonNamedCoordinateResearchWaypoint ∧
-    Proofs.HeroCase.GGWeightedCorrection.currentWaypoint ∧
-    weberSchlafliBridgeResearchWaypoint
+    namedWeberCoordinateBridgeResearchWaypoint ∧
+    Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
 
 structure NamedWeberOrbitResearchCertificate where
   ggQ34 : Proofs.HeroCase.GGQ34.currentWaypoint
-  mortonNamedCoordinate : mortonNamedCoordinateResearchWaypoint
+  namedWeberCoordinateBridge : namedWeberCoordinateBridgeResearchWaypoint
   ggWeightedCorrection : Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
-  weberSchlafliBridge : weberSchlafliBridgeResearchWaypoint
 
 def currentNamedWeberOrbitResearchCertificate : NamedWeberOrbitResearchCertificate where
   ggQ34 := Proofs.HeroCase.GGQ34.currentWaypoint_true
-  mortonNamedCoordinate := mortonNamedCoordinateResearchWaypoint_true
+  namedWeberCoordinateBridge := namedWeberCoordinateBridgeResearchWaypoint_true
   ggWeightedCorrection := Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
-  weberSchlafliBridge := weberSchlafliBridgeResearchWaypoint_true
 
 theorem currentNamedWeberOrbitResearchCertificate_sound :
     namedWeberOrbitResearchWaypoint := by
   exact ⟨
     currentNamedWeberOrbitResearchCertificate.ggQ34,
-    currentNamedWeberOrbitResearchCertificate.mortonNamedCoordinate,
-    currentNamedWeberOrbitResearchCertificate.ggWeightedCorrection,
-    currentNamedWeberOrbitResearchCertificate.weberSchlafliBridge
+    currentNamedWeberOrbitResearchCertificate.namedWeberCoordinateBridge,
+    currentNamedWeberOrbitResearchCertificate.ggWeightedCorrection
   ⟩
 
 theorem namedWeberOrbitResearchWaypoint_true :
