@@ -108,7 +108,9 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "weberSchlafliBridgeResearchWaypoint_true" in text
     assert "namedWeberCoordinateBridgeResearchWaypoint_true" in text
     assert "currentNamedWeberCoordinateBridgeResearchCertificate" in text
-    assert "dedicated coordinate-bridge certificate" in text
+    assert "ggWeightedOrbitResearchWaypoint_true" in text
+    assert "currentGGWeightedOrbitResearchCertificate" in text
+    assert "two dedicated research-side blocks" in text
     assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in text
@@ -147,7 +149,9 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "weberSchlafliBridgeResearchWaypoint_true" in lean_text
     assert "namedWeberCoordinateBridgeResearchWaypoint_true" in lean_text
     assert "currentNamedWeberCoordinateBridgeResearchCertificate" in lean_text
-    assert "dedicated coordinate-bridge certificate" in lean_text
+    assert "ggWeightedOrbitResearchWaypoint_true" in lean_text
+    assert "currentGGWeightedOrbitResearchCertificate" in lean_text
+    assert "two dedicated research-side blocks" in lean_text
     assert "Proofs/HeroCaseWeberSchlafliCoordinateObstruction.lean" in lean_text
     assert "Proofs/HeroCaseMortonNamedCoordinateWaypoint.lean" in lean_text
     assert "Proofs/HeroCaseMortonSquaredCoordinateObstruction.lean" in lean_text

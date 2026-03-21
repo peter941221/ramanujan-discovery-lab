@@ -489,27 +489,47 @@ theorem namedWeberCoordinateBridgeResearchWaypoint_true :
     namedWeberCoordinateBridgeResearchWaypoint := by
   exact currentNamedWeberCoordinateBridgeResearchCertificate_sound
 
-def namedWeberOrbitResearchWaypoint : Prop :=
+def ggWeightedOrbitResearchWaypoint : Prop :=
   Proofs.HeroCase.GGQ34.currentWaypoint ∧
-    namedWeberCoordinateBridgeResearchWaypoint ∧
-    Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
+    ggWeightedCorrectionResearchWaypoint
+
+structure GGWeightedOrbitResearchCertificate where
+  ggQ34 : Proofs.HeroCase.GGQ34.currentWaypoint
+  ggWeightedCorrection : ggWeightedCorrectionResearchWaypoint
+
+def currentGGWeightedOrbitResearchCertificate :
+    GGWeightedOrbitResearchCertificate where
+  ggQ34 := Proofs.HeroCase.GGQ34.currentWaypoint_true
+  ggWeightedCorrection := ggWeightedCorrectionResearchWaypoint_true
+
+theorem currentGGWeightedOrbitResearchCertificate_sound :
+    ggWeightedOrbitResearchWaypoint := by
+  exact ⟨
+    currentGGWeightedOrbitResearchCertificate.ggQ34,
+    currentGGWeightedOrbitResearchCertificate.ggWeightedCorrection
+  ⟩
+
+theorem ggWeightedOrbitResearchWaypoint_true :
+    ggWeightedOrbitResearchWaypoint := by
+  exact currentGGWeightedOrbitResearchCertificate_sound
+
+def namedWeberOrbitResearchWaypoint : Prop :=
+  namedWeberCoordinateBridgeResearchWaypoint ∧
+    ggWeightedOrbitResearchWaypoint
 
 structure NamedWeberOrbitResearchCertificate where
-  ggQ34 : Proofs.HeroCase.GGQ34.currentWaypoint
   namedWeberCoordinateBridge : namedWeberCoordinateBridgeResearchWaypoint
-  ggWeightedCorrection : Proofs.HeroCase.GGWeightedCorrection.currentWaypoint
+  ggWeightedOrbit : ggWeightedOrbitResearchWaypoint
 
 def currentNamedWeberOrbitResearchCertificate : NamedWeberOrbitResearchCertificate where
-  ggQ34 := Proofs.HeroCase.GGQ34.currentWaypoint_true
   namedWeberCoordinateBridge := namedWeberCoordinateBridgeResearchWaypoint_true
-  ggWeightedCorrection := Proofs.HeroCase.GGWeightedCorrection.currentWaypoint_true
+  ggWeightedOrbit := ggWeightedOrbitResearchWaypoint_true
 
 theorem currentNamedWeberOrbitResearchCertificate_sound :
     namedWeberOrbitResearchWaypoint := by
   exact ⟨
-    currentNamedWeberOrbitResearchCertificate.ggQ34,
     currentNamedWeberOrbitResearchCertificate.namedWeberCoordinateBridge,
-    currentNamedWeberOrbitResearchCertificate.ggWeightedCorrection
+    currentNamedWeberOrbitResearchCertificate.ggWeightedOrbit
   ⟩
 
 theorem namedWeberOrbitResearchWaypoint_true :
