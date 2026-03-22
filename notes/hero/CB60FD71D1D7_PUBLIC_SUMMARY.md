@@ -104,6 +104,14 @@ has been found in the primary sources checked so far.
   `1` at `t^1` with coefficient `4`, and its first follow-up
   `H_X_ws = (G_X_ws - 1) / (4*t^1)` still stays outside the same first
   theorem-shaped closure boxes.
+  That same anchor branch also lifts to a canonical Weber `j`-side constant-1
+  object
+  `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+  On the hero sample, `J_X_ws - 1` first fails at `t^1` with coefficient
+  `56/17`, and the normalized follow-up
+  `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)` then first fails at `t^1` with
+  coefficient `1083/238`; both layers still give `0` hits in the same first
+  theorem-shaped closure boxes.
   With the classical Weber naming closure in place, this
   `Q_gp_ws -> X_g_ws -> G_X_ws`
   branch is now best read as the source-faithful classical Weber
@@ -166,6 +174,74 @@ has been found in the primary sources checked so far.
 - This is not a proof of novelty.
 - This is not yet a publishable new-formula claim.
 - It is still best treated as a high-value audit target.
+
+## Current Direction Snapshot
+
+- A focused odd-prime descendant sanity check still runs on the current
+  Weber-side follow-up ladder:
+  `H_X_ws`, `H_gp_ws`, `K_XR_ws`, and `L_XK_ws`.
+  In the current tiny box, all four objects still give
+  `0 / 9` direct hits and `0 / 9` quotient hits.
+- The old shortlist has now been executed once rather than merely proposed:
+  - `P_ws`: on the hero sample, the leading-term-normalized coordinate
+    `N_P_ws = P_ws / t^3` gives `3 / 18` self-polynomial hits, but `0` hits in
+    fractional-linear, self-quotient finite-product, eta, modular-unit, and
+    plus-Pochhammer boxes
+  - `B_ws`: the companion normalization `N_B_ws = B_ws / 2` shows the same
+    shape, again with `3 / 18` self-polynomial hits and `0` hits elsewhere in
+    the first micro-box
+  - the direct `P/B` bridge is now explicit:
+    `D_PB_ws = N_B_ws - N_P_ws` and `Q_PB_ws = N_B_ws / N_P_ws` both first
+    differ at `t^3` with coefficient `3/4`; the bridge polynomial box lights up
+    only once at degree `3`, while `Q_PB_ws` and its normalized follow-up
+    `K_PB_ws` again show `3 / 18` self-polynomial hits and `0` hits in the
+    surrounding fractional-linear / eta / product boxes
+  - the same `P/B` lane now also has a first nested quotient layer:
+    `D_PK_ws = K_PB_ws - N_P_ws` and `Q_PK_ws = K_PB_ws / N_P_ws` both first
+    differ at `t^3` with coefficient `35/24`; that nested bridge polynomial box
+    also lights up only once at degree `3`, while `Q_PK_ws` and its normalized
+    follow-up `L_PK_ws` keep the same `3 / 18` self-polynomial and `0`-hit
+    side-box profile
+  - the first source-faithful one-coordinate Weber orbit pass on that same seam
+    is now also executed:
+    on the true `GG` source, the direct ladders around `Q_PB_ref_ws` and
+    `Q_PK_ref_ws` each show `3 / 8` direct polynomial-prefix hits, so the lane
+    itself is not empty.
+    But on the hero candidate, `Q_PB_ws`, `K_PB_ws`, `Q_PK_ws`, and `L_PK_ws`
+    all still give `0 / 7` direct polynomial-prefix hits, `0 / 6` quotient
+    polynomial-prefix hits, and `0 / 7` mixed-prefix hits, with `0`
+    multiplicative and `0` fractional-linear hits throughout that focused box.
+  - the canonical classical-Weber `j`-side lane is now also explicit:
+    `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+    It is the cleanest literature-facing one-coordinate lane in the current
+    Weber city.
+  - the first focused `J_f2_ws ↔ Q_PB_ws` comparison is now also executed:
+    on the direct hero series, the direct and nested bridge boxes both stay at
+    `0` hits in the checked polynomial / fractional-linear bridge boxes, and
+    `Q_JPB_ws`, `K_JPB_ws`, `Q_JKPB_ws`, and `L_JKPB_ws` all stay flat in the
+    focused named-`GG` direct / quotient / mixed prefix boxes
+  - `Q_XR_ws`: the direct named `GG` modular-equation pass now also reports
+    `0` hits in the checked direct, quotient, and mixed boxes, and the
+    normalized follow-up `K_XR_ws` stays equally flat in that same named lane
+- Reading:
+  - `P_ws` and `B_ws` are not blank walls anymore; they do carry internal
+    low-degree self-polynomial structure
+  - the new `P/B` bridge ladder says the two lanes are related, but still
+    only by bulky degree-`3` comparisons, not by a clean literature-facing coordinate
+  - the first source-faithful one-coordinate orbit pass on that seam is now
+    also flat on the hero candidate, even though the same lane does recognize
+    the true `GG` source in the bounded direct-prefix box
+  - `J_f2_ws` is now the cleanest literature-facing Weber coordinate, but the
+    first `J_f2_ws ↔ Q_PB_ws` cross-check also stayed flat, so the seam does
+    not simply collapse back to the first canonical `j` lane
+  - `Q_XR_ws` remains a useful diagnostic bridge object, not a recovered
+    literature coordinate
+- In plainer terms:
+  the next move is still a better coordinate in the same city, but the first
+  `P/B` self-orbit echo test and the first `J/PB` bridge test have now both
+  been exhausted once and stayed flat.
+  So the repo should next try a different named Weber coordinate or only then
+  widen a different comparison bridge.
 
 ## Current Working Formula
 

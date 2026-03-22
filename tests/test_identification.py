@@ -6,6 +6,8 @@ import sympy as sp
 from ramanujan_discovery.benchmarks import get_benchmark
 from ramanujan_discovery.cli import main
 from ramanujan_discovery.identification import (
+    _append_named_gg_descendant_focus_lines,
+    _append_named_gg_bridge_lines,
     benchmark_power_substitution_series,
     build_reduced_tail_anchor,
     build_gap_normalized_series,
@@ -24,6 +26,7 @@ from ramanujan_discovery.identification import (
     scan_source_family_eta_corrections,
     scan_source_family_self_plus_pochhammer_eta_corrections,
     scan_gg_modular_equation_box,
+    _scan_gg_descendant_focus_box,
     scan_self_mahler_linear_relations,
     scan_self_fractional_linear_uniqueness_relations,
     scan_self_polynomial_uniqueness_relations,
@@ -54,6 +57,7 @@ from ramanujan_discovery.identification import (
     scan_weber_class_invariant_box,
     scan_weber_class_invariant_bridge_box,
     scan_weber_p_class_invariant_box,
+    _build_weber_j_pb_bridge_scan,
     search_modular_unit_eta_relation,
     search_eta_quotient_relation,
     search_fractional_linear_relation,
@@ -1993,6 +1997,37 @@ def test_scan_gg_modular_equation_box_supports_odd_prime_descendants():
     )
 
 
+def test_scan_gg_descendant_focus_box_supports_direct_and_quotient_ladders():
+    order = 8
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    scan = _scan_gg_descendant_focus_box(
+        target_series=gg,
+        gg_series=gg,
+        order=order,
+        supplemental_powers=(5, 7, 11),
+        degree_values=(1,),
+        max_abs_exponent=2,
+    )
+
+    assert scan is not None
+    assert scan.direct_labels == ("GG5", "GG7", "GG11")
+    assert scan.quotient_labels == ("Q_5", "Q_7", "Q_11")
+    assert scan.order_checked == order
+    assert scan.degree_values == (1,)
+    assert scan.max_abs_exponent == 2
+    assert len(scan.direct_scans.polynomial_scans) == 3
+    assert len(scan.direct_scans.multiplicative_scans) == 3
+    assert len(scan.direct_scans.fractional_linear_scans) == 3
+    assert not scan.direct_scans.two_layer_fractional_linear_scans
+    assert len(scan.quotient_scans.polynomial_scans) == 3
+    assert len(scan.quotient_scans.multiplicative_scans) == 3
+    assert len(scan.quotient_scans.fractional_linear_scans) == 3
+    assert not scan.quotient_scans.two_layer_fractional_linear_scans
+
+
 def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_branch():
     order = 12
     target = [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)]
@@ -2037,6 +2072,7 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
     assert p_scan.template_results[0].hit
     assert p_scan.template_results[0].first_failure_power is None
     assert p_scan.template_results[0].first_failure_coeff is None
+    assert p_scan.leading_normalized_scan is None
 
     assert b_scan.family_label == "Weber-Schlafli"
     assert b_scan.label == "B_ws"
@@ -2050,6 +2086,331 @@ def test_scan_morton_periodic_point_box_finds_weber_schlafli_hit_on_constant_bra
     assert not b_scan.template_results[1].hit
     assert b_scan.template_results[1].first_failure_power == 0
     assert b_scan.template_results[1].first_failure_coeff == 16
+    assert not scan.leading_normalized_bridge_scans
+
+
+def test_scan_morton_periodic_point_box_builds_weber_micro_scans_on_true_gg():
+    order = 24
+    gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
+    gg_series = continued_fraction_series_coeffs(gg_template, depth=40, order=order)
+
+    scan = scan_morton_periodic_point_box(
+        target_series=gg_series,
+        order=order,
+    )
+
+    _, _, p_scan, b_scan = scan.named_coordinate_scans
+    assert p_scan.leading_normalized_scan is not None
+    assert p_scan.leading_normalized_scan.label == "N_P_ws"
+    assert p_scan.leading_normalized_scan.expression == "N_P_ws = P_ws / (t)"
+    assert p_scan.leading_normalized_scan.shift == 1
+    assert p_scan.leading_normalized_scan.leading_coefficient == 1
+    assert p_scan.leading_normalized_scan.scan.first_failure_power == 1
+    assert p_scan.leading_normalized_scan.scan.first_failure_coeff == sp.Rational(1, 2)
+    assert not p_scan.leading_normalized_scan.scan.self_polynomial_scan.hits
+    assert not p_scan.leading_normalized_scan.scan.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None
+        for item in p_scan.leading_normalized_scan.scan.self_quotient_product_scans
+    )
+    assert all(item.relation is None for item in p_scan.leading_normalized_scan.scan.eta_scans)
+    assert all(
+        item.relation is None
+        for item in p_scan.leading_normalized_scan.scan.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in p_scan.leading_normalized_scan.scan.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in p_scan.leading_normalized_scan.scan.self_plus_pochhammer_eta_scans
+    )
+
+    assert b_scan.leading_normalized_scan is not None
+    assert b_scan.leading_normalized_scan.label == "N_B_ws"
+    assert b_scan.leading_normalized_scan.expression == "N_B_ws = B_ws / (2)"
+    assert b_scan.leading_normalized_scan.shift == 0
+    assert b_scan.leading_normalized_scan.leading_coefficient == 2
+    assert b_scan.leading_normalized_scan.scan.first_failure_power == 1
+    assert b_scan.leading_normalized_scan.scan.first_failure_coeff == sp.Rational(1, 4)
+    assert not b_scan.leading_normalized_scan.scan.self_polynomial_scan.hits
+    assert not b_scan.leading_normalized_scan.scan.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None
+        for item in b_scan.leading_normalized_scan.scan.self_quotient_product_scans
+    )
+    assert all(item.relation is None for item in b_scan.leading_normalized_scan.scan.eta_scans)
+    assert all(
+        item.relation is None
+        for item in b_scan.leading_normalized_scan.scan.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in b_scan.leading_normalized_scan.scan.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in b_scan.leading_normalized_scan.scan.self_plus_pochhammer_eta_scans
+    )
+    assert len(scan.leading_normalized_bridge_scans) == 1
+    bridge = scan.leading_normalized_bridge_scans[0]
+    assert bridge.left_label == "N_P_ws"
+    assert bridge.right_label == "N_B_ws"
+    assert bridge.difference_label == "D_PB_ws"
+    assert bridge.difference_expression == "D_PB_ws = N_B_ws - N_P_ws"
+    assert bridge.difference_first_failure_power == 1
+    assert bridge.difference_first_failure_coeff == sp.Rational(-1, 4)
+    assert bridge.quotient_label == "Q_PB_ws"
+    assert bridge.quotient_expression == "Q_PB_ws = N_B_ws / N_P_ws"
+    assert bridge.quotient_first_failure_power == 1
+    assert bridge.quotient_first_failure_coeff == sp.Rational(-1, 4)
+    assert not any(item.relation is not None for item in bridge.polynomial_scans)
+    assert bridge.fractional_linear_relation is None
+    assert bridge.quotient_scan.first_failure_power == 1
+    assert bridge.quotient_scan.first_failure_coeff == sp.Rational(-1, 4)
+    assert not bridge.quotient_scan.self_polynomial_scan.hits
+    assert not bridge.quotient_scan.self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in bridge.quotient_scan.self_quotient_product_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.eta_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.modular_unit_eta_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.self_plus_pochhammer_eta_scans)
+    assert bridge.quotient_scan.normalized_followup is not None
+    assert bridge.quotient_scan.normalized_followup.label == "K_PB_ws"
+    assert bridge.quotient_scan.normalized_followup.expression == "K_PB_ws = (Q_PB_ws - 1) / (-1/4*t^1)"
+    assert bridge.quotient_scan.normalized_followup.first_failure_power == 1
+    assert bridge.quotient_scan.normalized_followup.first_failure_coeff == sp.Rational(-23, 8)
+    assert not bridge.quotient_scan.normalized_followup.self_polynomial_scan.hits
+    assert not bridge.quotient_scan.normalized_followup.self_fractional_linear_scan.hits
+    assert bridge.quotient_named_coordinate_orbit_scan is not None
+    assert bridge.quotient_named_coordinate_orbit_scan.base_label == "Q_PB_ref_ws"
+    assert tuple(label for label, _, _ in bridge.quotient_named_coordinate_orbit_scan.ordered_basis_series) == (
+        "Q_PB_ref_ws",
+        "Q_PB_ref_ws_2",
+        "Q_PB_ref_ws_3",
+        "Q_PB_ref_ws_4",
+    )
+    assert sum(
+        1
+        for item in bridge.quotient_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+        if item.relation is not None
+    ) == 3
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.direct_scans.multiplicative_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.direct_scans.fractional_linear_scans
+    )
+    assert bridge.quotient_followup_named_coordinate_orbit_scan is not None
+    assert bridge.quotient_followup_named_coordinate_orbit_scan.base_label == "K_PB_ref_ws"
+    assert sum(
+        1
+        for item in bridge.quotient_followup_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+        if item.relation is not None
+    ) == 3
+    assert bridge.quotient_followup_bridge_scan is not None
+    nested = bridge.quotient_followup_bridge_scan
+    assert nested.left_label == "N_P_ws"
+    assert nested.right_label == "K_PB_ws"
+    assert nested.difference_label == "D_PK_ws"
+    assert nested.difference_expression == "D_PK_ws = K_PB_ws - N_P_ws"
+    assert nested.difference_first_failure_power == 1
+    assert nested.difference_first_failure_coeff == sp.Rational(-27, 8)
+    assert nested.quotient_label == "Q_PK_ws"
+    assert nested.quotient_expression == "Q_PK_ws = K_PB_ws / N_P_ws"
+    assert nested.quotient_first_failure_power == 1
+    assert nested.quotient_first_failure_coeff == sp.Rational(-27, 8)
+    assert not any(item.relation is not None for item in nested.polynomial_scans)
+    assert nested.fractional_linear_relation is None
+    assert nested.quotient_scan.label == "Q_PK_ws"
+    assert nested.quotient_scan.first_failure_power == 1
+    assert nested.quotient_scan.first_failure_coeff == sp.Rational(-27, 8)
+    assert not nested.quotient_scan.self_polynomial_scan.hits
+    assert not nested.quotient_scan.self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in nested.quotient_scan.self_quotient_product_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.eta_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.modular_unit_eta_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.self_plus_pochhammer_eta_scans)
+    assert nested.quotient_scan.normalized_followup is not None
+    assert nested.quotient_scan.normalized_followup.label == "L_PK_ws"
+    assert nested.quotient_scan.normalized_followup.expression == "L_PK_ws = (Q_PK_ws - 1) / (-27/8*t^1)"
+    assert nested.quotient_scan.normalized_followup.first_failure_power == 1
+    assert nested.quotient_scan.normalized_followup.first_failure_coeff == sp.Rational(-215, 108)
+    assert not nested.quotient_scan.normalized_followup.self_polynomial_scan.hits
+    assert nested.quotient_named_coordinate_orbit_scan is not None
+    assert nested.quotient_named_coordinate_orbit_scan.base_label == "Q_PK_ref_ws"
+    assert sum(
+        1
+        for item in nested.quotient_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+        if item.relation is not None
+    ) == 3
+    assert nested.quotient_followup_named_coordinate_orbit_scan is not None
+    assert nested.quotient_followup_named_coordinate_orbit_scan.base_label == "L_PK_ref_ws"
+    assert sum(
+        1
+        for item in nested.quotient_followup_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+        if item.relation is not None
+    ) == 3
+
+
+def test_scan_morton_periodic_point_box_builds_weber_leading_bridge_on_hero():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scan = scan_morton_periodic_point_box(
+        target_series=hero_series,
+        order=order,
+    )
+
+    assert len(scan.leading_normalized_bridge_scans) == 1
+    bridge = scan.leading_normalized_bridge_scans[0]
+    assert bridge.left_label == "N_P_ws"
+    assert bridge.right_label == "N_B_ws"
+    assert bridge.difference_first_failure_power == 3
+    assert bridge.difference_first_failure_coeff == sp.Rational(3, 4)
+    assert bridge.quotient_first_failure_power == 3
+    assert bridge.quotient_first_failure_coeff == sp.Rational(3, 4)
+    assert len(bridge.polynomial_scans) == 3
+    assert sum(1 for item in bridge.polynomial_scans if item.relation is not None) == 1
+    assert bridge.polynomial_scans[0].relation is None
+    assert bridge.polynomial_scans[1].relation is None
+    assert bridge.polynomial_scans[2].relation is not None
+    assert bridge.fractional_linear_relation is None
+    assert bridge.quotient_scan.label == "Q_PB_ws"
+    assert bridge.quotient_scan.first_failure_power == 3
+    assert bridge.quotient_scan.first_failure_coeff == sp.Rational(3, 4)
+    assert len(bridge.quotient_scan.self_polynomial_scan.hits) == 3
+    assert not bridge.quotient_scan.self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in bridge.quotient_scan.self_quotient_product_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.eta_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.modular_unit_eta_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in bridge.quotient_scan.self_plus_pochhammer_eta_scans)
+    assert bridge.quotient_scan.normalized_followup is not None
+    assert bridge.quotient_scan.normalized_followup.label == "K_PB_ws"
+    assert bridge.quotient_scan.normalized_followup.expression == "K_PB_ws = (Q_PB_ws - 1) / (3/4*t^3)"
+    assert bridge.quotient_scan.normalized_followup.first_failure_power == 3
+    assert bridge.quotient_scan.normalized_followup.first_failure_coeff == sp.Rational(23, 24)
+    assert len(bridge.quotient_scan.normalized_followup.self_polynomial_scan.hits) == 3
+    assert not bridge.quotient_scan.normalized_followup.self_fractional_linear_scan.hits
+    assert bridge.quotient_named_coordinate_orbit_scan is not None
+    assert bridge.quotient_followup_named_coordinate_orbit_scan is not None
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.direct_scans.multiplicative_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.direct_scans.fractional_linear_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.quotient_scans.polynomial_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in bridge.quotient_named_coordinate_orbit_scan.mixed_quotient_scans.polynomial_scans
+    )
+    assert bridge.quotient_followup_bridge_scan is not None
+    nested = bridge.quotient_followup_bridge_scan
+    assert nested.left_label == "N_P_ws"
+    assert nested.right_label == "K_PB_ws"
+    assert nested.difference_label == "D_PK_ws"
+    assert nested.difference_expression == "D_PK_ws = K_PB_ws - N_P_ws"
+    assert nested.difference_first_failure_power == 3
+    assert nested.difference_first_failure_coeff == sp.Rational(35, 24)
+    assert nested.quotient_label == "Q_PK_ws"
+    assert nested.quotient_expression == "Q_PK_ws = K_PB_ws / N_P_ws"
+    assert nested.quotient_first_failure_power == 3
+    assert nested.quotient_first_failure_coeff == sp.Rational(35, 24)
+    assert len(nested.polynomial_scans) == 3
+    assert sum(1 for item in nested.polynomial_scans if item.relation is not None) == 1
+    assert nested.fractional_linear_relation is None
+    assert nested.quotient_scan.label == "Q_PK_ws"
+    assert nested.quotient_scan.first_failure_power == 3
+    assert nested.quotient_scan.first_failure_coeff == sp.Rational(35, 24)
+    assert len(nested.quotient_scan.self_polynomial_scan.hits) == 3
+    assert not nested.quotient_scan.self_fractional_linear_scan.hits
+    assert all(item.relation is None for item in nested.quotient_scan.self_quotient_product_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.eta_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.modular_unit_eta_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.self_plus_pochhammer_scans)
+    assert all(item.relation is None for item in nested.quotient_scan.self_plus_pochhammer_eta_scans)
+    assert nested.quotient_scan.normalized_followup is not None
+    assert nested.quotient_scan.normalized_followup.label == "L_PK_ws"
+    assert nested.quotient_scan.normalized_followup.expression == "L_PK_ws = (Q_PK_ws - 1) / (35/24*t^3)"
+    assert nested.quotient_scan.normalized_followup.first_failure_power == 3
+    assert nested.quotient_scan.normalized_followup.first_failure_coeff == sp.Rational(9, 140)
+    assert len(nested.quotient_scan.normalized_followup.self_polynomial_scan.hits) == 3
+    assert not nested.quotient_scan.normalized_followup.self_fractional_linear_scan.hits
+    assert nested.quotient_named_coordinate_orbit_scan is not None
+    assert nested.quotient_followup_named_coordinate_orbit_scan is not None
+    assert not any(
+        item.relation is not None
+        for item in nested.quotient_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in nested.quotient_named_coordinate_orbit_scan.quotient_scans.polynomial_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in nested.quotient_named_coordinate_orbit_scan.mixed_quotient_scans.polynomial_scans
+    )
+    assert not any(
+        item.relation is not None
+        for item in nested.quotient_followup_named_coordinate_orbit_scan.direct_scans.polynomial_scans
+    )
+
+
+def test_scan_morton_periodic_point_box_skips_focused_weber_bridge_orbit_in_smoke_profile():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scan = scan_morton_periodic_point_box(
+        target_series=hero_series,
+        order=order,
+        max_abs_exponent=4,
+    )
+
+    bridge = scan.leading_normalized_bridge_scans[0]
+    assert bridge.quotient_named_coordinate_orbit_scan is None
+    assert bridge.quotient_followup_named_coordinate_orbit_scan is None
+    assert bridge.quotient_followup_bridge_scan is not None
+    assert bridge.quotient_followup_bridge_scan.quotient_named_coordinate_orbit_scan is None
+    assert bridge.quotient_followup_bridge_scan.quotient_followup_named_coordinate_orbit_scan is None
 
 
 def test_scan_weber_class_invariant_box_identifies_true_gg_coordinate():
@@ -2119,7 +2480,40 @@ def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
     assert scan.classical_product_coordinate_scan.first_failure_power is None
     assert scan.classical_product_coordinate_scan.first_failure_coeff is None
     assert len(scan.classical_product_coordinate_scan.self_polynomial_scan.hits) >= 1
+    assert scan.classical_product_coordinate_scan.named_gg_modular_equation_scan is not None
     assert scan.classical_product_coordinate_scan.normalized_followup is None
+    assert scan.canonical_j_coordinate_label == "J_f2_ws"
+    assert scan.canonical_j_coordinate_expression == "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)"
+    assert "Yui--Zagier's Weber cubic" in scan.canonical_j_coordinate_reason
+    assert scan.canonical_j_coordinate_bridge_expression == "3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0"
+    assert scan.canonical_j_coordinate_scan.label == "J_f2_ws"
+    assert scan.canonical_j_coordinate_scan.first_failure_power is None
+    assert scan.canonical_j_coordinate_scan.first_failure_coeff is None
+    assert len(scan.canonical_j_coordinate_scan.self_polynomial_scan.hits) >= 1
+    assert scan.canonical_j_coordinate_scan.named_gg_modular_equation_scan is not None
+    assert scan.canonical_j_coordinate_scan.normalized_followup is None
+    assert scan.canonical_j_anchor_bridge_scan is not None
+    assert scan.canonical_j_anchor_bridge_scan.left_label == "G_X_ws"
+    assert scan.canonical_j_anchor_bridge_scan.right_label == "J_f2_ws"
+    assert scan.canonical_j_anchor_bridge_scan.difference_label == "D_XJ_ws"
+    assert scan.canonical_j_anchor_bridge_scan.quotient_label == "Q_XJ_ws"
+    assert scan.canonical_j_anchor_bridge_scan.difference_first_failure_power is None
+    assert scan.canonical_j_anchor_bridge_scan.difference_first_failure_coeff is None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_first_failure_power is None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_first_failure_coeff is None
+    assert len(scan.canonical_j_anchor_bridge_scan.quotient_scan.self_polynomial_scan.hits) >= 1
+    assert scan.canonical_j_anchor_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan is None
+    assert scan.canonical_j_lift_bridge_scan is not None
+    assert scan.canonical_j_lift_bridge_scan.difference_label == "D_JX_ws"
+    assert scan.canonical_j_lift_bridge_scan.difference_expression == "D_JX_ws = J_f2_ws - J_X_ws"
+    assert scan.canonical_j_lift_bridge_scan.difference_first_failure_power is None
+    assert scan.canonical_j_lift_bridge_scan.difference_first_failure_coeff is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_label == "Q_JX_ws"
+    assert scan.canonical_j_lift_bridge_scan.quotient_expression == "Q_JX_ws = J_f2_ws / J_X_ws"
+    assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_power is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_coeff is None
     assert scan.quotient_coordinate_label == "X_g_ws"
     assert scan.quotient_coordinate_expression == "X_g_ws = 16*t^2 / g12_ws^2"
     assert scan.quotient_coordinate_bridge_expression == (
@@ -2139,6 +2533,32 @@ def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
     assert scan.quotient_coordinate_template_scan.first_failure_coeff is None
     assert len(scan.quotient_coordinate_template_scan.self_polynomial_scan.hits) >= 1
     assert scan.quotient_coordinate_template_scan.normalized_followup is None
+    assert scan.anchor_canonical_j_coordinate_label == "J_X_ws"
+    assert (
+        scan.anchor_canonical_j_coordinate_expression
+        == "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)"
+    )
+    assert "signed Weber cubic" in scan.anchor_canonical_j_coordinate_reason
+    assert (
+        scan.anchor_canonical_j_coordinate_bridge_expression
+        == "4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0"
+    )
+    assert scan.anchor_canonical_j_coordinate_scan.label == "J_X_ws"
+    assert scan.anchor_canonical_j_coordinate_scan.first_failure_power is None
+    assert scan.anchor_canonical_j_coordinate_scan.first_failure_coeff is None
+    assert len(scan.anchor_canonical_j_coordinate_scan.self_polynomial_scan.hits) >= 1
+    assert scan.anchor_canonical_j_coordinate_scan.named_gg_modular_equation_scan is not None
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup is None
+    assert scan.primary_named_gg_modular_equation_scan is not None
+    assert scan.primary_named_gg_modular_equation_scan.benchmark_name == "gollnitz_gordon_normalized"
+    assert not scan.primary_named_gg_modular_equation_scan.weighted_coordinate_diagnostics
+    assert scan.quotient_coordinate_template_named_gg_modular_equation_scan is not None
+    assert (
+        scan.quotient_coordinate_template_named_gg_modular_equation_scan.benchmark_name
+        == "gollnitz_gordon_normalized"
+    )
+    assert not scan.quotient_coordinate_template_named_gg_modular_equation_scan.weighted_coordinate_diagnostics
+    assert scan.quotient_coordinate_template_scan.named_gg_modular_equation_scan is not None
     assert scan.quotient_label == "R_gp_ws"
     assert scan.quotient_expression == "R_gp_ws = G_p12_ws / G_g12_ws"
     assert scan.quotient_first_failure_power is None
@@ -2196,6 +2616,10 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     )
     assert scan.classical_product_coordinate_scan.normalized_followup.first_failure_power == 1
     assert scan.classical_product_coordinate_scan.normalized_followup.first_failure_coeff == sp.Rational(1, 2)
+    assert scan.classical_product_coordinate_scan.named_gg_modular_equation_scan is not None
+    assert not scan.classical_product_coordinate_scan.named_gg_modular_equation_scan.hit_templates
+    assert scan.classical_product_coordinate_scan.normalized_followup.named_gg_modular_equation_scan is not None
+    assert not scan.classical_product_coordinate_scan.normalized_followup.named_gg_modular_equation_scan.hit_templates
     assert not scan.classical_product_coordinate_scan.normalized_followup.self_polynomial_scan.hits
     assert not scan.classical_product_coordinate_scan.normalized_followup.self_fractional_linear_scan.hits
     assert all(
@@ -2217,6 +2641,87 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
         item.relation is None
         for item in scan.classical_product_coordinate_scan.normalized_followup.self_plus_pochhammer_eta_scans
     )
+    assert scan.canonical_j_coordinate_scan.first_failure_power == 1
+    assert scan.canonical_j_coordinate_scan.first_failure_coeff == sp.Rational(24, 5)
+    assert not scan.canonical_j_coordinate_scan.self_polynomial_scan.hits
+    assert not scan.canonical_j_coordinate_scan.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None for item in scan.canonical_j_coordinate_scan.self_quotient_product_scans
+    )
+    assert all(item.relation is None for item in scan.canonical_j_coordinate_scan.eta_scans)
+    assert all(
+        item.relation is None for item in scan.canonical_j_coordinate_scan.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None for item in scan.canonical_j_coordinate_scan.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.canonical_j_coordinate_scan.self_plus_pochhammer_eta_scans
+    )
+    assert scan.canonical_j_coordinate_scan.normalized_followup is not None
+    assert scan.canonical_j_coordinate_scan.normalized_followup.label == "H_J_f2_ws"
+    assert scan.canonical_j_coordinate_scan.normalized_followup.expression == (
+        "H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)"
+    )
+    assert scan.canonical_j_coordinate_scan.normalized_followup.first_failure_power == 1
+    assert scan.canonical_j_coordinate_scan.normalized_followup.first_failure_coeff == sp.Rational(409, 90)
+    assert not scan.canonical_j_coordinate_scan.normalized_followup.self_polynomial_scan.hits
+    assert not scan.canonical_j_coordinate_scan.normalized_followup.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None
+        for item in scan.canonical_j_coordinate_scan.normalized_followup.self_quotient_product_scans
+    )
+    assert all(
+        item.relation is None for item in scan.canonical_j_coordinate_scan.normalized_followup.eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.canonical_j_coordinate_scan.normalized_followup.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.canonical_j_coordinate_scan.normalized_followup.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.canonical_j_coordinate_scan.normalized_followup.self_plus_pochhammer_eta_scans
+    )
+    assert scan.canonical_j_anchor_bridge_scan is not None
+    assert scan.canonical_j_anchor_bridge_scan.difference_label == "D_XJ_ws"
+    assert scan.canonical_j_anchor_bridge_scan.quotient_label == "Q_XJ_ws"
+    assert scan.canonical_j_anchor_bridge_scan.quotient_scan.label == "Q_XJ_ws"
+    assert scan.canonical_j_anchor_bridge_scan.quotient_scan.normalized_followup is not None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_scan.normalized_followup.label == "K_XJ_ws"
+    assert not any(
+        bridge_scan.relation is not None for bridge_scan in scan.canonical_j_anchor_bridge_scan.polynomial_scans
+    )
+    assert scan.canonical_j_anchor_bridge_scan.fractional_linear_relation is None
+    assert not scan.canonical_j_anchor_bridge_scan.quotient_scan.self_polynomial_scan.hits
+    assert not scan.canonical_j_anchor_bridge_scan.quotient_scan.self_fractional_linear_scan.hits
+    assert scan.canonical_j_anchor_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert not scan.canonical_j_anchor_bridge_scan.quotient_named_gg_modular_equation_scan.hit_templates
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_named_gg_modular_equation_scan is not None
+    assert not scan.canonical_j_anchor_bridge_scan.quotient_followup_named_gg_modular_equation_scan.hit_templates
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan is not None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.difference_label == "D_XKJ_ws"
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.quotient_label == "Q_XKJ_ws"
+    assert not any(
+        bridge_scan.relation is not None
+        for bridge_scan in scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.polynomial_scans
+    )
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.fractional_linear_relation is None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert not scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan.hit_templates
+    assert scan.canonical_j_lift_bridge_scan is not None
+    assert scan.canonical_j_lift_bridge_scan.difference_label == "D_JX_ws"
+    assert scan.canonical_j_lift_bridge_scan.difference_expression == "D_JX_ws = J_f2_ws - J_X_ws"
+    assert scan.canonical_j_lift_bridge_scan.difference_first_failure_power == 1
+    assert scan.canonical_j_lift_bridge_scan.difference_first_failure_coeff == sp.Rational(128, 85)
+    assert scan.canonical_j_lift_bridge_scan.quotient_label == "Q_JX_ws"
+    assert scan.canonical_j_lift_bridge_scan.quotient_expression == "Q_JX_ws = J_f2_ws / J_X_ws"
+    assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_power == 1
+    assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_coeff == sp.Rational(128, 85)
     assert scan.quotient_coordinate_template_scan.first_failure_power == 1
     assert scan.quotient_coordinate_template_scan.first_failure_coeff == 4
     assert not scan.quotient_coordinate_template_scan.self_polynomial_scan.hits
@@ -2242,6 +2747,88 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     )
     assert scan.quotient_coordinate_template_scan.normalized_followup.first_failure_power == 1
     assert scan.quotient_coordinate_template_scan.normalized_followup.first_failure_coeff == sp.Rational(9, 2)
+    assert scan.anchor_canonical_j_coordinate_scan.first_failure_power == 1
+    assert scan.anchor_canonical_j_coordinate_scan.first_failure_coeff == sp.Rational(56, 17)
+    assert not scan.anchor_canonical_j_coordinate_scan.self_polynomial_scan.hits
+    assert not scan.anchor_canonical_j_coordinate_scan.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None for item in scan.anchor_canonical_j_coordinate_scan.self_quotient_product_scans
+    )
+    assert all(item.relation is None for item in scan.anchor_canonical_j_coordinate_scan.eta_scans)
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.self_plus_pochhammer_eta_scans
+    )
+    assert scan.anchor_canonical_j_coordinate_scan.named_gg_modular_equation_scan is not None
+    assert not scan.anchor_canonical_j_coordinate_scan.named_gg_modular_equation_scan.hit_templates
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup is not None
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup.label == "H_J_X_ws"
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup.expression == (
+        "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)"
+    )
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup.first_failure_power == 1
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup.first_failure_coeff == sp.Rational(1083, 238)
+    assert not scan.anchor_canonical_j_coordinate_scan.normalized_followup.self_polynomial_scan.hits
+    assert not scan.anchor_canonical_j_coordinate_scan.normalized_followup.self_fractional_linear_scan.hits
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.normalized_followup.self_quotient_product_scans
+    )
+    assert all(
+        item.relation is None for item in scan.anchor_canonical_j_coordinate_scan.normalized_followup.eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.normalized_followup.modular_unit_eta_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.normalized_followup.self_plus_pochhammer_scans
+    )
+    assert all(
+        item.relation is None
+        for item in scan.anchor_canonical_j_coordinate_scan.normalized_followup.self_plus_pochhammer_eta_scans
+    )
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup.named_gg_modular_equation_scan is not None
+    assert not scan.anchor_canonical_j_coordinate_scan.normalized_followup.named_gg_modular_equation_scan.hit_templates
+    assert scan.primary_named_gg_modular_equation_scan is not None
+    assert not scan.primary_named_gg_modular_equation_scan.hit_templates
+    assert scan.quotient_coordinate_template_named_gg_modular_equation_scan is not None
+    assert not scan.quotient_coordinate_template_named_gg_modular_equation_scan.hit_templates
+    assert scan.quotient_coordinate_template_scan.named_gg_modular_equation_scan is not None
+    assert not scan.quotient_coordinate_template_scan.named_gg_modular_equation_scan.hit_templates
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_modular_equation_scan is not None
+    assert not scan.quotient_coordinate_template_scan.normalized_followup.named_gg_modular_equation_scan.hit_templates
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_preview is not None
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_preview.direct_labels == (
+        "GG5",
+        "GG7",
+        "GG11",
+    )
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_preview.quotient_labels == (
+        "Q_5",
+        "Q_7",
+        "Q_11",
+    )
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_focused_scan is not None
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_focused_scan.direct_labels == (
+        "GG5",
+        "GG7",
+        "GG11",
+    )
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_focused_scan.quotient_labels == (
+        "Q_5",
+        "Q_7",
+        "Q_11",
+    )
     assert scan.quotient_first_failure_power == 3
     assert scan.quotient_first_failure_coeff == 96
     assert not scan.quotient_self_polynomial_scan.hits
@@ -2252,6 +2839,12 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert scan.normalized_followup.expression == "H_gp_ws = (R_gp_ws - 1) / (96*t^3)"
     assert scan.normalized_followup.first_failure_power == 1
     assert scan.normalized_followup.first_failure_coeff == sp.Rational(9, 2)
+    assert scan.normalized_followup.named_gg_descendant_preview is not None
+    assert scan.normalized_followup.named_gg_descendant_preview.direct_labels == ("GG5", "GG7", "GG11")
+    assert scan.normalized_followup.named_gg_descendant_preview.quotient_labels == ("Q_5", "Q_7", "Q_11")
+    assert scan.normalized_followup.named_gg_descendant_focused_scan is not None
+    assert scan.normalized_followup.named_gg_descendant_focused_scan.direct_labels == ("GG5", "GG7", "GG11")
+    assert scan.normalized_followup.named_gg_descendant_focused_scan.quotient_labels == ("Q_5", "Q_7", "Q_11")
     assert not scan.normalized_followup.self_polynomial_scan.hits
     assert not scan.normalized_followup.self_fractional_linear_scan.hits
     assert all(item.relation is None for item in scan.normalized_followup.self_quotient_product_scans)
@@ -2291,6 +2884,28 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     )
     assert scan.followup_bridge_scan.quotient_scan.normalized_followup.first_failure_power == 1
     assert scan.followup_bridge_scan.quotient_scan.normalized_followup.first_failure_coeff == 2
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview is not None
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview.direct_labels == (
+        "GG5",
+        "GG7",
+        "GG11",
+    )
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview.quotient_labels == (
+        "Q_5",
+        "Q_7",
+        "Q_11",
+    )
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan is not None
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan.direct_labels == (
+        "GG5",
+        "GG7",
+        "GG11",
+    )
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan.quotient_labels == (
+        "Q_5",
+        "Q_7",
+        "Q_11",
+    )
     assert scan.followup_bridge_scan.quotient_followup_bridge_scan is not None
     assert scan.followup_bridge_scan.quotient_followup_bridge_scan.left_label == "H_X_ws"
     assert scan.followup_bridge_scan.quotient_followup_bridge_scan.right_label == "K_XR_ws"
@@ -2338,9 +2953,51 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     )
     assert scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.first_failure_power == 1
     assert scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.first_failure_coeff == sp.Rational(563, 30)
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview
+        is not None
+    )
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview.direct_labels
+        == ("GG5", "GG7", "GG11")
+    )
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview.quotient_labels
+        == ("Q_5", "Q_7", "Q_11")
+    )
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan
+        is not None
+    )
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan.direct_labels
+        == ("GG5", "GG7", "GG11")
+    )
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan.quotient_labels
+        == ("Q_5", "Q_7", "Q_11")
+    )
     assert len(scan.followup_bridge_scan.polynomial_scans) == 3
     assert all(item.relation is None for item in scan.followup_bridge_scan.polynomial_scans)
     assert scan.followup_bridge_scan.fractional_linear_relation is None
+    qxr_gg_scan = scan.followup_bridge_scan.quotient_named_gg_modular_equation_scan
+    assert qxr_gg_scan is not None
+    assert qxr_gg_scan.benchmark_name == "gollnitz_gordon_normalized"
+    assert not qxr_gg_scan.hit_templates
+    assert not qxr_gg_scan.exact_polynomial_template_hits
+    assert not qxr_gg_scan.quotient_exact_polynomial_template_hits
+    assert all(scan_item.relation is None for scan_item in qxr_gg_scan.polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in qxr_gg_scan.quotient_polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in qxr_gg_scan.mixed_quotient_polynomial_scans)
+    kxr_gg_scan = scan.followup_bridge_scan.quotient_followup_named_gg_modular_equation_scan
+    assert kxr_gg_scan is not None
+    assert kxr_gg_scan.benchmark_name == "gollnitz_gordon_normalized"
+    assert not kxr_gg_scan.hit_templates
+    assert not kxr_gg_scan.exact_polynomial_template_hits
+    assert not kxr_gg_scan.quotient_exact_polynomial_template_hits
+    assert all(scan_item.relation is None for scan_item in kxr_gg_scan.polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in kxr_gg_scan.quotient_polynomial_scans)
+    assert all(scan_item.relation is None for scan_item in kxr_gg_scan.mixed_quotient_polynomial_scans)
     assert len(scan.followup_bridge_scan.quotient_followup_bridge_scan.polynomial_scans) == 3
     assert all(
         item.relation is None
@@ -2383,6 +3040,262 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert all(scan_item.relation is None for scan_item in followup_gg_scan.polynomial_scans)
     assert all(scan_item.relation is None for scan_item in followup_gg_scan.quotient_polynomial_scans)
     assert all(scan_item.relation is None for scan_item in followup_gg_scan.mixed_quotient_polynomial_scans)
+
+
+def test_scan_weber_class_invariant_bridge_box_skips_focused_named_gg_lane_in_smoke_profile():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scan = scan_weber_class_invariant_bridge_box(
+        target_series=hero_series,
+        order=order,
+        max_abs_exponent=4,
+    )
+
+    assert scan is not None
+    assert scan.primary_named_gg_modular_equation_scan is None
+    assert scan.quotient_coordinate_template_named_gg_modular_equation_scan is None
+    assert scan.classical_product_coordinate_scan.named_gg_modular_equation_scan is None
+    assert scan.classical_product_coordinate_scan.normalized_followup is not None
+    assert scan.classical_product_coordinate_scan.normalized_followup.named_gg_modular_equation_scan is None
+    assert scan.canonical_j_coordinate_scan.named_gg_modular_equation_scan is None
+    assert scan.canonical_j_coordinate_scan.normalized_followup is not None
+    assert scan.canonical_j_coordinate_scan.normalized_followup.named_gg_modular_equation_scan is None
+    assert scan.canonical_j_anchor_bridge_scan is not None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_scan.normalized_followup is not None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan is not None
+    assert scan.canonical_j_anchor_bridge_scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan is None
+    assert scan.quotient_coordinate_template_scan.named_gg_modular_equation_scan is None
+    assert scan.quotient_coordinate_template_scan.normalized_followup is not None
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_modular_equation_scan is None
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_preview is None
+    assert scan.quotient_coordinate_template_scan.normalized_followup.named_gg_descendant_focused_scan is None
+    assert scan.anchor_canonical_j_coordinate_scan.named_gg_modular_equation_scan is None
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup is not None
+    assert scan.anchor_canonical_j_coordinate_scan.normalized_followup.named_gg_modular_equation_scan is None
+    assert scan.normalized_followup is not None
+    assert scan.normalized_followup.named_gg_descendant_preview is None
+    assert scan.normalized_followup.named_gg_descendant_focused_scan is None
+    assert scan.followup_bridge_scan is not None
+    assert scan.followup_bridge_scan.quotient_named_gg_modular_equation_scan is None
+    assert scan.followup_bridge_scan.quotient_followup_named_gg_modular_equation_scan is None
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup is not None
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview is None
+    assert scan.followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan is None
+    assert scan.followup_bridge_scan.quotient_followup_bridge_scan is not None
+    assert scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup is not None
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_preview
+        is None
+    )
+    assert (
+        scan.followup_bridge_scan.quotient_followup_bridge_scan.quotient_scan.normalized_followup.named_gg_descendant_focused_scan
+        is None
+    )
+
+
+def test_build_weber_j_pb_bridge_scan_matches_true_gg_profile():
+    order = 24
+    gg_template = get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized()
+    gg_series = continued_fraction_series_coeffs(gg_template, depth=40, order=order)
+
+    scan = _build_weber_j_pb_bridge_scan(
+        target_series=gg_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.left_label == "J_f2_ws"
+    assert scan.right_label == "Q_PB_ws"
+    assert scan.difference_label == "D_JPB_ws"
+    assert scan.quotient_label == "Q_JPB_ws"
+    assert scan.difference_first_failure_power == 1
+    assert scan.difference_first_failure_coeff == sp.Rational(-1, 4)
+    assert scan.quotient_first_failure_power == 1
+    assert scan.quotient_first_failure_coeff == sp.Rational(-1, 4)
+    assert [bridge_scan.relation is not None for bridge_scan in scan.polynomial_scans] == [False, True, True]
+    assert scan.fractional_linear_relation is None
+    assert scan.quotient_named_gg_modular_equation_scan is not None
+    assert scan.quotient_followup_named_gg_modular_equation_scan is not None
+    assert scan.quotient_scan.normalized_followup is not None
+    assert scan.quotient_scan.normalized_followup.label == "K_JPB_ws"
+    assert scan.quotient_followup_bridge_scan is not None
+    assert scan.quotient_followup_bridge_scan.left_label == "J_f2_ws"
+    assert scan.quotient_followup_bridge_scan.right_label == "K_JPB_ws"
+    assert scan.quotient_followup_bridge_scan.difference_label == "D_JKPB_ws"
+    assert scan.quotient_followup_bridge_scan.quotient_label == "Q_JKPB_ws"
+    assert scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert scan.quotient_followup_bridge_scan.quotient_followup_named_gg_modular_equation_scan is not None
+    assert scan.quotient_followup_bridge_scan.quotient_followup_bridge_scan is None
+
+
+def test_build_weber_j_pb_bridge_scan_reports_hero_gap_profile():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scan = _build_weber_j_pb_bridge_scan(
+        target_series=hero_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.difference_first_failure_power == 1
+    assert scan.difference_first_failure_coeff == sp.Rational(-24, 5)
+    assert scan.quotient_first_failure_power == 1
+    assert scan.quotient_first_failure_coeff == sp.Rational(-24, 5)
+    assert not any(bridge_scan.relation is not None for bridge_scan in scan.polynomial_scans)
+    assert scan.fractional_linear_relation is None
+    assert not scan.quotient_scan.self_polynomial_scan.hits
+    assert not scan.quotient_scan.self_fractional_linear_scan.hits
+    assert scan.quotient_named_gg_modular_equation_scan is not None
+    assert not scan.quotient_named_gg_modular_equation_scan.hit_templates
+    assert scan.quotient_scan.normalized_followup is not None
+    assert scan.quotient_scan.normalized_followup.label == "K_JPB_ws"
+    assert scan.quotient_scan.normalized_followup.first_failure_power == 1
+    assert scan.quotient_scan.normalized_followup.first_failure_coeff == sp.Rational(-23, 90)
+    assert scan.quotient_followup_named_gg_modular_equation_scan is not None
+    assert not scan.quotient_followup_named_gg_modular_equation_scan.hit_templates
+    assert scan.quotient_followup_bridge_scan is not None
+    assert scan.quotient_followup_bridge_scan.difference_label == "D_JKPB_ws"
+    assert scan.quotient_followup_bridge_scan.quotient_label == "Q_JKPB_ws"
+    assert scan.quotient_followup_bridge_scan.difference_first_failure_power == 1
+    assert scan.quotient_followup_bridge_scan.difference_first_failure_coeff == sp.Rational(-91, 18)
+    assert scan.quotient_followup_bridge_scan.quotient_first_failure_power == 1
+    assert scan.quotient_followup_bridge_scan.quotient_first_failure_coeff == sp.Rational(-91, 18)
+    assert not any(
+        bridge_scan.relation is not None
+        for bridge_scan in scan.quotient_followup_bridge_scan.polynomial_scans
+    )
+    assert scan.quotient_followup_bridge_scan.fractional_linear_relation is None
+    assert scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert not scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan.hit_templates
+
+
+def test_build_weber_j_pb_bridge_scan_skips_named_gg_lane_in_smoke_profile():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scan = _build_weber_j_pb_bridge_scan(
+        target_series=hero_series,
+        order=order,
+        max_abs_exponent=4,
+    )
+
+    assert scan is not None
+    assert scan.quotient_named_gg_modular_equation_scan is None
+    assert scan.quotient_followup_named_gg_modular_equation_scan is None
+    assert scan.quotient_scan.normalized_followup is not None
+    assert scan.quotient_followup_bridge_scan is not None
+    assert scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan is None
+
+
+def test_append_named_gg_bridge_lines_formats_hx_followup_prefix():
+    order = 16
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=32, order=order)
+    scan = scan_weber_class_invariant_bridge_box(
+        target_series=hero_series,
+        order=order,
+    )
+
+    assert scan is not None
+    assert scan.quotient_coordinate_template_scan.normalized_followup is not None
+    gg_scan = scan.quotient_coordinate_template_scan.normalized_followup.named_gg_modular_equation_scan
+    assert gg_scan is not None
+
+    lines: list[str] = []
+    _append_named_gg_bridge_lines(
+        lines,
+        prefix="Weber quotient-coordinate normalized follow-up `H_X_ws`",
+        gg_scan=gg_scan,
+        series_symbol="t",
+    )
+
+    rendered = "\n".join(lines)
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes" in rendered
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes" in rendered
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses" in rendered
+
+
+def test_append_named_gg_descendant_focus_lines_formats_micro_scan_summary():
+    order = 8
+    gg = [sp.Integer(0) for _ in range(order)]
+    gg[0] = 1
+    gg[1] = 1
+
+    scan = _scan_gg_descendant_focus_box(
+        target_series=gg,
+        gg_series=gg,
+        order=order,
+        supplemental_powers=(5, 7, 11),
+        degree_values=(1,),
+        max_abs_exponent=2,
+    )
+
+    assert scan is not None
+
+    lines: list[str] = []
+    _append_named_gg_descendant_focus_lines(
+        lines,
+        prefix="Weber quotient-coordinate normalized follow-up `H_X_ws`",
+        descendant_scan=scan,
+    )
+
+    rendered = "\n".join(lines)
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan" in rendered
+    assert "`GG5, GG7, GG11`" in rendered
+    assert "`Q_5, Q_7, Q_11`" in rendered
+    assert "odd-prime descendant direct micro-boxes" in rendered
+    assert "odd-prime descendant quotient micro-boxes" in rendered
 
 
 def test_scan_gg_modular_equation_box_finds_chan_huang_exact_templates_on_true_gg():
@@ -3138,8 +4051,22 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Morton Weber-Schlafli coordinate `P_ws`" in text
     assert "Morton Weber-Schlafli coordinate templates on `P_ws`" in text
     assert "Morton Weber-Schlafli coordinate obstruction witnesses" in text
+    assert "Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`" in text
+    assert "Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes" in text
     assert "Morton Weber-Schlafli coordinate `B_ws`" in text
     assert "Morton Weber-Schlafli coordinate templates on `B_ws`" in text
+    assert "Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`" in text
+    assert "Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes" in text
+    assert "Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`" in text
+    assert "D_PB_ws = N_B_ws - N_P_ws" in text
+    assert "Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`" in text
+    assert "Q_PB_ws = N_B_ws / N_P_ws" in text
+    assert "Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`" in text
+    assert "Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`" in text
+    assert "D_PK_ws = K_PB_ws - N_P_ws" in text
+    assert "Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`" in text
+    assert "Q_PK_ws = K_PB_ws / N_P_ws" in text
+    assert "Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`" in text
     assert "Weber class-invariant coordinate `g12_ws`" in text
     assert "Weber class-invariant template on `g12_ws`" in text
     assert "Weber class-invariant correction `G_g12_ws`" in text
@@ -3154,6 +4081,34 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws" in text
     assert "Classical Weber `f2` tri-product bridge" in text
     assert "Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`" in text
+    assert "Canonical Weber `j`-side coordinate `J_f2_ws`" in text
+    assert "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)" in text
+    assert "Canonical Weber `j`-side bridge" in text
+    assert "3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0" in text
+    assert "Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`" in text
+    assert "Canonical Weber anchor `j`-side coordinate `J_X_ws`" in text
+    assert "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)" in text
+    assert "Canonical Weber anchor `j`-side bridge" in text
+    assert "4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0" in text
+    assert "Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`" in text
+    assert "Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`" in text
+    assert "D_XJ_ws = J_f2_ws - G_X_ws" in text
+    assert "Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`" in text
+    assert "Q_XJ_ws = J_f2_ws / G_X_ws" in text
+    assert "Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`" in text
+    assert "Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`" in text
+    assert "D_XKJ_ws = K_XJ_ws - G_X_ws" in text
+    assert "Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`" in text
+    assert "Q_XKJ_ws = K_XJ_ws / G_X_ws" in text
+    assert "Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`" in text
+    assert "D_JPB_ws = Q_PB_ws - J_f2_ws" in text
+    assert "Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`" in text
+    assert "Q_JPB_ws = Q_PB_ws / J_f2_ws" in text
+    assert "Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`" in text
+    assert "Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`" in text
+    assert "D_JKPB_ws = K_JPB_ws - J_f2_ws" in text
+    assert "Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`" in text
+    assert "Q_JKPB_ws = K_JPB_ws / J_f2_ws" in text
     assert "Weber residual quotient-coordinate `X_g_ws`" in text
     assert "X_g_ws = 16*t^2 / g12_ws^2" in text
     assert "Weber residual exact quotient-coordinate bridge" in text
@@ -3163,20 +4118,24 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber quotient-coordinate template bridge" in text
     assert "G_X_ws*G_g12_ws^2 - 1 = 0" in text
     assert "Weber quotient-coordinate normalized follow-up `H_X_ws`" in text
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview" not in text
+    assert "Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan" not in text
     assert "Weber normalized follow-up bridge difference `D_XR_ws`" in text
     assert "D_XR_ws = H_gp_ws - H_X_ws" in text
     assert "Weber normalized follow-up bridge quotient `Q_XR_ws`" in text
     assert "Q_XR_ws = H_gp_ws / H_X_ws" in text
     assert "Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`" in text
+    assert "Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes" not in text
+    assert "Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes" not in text
     assert "Weber quotient-follow-up bridge difference `D_XK_ws`" in text
     assert "D_XK_ws = K_XR_ws - H_X_ws" in text
     assert "Weber quotient-follow-up bridge quotient `Q_XK_ws`" in text
     assert "Q_XK_ws = K_XR_ws / H_X_ws" in text
     assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws`" in text
-    assert "Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes" in text
-    assert "Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact obstruction witnesses" in text
-    assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes" in text
-    assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses" in text
+    assert "Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes" not in text
+    assert "Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact obstruction witnesses" not in text
+    assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes" not in text
+    assert "Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses" not in text
     assert "Weber residual quotient diagnostic `R_gp_ws`" in text
     assert "Weber residual quotient self-polynomial uniqueness boxes" in text
     assert "Weber residual quotient self-fractional-linear uniqueness boxes" in text
@@ -3185,6 +4144,11 @@ def test_cli_tail_note_writes_tail_family_note(tmp_path: Path):
     assert "Weber residual normalized self-polynomial uniqueness boxes" in text
     assert "Weber residual normalized self-fractional-linear uniqueness boxes" in text
     assert "Weber residual normalized self-quotient finite-product boxes" in text
+    assert "Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview" not in text
+    assert "Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan" not in text
+    assert "Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`" not in text
+    assert "Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview" not in text
+    assert "Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan" not in text
     assert "Weber residual quotient plus-Pochhammer + eta templates" in text
     assert "GG direct / reciprocal / quotient templates" in text
     assert "GG narrow quotient-coordinate exact lane focuses on `Q_3` and `Q_4`" in text

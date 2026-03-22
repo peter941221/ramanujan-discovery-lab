@@ -25,6 +25,11 @@ class-invariant compression lane:
   = G_g12_ws*G_p12_ws`
   together with its normalized follow-up
   `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`
+- the same classical `f2` lane now also carries the canonical Weber `j`-side
+  coordinate
+  `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`
+  together with its normalized follow-up
+  `H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)`
 - Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical
   Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber
   `f`, `f1`, `f2` trio
@@ -36,6 +41,11 @@ class-invariant compression lane:
   is the current source-faithful positive-recognition object
 - the normalized follow-up `H_X_ws = (G_X_ws - 1) / (4*t^1)` is the next
   stripped version of that template-normalized coordinate on the hero side
+- the same template-normalized anchor now also carries its own canonical
+  Weber `j`-side lift
+  `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`
+  together with the normalized follow-up
+  `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`
 - the first direct bridge between the two normalized hero-side follow-ups is
   now also recorded:
   `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws`
@@ -117,8 +127,32 @@ def classicalProductCoordinateFollowupFirstFailure : FirstFailureWitness := ⟨1
 
 def classicalProductCoordinateFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
+def canonicalJCoordinateLabel : String := "J_f2_ws"
+
+def canonicalJCoordinateExpression : String :=
+  "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)"
+
+def canonicalJCoordinateReason : String :=
+  "Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`."
+
+def canonicalJCoordinateBridgeExpression : String :=
+  "3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0"
+
+def canonicalJCoordinateFirstFailure : FirstFailureWitness := ⟨1, (24 : Rat) / 5⟩
+
+def canonicalJCoordinateSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def canonicalJCoordinateFollowupLabel : String := "H_J_f2_ws"
+
+def canonicalJCoordinateFollowupExpression : String :=
+  "H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)"
+
+def canonicalJCoordinateFollowupFirstFailure : FirstFailureWitness := ⟨1, (409 : Rat) / 90⟩
+
+def canonicalJCoordinateFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
 def classicalWeberTrioReading : String :=
-  "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, and `G_X_ws` are the current source-faithful quotient/template branch."
+  "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, `G_X_ws`, and `J_X_ws` are the current source-faithful quotient/template branch."
 
 def focusedQuotientCoordinateLabel : String := "X_g_ws"
 
@@ -144,6 +178,30 @@ def templateNormalizedFollowupExpression : String :=
   "H_X_ws = (G_X_ws - 1) / (4*t^1)"
 
 def templateNormalizedFollowupFirstFailure : FirstFailureWitness := ⟨1, (9 : Rat) / 2⟩
+
+def anchorCanonicalJCoordinateLabel : String := "J_X_ws"
+
+def anchorCanonicalJCoordinateExpression : String :=
+  "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)"
+
+def anchorCanonicalJCoordinateReason : String :=
+  "The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift."
+
+def anchorCanonicalJCoordinateBridgeExpression : String :=
+  "4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0"
+
+def anchorCanonicalJCoordinateFirstFailure : FirstFailureWitness := ⟨1, (56 : Rat) / 17⟩
+
+def anchorCanonicalJCoordinateSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def anchorCanonicalJCoordinateFollowupLabel : String := "H_J_X_ws"
+
+def anchorCanonicalJCoordinateFollowupExpression : String :=
+  "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)"
+
+def anchorCanonicalJCoordinateFollowupFirstFailure : FirstFailureWitness := ⟨1, (1083 : Rat) / 238⟩
+
+def anchorCanonicalJCoordinateFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
 def followupBridgeDifferenceLabel : String := "D_XR_ws"
 
@@ -345,18 +403,107 @@ theorem classicalProductCoordinateWaypoint_true : classicalProductCoordinateWayp
     classicalProductCoordinateFollowupSmallBoxStatus
   ]
 
+def canonicalJCoordinateWaypointProp : Prop :=
+  canonicalJCoordinateLabel = "J_f2_ws" ∧
+    canonicalJCoordinateExpression = "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)" ∧
+    canonicalJCoordinateReason =
+      "Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`." ∧
+    canonicalJCoordinateBridgeExpression =
+      "3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0" ∧
+    canonicalJCoordinateFirstFailure.power = 1 ∧
+    canonicalJCoordinateFirstFailure.coeff = (24 : Rat) / 5 ∧
+    canonicalJCoordinateSmallBoxStatus.etaHits = 0 ∧
+    canonicalJCoordinateSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    canonicalJCoordinateSmallBoxStatus.selfPolynomialHits = 0 ∧
+    canonicalJCoordinateSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    canonicalJCoordinateSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    canonicalJCoordinateSmallBoxStatus.plusPochhammerHits = 0 ∧
+    canonicalJCoordinateSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    canonicalJCoordinateFollowupLabel = "H_J_f2_ws" ∧
+    canonicalJCoordinateFollowupExpression = "H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)" ∧
+    canonicalJCoordinateFollowupFirstFailure.power = 1 ∧
+    canonicalJCoordinateFollowupFirstFailure.coeff = (409 : Rat) / 90 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.etaHits = 0 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    canonicalJCoordinateFollowupSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem canonicalJCoordinateWaypoint_true : canonicalJCoordinateWaypointProp := by
+  simp [
+    canonicalJCoordinateWaypointProp,
+    canonicalJCoordinateLabel,
+    canonicalJCoordinateExpression,
+    canonicalJCoordinateReason,
+    canonicalJCoordinateBridgeExpression,
+    canonicalJCoordinateFirstFailure,
+    canonicalJCoordinateSmallBoxStatus,
+    canonicalJCoordinateFollowupLabel,
+    canonicalJCoordinateFollowupExpression,
+    canonicalJCoordinateFollowupFirstFailure,
+    canonicalJCoordinateFollowupSmallBoxStatus
+  ]
+
+def anchorCanonicalJCoordinateWaypointProp : Prop :=
+  anchorCanonicalJCoordinateLabel = "J_X_ws" ∧
+    anchorCanonicalJCoordinateExpression =
+      "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)" ∧
+    anchorCanonicalJCoordinateReason =
+      "The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift." ∧
+    anchorCanonicalJCoordinateBridgeExpression =
+      "4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0" ∧
+    anchorCanonicalJCoordinateFirstFailure.power = 1 ∧
+    anchorCanonicalJCoordinateFirstFailure.coeff = (56 : Rat) / 17 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.etaHits = 0 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.selfPolynomialHits = 0 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.plusPochhammerHits = 0 ∧
+    anchorCanonicalJCoordinateSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupLabel = "H_J_X_ws" ∧
+    anchorCanonicalJCoordinateFollowupExpression = "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)" ∧
+    anchorCanonicalJCoordinateFollowupFirstFailure.power = 1 ∧
+    anchorCanonicalJCoordinateFollowupFirstFailure.coeff = (1083 : Rat) / 238 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.etaHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus.plusPochhammerEtaHits = 0
+
+theorem anchorCanonicalJCoordinateWaypoint_true : anchorCanonicalJCoordinateWaypointProp := by
+  simp [
+    anchorCanonicalJCoordinateWaypointProp,
+    anchorCanonicalJCoordinateLabel,
+    anchorCanonicalJCoordinateExpression,
+    anchorCanonicalJCoordinateReason,
+    anchorCanonicalJCoordinateBridgeExpression,
+    anchorCanonicalJCoordinateFirstFailure,
+    anchorCanonicalJCoordinateSmallBoxStatus,
+    anchorCanonicalJCoordinateFollowupLabel,
+    anchorCanonicalJCoordinateFollowupExpression,
+    anchorCanonicalJCoordinateFollowupFirstFailure,
+    anchorCanonicalJCoordinateFollowupSmallBoxStatus
+  ]
+
 def classicalWeberTrioReadingProp : Prop :=
   classicalWeberTrioReading =
-      "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, and `G_X_ws` are the current source-faithful quotient/template branch." ∧
+      "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, `G_X_ws`, and `J_X_ws` are the current source-faithful quotient/template branch." ∧
     focusedQuotientCoordinateLabel = "X_g_ws" ∧
-    templateNormalizedCoordinateLabel = "G_X_ws"
+    templateNormalizedCoordinateLabel = "G_X_ws" ∧
+    anchorCanonicalJCoordinateLabel = "J_X_ws"
 
 theorem classicalWeberTrioReading_true : classicalWeberTrioReadingProp := by
   simp [
     classicalWeberTrioReadingProp,
     classicalWeberTrioReading,
     focusedQuotientCoordinateLabel,
-    templateNormalizedCoordinateLabel
+    templateNormalizedCoordinateLabel,
+    anchorCanonicalJCoordinateLabel
   ]
 
 def primaryResidualSelectionProp : Prop :=
@@ -371,11 +518,23 @@ def primaryResidualSelectionProp : Prop :=
       "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2) = G_g12_ws*G_p12_ws" ∧
     classicalProductCoordinateFollowupLabel = "H_f2_ws" ∧
     classicalProductCoordinateFollowupExpression = "H_f2_ws = (G_f2_ws - 1) / (-4*t^1)" ∧
+    canonicalJCoordinateLabel = "J_f2_ws" ∧
+    canonicalJCoordinateExpression =
+      "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)" ∧
+    canonicalJCoordinateFollowupLabel = "H_J_f2_ws" ∧
+    canonicalJCoordinateFollowupExpression =
+      "H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)" ∧
     templateNormalizedCoordinateLabel = "G_X_ws" ∧
     templateNormalizedCoordinateExpression =
       "G_X_ws = X_g_ws*(t^2; t^4)_inf^24 / (16*t^2) = 1 / G_g12_ws^2" ∧
     templateNormalizedFollowupLabel = "H_X_ws" ∧
     templateNormalizedFollowupExpression = "H_X_ws = (G_X_ws - 1) / (4*t^1)" ∧
+    anchorCanonicalJCoordinateLabel = "J_X_ws" ∧
+    anchorCanonicalJCoordinateExpression =
+      "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)" ∧
+    anchorCanonicalJCoordinateFollowupLabel = "H_J_X_ws" ∧
+    anchorCanonicalJCoordinateFollowupExpression =
+      "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)" ∧
     followupBridgeDifferenceLabel = "D_XR_ws" ∧
     followupBridgeDifferenceExpression = "D_XR_ws = H_gp_ws - H_X_ws" ∧
     followupBridgeQuotientLabel = "Q_XR_ws" ∧
@@ -406,10 +565,18 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     classicalProductCoordinateExpression,
     classicalProductCoordinateFollowupLabel,
     classicalProductCoordinateFollowupExpression,
+    canonicalJCoordinateLabel,
+    canonicalJCoordinateExpression,
+    canonicalJCoordinateFollowupLabel,
+    canonicalJCoordinateFollowupExpression,
     templateNormalizedCoordinateLabel,
     templateNormalizedCoordinateExpression,
     templateNormalizedFollowupLabel,
     templateNormalizedFollowupExpression,
+    anchorCanonicalJCoordinateLabel,
+    anchorCanonicalJCoordinateExpression,
+    anchorCanonicalJCoordinateFollowupLabel,
+    anchorCanonicalJCoordinateFollowupExpression,
     followupBridgeDifferenceLabel,
     followupBridgeDifferenceExpression,
     followupBridgeQuotientLabel,
@@ -713,6 +880,38 @@ theorem quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true :
     quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions
   ]
 
+def namedGGReturnBridgeExactClosureProp : Prop :=
+  quotientFollowupBridgeNamedGGClosureStatusProp ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp ∧
+    quotientFollowupBridgeNamedGGExactObstructionProp ∧
+    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp
+
+structure NamedGGReturnBridgeExactClosureCertificate where
+  qXKClosure : quotientFollowupBridgeNamedGGClosureStatusProp
+  lXKClosure : quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp
+  qXKObstruction : quotientFollowupBridgeNamedGGExactObstructionProp
+  lXKObstruction : quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp
+
+def currentNamedGGReturnBridgeExactClosureCertificate :
+    NamedGGReturnBridgeExactClosureCertificate where
+  qXKClosure := quotientFollowupBridgeNamedGGClosureStatus_true
+  lXKClosure := quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true
+  qXKObstruction := quotientFollowupBridgeNamedGGExactObstruction_true
+  lXKObstruction := quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true
+
+theorem currentNamedGGReturnBridgeExactClosureCertificate_sound :
+    namedGGReturnBridgeExactClosureProp := by
+  exact ⟨
+    currentNamedGGReturnBridgeExactClosureCertificate.qXKClosure,
+    currentNamedGGReturnBridgeExactClosureCertificate.lXKClosure,
+    currentNamedGGReturnBridgeExactClosureCertificate.qXKObstruction,
+    currentNamedGGReturnBridgeExactClosureCertificate.lXKObstruction
+  ⟩
+
+theorem namedGGReturnBridgeExactClosure_true :
+    namedGGReturnBridgeExactClosureProp := by
+  exact currentNamedGGReturnBridgeExactClosureCertificate_sound
+
 def quotientFollowupReturnBridgeProp : Prop :=
   quotientFollowupBridgeDifferenceLabel = "D_XK_ws" ∧
     quotientFollowupBridgeDifferenceExpression = "D_XK_ws = K_XR_ws - H_X_ws" ∧
@@ -727,10 +926,7 @@ def quotientFollowupReturnBridgeProp : Prop :=
     quotientFollowupBridgeStatusProp ∧
     quotientFollowupBridgeQuotientSmallBoxStatusProp ∧
     quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp ∧
-    quotientFollowupBridgeNamedGGClosureStatusProp ∧
-    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatusProp ∧
-    quotientFollowupBridgeNamedGGExactObstructionProp ∧
-    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp
+    namedGGReturnBridgeExactClosureProp
 
 theorem quotientFollowupReturnBridge_true : quotientFollowupReturnBridgeProp := by
   simp [
@@ -747,10 +943,7 @@ theorem quotientFollowupReturnBridge_true : quotientFollowupReturnBridgeProp := 
     quotientFollowupBridgeStatus_true,
     quotientFollowupBridgeQuotientSmallBoxStatus_true,
     quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true,
-    quotientFollowupBridgeNamedGGClosureStatus_true,
-    quotientFollowupBridgeQuotientFollowupNamedGGClosureStatus_true,
-    quotientFollowupBridgeNamedGGExactObstruction_true,
-    quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true
+    namedGGReturnBridgeExactClosure_true
   ]
 
 def focusedQuotientSmallBoxStatusProp : Prop :=
@@ -781,6 +974,8 @@ structure WaypointCertificate where
   bridge : exactCoordinateBridgeProp
   quotientCoordinateBridge : exactQuotientCoordinateBridgeProp
   classicalProductCoordinate : classicalProductCoordinateWaypointProp
+  canonicalJCoordinate : canonicalJCoordinateWaypointProp
+  anchorCanonicalJCoordinate : anchorCanonicalJCoordinateWaypointProp
   classicalWeberReading : classicalWeberTrioReadingProp
   templateCoordinate : templateNormalizedCoordinateProp
   selection : primaryResidualSelectionProp
@@ -804,10 +999,7 @@ structure WaypointCertificate where
   quotientFollowupBridgeQuotientSmallBoxes : quotientFollowupBridgeQuotientSmallBoxStatusProp
   quotientFollowupBridgeQuotientFollowupSmallBoxes :
     quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp
-  quotientFollowupBridgeNamedGGExactObstructions :
-    quotientFollowupBridgeNamedGGExactObstructionProp
-  quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions :
-    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp
+  namedGGReturnBridgeExactClosure : namedGGReturnBridgeExactClosureProp
   smallBoxes : focusedQuotientSmallBoxStatusProp
   normalizedSmallBoxes : normalizedFollowupSmallBoxStatusProp
 
@@ -815,6 +1007,8 @@ def currentWaypointCertificate : WaypointCertificate where
   bridge := exactCoordinateBridge_true
   quotientCoordinateBridge := exactQuotientCoordinateBridge_true
   classicalProductCoordinate := classicalProductCoordinateWaypoint_true
+  canonicalJCoordinate := canonicalJCoordinateWaypoint_true
+  anchorCanonicalJCoordinate := anchorCanonicalJCoordinateWaypoint_true
   classicalWeberReading := classicalWeberTrioReading_true
   templateCoordinate := templateNormalizedCoordinate_true
   selection := primaryResidualSelection_true
@@ -838,10 +1032,7 @@ def currentWaypointCertificate : WaypointCertificate where
   quotientFollowupBridgeQuotientSmallBoxes := quotientFollowupBridgeQuotientSmallBoxStatus_true
   quotientFollowupBridgeQuotientFollowupSmallBoxes :=
     quotientFollowupBridgeQuotientFollowupSmallBoxStatus_true
-  quotientFollowupBridgeNamedGGExactObstructions :=
-    quotientFollowupBridgeNamedGGExactObstruction_true
-  quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions :=
-    quotientFollowupBridgeQuotientFollowupNamedGGExactObstruction_true
+  namedGGReturnBridgeExactClosure := namedGGReturnBridgeExactClosure_true
   smallBoxes := focusedQuotientSmallBoxStatus_true
   normalizedSmallBoxes := normalizedFollowupSmallBoxStatus_true
 
@@ -849,6 +1040,8 @@ def currentWaypoint : Prop :=
   exactCoordinateBridgeProp ∧
     exactQuotientCoordinateBridgeProp ∧
     classicalProductCoordinateWaypointProp ∧
+    canonicalJCoordinateWaypointProp ∧
+    anchorCanonicalJCoordinateWaypointProp ∧
     classicalWeberTrioReadingProp ∧
     templateNormalizedCoordinateProp ∧
     primaryResidualSelectionProp ∧
@@ -871,8 +1064,7 @@ def currentWaypoint : Prop :=
     quotientFollowupBridgeStatusProp ∧
     quotientFollowupBridgeQuotientSmallBoxStatusProp ∧
     quotientFollowupBridgeQuotientFollowupSmallBoxStatusProp ∧
-    quotientFollowupBridgeNamedGGExactObstructionProp ∧
-    quotientFollowupBridgeQuotientFollowupNamedGGExactObstructionProp ∧
+    namedGGReturnBridgeExactClosureProp ∧
     focusedQuotientSmallBoxStatusProp ∧
     normalizedFollowupSmallBoxStatusProp
 
@@ -881,6 +1073,8 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.bridge,
     currentWaypointCertificate.quotientCoordinateBridge,
     currentWaypointCertificate.classicalProductCoordinate,
+    currentWaypointCertificate.canonicalJCoordinate,
+    currentWaypointCertificate.anchorCanonicalJCoordinate,
     currentWaypointCertificate.classicalWeberReading,
     currentWaypointCertificate.templateCoordinate,
     currentWaypointCertificate.selection,
@@ -903,8 +1097,7 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.quotientFollowupBridgeStatus,
     currentWaypointCertificate.quotientFollowupBridgeQuotientSmallBoxes,
     currentWaypointCertificate.quotientFollowupBridgeQuotientFollowupSmallBoxes,
-    currentWaypointCertificate.quotientFollowupBridgeNamedGGExactObstructions,
-    currentWaypointCertificate.quotientFollowupBridgeQuotientFollowupNamedGGExactObstructions,
+    currentWaypointCertificate.namedGGReturnBridgeExactClosure,
     currentWaypointCertificate.smallBoxes,
     currentWaypointCertificate.normalizedSmallBoxes
   ⟩

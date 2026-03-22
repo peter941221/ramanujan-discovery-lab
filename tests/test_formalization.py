@@ -105,6 +105,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "mortonSquaredCoordinateExcluded" in text
     assert "weberSchlafliCoordinateExcluded" in text
     assert "mortonNamedCoordinateResearchWaypoint_true" in text
+    assert "weberClassInvariantJSideResearchWaypoint_true" in text
+    assert "currentWeberClassInvariantResearchCertificate" in text
     assert "weberSchlafliBridgeResearchWaypoint_true" in text
     assert "namedWeberCoordinateBridgeResearchWaypoint_true" in text
     assert "currentNamedWeberCoordinateBridgeResearchCertificate" in text
@@ -118,6 +120,10 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)" in text
     assert "P_ws = (1/F - F) / 2" in text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in text
+    assert "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)" in text
+    assert "H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)" in text
+    assert "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)" in text
+    assert "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)" in text
     assert "(2,-1)" in text
     assert "(10,3)" in text
     assert "{-1, 3, 8}" in text
@@ -127,6 +133,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "currentRecognitionFrontierCertificate" in text
     assert "currentRecognitionFrontierWaypoint_true" in text
     assert "exact Chan--Huang obstruction quartets" in text
+    assert "currentNamedGGReturnBridgeExactClosureCertificate" in text
+    assert "namedGGReturnBridgeExactClosure_true" in text
     assert "(-9/2, -6)" in text
     assert "(593/10, 1186/15)" in text
     assert "not ready" in text
@@ -146,6 +154,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "mortonSquaredCoordinateExcluded" in lean_text
     assert "weberSchlafliCoordinateExcluded" in lean_text
     assert "mortonNamedCoordinateResearchWaypoint_true" in lean_text
+    assert "weberClassInvariantJSideResearchWaypoint_true" in lean_text
+    assert "currentWeberClassInvariantResearchCertificate" in lean_text
     assert "weberSchlafliBridgeResearchWaypoint_true" in lean_text
     assert "namedWeberCoordinateBridgeResearchWaypoint_true" in lean_text
     assert "currentNamedWeberCoordinateBridgeResearchCertificate" in lean_text
@@ -159,6 +169,10 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "T_mt = (X_mt - sigma^2) / (sigma^2*X_mt - 1)" in lean_text
     assert "P_ws = (1/F - F) / 2" in lean_text
     assert "B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)" in lean_text
+    assert "J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)" in lean_text
+    assert "H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)" in lean_text
+    assert "J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)" in lean_text
+    assert "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)" in lean_text
     assert "(2,-1)" in lean_text
     assert "(10,3)" in lean_text
     assert "{-1, 3, 8}" in lean_text
@@ -168,6 +182,8 @@ def test_cli_formalize_writes_note(tmp_path: Path):
     assert "currentRecognitionFrontierCertificate" in lean_text
     assert "currentRecognitionFrontierWaypoint_true" in lean_text
     assert "reverseEquivalenceRecoversHeroData" in lean_text
+    assert "currentNamedGGReturnBridgeExactClosureCertificate" in lean_text
+    assert "namedGGReturnBridgeExactClosure_true" in lean_text
     assert "nearestArithmeticSubsequenceSourcesExcluded" in lean_text
     assert "directLocalObstructions" in lean_text
     assert "simpleCor2cfBranchesExcluded" in lean_text

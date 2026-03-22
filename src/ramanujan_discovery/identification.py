@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from functools import lru_cache
 from itertools import product
 from math import comb, gcd
@@ -29,6 +29,22 @@ from ramanujan_discovery.series import (
     series_pow,
 )
 from ramanujan_discovery.storage import read_candidates
+
+
+@lru_cache(maxsize=None)
+def _canonical_benchmark_series(
+    benchmark_name: str,
+    *,
+    depth: int,
+    order: int,
+) -> tuple[sp.Expr, ...]:
+    return tuple(
+        continued_fraction_series_coeffs(
+            get_benchmark(benchmark_name).canonical_template.normalized(),
+            depth=depth,
+            order=order,
+        )
+    )
 
 
 @dataclass(frozen=True)
@@ -380,6 +396,7 @@ class TailFamilySourceEtaSample:
     weber_g_class_invariant_scan: WeberClassInvariantScan | None = None
     weber_p_class_invariant_scan: WeberClassInvariantScan | None = None
     weber_residual_bridge_scan: WeberResidualBridgeScan | None = None
+    weber_j_pb_bridge_scan: "ConstantOnePairBridgeScan | None" = None
 
 
 @dataclass(frozen=True)
@@ -587,6 +604,21 @@ class NamedPrefixBoxScans:
 
 
 @dataclass(frozen=True)
+class NamedCoordinateOrbitScan:
+    """A focused one-coordinate source ladder with direct, quotient, and mixed scans."""
+
+    family_label: str
+    base_label: str
+    base_expression: str
+    ordered_basis_series: tuple[tuple[str, str, Series], ...]
+    direct_scans: NamedPrefixBoxScans
+    quotient_basis_series: tuple[tuple[str, str, Series], ...]
+    quotient_scans: NamedPrefixBoxScans
+    mixed_quotient_basis_series: tuple[tuple[str, str, Series], ...]
+    mixed_quotient_scans: NamedPrefixBoxScans
+
+
+@dataclass(frozen=True)
 class ParameterizedSourceFamilyScan:
     """Per-family powered-basis scans that keep the source-family label explicit."""
 
@@ -681,6 +713,27 @@ class GGWeightedCoordinateDiagnostic:
 
 
 @dataclass(frozen=True)
+class GGDescendantPreview:
+    """A lightweight preview of extra named GG descendants worth checking next."""
+
+    direct_labels: tuple[str, ...]
+    quotient_labels: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class GGDescendantFocusedScan:
+    """A very small direct/quotient odd-prime descendant scan for one target object."""
+
+    direct_labels: tuple[str, ...]
+    quotient_labels: tuple[str, ...]
+    order_checked: int
+    degree_values: tuple[int, ...]
+    max_abs_exponent: int
+    direct_scans: NamedPrefixBoxScans
+    quotient_scans: NamedPrefixBoxScans
+
+
+@dataclass(frozen=True)
 class GGModularEquationScan:
     """A literature-driven GG box built from sign and low-power substitutions."""
 
@@ -729,6 +782,29 @@ class MortonNamedCoordinateScan:
     label: str
     expression: str
     template_results: tuple[MortonPeriodicPointTemplateResult, ...]
+    leading_normalized_scan: "LeadingNormalizedCoordinateScan | None" = None
+
+
+@dataclass(frozen=True)
+class LeadingNormalizedCoordinateScan:
+    """A constant-1 micro-scan obtained by dividing a coordinate by its leading term."""
+
+    label: str
+    expression: str
+    shift: int
+    leading_coefficient: sp.Expr
+    normalized_series: tuple[sp.Expr, ...]
+    scan: "ConstantOneSeriesScan"
+
+
+@dataclass(frozen=True)
+class WeberLeadingBridgeReferenceLadder:
+    """Focused true-GG reference objects for the Weber leading-normalized bridge lane."""
+
+    q_pb_series: tuple[sp.Expr, ...]
+    k_pb_series: tuple[sp.Expr, ...]
+    q_pk_series: tuple[sp.Expr, ...]
+    l_pk_series: tuple[sp.Expr, ...]
 
 
 @dataclass(frozen=True)
@@ -737,6 +813,7 @@ class MortonPeriodicPointScan:
 
     template_results: tuple[MortonPeriodicPointTemplateResult, ...]
     named_coordinate_scans: tuple[MortonNamedCoordinateScan, ...] = ()
+    leading_normalized_bridge_scans: tuple["ConstantOnePairBridgeScan", ...] = ()
 
 
 @dataclass(frozen=True)
@@ -776,6 +853,11 @@ class WeberResidualBridgeScan:
     classical_product_coordinate_expression: str
     classical_product_coordinate_bridge_expression: str
     classical_product_coordinate_scan: "ConstantOneSeriesScan"
+    canonical_j_coordinate_label: str
+    canonical_j_coordinate_expression: str
+    canonical_j_coordinate_reason: str
+    canonical_j_coordinate_bridge_expression: str
+    canonical_j_coordinate_scan: "ConstantOneSeriesScan"
     quotient_coordinate_label: str
     quotient_coordinate_expression: str
     quotient_coordinate_bridge_expression: str
@@ -784,6 +866,13 @@ class WeberResidualBridgeScan:
     quotient_coordinate_bridge_first_failure_coeff: sp.Expr | None
     quotient_coordinate_template_bridge_expression: str
     quotient_coordinate_template_scan: "ConstantOneSeriesScan"
+    anchor_canonical_j_coordinate_label: str
+    anchor_canonical_j_coordinate_expression: str
+    anchor_canonical_j_coordinate_reason: str
+    anchor_canonical_j_coordinate_bridge_expression: str
+    anchor_canonical_j_coordinate_scan: "ConstantOneSeriesScan"
+    primary_named_gg_modular_equation_scan: GGModularEquationScan | None
+    quotient_coordinate_template_named_gg_modular_equation_scan: GGModularEquationScan | None
     quotient_label: str
     quotient_expression: str
     quotient_first_failure_power: int | None
@@ -795,6 +884,8 @@ class WeberResidualBridgeScan:
     quotient_modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
     quotient_self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     quotient_self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+    canonical_j_anchor_bridge_scan: "ConstantOnePairBridgeScan | None" = None
+    canonical_j_lift_bridge_scan: "ConstantOnePairBridgeLiteScan | None" = None
     normalized_followup: "NormalizedResidualFollowupScan | None" = None
     followup_bridge_scan: "ConstantOnePairBridgeScan | None" = None
 
@@ -814,6 +905,9 @@ class NormalizedResidualFollowupScan:
     modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
     self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+    named_gg_modular_equation_scan: GGModularEquationScan | None = None
+    named_gg_descendant_preview: GGDescendantPreview | None = None
+    named_gg_descendant_focused_scan: GGDescendantFocusedScan | None = None
 
 
 @dataclass(frozen=True)
@@ -831,6 +925,7 @@ class ConstantOneSeriesScan:
     modular_unit_eta_scans: tuple[ModularUnitEtaRelationScan, ...]
     self_plus_pochhammer_scans: tuple[SelfPlusPochhammerRelationScan, ...]
     self_plus_pochhammer_eta_scans: tuple[SelfPlusPochhammerEtaRelationScan, ...]
+    named_gg_modular_equation_scan: GGModularEquationScan | None = None
     normalized_followup: "NormalizedResidualFollowupScan | None" = None
 
 
@@ -861,9 +956,35 @@ class ConstantOnePairBridgeScan:
     polynomial_scans: tuple[PolynomialBridgeRelationScan, ...]
     fractional_linear_relation: FractionalLinearRelation | None
     fractional_linear_error: str | None = None
+    quotient_named_coordinate_orbit_scan: NamedCoordinateOrbitScan | None = None
+    quotient_followup_named_coordinate_orbit_scan: NamedCoordinateOrbitScan | None = None
     quotient_named_gg_modular_equation_scan: GGModularEquationScan | None = None
     quotient_followup_named_gg_modular_equation_scan: GGModularEquationScan | None = None
     quotient_followup_bridge_scan: "ConstantOnePairBridgeScan | None" = None
+
+
+@dataclass(frozen=True)
+class ConstantOnePairBridgeLiteScan:
+    """A lightweight comparison between two constant-1 series.
+
+    This keeps the first-failure fingerprint together with the smallest bridge boxes
+    (bounded polynomial and one-coordinate fractional-linear comparisons), but avoids
+    the heavier closure scans on the bridge quotient.
+    """
+
+    left_label: str
+    right_label: str
+    difference_label: str
+    difference_expression: str
+    difference_first_failure_power: int | None
+    difference_first_failure_coeff: sp.Expr | None
+    quotient_label: str
+    quotient_expression: str
+    quotient_first_failure_power: int | None
+    quotient_first_failure_coeff: sp.Expr | None
+    polynomial_scans: tuple[PolynomialBridgeRelationScan, ...]
+    fractional_linear_relation: FractionalLinearRelation | None
+    fractional_linear_error: str | None = None
 
 
 @dataclass(frozen=True)
@@ -1410,6 +1531,209 @@ def build_gap_normalized_series(
     )
 
 
+def _leading_term_scale_expr(*, shift: int, leading_coefficient: sp.Expr) -> str:
+    coeff = sp.simplify(leading_coefficient)
+    if shift == 0:
+        return _format_expr(coeff)
+    power_term = "t" if shift == 1 else f"t^{shift}"
+    if coeff == 1:
+        return power_term
+    if coeff == -1:
+        return f"-{power_term}"
+    return f"{_format_expr(coeff)}*{power_term}"
+
+
+def _build_leading_normalized_coordinate_scan(
+    *,
+    source_label: str,
+    target_series: Series,
+    order: int,
+    max_abs_exponent: int,
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    moduli: tuple[int, ...] = (2, 3, 4),
+) -> LeadingNormalizedCoordinateScan | None:
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+
+    shift, leading_coefficient = _first_nonzero_residual_term(target_series[:order])
+    if shift is None or leading_coefficient is None:
+        return None
+
+    normalized: Series = [sp.Integer(0) for _ in range(order)]
+    for index in range(order - shift):
+        normalized[index] = sp.simplify(target_series[index + shift] / leading_coefficient)
+
+    label = f"N_{source_label}"
+    scale_expr = _leading_term_scale_expr(
+        shift=shift,
+        leading_coefficient=leading_coefficient,
+    )
+    expression = f"{label} = {source_label} / ({scale_expr})"
+    scan = _scan_constant_one_series(
+        label=label,
+        expression=expression,
+        target_series=normalized,
+        order=order,
+        eta_levels=eta_levels,
+        moduli=moduli,
+        max_abs_exponent=max_abs_exponent,
+    )
+    return LeadingNormalizedCoordinateScan(
+        label=label,
+        expression=expression,
+        shift=shift,
+        leading_coefficient=leading_coefficient,
+        normalized_series=tuple(normalized),
+        scan=scan,
+    )
+
+
+def _constant_one_residual_series(
+    *,
+    target_series: Series,
+    order: int,
+) -> tuple[Series, int | None, sp.Expr | None]:
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+    if sp.simplify(target_series[0] - 1) != 0:
+        raise ValueError("target series must have constant term 1")
+
+    residual = [
+        sp.simplify(value - (sp.Integer(1) if index == 0 else sp.Integer(0)))
+        for index, value in enumerate(target_series[:order])
+    ]
+    first_failure_power, first_failure_coeff = _first_nonzero_residual_term(residual)
+    return residual, first_failure_power, first_failure_coeff
+
+
+def _normalized_constant_one_followup_series(
+    *,
+    target_series: Series,
+    order: int,
+) -> Series | None:
+    residual, first_failure_power, first_failure_coeff = _constant_one_residual_series(
+        target_series=target_series,
+        order=order,
+    )
+    if first_failure_power is None or first_failure_coeff is None:
+        return None
+
+    followup: Series = [sp.Integer(0) for _ in range(order)]
+    for index in range(order - first_failure_power):
+        followup[index] = sp.simplify(
+            residual[index + first_failure_power] / first_failure_coeff
+        )
+    return followup
+
+
+def _named_coordinate_power_entries(
+    *,
+    base_label: str,
+    base_expression: str,
+    base_series: Series,
+    order: int,
+    powers: tuple[int, ...],
+) -> tuple[tuple[str, str, Series], ...]:
+    if len(base_series) < order:
+        raise ValueError("base_series is shorter than requested order")
+
+    entries: list[tuple[str, str, Series]] = [
+        (base_label, base_expression, list(base_series[:order]))
+    ]
+    for power in tuple(sorted({value for value in powers if value >= 2})):
+        entries.append(
+            (
+                f"{base_label}_{power}",
+                f"{base_label}(t^{power})",
+                benchmark_power_substitution_series(base_series, power=power, order=order),
+            )
+        )
+    return tuple(entries)
+
+
+def scan_named_coordinate_orbit_box(
+    *,
+    target_series: Series,
+    family_label: str,
+    base_label: str,
+    base_expression: str,
+    base_series: Series,
+    order: int,
+    powers: tuple[int, ...] = (2, 3, 4),
+    degree_values: tuple[int, ...] = (1, 2),
+    max_abs_exponent: int = 2,
+    solve_order: int | None = None,
+) -> NamedCoordinateOrbitScan:
+    direct_entries = _named_coordinate_power_entries(
+        base_label=base_label,
+        base_expression=base_expression,
+        base_series=base_series,
+        order=order,
+        powers=powers,
+    )
+    direct_ordered_basis = tuple((label, series) for label, _, series in direct_entries)
+    direct_scans = scan_named_prefix_boxes(
+        target_series=target_series,
+        ordered_basis_series=direct_ordered_basis,
+        order=order,
+        degree_values=degree_values,
+        required_variable="F",
+        max_abs_exponent=max_abs_exponent,
+        solve_order=solve_order,
+        include_two_layer=False,
+    )
+
+    base_series_trunc = direct_entries[0][2]
+    quotient_entries: list[tuple[str, str, Series]] = []
+    for label, _, series in direct_entries[1:]:
+        suffix = label.removeprefix(f"{base_label}_")
+        quotient_entries.append(
+            (
+                f"{base_label}_q{suffix}",
+                f"{label} / {base_label}",
+                series_div(series, base_series_trunc),
+            )
+        )
+    quotient_ordered_basis = tuple((label, series) for label, _, series in quotient_entries)
+    quotient_scans = scan_named_prefix_boxes(
+        target_series=target_series,
+        ordered_basis_series=quotient_ordered_basis,
+        order=order,
+        degree_values=degree_values,
+        required_variable="F",
+        max_abs_exponent=max_abs_exponent,
+        solve_order=solve_order,
+        include_two_layer=False,
+    )
+
+    mixed_entries = ((direct_entries[0][0], direct_entries[0][1], direct_entries[0][2]),) + tuple(
+        quotient_entries
+    )
+    mixed_ordered_basis = tuple((label, series) for label, _, series in mixed_entries)
+    mixed_scans = scan_named_prefix_boxes(
+        target_series=target_series,
+        ordered_basis_series=mixed_ordered_basis,
+        order=order,
+        degree_values=degree_values,
+        required_variable="F",
+        max_abs_exponent=max_abs_exponent,
+        solve_order=solve_order,
+        include_two_layer=False,
+    )
+
+    return NamedCoordinateOrbitScan(
+        family_label=family_label,
+        base_label=base_label,
+        base_expression=base_expression,
+        ordered_basis_series=direct_entries,
+        direct_scans=direct_scans,
+        quotient_basis_series=tuple(quotient_entries),
+        quotient_scans=quotient_scans,
+        mixed_quotient_basis_series=mixed_entries,
+        mixed_quotient_scans=mixed_scans,
+    )
+
+
 def _scan_constant_one_series(
     *,
     label: str,
@@ -1420,6 +1744,22 @@ def _scan_constant_one_series(
     moduli: tuple[int, ...],
     max_abs_exponent: int,
     followup_label: str | None = None,
+    named_gg_benchmark_name: str | None = None,
+    named_gg_series: Series | None = None,
+    named_gg_degree_values: tuple[int, ...] = (1, 2),
+    named_gg_solve_order: int | None = None,
+    named_gg_supplemental_powers: tuple[int, ...] = (),
+    named_gg_include_weighted_coordinate_diagnostics: bool = False,
+    followup_named_gg_benchmark_name: str | None = None,
+    followup_named_gg_series: Series | None = None,
+    followup_named_gg_degree_values: tuple[int, ...] = (1, 2),
+    followup_named_gg_solve_order: int | None = None,
+    followup_named_gg_supplemental_powers: tuple[int, ...] = (),
+    followup_named_gg_descendant_preview_powers: tuple[int, ...] = (),
+    followup_named_gg_descendant_focus_powers: tuple[int, ...] = (),
+    followup_named_gg_descendant_focus_degree_values: tuple[int, ...] = (1,),
+    followup_named_gg_descendant_focus_max_abs_exponent: int = 2,
+    followup_named_gg_include_weighted_coordinate_diagnostics: bool = False,
 ) -> ConstantOneSeriesScan:
     if len(target_series) < order:
         raise ValueError("target_series is shorter than requested order")
@@ -1428,6 +1768,26 @@ def _scan_constant_one_series(
 
     residual = [sp.simplify(value - (1 if index == 0 else 0)) for index, value in enumerate(target_series[:order])]
     first_failure_power, first_failure_coeff = _first_nonzero_residual_term(residual)
+    focused_named_gg_order = min(order, 12 if max_abs_exponent <= 4 else 16)
+    focused_named_gg_solve_order = min(focused_named_gg_order, 12)
+
+    named_gg_modular_equation_scan: GGModularEquationScan | None = None
+    if (
+        named_gg_benchmark_name is not None
+        and named_gg_series is not None
+        and max_abs_exponent > 4
+    ):
+        named_gg_modular_equation_scan = scan_gg_modular_equation_box(
+            target_series=target_series[:focused_named_gg_order],
+            benchmark_name=named_gg_benchmark_name,
+            gg_series=named_gg_series[:focused_named_gg_order],
+            order=focused_named_gg_order,
+            degree_values=named_gg_degree_values,
+            max_abs_exponent=max_abs_exponent,
+            solve_order=named_gg_solve_order or focused_named_gg_solve_order,
+            supplemental_powers=named_gg_supplemental_powers,
+            include_weighted_coordinate_diagnostics=named_gg_include_weighted_coordinate_diagnostics,
+        )
 
     normalized_followup: NormalizedResidualFollowupScan | None = None
     if (
@@ -1448,6 +1808,39 @@ def _scan_constant_one_series(
         followup_first_failure_power, followup_first_failure_coeff = _first_nonzero_residual_term(
             followup_residual
         )
+        followup_named_gg_modular_equation_scan: GGModularEquationScan | None = None
+        followup_named_gg_descendant_preview: GGDescendantPreview | None = None
+        followup_named_gg_descendant_focused_scan: GGDescendantFocusedScan | None = None
+        if (
+            followup_named_gg_benchmark_name is not None
+            and followup_named_gg_series is not None
+            and max_abs_exponent > 4
+        ):
+            followup_named_gg_modular_equation_scan = scan_gg_modular_equation_box(
+                target_series=followup_series[:focused_named_gg_order],
+                benchmark_name=followup_named_gg_benchmark_name,
+                gg_series=followup_named_gg_series[:focused_named_gg_order],
+                order=focused_named_gg_order,
+                degree_values=followup_named_gg_degree_values,
+                max_abs_exponent=max_abs_exponent,
+                solve_order=followup_named_gg_solve_order or focused_named_gg_solve_order,
+                supplemental_powers=followup_named_gg_supplemental_powers,
+                include_weighted_coordinate_diagnostics=followup_named_gg_include_weighted_coordinate_diagnostics,
+            )
+        if followup_named_gg_series is not None and max_abs_exponent > 4:
+            followup_named_gg_descendant_preview = _gg_descendant_preview(
+                base_series=followup_named_gg_series[:focused_named_gg_order],
+                order=focused_named_gg_order,
+                supplemental_powers=followup_named_gg_descendant_preview_powers,
+            )
+            followup_named_gg_descendant_focused_scan = _scan_gg_descendant_focus_box(
+                target_series=followup_series,
+                gg_series=followup_named_gg_series,
+                order=order,
+                supplemental_powers=followup_named_gg_descendant_focus_powers,
+                degree_values=followup_named_gg_descendant_focus_degree_values,
+                max_abs_exponent=followup_named_gg_descendant_focus_max_abs_exponent,
+            )
         normalized_followup = NormalizedResidualFollowupScan(
             label=followup_label,
             expression=(
@@ -1511,6 +1904,9 @@ def _scan_constant_one_series(
                     max_abs_exponent=max_abs_exponent,
                 )
             ),
+            named_gg_modular_equation_scan=followup_named_gg_modular_equation_scan,
+            named_gg_descendant_preview=followup_named_gg_descendant_preview,
+            named_gg_descendant_focused_scan=followup_named_gg_descendant_focused_scan,
         )
 
     return ConstantOneSeriesScan(
@@ -1573,6 +1969,7 @@ def _scan_constant_one_series(
                 max_abs_exponent=max_abs_exponent,
             )
         ),
+        named_gg_modular_equation_scan=named_gg_modular_equation_scan,
         normalized_followup=normalized_followup,
     )
 
@@ -1599,8 +1996,17 @@ def _scan_constant_one_series_pair_bridge(
     named_gg_max_abs_exponent: int = 8,
     named_gg_solve_order: int | None = None,
     named_gg_supplemental_powers: tuple[int, ...] = (),
-    named_gg_target_quotient_label: str | None = None,
-    named_gg_target_followup_label: str | None = None,
+    named_gg_target_pairs: tuple[tuple[str, str], ...] = (),
+    quotient_followup_named_gg_series: Series | None = None,
+    quotient_followup_named_gg_descendant_preview_powers: tuple[int, ...] = (),
+    quotient_followup_named_gg_descendant_focus_powers: tuple[int, ...] = (),
+    quotient_followup_named_gg_descendant_focus_degree_values: tuple[int, ...] = (1,),
+    quotient_followup_named_gg_descendant_focus_max_abs_exponent: int = 2,
+    nested_quotient_followup_named_gg_series: Series | None = None,
+    nested_quotient_followup_named_gg_descendant_preview_powers: tuple[int, ...] = (),
+    nested_quotient_followup_named_gg_descendant_focus_powers: tuple[int, ...] = (),
+    nested_quotient_followup_named_gg_descendant_focus_degree_values: tuple[int, ...] = (1,),
+    nested_quotient_followup_named_gg_descendant_focus_max_abs_exponent: int = 2,
     named_gg_include_weighted_coordinate_diagnostics: bool = False,
 ) -> ConstantOnePairBridgeScan:
     if len(left_series) < order or len(right_series) < order:
@@ -1631,6 +2037,11 @@ def _scan_constant_one_series_pair_bridge(
         moduli=(2, 3, 4),
         max_abs_exponent=8,
         followup_label=quotient_followup_label,
+        followup_named_gg_series=quotient_followup_named_gg_series,
+        followup_named_gg_descendant_preview_powers=quotient_followup_named_gg_descendant_preview_powers,
+        followup_named_gg_descendant_focus_powers=quotient_followup_named_gg_descendant_focus_powers,
+        followup_named_gg_descendant_focus_degree_values=quotient_followup_named_gg_descendant_focus_degree_values,
+        followup_named_gg_descendant_focus_max_abs_exponent=quotient_followup_named_gg_descendant_focus_max_abs_exponent,
     )
 
     checked_order = min(order, solve_order or order)
@@ -1682,10 +2093,12 @@ def _scan_constant_one_series_pair_bridge(
     named_gg_matches_target = (
         named_gg_benchmark_name is not None
         and named_gg_series is not None
-        and named_gg_target_quotient_label is not None
-        and named_gg_target_followup_label is not None
-        and quotient_label == named_gg_target_quotient_label
-        and quotient_followup_label == named_gg_target_followup_label
+        and named_gg_max_abs_exponent > 4
+        and any(
+            quotient_label == target_quotient_label
+            and quotient_followup_label == target_followup_label
+            for target_quotient_label, target_followup_label in named_gg_target_pairs
+        )
     )
     if named_gg_matches_target:
         quotient_named_gg_modular_equation_scan = scan_gg_modular_equation_box(
@@ -1755,9 +2168,13 @@ def _scan_constant_one_series_pair_bridge(
             named_gg_max_abs_exponent=named_gg_max_abs_exponent,
             named_gg_solve_order=named_gg_solve_order,
             named_gg_supplemental_powers=named_gg_supplemental_powers,
-            named_gg_target_quotient_label=named_gg_target_quotient_label,
-            named_gg_target_followup_label=named_gg_target_followup_label,
+            named_gg_target_pairs=named_gg_target_pairs,
             named_gg_include_weighted_coordinate_diagnostics=named_gg_include_weighted_coordinate_diagnostics,
+            quotient_followup_named_gg_series=nested_quotient_followup_named_gg_series,
+            quotient_followup_named_gg_descendant_preview_powers=nested_quotient_followup_named_gg_descendant_preview_powers,
+            quotient_followup_named_gg_descendant_focus_powers=nested_quotient_followup_named_gg_descendant_focus_powers,
+            quotient_followup_named_gg_descendant_focus_degree_values=nested_quotient_followup_named_gg_descendant_focus_degree_values,
+            quotient_followup_named_gg_descendant_focus_max_abs_exponent=nested_quotient_followup_named_gg_descendant_focus_max_abs_exponent,
         )
 
     return ConstantOnePairBridgeScan(
@@ -1778,6 +2195,98 @@ def _scan_constant_one_series_pair_bridge(
         quotient_named_gg_modular_equation_scan=quotient_named_gg_modular_equation_scan,
         quotient_followup_named_gg_modular_equation_scan=quotient_followup_named_gg_modular_equation_scan,
         quotient_followup_bridge_scan=quotient_followup_bridge_scan,
+    )
+
+
+def _scan_constant_one_series_pair_bridge_lite(
+    *,
+    left_label: str,
+    left_series: Series,
+    right_label: str,
+    right_series: Series,
+    order: int,
+    difference_label: str = "D_XR_ws",
+    quotient_label: str = "Q_XR_ws",
+    polynomial_degree_values: tuple[int, ...] = (1, 2, 3),
+    solve_order: int | None = 24,
+) -> ConstantOnePairBridgeLiteScan:
+    if len(left_series) < order or len(right_series) < order:
+        raise ValueError("series are shorter than requested order")
+    if sp.simplify(left_series[0] - 1) != 0 or sp.simplify(right_series[0] - 1) != 0:
+        raise ValueError("pair-bridge scan requires constant-1 series")
+
+    difference_series = [
+        sp.simplify(right_series[index] - left_series[index])
+        for index in range(order)
+    ]
+    difference_first_failure_power, difference_first_failure_coeff = _first_nonzero_residual_term(
+        difference_series
+    )
+    quotient_series = series_div(right_series, left_series)
+    quotient_residual = [sp.simplify(value) for value in quotient_series]
+    quotient_residual[0] = sp.simplify(quotient_residual[0] - 1)
+    quotient_first_failure_power, quotient_first_failure_coeff = _first_nonzero_residual_term(
+        quotient_residual
+    )
+
+    checked_order = min(order, solve_order or order)
+    variable_series: Series = [sp.Integer(0) for _ in range(checked_order)]
+    if checked_order > 1:
+        variable_series[1] = sp.Integer(1)
+
+    polynomial_scans: list[PolynomialBridgeRelationScan] = []
+    for degree in polynomial_degree_values:
+        try:
+            relation = search_polynomial_bridge_relation(
+                series_by_variable={
+                    "HX": left_series[:checked_order],
+                    "HR": right_series[:checked_order],
+                    "T": variable_series,
+                },
+                order=checked_order,
+                max_total_degree=degree,
+                required_variables=("HX", "HR"),
+            )
+            polynomial_scans.append(
+                PolynomialBridgeRelationScan(
+                    degree=degree,
+                    relation=relation,
+                )
+            )
+        except ValueError as exc:
+            polynomial_scans.append(
+                PolynomialBridgeRelationScan(
+                    degree=degree,
+                    relation=None,
+                    error=str(exc),
+                )
+            )
+
+    fractional_linear_relation = None
+    fractional_linear_error = None
+    try:
+        fractional_linear_relation = search_fractional_linear_relation(
+            target_series=right_series[:checked_order],
+            basis_series_by_variable={"HX": left_series[:checked_order]},
+            order=checked_order,
+        )
+    except ValueError as exc:
+        fractional_linear_error = str(exc)
+
+    return ConstantOnePairBridgeLiteScan(
+        left_label=left_label,
+        right_label=right_label,
+        difference_label=difference_label,
+        difference_expression=f"{difference_label} = {right_label} - {left_label}",
+        difference_first_failure_power=difference_first_failure_power,
+        difference_first_failure_coeff=difference_first_failure_coeff,
+        quotient_label=quotient_label,
+        quotient_expression=f"{quotient_label} = {right_label} / {left_label}",
+        quotient_first_failure_power=quotient_first_failure_power,
+        quotient_first_failure_coeff=quotient_first_failure_coeff,
+        polynomial_scans=tuple(polynomial_scans),
+        fractional_linear_relation=fractional_linear_relation,
+        fractional_linear_error=fractional_linear_error,
     )
 
 
@@ -3066,6 +3575,7 @@ def scan_tail_family_source_eta_ladder(
             morton_scan = scan_morton_periodic_point_box(
                 target_series=current_series[:morton_scan_order],
                 order=morton_scan_order,
+                max_abs_exponent=max_abs_exponent,
             )
             weber_g_class_invariant_scan = scan_weber_class_invariant_box(
                 target_series=current_series[:morton_scan_order],
@@ -3088,6 +3598,13 @@ def scan_tail_family_source_eta_ladder(
                 moduli=powers,
                 max_abs_exponent=max_abs_exponent,
             )
+            weber_j_pb_bridge_scan = _build_weber_j_pb_bridge_scan(
+                target_series=current_series[:morton_scan_order],
+                order=morton_scan_order,
+                eta_levels=eta_levels,
+                moduli=powers,
+                max_abs_exponent=max_abs_exponent,
+            )
             samples.append(
                 TailFamilySourceEtaSample(
                     label=current_label,
@@ -3104,6 +3621,7 @@ def scan_tail_family_source_eta_ladder(
                     weber_g_class_invariant_scan=weber_g_class_invariant_scan,
                     weber_p_class_invariant_scan=weber_p_class_invariant_scan,
                     weber_residual_bridge_scan=weber_residual_bridge_scan,
+                    weber_j_pb_bridge_scan=weber_j_pb_bridge_scan,
                 )
             )
             if gap_depth == max_gap_depth:
@@ -4365,6 +4883,18 @@ def _weber_class_invariant_scan_has_hit(scan: WeberClassInvariantScan) -> bool:
     )
 
 
+def _constant_one_series_scan_has_hit(scan: ConstantOneSeriesScan) -> bool:
+    return (
+        bool(scan.self_polynomial_scan.hits)
+        or bool(scan.self_fractional_linear_scan.hits)
+        or any(item.relation is not None for item in scan.self_quotient_product_scans)
+        or any(item.relation is not None for item in scan.eta_scans)
+        or any(item.relation is not None for item in scan.modular_unit_eta_scans)
+        or any(item.relation is not None for item in scan.self_plus_pochhammer_scans)
+        or any(item.relation is not None for item in scan.self_plus_pochhammer_eta_scans)
+    )
+
+
 def _gg_weighted_coordinate_diagnostic_has_hit(diagnostic: GGWeightedCoordinateDiagnostic) -> bool:
     return (
         (diagnostic.first_difference_power is None and diagnostic.first_difference_coeff is None)
@@ -4558,6 +5088,213 @@ def _append_named_gg_bridge_lines(
             + ".",
         ]
     )
+
+
+def _append_constant_one_scan_summary_lines(
+    lines: list[str],
+    *,
+    prefix: str,
+    scan: ConstantOneSeriesScan,
+    series_symbol: str,
+) -> None:
+    self_product_hits = [
+        item for item in scan.self_quotient_product_scans if item.relation is not None
+    ]
+    eta_hits = [item for item in scan.eta_scans if item.relation is not None]
+    modular_hits = [item for item in scan.modular_unit_eta_scans if item.relation is not None]
+    plus_hits = [item for item in scan.self_plus_pochhammer_scans if item.relation is not None]
+    plus_eta_hits = [
+        item for item in scan.self_plus_pochhammer_eta_scans if item.relation is not None
+    ]
+    lines.append(f"- {prefix}: `{scan.expression}`.")
+    if scan.first_failure_power is None or scan.first_failure_coeff is None:
+        lines.append(f"- {prefix}: matches `1` through the checked truncation.")
+    else:
+        lines.append(
+            f"- {prefix}: `{scan.label} - 1` first fails at "
+            f"`{series_symbol}^{scan.first_failure_power}` with coefficient "
+            f"`{_format_expr(scan.first_failure_coeff)}`."
+        )
+    lines.append(
+        f"- {prefix} self-polynomial uniqueness boxes: "
+        f"`{len(scan.self_polynomial_scan.hits)}` / "
+        f"`{len(scan.self_polynomial_scan.moduli_checked) * len(scan.self_polynomial_scan.fg_degree_values) * len(scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+    )
+    lines.append(
+        f"- {prefix} self-fractional-linear uniqueness boxes: "
+        f"`{len(scan.self_fractional_linear_scan.hits)}` / "
+        f"`{len(scan.self_fractional_linear_scan.moduli_checked) * len(scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+    )
+    lines.append(
+        f"- {prefix} self-quotient finite-product boxes: "
+        f"`{len(self_product_hits)}` / `{len(scan.self_quotient_product_scans)}` hit boxes."
+    )
+    lines.append(
+        f"- {prefix} eta templates: `{len(eta_hits)}` / `{len(scan.eta_scans)}` hit boxes."
+    )
+    lines.append(
+        f"- {prefix} modular-unit / eta templates: "
+        f"`{len(modular_hits)}` / `{len(scan.modular_unit_eta_scans)}` hit boxes."
+    )
+    lines.append(
+        f"- {prefix} plus-Pochhammer templates: "
+        f"`{len(plus_hits)}` / `{len(scan.self_plus_pochhammer_scans)}` hit boxes."
+    )
+    lines.append(
+        f"- {prefix} plus-Pochhammer + eta templates: "
+        f"`{len(plus_eta_hits)}` / `{len(scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+    )
+
+
+def _append_named_gg_descendant_focus_lines(
+    lines: list[str],
+    *,
+    prefix: str,
+    descendant_scan: GGDescendantFocusedScan,
+) -> None:
+    direct_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                descendant_scan.direct_scans.polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                descendant_scan.direct_scans.multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                descendant_scan.direct_scans.fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+        )
+    )
+    quotient_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                descendant_scan.quotient_scans.polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                descendant_scan.quotient_scans.multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                descendant_scan.quotient_scans.fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+        )
+    )
+    lines.extend(
+        [
+            f"- {prefix} odd-prime descendant micro-scan: checked direct ladder "
+            f"`{', '.join(descendant_scan.direct_labels)}` and quotient ladder "
+            f"`{', '.join(descendant_scan.quotient_labels)}` through order "
+            f"`{descendant_scan.order_checked}` with degree box `{descendant_scan.degree_values}` "
+            f"and max exponent `{descendant_scan.max_abs_exponent}`.",
+            f"- {prefix} odd-prime descendant direct micro-boxes: {direct_summary}.",
+            f"- {prefix} odd-prime descendant quotient micro-boxes: {quotient_summary}.",
+        ]
+    )
+
+
+def _append_named_coordinate_orbit_lines(
+    lines: list[str],
+    *,
+    prefix: str,
+    orbit_scan: NamedCoordinateOrbitScan,
+) -> None:
+    direct_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                orbit_scan.direct_scans.polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                orbit_scan.direct_scans.multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                orbit_scan.direct_scans.fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+        )
+    )
+    quotient_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                orbit_scan.quotient_scans.polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                orbit_scan.quotient_scans.multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                orbit_scan.quotient_scans.fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+        )
+    )
+    mixed_summary = "; ".join(
+        (
+            _format_tail_prefix_summary(
+                orbit_scan.mixed_quotient_scans.polynomial_scans,
+                label="polynomial",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                orbit_scan.mixed_quotient_scans.multiplicative_scans,
+                label="multiplicative",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+            _format_tail_prefix_summary(
+                orbit_scan.mixed_quotient_scans.fractional_linear_scans,
+                label="fractional-linear",
+                hit_predicate=lambda item: item.relation is not None,
+            ),
+        )
+    )
+    direct_labels = ", ".join(f"`{label}`" for label, _, _ in orbit_scan.ordered_basis_series)
+    quotient_labels = ", ".join(f"`{label}`" for label, _, _ in orbit_scan.quotient_basis_series)
+    mixed_labels = ", ".join(f"`{label}`" for label, _, _ in orbit_scan.mixed_quotient_basis_series)
+    lines.extend(
+        [
+            f"- {prefix} focused `{orbit_scan.family_label}` direct ladder: {direct_labels}.",
+            f"- {prefix} focused `{orbit_scan.family_label}` quotient ladder: {quotient_labels}.",
+            f"- {prefix} focused `{orbit_scan.family_label}` mixed ladder: {mixed_labels}.",
+            f"- {prefix} focused `{orbit_scan.family_label}` direct prefixes: {direct_summary}.",
+            f"- {prefix} focused `{orbit_scan.family_label}` quotient prefixes: {quotient_summary}.",
+            f"- {prefix} focused `{orbit_scan.family_label}` mixed prefixes: {mixed_summary}.",
+        ]
+    )
+
+
+def _named_prefix_box_scan_hit_count(scans: NamedPrefixBoxScans) -> tuple[int, int]:
+    total = (
+        len(scans.polynomial_scans)
+        + len(scans.multiplicative_scans)
+        + len(scans.fractional_linear_scans)
+        + len(scans.two_layer_fractional_linear_scans)
+    )
+    hits = (
+        sum(1 for item in scans.polynomial_scans if item.relation is not None)
+        + sum(1 for item in scans.multiplicative_scans if item.relation is not None)
+        + sum(1 for item in scans.fractional_linear_scans if item.relation is not None)
+        + sum(1 for item in scans.two_layer_fractional_linear_scans if item.total_hits > 0)
+    )
+    return hits, total
 
 
 def _format_self_eta_correction(
@@ -6186,6 +6923,91 @@ def _gg_modular_equation_ordered_basis_series(
     return tuple(entries)
 
 
+def _gg_descendant_preview(
+    *,
+    base_series: Series,
+    order: int,
+    supplemental_powers: tuple[int, ...] = (),
+) -> GGDescendantPreview | None:
+    descendant_powers = tuple(sorted({value for value in supplemental_powers if value >= 5}))
+    if not descendant_powers:
+        return None
+    ordered_basis_entries = _gg_modular_equation_ordered_basis_series(
+        base_series=base_series,
+        order=order,
+        supplemental_powers=descendant_powers,
+    )
+    quotient_basis_entries = _gg_modular_equation_quotient_basis_series(ordered_basis_entries)
+    direct_labels = tuple(f"GG{power}" for power in descendant_powers)
+    quotient_labels = tuple(f"Q_{power}" for power in descendant_powers)
+    available_direct = {label for label, _, _ in ordered_basis_entries}
+    available_quotient = {label for label, _, _ in quotient_basis_entries}
+    return GGDescendantPreview(
+        direct_labels=tuple(label for label in direct_labels if label in available_direct),
+        quotient_labels=tuple(label for label in quotient_labels if label in available_quotient),
+    )
+
+
+def _scan_gg_descendant_focus_box(
+    *,
+    target_series: Series,
+    gg_series: Series,
+    order: int,
+    supplemental_powers: tuple[int, ...] = (),
+    degree_values: tuple[int, ...] = (1,),
+    max_abs_exponent: int = 2,
+) -> GGDescendantFocusedScan | None:
+    descendant_powers = tuple(sorted({value for value in supplemental_powers if value >= 5}))
+    if not descendant_powers:
+        return None
+    checked_order = min(order, 8)
+    ordered_basis_entries = _gg_modular_equation_ordered_basis_series(
+        base_series=gg_series[:checked_order],
+        order=checked_order,
+        supplemental_powers=descendant_powers,
+    )
+    direct_basis_series = tuple(
+        (label, series)
+        for label, _, series in ordered_basis_entries
+        if label in {f"GG{power}" for power in descendant_powers}
+    )
+    quotient_basis_entries = _gg_modular_equation_quotient_basis_series(ordered_basis_entries)
+    quotient_basis_series = tuple(
+        (label, series)
+        for label, _, series in quotient_basis_entries
+        if label in {f"Q_{power}" for power in descendant_powers}
+    )
+    if not direct_basis_series or not quotient_basis_series:
+        return None
+    direct_scans = scan_named_prefix_boxes(
+        target_series=target_series[:checked_order],
+        ordered_basis_series=direct_basis_series,
+        order=checked_order,
+        degree_values=degree_values,
+        max_abs_exponent=max_abs_exponent,
+        solve_order=checked_order,
+        include_two_layer=False,
+    )
+    quotient_scans = scan_named_prefix_boxes(
+        target_series=target_series[:checked_order],
+        ordered_basis_series=quotient_basis_series,
+        order=checked_order,
+        degree_values=degree_values,
+        max_abs_exponent=max_abs_exponent,
+        solve_order=checked_order,
+        include_two_layer=False,
+    )
+    return GGDescendantFocusedScan(
+        direct_labels=tuple(label for label, _ in direct_basis_series),
+        quotient_labels=tuple(label for label, _ in quotient_basis_series),
+        order_checked=checked_order,
+        degree_values=tuple(sorted({degree for degree in degree_values if degree >= 1})),
+        max_abs_exponent=max_abs_exponent,
+        direct_scans=direct_scans,
+        quotient_scans=quotient_scans,
+    )
+
+
 @lru_cache(maxsize=None)
 def _gg_exact_modular_relations(order: int) -> tuple[tuple[str, PolynomialRelation], ...]:
     u, v, t = sp.symbols("F G T")
@@ -6418,6 +7240,69 @@ def _weber_companion_coordinate_series(
     return _series_fractional_power_nonzero_constant(
         base=b_source,
         exponent=sp.Rational(1, 2),
+    )
+
+
+@lru_cache(maxsize=None)
+def _focused_weber_bridge_reference_ladder(
+    *,
+    order: int,
+) -> WeberLeadingBridgeReferenceLadder | None:
+    gg_series = list(
+        _canonical_benchmark_series(
+            "gollnitz_gordon_normalized",
+            depth=order,
+            order=order,
+        )
+    )
+    p_series = _weber_schlafli_coordinate_series(
+        target_series=gg_series,
+        order=order,
+    )
+    if p_series is None:
+        return None
+    b_series = _weber_companion_coordinate_series(
+        p_series=p_series,
+        order=order,
+    )
+    if b_series is None:
+        return None
+
+    p_scan = _build_leading_normalized_coordinate_scan(
+        source_label="P_ws",
+        target_series=p_series,
+        order=order,
+        max_abs_exponent=4,
+    )
+    b_scan = _build_leading_normalized_coordinate_scan(
+        source_label="B_ws",
+        target_series=b_series,
+        order=order,
+        max_abs_exponent=4,
+    )
+    if p_scan is None or b_scan is None:
+        return None
+
+    q_pb_series = series_div(list(b_scan.normalized_series), list(p_scan.normalized_series))
+    k_pb_series = _normalized_constant_one_followup_series(
+        target_series=q_pb_series,
+        order=order,
+    )
+    if k_pb_series is None:
+        return None
+    q_pk_series = series_div(k_pb_series, list(p_scan.normalized_series))
+    l_pk_series = _normalized_constant_one_followup_series(
+        target_series=q_pk_series,
+        order=order,
+    )
+    if l_pk_series is None:
+        return None
+
+    return WeberLeadingBridgeReferenceLadder(
+        q_pb_series=tuple(q_pb_series),
+        k_pb_series=tuple(k_pb_series),
+        q_pk_series=tuple(q_pk_series),
+        l_pk_series=tuple(l_pk_series),
     )
 
 
@@ -6714,11 +7599,14 @@ def scan_weber_class_invariant_bridge_box(
     p_template_series = _normalized_weber_p_template_series(order=order)
     g_correction_series = series_div(g_coordinate_series, g_template_series)
     p_correction_series = series_div(p_coordinate_series, p_template_series)
-    gg_series = continued_fraction_series_coeffs(
-        get_benchmark("gollnitz_gordon_normalized").canonical_template.normalized(),
+    gg_series = _canonical_benchmark_series(
+        "gollnitz_gordon_normalized",
         depth=order,
         order=order,
     )
+    focused_named_gg_supplemental_powers = _supplemental_source_family_powers(
+        smoke=max_abs_exponent <= 4
+    ).get("GG", ())
 
     g_squared = series_pow(g_coordinate_series, 2)
     g_fourth = series_pow(g_squared, 2)
@@ -6745,18 +7633,56 @@ def scan_weber_class_invariant_bridge_box(
         for index in range(order)
     ]
     bridge_first_failure_power, bridge_first_failure_coeff = _first_nonzero_residual_term(bridge_series)
+    classical_product_coordinate_series = series_mul(g_correction_series, p_correction_series)
     classical_product_coordinate_scan = _scan_constant_one_series(
         label="G_f2_ws",
         expression=(
             "G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)"
             " = G_g12_ws*G_p12_ws"
         ),
-        target_series=series_mul(g_correction_series, p_correction_series),
+        target_series=classical_product_coordinate_series,
         order=order,
         eta_levels=eta_levels,
         moduli=moduli,
         max_abs_exponent=max_abs_exponent,
         followup_label="H_f2_ws",
+        named_gg_benchmark_name="gollnitz_gordon_normalized",
+        named_gg_series=gg_series,
+        named_gg_solve_order=12,
+        named_gg_include_weighted_coordinate_diagnostics=False,
+        followup_named_gg_benchmark_name="gollnitz_gordon_normalized",
+        followup_named_gg_series=gg_series,
+        followup_named_gg_solve_order=12,
+        followup_named_gg_include_weighted_coordinate_diagnostics=False,
+    )
+    canonical_j_numerator_series = series_pow(
+        [
+            sp.simplify((sp.Integer(16) if index == 0 else sp.Integer(0)) - value)
+            for index, value in enumerate(classical_product_coordinate_series)
+        ],
+        3,
+    )
+    canonical_j_coordinate_series = series_div(
+        canonical_j_numerator_series,
+        [sp.simplify(3375 * value) for value in classical_product_coordinate_series],
+    )
+    canonical_j_coordinate_scan = _scan_constant_one_series(
+        label="J_f2_ws",
+        expression="J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)",
+        target_series=canonical_j_coordinate_series,
+        order=order,
+        eta_levels=eta_levels,
+        moduli=moduli,
+        max_abs_exponent=max_abs_exponent,
+        followup_label="H_J_f2_ws",
+        named_gg_benchmark_name="gollnitz_gordon_normalized",
+        named_gg_series=gg_series,
+        named_gg_solve_order=12,
+        named_gg_include_weighted_coordinate_diagnostics=False,
+        followup_named_gg_benchmark_name="gollnitz_gordon_normalized",
+        followup_named_gg_series=gg_series,
+        followup_named_gg_solve_order=12,
+        followup_named_gg_include_weighted_coordinate_diagnostics=False,
     )
 
     raw_quotient_series = series_div(p_coordinate_series, g_coordinate_series)
@@ -6803,7 +7729,105 @@ def scan_weber_class_invariant_bridge_box(
         moduli=moduli,
         max_abs_exponent=max_abs_exponent,
         followup_label="H_X_ws",
+        named_gg_benchmark_name="gollnitz_gordon_normalized",
+        named_gg_series=gg_series,
+        named_gg_solve_order=12,
+        named_gg_include_weighted_coordinate_diagnostics=False,
+        followup_named_gg_benchmark_name="gollnitz_gordon_normalized",
+        followup_named_gg_series=gg_series,
+        followup_named_gg_solve_order=12,
+        followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+        followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+        followup_named_gg_descendant_focus_degree_values=(1,),
+        followup_named_gg_descendant_focus_max_abs_exponent=2,
+        followup_named_gg_include_weighted_coordinate_diagnostics=False,
     )
+    anchor_canonical_j_coordinate_numerator_series = series_pow(
+        [
+            sp.simplify((sp.Integer(1) if index == 0 else sp.Integer(0)) + 16 * value)
+            for index, value in enumerate(quotient_coordinate_template_series)
+        ],
+        3,
+    )
+    anchor_canonical_j_coordinate_series = series_div(
+        anchor_canonical_j_coordinate_numerator_series,
+        [sp.simplify(4913 * value) for value in series_pow(quotient_coordinate_template_series, 2)],
+    )
+    anchor_canonical_j_coordinate_scan = _scan_constant_one_series(
+        label="J_X_ws",
+        expression="J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)",
+        target_series=anchor_canonical_j_coordinate_series,
+        order=order,
+        eta_levels=eta_levels,
+        moduli=moduli,
+        max_abs_exponent=max_abs_exponent,
+        followup_label="H_J_X_ws",
+        named_gg_benchmark_name="gollnitz_gordon_normalized",
+        named_gg_series=gg_series,
+        named_gg_solve_order=12,
+        named_gg_include_weighted_coordinate_diagnostics=False,
+        followup_named_gg_benchmark_name="gollnitz_gordon_normalized",
+        followup_named_gg_series=gg_series,
+        followup_named_gg_solve_order=12,
+        followup_named_gg_include_weighted_coordinate_diagnostics=False,
+    )
+    canonical_j_anchor_bridge_scan = _scan_constant_one_series_pair_bridge(
+        left_label=quotient_coordinate_template_scan.label,
+        left_series=quotient_coordinate_template_series,
+        right_label=canonical_j_coordinate_scan.label,
+        right_series=canonical_j_coordinate_series,
+        order=order,
+        difference_label="D_XJ_ws",
+        quotient_label="Q_XJ_ws",
+        quotient_followup_label="K_XJ_ws",
+        quotient_followup_bridge_left_label=quotient_coordinate_template_scan.label,
+        quotient_followup_bridge_difference_label="D_XKJ_ws",
+        quotient_followup_bridge_quotient_label="Q_XKJ_ws",
+        quotient_followup_bridge_quotient_followup_label="L_XKJ_ws",
+        named_gg_benchmark_name="gollnitz_gordon_normalized",
+        named_gg_series=gg_series,
+        named_gg_degree_values=(1, 2),
+        named_gg_max_abs_exponent=max_abs_exponent,
+        named_gg_solve_order=min(order, 24),
+        named_gg_target_pairs=(("Q_XJ_ws", "K_XJ_ws"), ("Q_XKJ_ws", "L_XKJ_ws")),
+        quotient_followup_named_gg_series=gg_series,
+        quotient_followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+        quotient_followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+        quotient_followup_named_gg_descendant_focus_degree_values=(1,),
+        quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
+        nested_quotient_followup_named_gg_series=gg_series,
+        nested_quotient_followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+        nested_quotient_followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+        nested_quotient_followup_named_gg_descendant_focus_degree_values=(1,),
+        nested_quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
+        named_gg_include_weighted_coordinate_diagnostics=False,
+    )
+    canonical_j_lift_bridge_scan: ConstantOnePairBridgeLiteScan | None = None
+    if max_abs_exponent > 4:
+        canonical_j_lift_bridge_scan = _scan_constant_one_series_pair_bridge_lite(
+            left_label=anchor_canonical_j_coordinate_scan.label,
+            left_series=anchor_canonical_j_coordinate_series,
+            right_label=canonical_j_coordinate_scan.label,
+            right_series=canonical_j_coordinate_series,
+            order=order,
+            difference_label="D_JX_ws",
+            quotient_label="Q_JX_ws",
+            solve_order=min(order, 24),
+        )
+    primary_named_gg_modular_equation_scan: GGModularEquationScan | None = None
+    if max_abs_exponent > 4:
+        focused_named_gg_order = min(order, 16)
+        focused_named_gg_solve_order = min(focused_named_gg_order, 12)
+        primary_named_gg_modular_equation_scan = scan_gg_modular_equation_box(
+            target_series=g_correction_series[:focused_named_gg_order],
+            benchmark_name="gollnitz_gordon_normalized",
+            gg_series=gg_series[:focused_named_gg_order],
+            order=focused_named_gg_order,
+            degree_values=(1, 2),
+            max_abs_exponent=max_abs_exponent,
+            solve_order=focused_named_gg_solve_order,
+            include_weighted_coordinate_diagnostics=False,
+        )
     quotient_series = series_div(p_correction_series, g_correction_series)
     quotient_residual = [sp.simplify(value) for value in quotient_series]
     quotient_residual[0] = sp.simplify(quotient_residual[0] - 1)
@@ -6846,6 +7870,23 @@ def scan_weber_class_invariant_bridge_box(
         followup_first_failure_power, followup_first_failure_coeff = _first_nonzero_residual_term(
             followup_residual
         )
+        normalized_followup_named_gg_descendant_preview: GGDescendantPreview | None = None
+        normalized_followup_named_gg_descendant_focused_scan: GGDescendantFocusedScan | None = None
+        if max_abs_exponent > 4:
+            focused_named_gg_order = min(order, 16)
+            normalized_followup_named_gg_descendant_preview = _gg_descendant_preview(
+                base_series=gg_series[:focused_named_gg_order],
+                order=focused_named_gg_order,
+                supplemental_powers=focused_named_gg_supplemental_powers,
+            )
+            normalized_followup_named_gg_descendant_focused_scan = _scan_gg_descendant_focus_box(
+                target_series=followup_series,
+                gg_series=gg_series,
+                order=order,
+                supplemental_powers=focused_named_gg_supplemental_powers,
+                degree_values=(1,),
+                max_abs_exponent=2,
+            )
         normalized_followup = NormalizedResidualFollowupScan(
             label="H_gp_ws",
             expression=(
@@ -6909,6 +7950,8 @@ def scan_weber_class_invariant_bridge_box(
                     max_abs_exponent=max_abs_exponent,
                 )
             ),
+            named_gg_descendant_preview=normalized_followup_named_gg_descendant_preview,
+            named_gg_descendant_focused_scan=normalized_followup_named_gg_descendant_focused_scan,
         )
 
     followup_bridge_scan: ConstantOnePairBridgeScan | None = None
@@ -6961,8 +8004,17 @@ def scan_weber_class_invariant_bridge_box(
             named_gg_degree_values=(1, 2),
             named_gg_max_abs_exponent=max_abs_exponent,
             named_gg_solve_order=min(order, 24),
-            named_gg_target_quotient_label="Q_XK_ws",
-            named_gg_target_followup_label="L_XK_ws",
+            named_gg_target_pairs=(("Q_XR_ws", "K_XR_ws"), ("Q_XK_ws", "L_XK_ws")),
+            quotient_followup_named_gg_series=gg_series,
+            quotient_followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+            quotient_followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+            quotient_followup_named_gg_descendant_focus_degree_values=(1,),
+            quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
+            nested_quotient_followup_named_gg_series=gg_series,
+            nested_quotient_followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+            nested_quotient_followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+            nested_quotient_followup_named_gg_descendant_focus_degree_values=(1,),
+            nested_quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
             named_gg_include_weighted_coordinate_diagnostics=False,
         )
 
@@ -6995,6 +8047,17 @@ def scan_weber_class_invariant_bridge_box(
         ),
         classical_product_coordinate_bridge_expression="G_f2_ws - G_g12_ws*G_p12_ws = 0",
         classical_product_coordinate_scan=classical_product_coordinate_scan,
+        canonical_j_coordinate_label="J_f2_ws",
+        canonical_j_coordinate_expression="J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)",
+        canonical_j_coordinate_reason=(
+            "Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the "
+            "classical Weber `f2` coordinate into a canonical `j`-side "
+            "constant-1 object once the true-source normalization makes `G_f2_ws = 1`."
+        ),
+        canonical_j_coordinate_bridge_expression="3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0",
+        canonical_j_coordinate_scan=canonical_j_coordinate_scan,
+        canonical_j_anchor_bridge_scan=canonical_j_anchor_bridge_scan,
+        canonical_j_lift_bridge_scan=canonical_j_lift_bridge_scan,
         quotient_coordinate_label="X_g_ws",
         quotient_coordinate_expression="X_g_ws = 16*t^2 / g12_ws^2",
         quotient_coordinate_bridge_expression=(
@@ -7006,6 +8069,19 @@ def scan_weber_class_invariant_bridge_box(
         quotient_coordinate_bridge_first_failure_coeff=quotient_coordinate_bridge_first_failure_coeff,
         quotient_coordinate_template_bridge_expression="G_X_ws*G_g12_ws^2 - 1 = 0",
         quotient_coordinate_template_scan=quotient_coordinate_template_scan,
+        anchor_canonical_j_coordinate_label="J_X_ws",
+        anchor_canonical_j_coordinate_expression="J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)",
+        anchor_canonical_j_coordinate_reason=(
+            "The same signed Weber cubic also turns the squared `g`-side branch "
+            "`1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 "
+            "object, so the template-normalized anchor now has its own direct `j` lift."
+        ),
+        anchor_canonical_j_coordinate_bridge_expression=(
+            "4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0"
+        ),
+        anchor_canonical_j_coordinate_scan=anchor_canonical_j_coordinate_scan,
+        primary_named_gg_modular_equation_scan=primary_named_gg_modular_equation_scan,
+        quotient_coordinate_template_named_gg_modular_equation_scan=quotient_coordinate_template_scan.named_gg_modular_equation_scan,
         quotient_label="R_gp_ws",
         quotient_expression="R_gp_ws = G_p12_ws / G_g12_ws",
         quotient_first_failure_power=quotient_first_failure_power,
@@ -7052,10 +8128,121 @@ def scan_weber_class_invariant_bridge_box(
     )
 
 
+def _build_weber_j_pb_bridge_scan(
+    *,
+    target_series: Series,
+    order: int,
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    moduli: tuple[int, ...] = (2, 3, 4),
+    max_abs_exponent: int = 8,
+) -> ConstantOnePairBridgeScan | None:
+    p_coordinate_series = _weber_schlafli_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if p_coordinate_series is None:
+        return None
+    b_coordinate_series = _weber_companion_coordinate_series(
+        p_series=p_coordinate_series,
+        order=order,
+    )
+    if b_coordinate_series is None:
+        return None
+    p_leading_normalized_scan = _build_leading_normalized_coordinate_scan(
+        source_label="P_ws",
+        target_series=p_coordinate_series,
+        order=order,
+        max_abs_exponent=min(max_abs_exponent, 4),
+        eta_levels=eta_levels,
+        moduli=moduli,
+    )
+    b_leading_normalized_scan = _build_leading_normalized_coordinate_scan(
+        source_label="B_ws",
+        target_series=b_coordinate_series,
+        order=order,
+        max_abs_exponent=min(max_abs_exponent, 4),
+        eta_levels=eta_levels,
+        moduli=moduli,
+    )
+    if p_leading_normalized_scan is None or b_leading_normalized_scan is None:
+        return None
+
+    g_coordinate_series = _normalized_weber_g_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    p_named_coordinate_series = _normalized_weber_p_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if g_coordinate_series is None or p_named_coordinate_series is None:
+        return None
+    g_template_series = _normalized_weber_g_template_series(order=order)
+    p_template_series = _normalized_weber_p_template_series(order=order)
+    g_correction_series = series_div(g_coordinate_series, g_template_series)
+    p_correction_series = series_div(p_named_coordinate_series, p_template_series)
+    classical_product_coordinate_series = series_mul(g_correction_series, p_correction_series)
+    canonical_j_numerator_series = series_pow(
+        [
+            sp.simplify((sp.Integer(16) if index == 0 else sp.Integer(0)) - value)
+            for index, value in enumerate(classical_product_coordinate_series)
+        ],
+        3,
+    )
+    canonical_j_coordinate_series = series_div(
+        canonical_j_numerator_series,
+        [sp.simplify(3375 * value) for value in classical_product_coordinate_series],
+    )
+    q_pb_series = series_div(
+        list(b_leading_normalized_scan.normalized_series),
+        list(p_leading_normalized_scan.normalized_series),
+    )
+    gg_series = _canonical_benchmark_series(
+        "gollnitz_gordon_normalized",
+        depth=order,
+        order=order,
+    )
+    focused_named_gg_supplemental_powers = _supplemental_source_family_powers(
+        smoke=max_abs_exponent <= 4
+    ).get("GG", ())
+    return _scan_constant_one_series_pair_bridge(
+        left_label="J_f2_ws",
+        left_series=canonical_j_coordinate_series,
+        right_label="Q_PB_ws",
+        right_series=q_pb_series,
+        order=order,
+        difference_label="D_JPB_ws",
+        quotient_label="Q_JPB_ws",
+        quotient_followup_label="K_JPB_ws",
+        quotient_followup_bridge_left_label="J_f2_ws",
+        quotient_followup_bridge_difference_label="D_JKPB_ws",
+        quotient_followup_bridge_quotient_label="Q_JKPB_ws",
+        quotient_followup_bridge_quotient_followup_label="L_JKPB_ws",
+        named_gg_benchmark_name="gollnitz_gordon_normalized",
+        named_gg_series=gg_series,
+        named_gg_degree_values=(1, 2),
+        named_gg_max_abs_exponent=max_abs_exponent,
+        named_gg_solve_order=min(order, 24),
+        named_gg_target_pairs=(("Q_JPB_ws", "K_JPB_ws"), ("Q_JKPB_ws", "L_JKPB_ws")),
+        quotient_followup_named_gg_series=gg_series,
+        quotient_followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+        quotient_followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+        quotient_followup_named_gg_descendant_focus_degree_values=(1,),
+        quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
+        nested_quotient_followup_named_gg_series=gg_series,
+        nested_quotient_followup_named_gg_descendant_preview_powers=focused_named_gg_supplemental_powers,
+        nested_quotient_followup_named_gg_descendant_focus_powers=focused_named_gg_supplemental_powers,
+        nested_quotient_followup_named_gg_descendant_focus_degree_values=(1,),
+        nested_quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
+        named_gg_include_weighted_coordinate_diagnostics=False,
+    )
+
+
 def scan_morton_periodic_point_box(
     *,
     target_series: Series,
     order: int,
+    max_abs_exponent: int = 8,
 ) -> MortonPeriodicPointScan:
     if order < 2:
         return MortonPeriodicPointScan(template_results=())
@@ -7115,6 +8302,12 @@ def scan_morton_periodic_point_box(
             )
         )
     named_coordinate_scans: list[MortonNamedCoordinateScan] = []
+    leading_normalized_bridge_scans: list[ConstantOnePairBridgeScan] = []
+    focused_weber_bridge_reference = (
+        _focused_weber_bridge_reference_ladder(order=min(order, 16))
+        if max_abs_exponent > 4
+        else None
+    )
     squared_coordinate_template_results: list[MortonPeriodicPointTemplateResult] = []
     for label, relation in _morton_squared_coordinate_relations(order):
         residual = _relation_residual_series(
@@ -7178,6 +8371,12 @@ def scan_morton_periodic_point_box(
         order=order,
     )
     if weber_coordinate_series is not None:
+        weber_leading_normalized_scan = _build_leading_normalized_coordinate_scan(
+            source_label="P_ws",
+            target_series=weber_coordinate_series,
+            order=order,
+            max_abs_exponent=min(max_abs_exponent, 4),
+        )
         weber_coordinate_q2 = benchmark_power_substitution_series(
             weber_coordinate_series,
             power=2,
@@ -7205,6 +8404,7 @@ def scan_morton_periodic_point_box(
                 label="P_ws",
                 expression="P_ws = (1/F - F) / 2",
                 template_results=tuple(weber_template_results),
+                leading_normalized_scan=weber_leading_normalized_scan,
             )
         )
         weber_companion_series = _weber_companion_coordinate_series(
@@ -7212,6 +8412,12 @@ def scan_morton_periodic_point_box(
             order=order,
         )
         if weber_companion_series is not None:
+            weber_companion_leading_normalized_scan = _build_leading_normalized_coordinate_scan(
+                source_label="B_ws",
+                target_series=weber_companion_series,
+                order=order,
+                max_abs_exponent=min(max_abs_exponent, 4),
+            )
             weber_companion_q2 = benchmark_power_substitution_series(
                 weber_companion_series,
                 power=2,
@@ -7251,11 +8457,120 @@ def scan_morton_periodic_point_box(
                     label="B_ws",
                     expression="B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)",
                     template_results=tuple(companion_template_results),
+                    leading_normalized_scan=weber_companion_leading_normalized_scan,
                 )
             )
+            if (
+                weber_leading_normalized_scan is not None
+                and weber_companion_leading_normalized_scan is not None
+            ):
+                bridge_scan = _scan_constant_one_series_pair_bridge(
+                        left_label=weber_leading_normalized_scan.label,
+                        left_series=list(weber_leading_normalized_scan.normalized_series),
+                        right_label=weber_companion_leading_normalized_scan.label,
+                        right_series=list(weber_companion_leading_normalized_scan.normalized_series),
+                        order=order,
+                        difference_label="D_PB_ws",
+                        quotient_label="Q_PB_ws",
+                        quotient_followup_label="K_PB_ws",
+                        quotient_followup_bridge_left_label=weber_leading_normalized_scan.label,
+                        quotient_followup_bridge_difference_label="D_PK_ws",
+                        quotient_followup_bridge_quotient_label="Q_PK_ws",
+                        quotient_followup_bridge_quotient_followup_label="L_PK_ws",
+                    )
+                q_pb_series = series_div(
+                    list(weber_companion_leading_normalized_scan.normalized_series),
+                    list(weber_leading_normalized_scan.normalized_series),
+                )
+                k_pb_series = _normalized_constant_one_followup_series(
+                    target_series=q_pb_series,
+                    order=order,
+                )
+                if (
+                    focused_weber_bridge_reference is not None
+                ):
+                    focused_order = min(order, 16)
+                    bridge_scan = replace(
+                        bridge_scan,
+                        quotient_named_coordinate_orbit_scan=scan_named_coordinate_orbit_box(
+                            target_series=q_pb_series[:focused_order],
+                            family_label="Weber bridge",
+                            base_label="Q_PB_ref_ws",
+                            base_expression="Q_PB_ref_ws = N_B_ref_ws / N_P_ref_ws",
+                            base_series=list(focused_weber_bridge_reference.q_pb_series[:focused_order]),
+                            order=focused_order,
+                            powers=(2, 3, 4),
+                            degree_values=(1, 2),
+                            max_abs_exponent=2,
+                            solve_order=min(focused_order, 12),
+                        ),
+                        quotient_followup_named_coordinate_orbit_scan=(
+                            scan_named_coordinate_orbit_box(
+                                target_series=k_pb_series[:focused_order],
+                                family_label="Weber bridge",
+                                base_label="K_PB_ref_ws",
+                                base_expression="K_PB_ref_ws = (Q_PB_ref_ws - 1) / (leading term)",
+                                base_series=list(focused_weber_bridge_reference.k_pb_series[:focused_order]),
+                                order=focused_order,
+                                powers=(2, 3, 4),
+                                degree_values=(1, 2),
+                                max_abs_exponent=2,
+                                solve_order=min(focused_order, 12),
+                            )
+                            if k_pb_series is not None
+                            else None
+                        ),
+                    )
+                if bridge_scan.quotient_followup_bridge_scan is not None and k_pb_series is not None:
+                    q_pk_series = series_div(
+                        k_pb_series,
+                        list(weber_leading_normalized_scan.normalized_series),
+                    )
+                    l_pk_series = _normalized_constant_one_followup_series(
+                        target_series=q_pk_series,
+                        order=order,
+                    )
+                    if focused_weber_bridge_reference is not None:
+                        focused_order = min(order, 16)
+                        bridge_scan = replace(
+                            bridge_scan,
+                            quotient_followup_bridge_scan=replace(
+                                bridge_scan.quotient_followup_bridge_scan,
+                                quotient_named_coordinate_orbit_scan=scan_named_coordinate_orbit_box(
+                                    target_series=q_pk_series[:focused_order],
+                                    family_label="Weber bridge",
+                                    base_label="Q_PK_ref_ws",
+                                    base_expression="Q_PK_ref_ws = K_PB_ref_ws / N_P_ref_ws",
+                                    base_series=list(focused_weber_bridge_reference.q_pk_series[:focused_order]),
+                                    order=focused_order,
+                                    powers=(2, 3, 4),
+                                    degree_values=(1, 2),
+                                    max_abs_exponent=2,
+                                    solve_order=min(focused_order, 12),
+                                ),
+                                quotient_followup_named_coordinate_orbit_scan=(
+                                    scan_named_coordinate_orbit_box(
+                                        target_series=l_pk_series[:focused_order],
+                                        family_label="Weber bridge",
+                                        base_label="L_PK_ref_ws",
+                                        base_expression="L_PK_ref_ws = (Q_PK_ref_ws - 1) / (leading term)",
+                                        base_series=list(focused_weber_bridge_reference.l_pk_series[:focused_order]),
+                                        order=focused_order,
+                                        powers=(2, 3, 4),
+                                        degree_values=(1, 2),
+                                        max_abs_exponent=2,
+                                        solve_order=min(focused_order, 12),
+                                    )
+                                    if l_pk_series is not None
+                                    else None
+                                ),
+                            ),
+                        )
+                leading_normalized_bridge_scans.append(bridge_scan)
     return MortonPeriodicPointScan(
         template_results=tuple(template_results),
         named_coordinate_scans=tuple(named_coordinate_scans),
+        leading_normalized_bridge_scans=tuple(leading_normalized_bridge_scans),
     )
 
 
@@ -8622,8 +9937,8 @@ def build_candidate_identification_note(
         (
             label,
             benchmark_name,
-            continued_fraction_series_coeffs(
-                get_benchmark(benchmark_name).canonical_template.normalized(),
+            _canonical_benchmark_series(
+                benchmark_name,
                 depth=profile_depth,
                 order=profile_order,
             ),
@@ -13049,8 +14364,8 @@ def build_candidate_tail_family_note(
         (
             label,
             benchmark_name,
-            continued_fraction_series_coeffs(
-                get_benchmark(benchmark_name).canonical_template.normalized(),
+            _canonical_benchmark_series(
+                benchmark_name,
                 depth=profile_depth,
                 order=reduced_bridge_order,
             ),
@@ -13078,6 +14393,7 @@ def build_candidate_tail_family_note(
         gg_max_abs_exponent=4 if smoke else 6,
         gg_solve_order=min(reduced_bridge_order, 14 if smoke else 18),
         gg_supplemental_powers=(),
+        morton_order=min(reduced_bridge_order, 18 if smoke else 24),
     )
 
     if not sample_scans:
@@ -13210,6 +14526,225 @@ def build_candidate_tail_family_note(
                             )
                             + "."
                         )
+                    if coordinate_scan.leading_normalized_scan is not None:
+                        _append_constant_one_scan_summary_lines(
+                            lines,
+                            prefix=(
+                                f"Morton {coordinate_scan.family_label} leading-term-normalized coordinate "
+                                f"`{coordinate_scan.leading_normalized_scan.label}`"
+                            ),
+                            scan=coordinate_scan.leading_normalized_scan.scan,
+                            series_symbol=series_symbol,
+                        )
+                for bridge_scan in morton_scan.leading_normalized_bridge_scans:
+                    bridge_polynomial_hits = [
+                        item for item in bridge_scan.polynomial_scans if item.relation is not None
+                    ]
+                    lines.append(
+                        f"- Morton Weber-Schlafli leading-normalized bridge difference `{bridge_scan.difference_label}`: "
+                        f"`{bridge_scan.difference_expression}`."
+                    )
+                    if (
+                        bridge_scan.difference_first_failure_power is None
+                        or bridge_scan.difference_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized bridge difference `{bridge_scan.difference_label}`: "
+                            "matches `0` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized bridge difference `{bridge_scan.difference_label}`: "
+                            f"first fails at `{series_symbol}^{bridge_scan.difference_first_failure_power}` "
+                            f"with coefficient `{_format_expr(bridge_scan.difference_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Morton Weber-Schlafli leading-normalized bridge quotient `{bridge_scan.quotient_label}`: "
+                        f"`{bridge_scan.quotient_expression}`."
+                    )
+                    if (
+                        bridge_scan.quotient_first_failure_power is None
+                        or bridge_scan.quotient_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized bridge quotient `{bridge_scan.quotient_label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized bridge quotient `{bridge_scan.quotient_label}`: "
+                            f"`{bridge_scan.quotient_label} - 1` first fails at "
+                            f"`{series_symbol}^{bridge_scan.quotient_first_failure_power}` with coefficient "
+                            f"`{_format_expr(bridge_scan.quotient_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: "
+                        f"`{len(bridge_polynomial_hits)}` / `{len(bridge_scan.polynomial_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        "- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: "
+                        + (
+                            "`1` / `1` hit boxes."
+                            if bridge_scan.fractional_linear_relation is not None
+                            else "`0` / `1` hit boxes."
+                        )
+                    )
+                    _append_constant_one_scan_summary_lines(
+                        lines,
+                        prefix=(
+                            f"Morton Weber-Schlafli leading-normalized bridge quotient "
+                            f"`{bridge_scan.quotient_scan.label}`"
+                        ),
+                        scan=bridge_scan.quotient_scan,
+                        series_symbol=series_symbol,
+                    )
+                    if bridge_scan.quotient_named_coordinate_orbit_scan is not None:
+                        _append_named_coordinate_orbit_lines(
+                            lines,
+                            prefix=(
+                                f"Morton Weber-Schlafli leading-normalized bridge quotient "
+                                f"`{bridge_scan.quotient_scan.label}`"
+                            ),
+                            orbit_scan=bridge_scan.quotient_named_coordinate_orbit_scan,
+                        )
+                    if bridge_scan.quotient_scan.normalized_followup is not None:
+                        _append_constant_one_scan_summary_lines(
+                            lines,
+                            prefix=(
+                                "Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up "
+                                f"`{bridge_scan.quotient_scan.normalized_followup.label}`"
+                            ),
+                            scan=ConstantOneSeriesScan(
+                                label=bridge_scan.quotient_scan.normalized_followup.label,
+                                expression=bridge_scan.quotient_scan.normalized_followup.expression,
+                                first_failure_power=bridge_scan.quotient_scan.normalized_followup.first_failure_power,
+                                first_failure_coeff=bridge_scan.quotient_scan.normalized_followup.first_failure_coeff,
+                                self_polynomial_scan=bridge_scan.quotient_scan.normalized_followup.self_polynomial_scan,
+                                self_fractional_linear_scan=bridge_scan.quotient_scan.normalized_followup.self_fractional_linear_scan,
+                                self_quotient_product_scans=bridge_scan.quotient_scan.normalized_followup.self_quotient_product_scans,
+                                eta_scans=bridge_scan.quotient_scan.normalized_followup.eta_scans,
+                                modular_unit_eta_scans=bridge_scan.quotient_scan.normalized_followup.modular_unit_eta_scans,
+                                self_plus_pochhammer_scans=bridge_scan.quotient_scan.normalized_followup.self_plus_pochhammer_scans,
+                                self_plus_pochhammer_eta_scans=bridge_scan.quotient_scan.normalized_followup.self_plus_pochhammer_eta_scans,
+                                named_gg_modular_equation_scan=bridge_scan.quotient_scan.normalized_followup.named_gg_modular_equation_scan,
+                                normalized_followup=None,
+                                ),
+                                series_symbol=series_symbol,
+                            )
+                        if bridge_scan.quotient_followup_named_coordinate_orbit_scan is not None:
+                            _append_named_coordinate_orbit_lines(
+                                lines,
+                                prefix=(
+                                    "Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up "
+                                    f"`{bridge_scan.quotient_scan.normalized_followup.label}`"
+                                ),
+                                orbit_scan=bridge_scan.quotient_followup_named_coordinate_orbit_scan,
+                            )
+                    if bridge_scan.quotient_followup_bridge_scan is not None:
+                        nested_bridge = bridge_scan.quotient_followup_bridge_scan
+                        nested_bridge_polynomial_hits = [
+                            item for item in nested_bridge.polynomial_scans if item.relation is not None
+                        ]
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized nested bridge difference `{nested_bridge.difference_label}`: "
+                            f"`{nested_bridge.difference_expression}`."
+                        )
+                        if (
+                            nested_bridge.difference_first_failure_power is None
+                            or nested_bridge.difference_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Morton Weber-Schlafli leading-normalized nested bridge difference `{nested_bridge.difference_label}`: "
+                                "matches `0` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Morton Weber-Schlafli leading-normalized nested bridge difference `{nested_bridge.difference_label}`: "
+                                f"first fails at `{series_symbol}^{nested_bridge.difference_first_failure_power}` "
+                                f"with coefficient `{_format_expr(nested_bridge.difference_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized nested bridge quotient `{nested_bridge.quotient_label}`: "
+                            f"`{nested_bridge.quotient_expression}`."
+                        )
+                        if (
+                            nested_bridge.quotient_first_failure_power is None
+                            or nested_bridge.quotient_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Morton Weber-Schlafli leading-normalized nested bridge quotient `{nested_bridge.quotient_label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Morton Weber-Schlafli leading-normalized nested bridge quotient `{nested_bridge.quotient_label}`: "
+                                f"`{nested_bridge.quotient_label} - 1` first fails at "
+                                f"`{series_symbol}^{nested_bridge.quotient_first_failure_power}` with coefficient "
+                                f"`{_format_expr(nested_bridge.quotient_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: "
+                            f"`{len(nested_bridge_polynomial_hits)}` / `{len(nested_bridge.polynomial_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            "- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: "
+                            + (
+                                "`1` / `1` hit boxes."
+                                if nested_bridge.fractional_linear_relation is not None
+                                else "`0` / `1` hit boxes."
+                            )
+                        )
+                        _append_constant_one_scan_summary_lines(
+                            lines,
+                            prefix=(
+                                f"Morton Weber-Schlafli leading-normalized nested bridge quotient "
+                                f"`{nested_bridge.quotient_scan.label}`"
+                            ),
+                            scan=nested_bridge.quotient_scan,
+                            series_symbol=series_symbol,
+                        )
+                        if nested_bridge.quotient_named_coordinate_orbit_scan is not None:
+                            _append_named_coordinate_orbit_lines(
+                                lines,
+                                prefix=(
+                                    f"Morton Weber-Schlafli leading-normalized nested bridge quotient "
+                                    f"`{nested_bridge.quotient_scan.label}`"
+                                ),
+                                orbit_scan=nested_bridge.quotient_named_coordinate_orbit_scan,
+                            )
+                        if nested_bridge.quotient_scan.normalized_followup is not None:
+                            _append_constant_one_scan_summary_lines(
+                                lines,
+                                prefix=(
+                                    "Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up "
+                                    f"`{nested_bridge.quotient_scan.normalized_followup.label}`"
+                                ),
+                                scan=ConstantOneSeriesScan(
+                                    label=nested_bridge.quotient_scan.normalized_followup.label,
+                                    expression=nested_bridge.quotient_scan.normalized_followup.expression,
+                                    first_failure_power=nested_bridge.quotient_scan.normalized_followup.first_failure_power,
+                                    first_failure_coeff=nested_bridge.quotient_scan.normalized_followup.first_failure_coeff,
+                                    self_polynomial_scan=nested_bridge.quotient_scan.normalized_followup.self_polynomial_scan,
+                                    self_fractional_linear_scan=nested_bridge.quotient_scan.normalized_followup.self_fractional_linear_scan,
+                                    self_quotient_product_scans=nested_bridge.quotient_scan.normalized_followup.self_quotient_product_scans,
+                                    eta_scans=nested_bridge.quotient_scan.normalized_followup.eta_scans,
+                                    modular_unit_eta_scans=nested_bridge.quotient_scan.normalized_followup.modular_unit_eta_scans,
+                                    self_plus_pochhammer_scans=nested_bridge.quotient_scan.normalized_followup.self_plus_pochhammer_scans,
+                                    self_plus_pochhammer_eta_scans=nested_bridge.quotient_scan.normalized_followup.self_plus_pochhammer_eta_scans,
+                                    named_gg_modular_equation_scan=nested_bridge.quotient_scan.normalized_followup.named_gg_modular_equation_scan,
+                                    normalized_followup=None,
+                                    ),
+                                    series_symbol=series_symbol,
+                                )
+                            if nested_bridge.quotient_followup_named_coordinate_orbit_scan is not None:
+                                _append_named_coordinate_orbit_lines(
+                                    lines,
+                                    prefix=(
+                                        "Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up "
+                                        f"`{nested_bridge.quotient_scan.normalized_followup.label}`"
+                                    ),
+                                    orbit_scan=nested_bridge.quotient_followup_named_coordinate_orbit_scan,
+                                )
             for weber_scan in (
                 sample.weber_g_class_invariant_scan,
                 sample.weber_p_class_invariant_scan,
@@ -13317,6 +14852,18 @@ def build_candidate_tail_family_note(
                     f"`{bridge_scan.primary_expression}`."
                 )
                 lines.append(f"- Weber residual bridge reason: {bridge_scan.primary_reason}")
+                if bridge_scan.primary_named_gg_modular_equation_scan is not None:
+                    lines.append(
+                        "- Focused source-faithful residual pass: the primary Weber residual is now also "
+                        "pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation "
+                        "basis before moving on to the quotient residual."
+                    )
+                    _append_named_gg_bridge_lines(
+                        lines,
+                        prefix=f"Weber primary residual `{bridge_scan.primary_label}`",
+                        gg_scan=bridge_scan.primary_named_gg_modular_equation_scan,
+                        series_symbol=series_symbol,
+                    )
                 lines.append(
                     f"- Weber residual companion `{bridge_scan.companion_label}`: "
                     f"`{bridge_scan.companion_expression}`."
@@ -13424,6 +14971,16 @@ def build_candidate_tail_family_note(
                     f"`{len(classical_product_plus_eta_hits)}` / "
                     f"`{len(classical_product_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                 )
+                if classical_product_scan.named_gg_modular_equation_scan is not None:
+                    _append_named_gg_bridge_lines(
+                        lines,
+                        prefix=(
+                            f"Classical Weber `f2` tri-product coordinate "
+                            f"`{classical_product_scan.label}`"
+                        ),
+                        gg_scan=classical_product_scan.named_gg_modular_equation_scan,
+                        series_symbol=series_symbol,
+                    )
                 if classical_product_scan.normalized_followup is not None:
                     classical_product_followup = classical_product_scan.normalized_followup
                     classical_product_followup_self_product_hits = [
@@ -13500,6 +15057,755 @@ def build_candidate_tail_family_note(
                         f"`{len(classical_product_followup_plus_eta_hits)}` / "
                         f"`{len(classical_product_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
                     )
+                if classical_product_followup.named_gg_modular_equation_scan is not None:
+                    _append_named_gg_bridge_lines(
+                        lines,
+                        prefix=(
+                            f"Classical Weber `f2` tri-product normalized follow-up "
+                                f"`{classical_product_followup.label}`"
+                            ),
+                            gg_scan=classical_product_followup.named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                canonical_j_scan = bridge_scan.canonical_j_coordinate_scan
+                canonical_j_eta_hits = [
+                    scan for scan in canonical_j_scan.eta_scans if scan.relation is not None
+                ]
+                canonical_j_modular_hits = [
+                    scan
+                    for scan in canonical_j_scan.modular_unit_eta_scans
+                    if scan.relation is not None
+                ]
+                canonical_j_plus_hits = [
+                    scan
+                    for scan in canonical_j_scan.self_plus_pochhammer_scans
+                    if scan.relation is not None
+                ]
+                canonical_j_plus_eta_hits = [
+                    scan
+                    for scan in canonical_j_scan.self_plus_pochhammer_eta_scans
+                    if scan.relation is not None
+                ]
+                canonical_j_self_product_hits = [
+                    scan
+                    for scan in canonical_j_scan.self_quotient_product_scans
+                    if scan.relation is not None
+                ]
+                lines.append(
+                    f"- Canonical Weber `j`-side coordinate `{bridge_scan.canonical_j_coordinate_label}`: "
+                    f"`{bridge_scan.canonical_j_coordinate_expression}`."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side reason: {bridge_scan.canonical_j_coordinate_reason}"
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side bridge: "
+                    f"`{bridge_scan.canonical_j_coordinate_bridge_expression}`."
+                )
+                if (
+                    canonical_j_scan.first_failure_power is None
+                    or canonical_j_scan.first_failure_coeff is None
+                ):
+                    lines.append(
+                        f"- Canonical Weber `j`-side coordinate `{canonical_j_scan.label}`: "
+                        "matches `1` through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        f"- Canonical Weber `j`-side coordinate `{canonical_j_scan.label}`: "
+                        f"`{canonical_j_scan.label} - 1` first fails at "
+                        f"`{series_symbol}^{canonical_j_scan.first_failure_power}` with coefficient "
+                        f"`{_format_expr(canonical_j_scan.first_failure_coeff)}`."
+                    )
+                lines.append(
+                    f"- Canonical Weber `j`-side self-polynomial uniqueness boxes: "
+                    f"`{len(canonical_j_scan.self_polynomial_scan.hits)}` / "
+                    f"`{len(canonical_j_scan.self_polynomial_scan.moduli_checked) * len(canonical_j_scan.self_polynomial_scan.fg_degree_values) * len(canonical_j_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: "
+                    f"`{len(canonical_j_scan.self_fractional_linear_scan.hits)}` / "
+                    f"`{len(canonical_j_scan.self_fractional_linear_scan.moduli_checked) * len(canonical_j_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side self-quotient finite-product boxes: "
+                    f"`{len(canonical_j_self_product_hits)}` / "
+                    f"`{len(canonical_j_scan.self_quotient_product_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side eta templates: `{len(canonical_j_eta_hits)}` / "
+                    f"`{len(canonical_j_scan.eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side modular-unit / eta templates: "
+                    f"`{len(canonical_j_modular_hits)}` / `{len(canonical_j_scan.modular_unit_eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side plus-Pochhammer templates: "
+                    f"`{len(canonical_j_plus_hits)}` / `{len(canonical_j_scan.self_plus_pochhammer_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber `j`-side plus-Pochhammer + eta templates: "
+                    f"`{len(canonical_j_plus_eta_hits)}` / "
+                    f"`{len(canonical_j_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                )
+                if canonical_j_scan.named_gg_modular_equation_scan is not None:
+                    _append_named_gg_bridge_lines(
+                        lines,
+                        prefix=f"Canonical Weber `j`-side coordinate `{canonical_j_scan.label}`",
+                        gg_scan=canonical_j_scan.named_gg_modular_equation_scan,
+                        series_symbol=series_symbol,
+                    )
+                if canonical_j_scan.normalized_followup is not None:
+                    canonical_j_followup = canonical_j_scan.normalized_followup
+                    canonical_j_followup_self_product_hits = [
+                        scan
+                        for scan in canonical_j_followup.self_quotient_product_scans
+                        if scan.relation is not None
+                    ]
+                    canonical_j_followup_eta_hits = [
+                        scan for scan in canonical_j_followup.eta_scans if scan.relation is not None
+                    ]
+                    canonical_j_followup_modular_hits = [
+                        scan
+                        for scan in canonical_j_followup.modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    canonical_j_followup_plus_hits = [
+                        scan
+                        for scan in canonical_j_followup.self_plus_pochhammer_scans
+                        if scan.relation is not None
+                    ]
+                    canonical_j_followup_plus_eta_hits = [
+                        scan
+                        for scan in canonical_j_followup.self_plus_pochhammer_eta_scans
+                        if scan.relation is not None
+                    ]
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized follow-up `{canonical_j_followup.label}`: "
+                        f"`{canonical_j_followup.expression}`."
+                    )
+                    if (
+                        canonical_j_followup.first_failure_power is None
+                        or canonical_j_followup.first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Canonical Weber `j`-side normalized follow-up `{canonical_j_followup.label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Canonical Weber `j`-side normalized follow-up `{canonical_j_followup.label}`: "
+                            f"`{canonical_j_followup.label} - 1` first fails at "
+                            f"`{series_symbol}^{canonical_j_followup.first_failure_power}` with coefficient "
+                            f"`{_format_expr(canonical_j_followup.first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: "
+                        f"`{len(canonical_j_followup.self_polynomial_scan.hits)}` / "
+                        f"`{len(canonical_j_followup.self_polynomial_scan.moduli_checked) * len(canonical_j_followup.self_polynomial_scan.fg_degree_values) * len(canonical_j_followup.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: "
+                        f"`{len(canonical_j_followup.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(canonical_j_followup.self_fractional_linear_scan.moduli_checked) * len(canonical_j_followup.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized self-quotient finite-product boxes: "
+                        f"`{len(canonical_j_followup_self_product_hits)}` / "
+                        f"`{len(canonical_j_followup.self_quotient_product_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized eta templates: `{len(canonical_j_followup_eta_hits)}` / "
+                        f"`{len(canonical_j_followup.eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized modular-unit / eta templates: "
+                        f"`{len(canonical_j_followup_modular_hits)}` / `{len(canonical_j_followup.modular_unit_eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized plus-Pochhammer templates: "
+                        f"`{len(canonical_j_followup_plus_hits)}` / `{len(canonical_j_followup.self_plus_pochhammer_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: "
+                        f"`{len(canonical_j_followup_plus_eta_hits)}` / "
+                        f"`{len(canonical_j_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
+                    )
+                    if canonical_j_followup.named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                f"Canonical Weber `j`-side normalized follow-up "
+                                f"`{canonical_j_followup.label}`"
+                            ),
+                            gg_scan=canonical_j_followup.named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                anchor_canonical_j_scan = bridge_scan.anchor_canonical_j_coordinate_scan
+                anchor_canonical_j_eta_hits = [
+                    scan for scan in anchor_canonical_j_scan.eta_scans if scan.relation is not None
+                ]
+                anchor_canonical_j_modular_hits = [
+                    scan
+                    for scan in anchor_canonical_j_scan.modular_unit_eta_scans
+                    if scan.relation is not None
+                ]
+                anchor_canonical_j_plus_hits = [
+                    scan
+                    for scan in anchor_canonical_j_scan.self_plus_pochhammer_scans
+                    if scan.relation is not None
+                ]
+                anchor_canonical_j_plus_eta_hits = [
+                    scan
+                    for scan in anchor_canonical_j_scan.self_plus_pochhammer_eta_scans
+                    if scan.relation is not None
+                ]
+                anchor_canonical_j_self_product_hits = [
+                    scan
+                    for scan in anchor_canonical_j_scan.self_quotient_product_scans
+                    if scan.relation is not None
+                ]
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side coordinate `{bridge_scan.anchor_canonical_j_coordinate_label}`: "
+                    f"`{bridge_scan.anchor_canonical_j_coordinate_expression}`."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side reason: {bridge_scan.anchor_canonical_j_coordinate_reason}"
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side bridge: "
+                    f"`{bridge_scan.anchor_canonical_j_coordinate_bridge_expression}`."
+                )
+                if (
+                    anchor_canonical_j_scan.first_failure_power is None
+                    or anchor_canonical_j_scan.first_failure_coeff is None
+                ):
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side coordinate `{anchor_canonical_j_scan.label}`: "
+                        "matches `1` through the checked truncation."
+                    )
+                else:
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side coordinate `{anchor_canonical_j_scan.label}`: "
+                        f"`{anchor_canonical_j_scan.label} - 1` first fails at "
+                        f"`{series_symbol}^{anchor_canonical_j_scan.first_failure_power}` with coefficient "
+                        f"`{_format_expr(anchor_canonical_j_scan.first_failure_coeff)}`."
+                    )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: "
+                    f"`{len(anchor_canonical_j_scan.self_polynomial_scan.hits)}` / "
+                    f"`{len(anchor_canonical_j_scan.self_polynomial_scan.moduli_checked) * len(anchor_canonical_j_scan.self_polynomial_scan.fg_degree_values) * len(anchor_canonical_j_scan.self_polynomial_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: "
+                    f"`{len(anchor_canonical_j_scan.self_fractional_linear_scan.hits)}` / "
+                    f"`{len(anchor_canonical_j_scan.self_fractional_linear_scan.moduli_checked) * len(anchor_canonical_j_scan.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side self-quotient finite-product boxes: "
+                    f"`{len(anchor_canonical_j_self_product_hits)}` / "
+                    f"`{len(anchor_canonical_j_scan.self_quotient_product_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side eta templates: `{len(anchor_canonical_j_eta_hits)}` / "
+                    f"`{len(anchor_canonical_j_scan.eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side modular-unit / eta templates: "
+                    f"`{len(anchor_canonical_j_modular_hits)}` / `{len(anchor_canonical_j_scan.modular_unit_eta_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side plus-Pochhammer templates: "
+                    f"`{len(anchor_canonical_j_plus_hits)}` / `{len(anchor_canonical_j_scan.self_plus_pochhammer_scans)}` hit boxes."
+                )
+                lines.append(
+                    f"- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: "
+                    f"`{len(anchor_canonical_j_plus_eta_hits)}` / "
+                    f"`{len(anchor_canonical_j_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
+                )
+                if anchor_canonical_j_scan.named_gg_modular_equation_scan is not None:
+                    _append_named_gg_bridge_lines(
+                        lines,
+                        prefix=(
+                            f"Canonical Weber anchor `j`-side coordinate "
+                            f"`{anchor_canonical_j_scan.label}`"
+                        ),
+                        gg_scan=anchor_canonical_j_scan.named_gg_modular_equation_scan,
+                        series_symbol=series_symbol,
+                    )
+                if anchor_canonical_j_scan.normalized_followup is not None:
+                    anchor_canonical_j_followup = anchor_canonical_j_scan.normalized_followup
+                    anchor_canonical_j_followup_self_product_hits = [
+                        scan
+                        for scan in anchor_canonical_j_followup.self_quotient_product_scans
+                        if scan.relation is not None
+                    ]
+                    anchor_canonical_j_followup_eta_hits = [
+                        scan
+                        for scan in anchor_canonical_j_followup.eta_scans
+                        if scan.relation is not None
+                    ]
+                    anchor_canonical_j_followup_modular_hits = [
+                        scan
+                        for scan in anchor_canonical_j_followup.modular_unit_eta_scans
+                        if scan.relation is not None
+                    ]
+                    anchor_canonical_j_followup_plus_hits = [
+                        scan
+                        for scan in anchor_canonical_j_followup.self_plus_pochhammer_scans
+                        if scan.relation is not None
+                    ]
+                    anchor_canonical_j_followup_plus_eta_hits = [
+                        scan
+                        for scan in anchor_canonical_j_followup.self_plus_pochhammer_eta_scans
+                        if scan.relation is not None
+                    ]
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized follow-up `{anchor_canonical_j_followup.label}`: "
+                        f"`{anchor_canonical_j_followup.expression}`."
+                    )
+                    if (
+                        anchor_canonical_j_followup.first_failure_power is None
+                        or anchor_canonical_j_followup.first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Canonical Weber anchor `j`-side normalized follow-up `{anchor_canonical_j_followup.label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Canonical Weber anchor `j`-side normalized follow-up `{anchor_canonical_j_followup.label}`: "
+                            f"`{anchor_canonical_j_followup.label} - 1` first fails at "
+                            f"`{series_symbol}^{anchor_canonical_j_followup.first_failure_power}` with coefficient "
+                            f"`{_format_expr(anchor_canonical_j_followup.first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: "
+                        f"`{len(anchor_canonical_j_followup.self_polynomial_scan.hits)}` / "
+                        f"`{len(anchor_canonical_j_followup.self_polynomial_scan.moduli_checked) * len(anchor_canonical_j_followup.self_polynomial_scan.fg_degree_values) * len(anchor_canonical_j_followup.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: "
+                        f"`{len(anchor_canonical_j_followup.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(anchor_canonical_j_followup.self_fractional_linear_scan.moduli_checked) * len(anchor_canonical_j_followup.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: "
+                        f"`{len(anchor_canonical_j_followup_self_product_hits)}` / "
+                        f"`{len(anchor_canonical_j_followup.self_quotient_product_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized eta templates: `{len(anchor_canonical_j_followup_eta_hits)}` / "
+                        f"`{len(anchor_canonical_j_followup.eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: "
+                        f"`{len(anchor_canonical_j_followup_modular_hits)}` / `{len(anchor_canonical_j_followup.modular_unit_eta_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: "
+                        f"`{len(anchor_canonical_j_followup_plus_hits)}` / `{len(anchor_canonical_j_followup.self_plus_pochhammer_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: "
+                        f"`{len(anchor_canonical_j_followup_plus_eta_hits)}` / "
+                        f"`{len(anchor_canonical_j_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
+                    )
+                    if anchor_canonical_j_followup.named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                f"Canonical Weber anchor `j`-side normalized follow-up "
+                                f"`{anchor_canonical_j_followup.label}`"
+                            ),
+                            gg_scan=anchor_canonical_j_followup.named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                canonical_j_anchor_bridge = bridge_scan.canonical_j_anchor_bridge_scan
+                if canonical_j_anchor_bridge is not None:
+                    canonical_j_anchor_quotient = canonical_j_anchor_bridge.quotient_scan
+                    lines.append(
+                        f"- Canonical Weber `j`-side anchor bridge difference `{canonical_j_anchor_bridge.difference_label}`: "
+                        f"`{canonical_j_anchor_bridge.difference_expression}`."
+                    )
+                    if (
+                        canonical_j_anchor_bridge.difference_first_failure_power is None
+                        or canonical_j_anchor_bridge.difference_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            "- Canonical Weber `j`-side anchor bridge difference verdict: "
+                            "matches `0` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            "- Canonical Weber `j`-side anchor bridge difference verdict: "
+                            f"first fails at `{series_symbol}^{canonical_j_anchor_bridge.difference_first_failure_power}` "
+                            f"with coefficient `{_format_expr(canonical_j_anchor_bridge.difference_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side anchor bridge quotient `{canonical_j_anchor_bridge.quotient_label}`: "
+                        f"`{canonical_j_anchor_bridge.quotient_expression}`."
+                    )
+                    if (
+                        canonical_j_anchor_bridge.quotient_first_failure_power is None
+                        or canonical_j_anchor_bridge.quotient_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Canonical Weber `j`-side anchor bridge quotient `{canonical_j_anchor_bridge.quotient_label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Canonical Weber `j`-side anchor bridge quotient `{canonical_j_anchor_bridge.quotient_label}`: "
+                            f"`{canonical_j_anchor_bridge.quotient_label} - 1` first fails at "
+                            f"`{series_symbol}^{canonical_j_anchor_bridge.quotient_first_failure_power}` with coefficient "
+                            f"`{_format_expr(canonical_j_anchor_bridge.quotient_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side anchor bridge polynomial boxes: "
+                        f"`{sum(1 for scan in canonical_j_anchor_bridge.polynomial_scans if scan.relation is not None)}` / "
+                        f"`{len(canonical_j_anchor_bridge.polynomial_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side anchor bridge fractional-linear box: "
+                        f"`{1 if canonical_j_anchor_bridge.fractional_linear_relation is not None else 0}` / `1` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: "
+                        f"`{len(canonical_j_anchor_quotient.self_polynomial_scan.hits)}` / "
+                        f"`{len(canonical_j_anchor_quotient.self_polynomial_scan.moduli_checked) * len(canonical_j_anchor_quotient.self_polynomial_scan.fg_degree_values) * len(canonical_j_anchor_quotient.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: "
+                        f"`{len(canonical_j_anchor_quotient.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(canonical_j_anchor_quotient.self_fractional_linear_scan.moduli_checked) * len(canonical_j_anchor_quotient.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    if canonical_j_anchor_bridge.quotient_named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                f"Canonical Weber `j`-side anchor bridge quotient "
+                                f"`{canonical_j_anchor_bridge.quotient_label}`"
+                            ),
+                            gg_scan=canonical_j_anchor_bridge.quotient_named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                    if canonical_j_anchor_quotient.normalized_followup is not None:
+                        canonical_j_anchor_followup = canonical_j_anchor_quotient.normalized_followup
+                        lines.append(
+                            f"- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `{canonical_j_anchor_followup.label}`: "
+                            f"`{canonical_j_anchor_followup.expression}`."
+                        )
+                        if (
+                            canonical_j_anchor_followup.first_failure_power is None
+                            or canonical_j_anchor_followup.first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `{canonical_j_anchor_followup.label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `{canonical_j_anchor_followup.label}`: "
+                                f"`{canonical_j_anchor_followup.label} - 1` first fails at "
+                                f"`{series_symbol}^{canonical_j_anchor_followup.first_failure_power}` with coefficient "
+                                f"`{_format_expr(canonical_j_anchor_followup.first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: "
+                            f"`{len(canonical_j_anchor_followup.self_polynomial_scan.hits)}` / "
+                            f"`{len(canonical_j_anchor_followup.self_polynomial_scan.moduli_checked) * len(canonical_j_anchor_followup.self_polynomial_scan.fg_degree_values) * len(canonical_j_anchor_followup.self_polynomial_scan.t_degree_values)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: "
+                            f"`{len(canonical_j_anchor_followup.self_fractional_linear_scan.hits)}` / "
+                            f"`{len(canonical_j_anchor_followup.self_fractional_linear_scan.moduli_checked) * len(canonical_j_anchor_followup.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                        )
+                    if canonical_j_anchor_bridge.quotient_followup_named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                "Canonical Weber `j`-side anchor bridge quotient normalized follow-up "
+                                f"`{canonical_j_anchor_quotient.normalized_followup.label}`"
+                            ),
+                            gg_scan=canonical_j_anchor_bridge.quotient_followup_named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                    if canonical_j_anchor_bridge.quotient_followup_bridge_scan is not None:
+                        canonical_j_anchor_nested_bridge = canonical_j_anchor_bridge.quotient_followup_bridge_scan
+                        lines.append(
+                            f"- Canonical Weber `j`-side nested anchor bridge difference `{canonical_j_anchor_nested_bridge.difference_label}`: "
+                            f"`{canonical_j_anchor_nested_bridge.difference_expression}`."
+                        )
+                        if (
+                            canonical_j_anchor_nested_bridge.difference_first_failure_power is None
+                            or canonical_j_anchor_nested_bridge.difference_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                "- Canonical Weber `j`-side nested anchor bridge difference verdict: "
+                                "matches `0` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                "- Canonical Weber `j`-side nested anchor bridge difference verdict: "
+                                f"first fails at `{series_symbol}^{canonical_j_anchor_nested_bridge.difference_first_failure_power}` "
+                                f"with coefficient `{_format_expr(canonical_j_anchor_nested_bridge.difference_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Canonical Weber `j`-side nested anchor bridge quotient `{canonical_j_anchor_nested_bridge.quotient_label}`: "
+                            f"`{canonical_j_anchor_nested_bridge.quotient_expression}`."
+                        )
+                        if (
+                            canonical_j_anchor_nested_bridge.quotient_first_failure_power is None
+                            or canonical_j_anchor_nested_bridge.quotient_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Canonical Weber `j`-side nested anchor bridge quotient `{canonical_j_anchor_nested_bridge.quotient_label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Canonical Weber `j`-side nested anchor bridge quotient `{canonical_j_anchor_nested_bridge.quotient_label}`: "
+                                f"`{canonical_j_anchor_nested_bridge.quotient_label} - 1` first fails at "
+                                f"`{series_symbol}^{canonical_j_anchor_nested_bridge.quotient_first_failure_power}` with coefficient "
+                                f"`{_format_expr(canonical_j_anchor_nested_bridge.quotient_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Canonical Weber `j`-side nested anchor bridge polynomial boxes: "
+                            f"`{sum(1 for scan in canonical_j_anchor_nested_bridge.polynomial_scans if scan.relation is not None)}` / "
+                            f"`{len(canonical_j_anchor_nested_bridge.polynomial_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Canonical Weber `j`-side nested anchor bridge fractional-linear box: "
+                            f"`{1 if canonical_j_anchor_nested_bridge.fractional_linear_relation is not None else 0}` / `1` hit boxes."
+                        )
+                        if canonical_j_anchor_nested_bridge.quotient_named_gg_modular_equation_scan is not None:
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    f"Canonical Weber `j`-side nested anchor bridge quotient "
+                                    f"`{canonical_j_anchor_nested_bridge.quotient_label}`"
+                                ),
+                                gg_scan=canonical_j_anchor_nested_bridge.quotient_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
+                            )
+                canonical_j_lift_bridge = bridge_scan.canonical_j_lift_bridge_scan
+                if canonical_j_lift_bridge is not None:
+                    lines.append(
+                        f"- Canonical Weber `j`-side lift-bridge difference `{canonical_j_lift_bridge.difference_label}`: "
+                        f"`{canonical_j_lift_bridge.difference_expression}`."
+                    )
+                    if (
+                        canonical_j_lift_bridge.difference_first_failure_power is None
+                        or canonical_j_lift_bridge.difference_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            "- Canonical Weber `j`-side lift-bridge difference verdict: "
+                            "matches `0` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            "- Canonical Weber `j`-side lift-bridge difference verdict: "
+                            f"first fails at `{series_symbol}^{canonical_j_lift_bridge.difference_first_failure_power}` "
+                            f"with coefficient `{_format_expr(canonical_j_lift_bridge.difference_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side lift-bridge quotient `{canonical_j_lift_bridge.quotient_label}`: "
+                        f"`{canonical_j_lift_bridge.quotient_expression}`."
+                    )
+                    if (
+                        canonical_j_lift_bridge.quotient_first_failure_power is None
+                        or canonical_j_lift_bridge.quotient_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Canonical Weber `j`-side lift-bridge quotient `{canonical_j_lift_bridge.quotient_label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Canonical Weber `j`-side lift-bridge quotient `{canonical_j_lift_bridge.quotient_label}`: "
+                            f"`{canonical_j_lift_bridge.quotient_label} - 1` first fails at "
+                            f"`{series_symbol}^{canonical_j_lift_bridge.quotient_first_failure_power}` with coefficient "
+                            f"`{_format_expr(canonical_j_lift_bridge.quotient_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side lift-bridge polynomial boxes: "
+                        f"`{sum(1 for scan in canonical_j_lift_bridge.polynomial_scans if scan.relation is not None)}` / "
+                        f"`{len(canonical_j_lift_bridge.polynomial_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side lift-bridge fractional-linear box: "
+                        f"`{1 if canonical_j_lift_bridge.fractional_linear_relation is not None else 0}` / `1` hit boxes."
+                    )
+                if sample.weber_j_pb_bridge_scan is not None:
+                    j_pb_bridge = sample.weber_j_pb_bridge_scan
+                    j_pb_quotient = j_pb_bridge.quotient_scan
+                    lines.append(
+                        f"- Canonical Weber `j`-side vs `P/B` bridge difference `{j_pb_bridge.difference_label}`: "
+                        f"`{j_pb_bridge.difference_expression}`."
+                    )
+                    if (
+                        j_pb_bridge.difference_first_failure_power is None
+                        or j_pb_bridge.difference_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            "- Canonical Weber `j`-side vs `P/B` bridge difference verdict: "
+                            "matches `0` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            "- Canonical Weber `j`-side vs `P/B` bridge difference verdict: "
+                            f"first fails at `{series_symbol}^{j_pb_bridge.difference_first_failure_power}` "
+                            f"with coefficient `{_format_expr(j_pb_bridge.difference_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side vs `P/B` bridge quotient `{j_pb_bridge.quotient_label}`: "
+                        f"`{j_pb_bridge.quotient_expression}`."
+                    )
+                    if (
+                        j_pb_bridge.quotient_first_failure_power is None
+                        or j_pb_bridge.quotient_first_failure_coeff is None
+                    ):
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` bridge quotient `{j_pb_bridge.quotient_label}`: "
+                            "matches `1` through the checked truncation."
+                        )
+                    else:
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` bridge quotient `{j_pb_bridge.quotient_label}`: "
+                            f"`{j_pb_bridge.quotient_label} - 1` first fails at "
+                            f"`{series_symbol}^{j_pb_bridge.quotient_first_failure_power}` with coefficient "
+                            f"`{_format_expr(j_pb_bridge.quotient_first_failure_coeff)}`."
+                        )
+                    lines.append(
+                        f"- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: "
+                        f"`{sum(1 for scan in j_pb_bridge.polynomial_scans if scan.relation is not None)}` / "
+                        f"`{len(j_pb_bridge.polynomial_scans)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: "
+                        f"`{1 if j_pb_bridge.fractional_linear_relation is not None else 0}` / `1` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: "
+                        f"`{len(j_pb_quotient.self_polynomial_scan.hits)}` / "
+                        f"`{len(j_pb_quotient.self_polynomial_scan.moduli_checked) * len(j_pb_quotient.self_polynomial_scan.fg_degree_values) * len(j_pb_quotient.self_polynomial_scan.t_degree_values)}` hit boxes."
+                    )
+                    lines.append(
+                        f"- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: "
+                        f"`{len(j_pb_quotient.self_fractional_linear_scan.hits)}` / "
+                        f"`{len(j_pb_quotient.self_fractional_linear_scan.moduli_checked) * len(j_pb_quotient.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                    )
+                    if j_pb_bridge.quotient_named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                f"Canonical Weber `j`-side vs `P/B` bridge quotient "
+                                f"`{j_pb_bridge.quotient_label}`"
+                            ),
+                            gg_scan=j_pb_bridge.quotient_named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                    if j_pb_quotient.normalized_followup is not None:
+                        j_pb_followup = j_pb_quotient.normalized_followup
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `{j_pb_followup.label}`: "
+                            f"`{j_pb_followup.expression}`."
+                        )
+                        if (
+                            j_pb_followup.first_failure_power is None
+                            or j_pb_followup.first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `{j_pb_followup.label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `{j_pb_followup.label}`: "
+                                f"`{j_pb_followup.label} - 1` first fails at "
+                                f"`{series_symbol}^{j_pb_followup.first_failure_power}` with coefficient "
+                                f"`{_format_expr(j_pb_followup.first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: "
+                            f"`{len(j_pb_followup.self_polynomial_scan.hits)}` / "
+                            f"`{len(j_pb_followup.self_polynomial_scan.moduli_checked) * len(j_pb_followup.self_polynomial_scan.fg_degree_values) * len(j_pb_followup.self_polynomial_scan.t_degree_values)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: "
+                            f"`{len(j_pb_followup.self_fractional_linear_scan.hits)}` / "
+                            f"`{len(j_pb_followup.self_fractional_linear_scan.moduli_checked) * len(j_pb_followup.self_fractional_linear_scan.t_degree_values)}` hit boxes."
+                        )
+                    if j_pb_bridge.quotient_followup_named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                "Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up "
+                                f"`{j_pb_quotient.normalized_followup.label}`"
+                            ),
+                            gg_scan=j_pb_bridge.quotient_followup_named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                    if j_pb_bridge.quotient_followup_bridge_scan is not None:
+                        j_pb_nested_bridge = j_pb_bridge.quotient_followup_bridge_scan
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` nested bridge difference `{j_pb_nested_bridge.difference_label}`: "
+                            f"`{j_pb_nested_bridge.difference_expression}`."
+                        )
+                        if (
+                            j_pb_nested_bridge.difference_first_failure_power is None
+                            or j_pb_nested_bridge.difference_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                "- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: "
+                                "matches `0` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                "- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: "
+                                f"first fails at `{series_symbol}^{j_pb_nested_bridge.difference_first_failure_power}` "
+                                f"with coefficient `{_format_expr(j_pb_nested_bridge.difference_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` nested bridge quotient `{j_pb_nested_bridge.quotient_label}`: "
+                            f"`{j_pb_nested_bridge.quotient_expression}`."
+                        )
+                        if (
+                            j_pb_nested_bridge.quotient_first_failure_power is None
+                            or j_pb_nested_bridge.quotient_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- Canonical Weber `j`-side vs `P/B` nested bridge quotient `{j_pb_nested_bridge.quotient_label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- Canonical Weber `j`-side vs `P/B` nested bridge quotient `{j_pb_nested_bridge.quotient_label}`: "
+                                f"`{j_pb_nested_bridge.quotient_label} - 1` first fails at "
+                                f"`{series_symbol}^{j_pb_nested_bridge.quotient_first_failure_power}` with coefficient "
+                                f"`{_format_expr(j_pb_nested_bridge.quotient_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: "
+                            f"`{sum(1 for scan in j_pb_nested_bridge.polynomial_scans if scan.relation is not None)}` / "
+                            f"`{len(j_pb_nested_bridge.polynomial_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: "
+                            f"`{1 if j_pb_nested_bridge.fractional_linear_relation is not None else 0}` / `1` hit boxes."
+                        )
+                        if j_pb_nested_bridge.quotient_named_gg_modular_equation_scan is not None:
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    f"Canonical Weber `j`-side vs `P/B` nested bridge quotient "
+                                    f"`{j_pb_nested_bridge.quotient_label}`"
+                                ),
+                                gg_scan=j_pb_nested_bridge.quotient_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
+                            )
                 lines.append(
                     f"- Weber residual quotient-coordinate `{bridge_scan.quotient_coordinate_label}`: "
                     f"`{bridge_scan.quotient_coordinate_expression}`."
@@ -13605,6 +15911,21 @@ def build_candidate_tail_family_note(
                     f"`{len(coordinate_plus_eta_hits)}` / "
                     f"`{len(coordinate_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                 )
+                if coordinate_scan.named_gg_modular_equation_scan is not None:
+                    lines.append(
+                        "- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is "
+                        "now also checked directly against the named `GG` modular-equation coordinates, so "
+                        "we test that template-normalized branch before falling back to the later residual quotient."
+                    )
+                    _append_named_gg_bridge_lines(
+                        lines,
+                        prefix=(
+                            f"Weber quotient-coordinate template normalization "
+                            f"`{coordinate_scan.label}`"
+                        ),
+                        gg_scan=coordinate_scan.named_gg_modular_equation_scan,
+                        series_symbol=series_symbol,
+                    )
                 if coordinate_scan.normalized_followup is not None:
                     coordinate_followup_scan = coordinate_scan.normalized_followup
                     coordinate_followup_self_product_hits = [
@@ -13683,6 +16004,32 @@ def build_candidate_tail_family_note(
                         f"`{len(coordinate_followup_plus_eta_hits)}` / "
                         f"`{len(coordinate_followup_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                     )
+                    if coordinate_followup_scan.named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                f"Weber quotient-coordinate normalized follow-up "
+                                f"`{coordinate_followup_scan.label}`"
+                            ),
+                            gg_scan=coordinate_followup_scan.named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                    if coordinate_followup_scan.named_gg_descendant_preview is not None:
+                        preview = coordinate_followup_scan.named_gg_descendant_preview
+                        lines.append(
+                            f"- Weber quotient-coordinate normalized follow-up `{coordinate_followup_scan.label}` "
+                            f"odd-prime descendant preview: direct ladder `{', '.join(preview.direct_labels)}`; "
+                            f"quotient ladder `{', '.join(preview.quotient_labels)}`."
+                        )
+                    if coordinate_followup_scan.named_gg_descendant_focused_scan is not None:
+                        _append_named_gg_descendant_focus_lines(
+                            lines,
+                            prefix=(
+                                f"Weber quotient-coordinate normalized follow-up "
+                                f"`{coordinate_followup_scan.label}`"
+                            ),
+                            descendant_scan=coordinate_followup_scan.named_gg_descendant_focused_scan,
+                        )
                 if bridge_scan.followup_bridge_scan is not None:
                     followup_bridge = bridge_scan.followup_bridge_scan
                     polynomial_bridge_hits = [
@@ -13789,6 +16136,16 @@ def build_candidate_tail_family_note(
                         f"`{len(quotient_bridge_plus_eta_hits)}` / "
                         f"`{len(quotient_bridge_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                     )
+                    if followup_bridge.quotient_named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=(
+                                f"Weber normalized follow-up bridge quotient "
+                                f"`{followup_bridge.quotient_label}`"
+                            ),
+                            gg_scan=followup_bridge.quotient_named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
                     if quotient_bridge_scan.normalized_followup is not None:
                         quotient_bridge_followup = quotient_bridge_scan.normalized_followup
                         quotient_bridge_followup_self_product_hits = [
@@ -13865,6 +16222,32 @@ def build_candidate_tail_family_note(
                             f"`{len(quotient_bridge_followup_plus_eta_hits)}` / "
                             f"`{len(quotient_bridge_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
                         )
+                        if followup_bridge.quotient_followup_named_gg_modular_equation_scan is not None:
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    "Weber normalized follow-up bridge quotient normalized follow-up "
+                                    f"`{quotient_bridge_followup.label}`"
+                                ),
+                                gg_scan=followup_bridge.quotient_followup_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
+                            )
+                        if quotient_bridge_followup.named_gg_descendant_preview is not None:
+                            preview = quotient_bridge_followup.named_gg_descendant_preview
+                            lines.append(
+                                f"- Weber normalized follow-up bridge quotient normalized follow-up `{quotient_bridge_followup.label}` "
+                                f"odd-prime descendant preview: direct ladder `{', '.join(preview.direct_labels)}`; "
+                                f"quotient ladder `{', '.join(preview.quotient_labels)}`."
+                            )
+                        if quotient_bridge_followup.named_gg_descendant_focused_scan is not None:
+                            _append_named_gg_descendant_focus_lines(
+                                lines,
+                                prefix=(
+                                    f"Weber normalized follow-up bridge quotient normalized follow-up "
+                                    f"`{quotient_bridge_followup.label}`"
+                                ),
+                                descendant_scan=quotient_bridge_followup.named_gg_descendant_focused_scan,
+                            )
                     if followup_bridge.quotient_followup_bridge_scan is not None:
                         quotient_followup_bridge = followup_bridge.quotient_followup_bridge_scan
                         quotient_followup_polynomial_hits = [
@@ -14072,6 +16455,22 @@ def build_candidate_tail_family_note(
                                 f"`{len(quotient_followup_bridge_followup_plus_eta_hits)}` / "
                                 f"`{len(quotient_followup_bridge_followup.self_plus_pochhammer_eta_scans)}` hit boxes."
                             )
+                            if quotient_followup_bridge_followup.named_gg_descendant_preview is not None:
+                                preview = quotient_followup_bridge_followup.named_gg_descendant_preview
+                                lines.append(
+                                    f"- Weber quotient-follow-up bridge quotient normalized follow-up `{quotient_followup_bridge_followup.label}` "
+                                    f"odd-prime descendant preview: direct ladder `{', '.join(preview.direct_labels)}`; "
+                                    f"quotient ladder `{', '.join(preview.quotient_labels)}`."
+                                )
+                            if quotient_followup_bridge_followup.named_gg_descendant_focused_scan is not None:
+                                _append_named_gg_descendant_focus_lines(
+                                    lines,
+                                    prefix=(
+                                        "Weber quotient-follow-up bridge quotient normalized follow-up "
+                                        f"`{quotient_followup_bridge_followup.label}`"
+                                    ),
+                                    descendant_scan=quotient_followup_bridge_followup.named_gg_descendant_focused_scan,
+                                )
                         if quotient_followup_bridge.quotient_followup_named_gg_modular_equation_scan is not None:
                             _append_named_gg_bridge_lines(
                                 lines,
@@ -14208,6 +16607,59 @@ def build_candidate_tail_family_note(
                         f"- Weber residual normalized plus-Pochhammer + eta templates: "
                         f"`{len(followup_plus_eta_hits)}` / `{len(followup_scan.self_plus_pochhammer_eta_scans)}` hit boxes."
                     )
+                    if followup_scan.named_gg_modular_equation_scan is not None:
+                        _append_named_gg_bridge_lines(
+                            lines,
+                            prefix=f"Weber residual normalized follow-up `{followup_scan.label}`",
+                            gg_scan=followup_scan.named_gg_modular_equation_scan,
+                            series_symbol=series_symbol,
+                        )
+                    if followup_scan.named_gg_descendant_preview is not None:
+                        preview = followup_scan.named_gg_descendant_preview
+                        lines.append(
+                            f"- Weber residual normalized follow-up `{followup_scan.label}` "
+                            f"odd-prime descendant preview: direct ladder `{', '.join(preview.direct_labels)}`; "
+                            f"quotient ladder `{', '.join(preview.quotient_labels)}`."
+                        )
+                    if followup_scan.named_gg_descendant_focused_scan is not None:
+                        _append_named_gg_descendant_focus_lines(
+                            lines,
+                            prefix=f"Weber residual normalized follow-up `{followup_scan.label}`",
+                            descendant_scan=followup_scan.named_gg_descendant_focused_scan,
+                        )
+                    coordinate_followup_scan = bridge_scan.quotient_coordinate_template_scan.normalized_followup
+                    if (
+                        coordinate_followup_scan is not None
+                        and coordinate_followup_scan.named_gg_descendant_focused_scan is not None
+                        and followup_scan.named_gg_descendant_focused_scan is not None
+                    ):
+                        left_direct_hits, left_direct_total = _named_prefix_box_scan_hit_count(
+                            coordinate_followup_scan.named_gg_descendant_focused_scan.direct_scans
+                        )
+                        right_direct_hits, right_direct_total = _named_prefix_box_scan_hit_count(
+                            followup_scan.named_gg_descendant_focused_scan.direct_scans
+                        )
+                        left_quotient_hits, left_quotient_total = _named_prefix_box_scan_hit_count(
+                            coordinate_followup_scan.named_gg_descendant_focused_scan.quotient_scans
+                        )
+                        right_quotient_hits, right_quotient_total = _named_prefix_box_scan_hit_count(
+                            followup_scan.named_gg_descendant_focused_scan.quotient_scans
+                        )
+                        lines.append(
+                            f"- Weber odd-prime descendant comparison `{coordinate_followup_scan.label}` vs `{followup_scan.label}`: "
+                            f"shared direct ladder `{', '.join(coordinate_followup_scan.named_gg_descendant_focused_scan.direct_labels)}` "
+                            f"and shared quotient ladder `{', '.join(coordinate_followup_scan.named_gg_descendant_focused_scan.quotient_labels)}`."
+                        )
+                        lines.append(
+                            f"- Weber odd-prime descendant direct micro-box comparison: "
+                            f"`{coordinate_followup_scan.label}` has `{left_direct_hits}` / `{left_direct_total}` hits, "
+                            f"`{followup_scan.label}` has `{right_direct_hits}` / `{right_direct_total}` hits."
+                        )
+                        lines.append(
+                            f"- Weber odd-prime descendant quotient micro-box comparison: "
+                            f"`{coordinate_followup_scan.label}` has `{left_quotient_hits}` / `{left_quotient_total}` hits, "
+                            f"`{followup_scan.label}` has `{right_quotient_hits}` / `{right_quotient_total}` hits."
+                        )
             if sample.gg_modular_equation_scan is not None:
                 gg_scan = sample.gg_modular_equation_scan
                 direct_prefix_summary = "; ".join(
@@ -14543,29 +16995,16 @@ def build_candidate_tail_family_note(
             1
             for sample in sample_scans
             if sample.weber_residual_bridge_scan is not None
-            and (
-                bool(sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_polynomial_scan.hits)
-                or bool(sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_fractional_linear_scan.hits)
-                or any(
-                    scan.relation is not None
-                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_quotient_product_scans
-                )
-                or any(
-                    scan.relation is not None
-                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.eta_scans
-                )
-                or any(
-                    scan.relation is not None
-                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.modular_unit_eta_scans
-                )
-                or any(
-                    scan.relation is not None
-                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_plus_pochhammer_scans
-                )
-                or any(
-                    scan.relation is not None
-                    for scan in sample.weber_residual_bridge_scan.classical_product_coordinate_scan.self_plus_pochhammer_eta_scans
-                )
+            and _constant_one_series_scan_has_hit(
+                sample.weber_residual_bridge_scan.classical_product_coordinate_scan
+            )
+        )
+        weber_anchor_canonical_j_hit_count = sum(
+            1
+            for sample in sample_scans
+            if sample.weber_residual_bridge_scan is not None
+            and _constant_one_series_scan_has_hit(
+                sample.weber_residual_bridge_scan.anchor_canonical_j_coordinate_scan
             )
         )
         weber_residual_quotient_hit_count = sum(
@@ -14639,9 +17078,10 @@ def build_candidate_tail_family_note(
                 f"- Weber g-class-invariant sample hits found: `{weber_g_class_invariant_hit_count}`",
                 f"- Weber G-class-invariant sample hits found: `{weber_p_class_invariant_hit_count}`",
                 f"- Classical Weber `f2` tri-product sample hits found: `{weber_classical_product_hit_count}`",
+                f"- Canonical Weber anchor `j`-side sample hits found: `{weber_anchor_canonical_j_hit_count}`",
                 f"- Weber residual-quotient sample hits found: `{weber_residual_quotient_hit_count}`",
                 f"- Weber residual-follow-up sample hits found: `{weber_residual_followup_hit_count}`",
-                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.",
+                "- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the anchor-derived canonical Weber `j` box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.",
                 "",
                 f"- Build elapsed seconds: `{perf_counter() - build_started_at:.2f}`",
                 "",

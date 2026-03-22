@@ -8,17 +8,17 @@
 - Depth: `40`
 - Series order: `90`
 - Polynomial relation search: total degree `<= 4`
-- Build elapsed seconds before final render: `2091.88`
+- Build elapsed seconds before final render: `1809.79`
 
 ## Build Timing
 
 - `series-and-benchmark-setup`: `0.00`
-- `rhs-uniqueness-search`: `75.90`
-- `source-family-scans`: `527.84`
-- `cross-family-functional-scans`: `1003.20`
-- `explicit-gg-family-scans`: `404.71`
-- `benchmark-tower-scans`: `80.23`
-- `final-render`: `15.20`
+- `rhs-uniqueness-search`: `72.75`
+- `source-family-scans`: `434.42`
+- `cross-family-functional-scans`: `836.03`
+- `explicit-gg-family-scans`: `390.01`
+- `benchmark-tower-scans`: `76.59`
+- `final-render`: `13.47`
 
 ## Objects
 

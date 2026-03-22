@@ -117,9 +117,99 @@ U_t2 = T(t^2) / (1 + t^2)
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t^3)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^3` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-1*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `-2`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-3`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-3`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-3`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-3*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `-19/12`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
@@ -138,6 +228,15 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -153,6 +252,14 @@ U_t2 = T(t^2) / (1 + t^2)
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -162,6 +269,176 @@ U_t2 = T(t^2) / (1 + t^2)
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `6`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `87/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `116/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `58/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `87/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `409/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `499/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `998/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `499/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `499/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `219/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `292/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `146/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `219/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1083/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3963/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `2642/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1321/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3963/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (4/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `23/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `53/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `106/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `53/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `53/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-67/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-134/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-67/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-67/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-29/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-29/5`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-72/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-96/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-48/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-72/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-29/5*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-602/435`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-167/145`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-668/435`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-334/435`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-167/145`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-538/87`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-538/87`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-451/29`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-1804/87`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-902/87`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-451/29`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -176,6 +453,15 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -185,6 +471,18 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `33/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `22`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `11`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `33/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -198,6 +496,14 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `2`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -207,6 +513,18 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `12`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -221,9 +539,9 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-6`.
@@ -237,10 +555,14 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `617/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1234/15`.
@@ -263,6 +585,13 @@ U_t2 = T(t^2) / (1 + t^2)
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -309,9 +638,99 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `-3/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `5/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `5/4`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `5/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (5/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `87/40`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `147/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `147/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `147/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (147/40*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `1783/588`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
@@ -330,6 +749,15 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -345,6 +773,14 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-28`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-21`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-8*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-5/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -354,6 +790,176 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-6`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `48/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `159/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `212/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `106/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `159/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (48/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `503/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `593/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1186/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `593/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `593/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `112/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `387/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `516/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `258/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `387/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (112/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1333/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `4713/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `3142/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1571/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `4713/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `39/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `52/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `26/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `39/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (8/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `-59/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-29/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-58/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-29/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-29/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-299/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-299/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-269/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-538/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-269/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-269/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `256/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `256/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-167/20`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-167/20`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-441/20`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-147/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-147/10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-441/20`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-167/20*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-70141/20040`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-50101/6680`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-50101/5010`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-50101/10020`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-50101/6680`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-52505/4008`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-52505/4008`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-48497/1336`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-48497/1002`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-48497/2004`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-48497/1336`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -368,6 +974,15 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (8*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `11/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -377,6 +992,18 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `39/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `26`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `13`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `39/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -390,6 +1017,14 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -399,6 +1034,18 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-3/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -413,9 +1060,9 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-2`.
@@ -429,10 +1076,14 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `593/6`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1186/9`.
@@ -455,6 +1106,13 @@ U_t2_g1 = (U_t2 - 1) / t^3
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -501,9 +1159,99 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `5/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `-9/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-9/4`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-9/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-9/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `-29/24`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-89/24`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-89/24`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-89/24`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-89/24*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `-2135/1068`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^2` with coefficient `4`.
@@ -522,6 +1270,15 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -537,6 +1294,14 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (8*t^2)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `4`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -546,6 +1311,176 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^2` with coefficient `-48/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (-48/5*t^2)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^2` with coefficient `-112/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (-112/17*t^2)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `4`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^2` with coefficient `-8/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^2` with coefficient `-8/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (-8/5*t^2)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^2` with coefficient `-256/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^2` with coefficient `-256/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-9/4`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-9/4`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-15/4`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-5/2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-15/4`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-9/4*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-219/40`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-537/40`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-179/10`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-179/20`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-537/40`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-219/40`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-219/40`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-537/40`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-179/10`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-179/20`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-537/40`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -560,6 +1495,15 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (-8*t^2)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -569,6 +1513,18 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -582,6 +1538,14 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^2` with coefficient `-163/6`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -591,6 +1555,18 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-4`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -605,9 +1581,9 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
@@ -621,10 +1597,14 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `283/8`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `283/6`.
@@ -647,6 +1627,13 @@ U_t2_g2 = (U_t2_g1 - 1) / t^1
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -693,9 +1680,99 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `8`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-2*t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `-1/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `-1/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^2` with coefficient `-3/8`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^2` with coefficient `-3/8`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^2` with coefficient `-3/8`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-3/8*t^2)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-1/2`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1/2`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1/2`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-1/2*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `61/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-6`.
@@ -714,6 +1791,15 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-20`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-15`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -729,6 +1815,14 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-33`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-44`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-22`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-33`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-12*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-25/6`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -738,6 +1832,176 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-19/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-38/3`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-19/3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-19/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `72/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `231/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `308/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `154/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `231/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (72/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `239/30`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `269/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `538/15`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `269/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `269/10`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `168/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `555/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `740/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `370/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `555/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (168/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `5701/714`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `6415/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `12830/357`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `6415/357`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `6415/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `12/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `12/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `51/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `68/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `34/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `51/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (12/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `-101/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-71/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-142/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-71/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-71/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-461/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-461/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-431/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-862/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-431/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-431/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `384/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `384/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-72/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-72/5`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-201/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-268/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-134/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-201/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-72/5*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-6151/960`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-5191/320`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-5191/240`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-5191/480`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-5191/320`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-3995/192`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-3995/192`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3803/64`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-3803/48`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-3803/96`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3803/64`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -752,6 +2016,15 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `39`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `52`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `26`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `39`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (12*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `47/6`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -761,6 +2034,18 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `53/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `106/3`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `53/3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `53/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -774,6 +2059,14 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `6`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -783,6 +2076,18 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-11/6`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -797,9 +2102,9 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-5/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-10/3`.
@@ -813,10 +2118,14 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `1619/22`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `3238/33`.
@@ -839,6 +2148,13 @@ U_t2_g3 = (1 - U_t2_g2) / t^1
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -885,9 +2201,99 @@ U_t3 = T(t^3) / (1 + t^3)
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^8` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t^4)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^2` with coefficient `1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^4` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-1*t^2)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-1*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `13/4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
@@ -906,6 +2312,15 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -921,6 +2336,14 @@ U_t3 = T(t^3) / (1 + t^3)
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -930,6 +2353,176 @@ U_t3 = T(t^3) / (1 + t^3)
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `6`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `87/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `116/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `58/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `87/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `409/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `499/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `998/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `499/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `499/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `219/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `292/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `146/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `219/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1083/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3963/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `2642/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1321/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3963/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (4/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `23/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `53/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `106/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `53/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `53/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-67/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-134/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-67/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-67/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-24/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-24/5`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-57/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-76/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-38/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-57/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-24/5*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-17/360`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `343/120`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `343/90`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `343/180`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `343/120`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-349/72`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-349/72`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-277/24`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-277/18`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-277/36`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-277/24`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -944,6 +2537,15 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -953,6 +2555,18 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `33/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `22`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `11`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `33/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -966,6 +2580,14 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `2`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -975,6 +2597,18 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `12`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -989,9 +2623,9 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-6`.
@@ -1005,10 +2639,14 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `121/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `242/3`.
@@ -1031,6 +2669,13 @@ U_t3 = T(t^3) / (1 + t^3)
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -1077,9 +2722,99 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^4` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t^2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^2` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (1*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `9/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `13/4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `13/4`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `13/4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (13/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `3`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
@@ -1098,6 +2833,15 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -1113,6 +2857,14 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `3/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1122,6 +2874,176 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `10`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `87/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `116/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `58/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `87/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `499/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `589/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1178/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `589/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `589/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `219/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `292/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `146/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `219/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1321/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `4677/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `3118/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1559/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `4677/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (4/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `53/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `83/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `166/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `83/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `83/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-67/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-67/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-37/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-74/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-37/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-37/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-19/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-19/5`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-42/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-56/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-28/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-42/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-19/5*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `1837/1140`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `2977/380`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `2977/285`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2977/570`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `2977/380`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-727/228`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-727/228`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-499/76`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-499/57`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-499/114`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-499/76`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -1136,6 +3058,15 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `11/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1145,6 +3076,18 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `39/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `26`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `13`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `39/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -1158,6 +3101,14 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `2`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1167,6 +3118,18 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `12`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-7/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -1181,9 +3144,9 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-15/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-10`.
@@ -1197,10 +3160,14 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `557/14`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1114/21`.
@@ -1223,6 +3190,13 @@ U_t3_g1 = (U_t3 - 1) / t^4
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -1269,9 +3243,99 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `3/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `-5/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-5/4`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-5/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-5/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `41/40`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-19/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-19/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-19/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-19/40*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `777/76`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^2` with coefficient `2`.
@@ -1290,6 +3354,15 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -1305,6 +3378,14 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (4*t^2)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `6`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1314,6 +3395,176 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^2` with coefficient `-24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (-24/5*t^2)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `6`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^2` with coefficient `-56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (-56/17*t^2)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `6`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^2` with coefficient `-4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^2` with coefficient `-4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (-4/5*t^2)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `6`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `6`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `6`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^2` with coefficient `-128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^2` with coefficient `-128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-5/4`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-5/4`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3/4`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-1`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-1/2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3/4`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-5/4*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-563/200`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-1089/200`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-363/50`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-363/100`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-1089/200`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-563/200`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-563/200`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-1089/200`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-363/50`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-363/100`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-1089/200`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -1328,6 +3579,15 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (-4*t^2)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `6`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1337,6 +3597,18 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `28`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `21`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -1350,6 +3622,14 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^2` with coefficient `-151/6`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1359,6 +3639,18 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-6`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -1373,9 +3665,9 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-20`.
@@ -1389,10 +3681,14 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `52/3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `208/9`.
@@ -1415,6 +3711,13 @@ U_t3_g2 = (U_t3_g1 - 1) / t^2
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -1461,9 +3764,99 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `3/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `-7/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-7/4`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-7/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-7/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `-17/8`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-29/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-29/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-29/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-29/8*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `-2633/812`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
@@ -1482,6 +3875,15 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -1497,6 +3899,14 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-28`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-21`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-8*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-1`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1506,6 +3916,176 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^2` with coefficient `-15/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^2` with coefficient `-10`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^2` with coefficient `-5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^2` with coefficient `-15/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `48/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `159/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `212/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `106/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `159/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (48/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `319/45`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `364/15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1456/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `728/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `364/15`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `112/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `387/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `516/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `258/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `387/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (112/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `845/119`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `2892/119`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `3856/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1928/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `2892/119`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `39/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `52/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `26/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `39/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (8/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `-7/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `8/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `32/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `16/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-127/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-127/15`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-112/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-448/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-224/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-112/5`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `256/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `256/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-227/20`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-227/20`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-621/20`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-207/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-207/10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-621/20`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-227/20*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-107101/27240`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-79861/9080`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-79861/6810`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-79861/13620`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-79861/9080`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-73721/5448`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-73721/5448`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-68273/1816`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-68273/1362`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-68273/2724`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-68273/1816`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -1520,6 +4100,15 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (8*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `7`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1529,6 +4118,18 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `24`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `32`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `16`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `24`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -1542,6 +4143,14 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1551,6 +4160,18 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-3`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -1565,9 +4186,9 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-8`.
@@ -1581,10 +4202,14 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `140/3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `560/9`.
@@ -1607,6 +4232,13 @@ U_t3_g3 = (1 - U_t3_g2) / t^1
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -1653,9 +4285,99 @@ U_t4 = T(t^4) / (1 + t^4)
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^10` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t^5)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^3` with coefficient `1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^5` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `4` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^3` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^3` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^3` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-1*t^3)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-1*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `5/4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
@@ -1674,6 +4396,15 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -1689,6 +4420,14 @@ U_t4 = T(t^4) / (1 + t^4)
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1698,6 +4437,176 @@ U_t4 = T(t^4) / (1 + t^4)
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `6`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `87/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `116/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `58/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `87/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `409/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `499/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `998/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `499/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `499/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `219/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `292/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `146/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `219/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1083/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3963/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `2642/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1321/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3963/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (4/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `23/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `53/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `106/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `53/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `53/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-67/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-134/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-67/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-67/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-24/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-24/5`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-57/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-76/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-38/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-57/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-24/5*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-23/90`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `67/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `134/45`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `67/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `67/30`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-91/18`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-91/18`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-73/6`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-146/9`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-73/9`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-73/6`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -1712,6 +4621,15 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1721,6 +4639,18 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `33/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `22`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `11`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `33/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -1734,6 +4664,14 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `2`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1743,6 +4681,18 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `12`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -1757,9 +4707,9 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-6`.
@@ -1773,10 +4723,14 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `121/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `242/3`.
@@ -1799,6 +4753,13 @@ U_t4 = T(t^4) / (1 + t^4)
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -1845,9 +4806,99 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^6` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t^3)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `-1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^3` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `1`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (1*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `2`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `3`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `3`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `3`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (3*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `11/4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-2`.
@@ -1866,6 +4917,15 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -1881,6 +4941,14 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `1/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1890,6 +4958,176 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `6`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `87/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `116/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `58/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `87/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (24/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `409/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `499/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `998/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `499/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `499/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `219/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `292/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `146/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `219/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1083/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3963/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `2642/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1321/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3963/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (4/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `23/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `53/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `106/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `53/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `53/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-97/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-67/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-134/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-67/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-67/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-19/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-19/5`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-42/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-56/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-28/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-42/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-19/5*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `118/285`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `403/95`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1612/285`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `806/285`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `403/95`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-250/57`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-250/57`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-193/19`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-772/57`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-386/57`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-193/19`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -1904,6 +5142,15 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (4*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `9/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1913,6 +5160,18 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `33/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `22`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `11`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `33/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -1926,6 +5185,14 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `2`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -1935,6 +5202,18 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `12`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `9`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -1949,9 +5228,9 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-6`.
@@ -1965,10 +5244,14 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `617/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1234/15`.
@@ -1991,6 +5274,13 @@ U_t4_g1 = (U_t4 - 1) / t^5
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -2037,9 +5327,99 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `-1`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `3/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `-5/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-5/4`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-5/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-5/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `9/40`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-51/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-51/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-51/40`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-51/40*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `41/204`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^2` with coefficient `2`.
@@ -2058,6 +5438,15 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -2073,6 +5462,14 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (4*t^2)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `5`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -2082,6 +5479,176 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `24`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `12`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `18`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^2` with coefficient `-24/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (-24/5*t^2)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `5`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `24`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `12`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `18`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^2` with coefficient `-56/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (-56/17*t^2)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `5`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `24`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `12`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `18`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^2` with coefficient `-4/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^2` with coefficient `-4/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (-4/5*t^2)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `24`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `12`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `18`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `5`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `5`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `24`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `12`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `18`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^2` with coefficient `-128/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^2` with coefficient `-128/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-5/4`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-5/4`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3/4`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-1`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-1/2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3/4`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-5/4*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-723/200`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-1569/200`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-523/50`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-523/100`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-1569/200`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-723/200`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-723/200`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-1569/200`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-523/50`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-523/100`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-1569/200`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -2096,6 +5663,15 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (-4*t^2)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `5`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -2105,6 +5681,18 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `24`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `12`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `18`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -2118,6 +5706,14 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^2` with coefficient `-151/6`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -2127,6 +5723,18 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -2141,9 +5749,9 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-12`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-16`.
@@ -2157,10 +5765,14 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `128/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `512/15`.
@@ -2183,6 +5795,13 @@ U_t4_g2 = (U_t4_g1 - 1) / t^3
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -2229,9 +5848,99 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Morton Weber-Schlafli coordinate `P_ws`: `P_ws = (1/F - F) / 2`.
 - Morton Weber-Schlafli coordinate templates on `P_ws`: `0` / `1` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber-Schlafli template `P^2*P_2^2 + P^2 - 2*P_2`` first fails at `t^2` with coefficient `3`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws = P_ws / (-t)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws`: `N_P_ws - 1` first fails at `t^1` with coefficient `1/2`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_P_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Morton Weber-Schlafli coordinate `B_ws`: `B_ws = sqrt(root4(P_ws^8 + 16*P_ws^4) + 4)`.
 - Morton Weber-Schlafli coordinate templates on `B_ws`: `0` / `2` exact hits.
 - Morton Weber-Schlafli coordinate obstruction witnesses: `Morton Weber companion template `B^2 - B_2 - 4`` first fails at `t^0` with coefficient `-2`; `Morton Weber companion template `B_2^4 - P^8 - 16*P^4`` first fails at `t^0` with coefficient `16`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws = B_ws / (2)`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws`: `N_B_ws - 1` first fails at `t^1` with coefficient `-1/4`.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-term-normalized coordinate `N_B_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: `D_PB_ws = N_B_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge difference `D_PB_ws`: first fails at `t^1` with coefficient `-3/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-3/4`.
+- Morton Weber-Schlafli leading-normalized bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws = N_B_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws`: `Q_PB_ws - 1` first fails at `t^1` with coefficient `-3/4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_2`, `Q_PB_ref_ws_3`, `Q_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient ladder: `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed ladder: `Q_PB_ref_ws`, `Q_PB_ref_ws_q2`, `Q_PB_ref_ws_q3`, `Q_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient `Q_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws = (Q_PB_ws - 1) / (-3/4*t^1)`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws`: `K_PB_ws - 1` first fails at `t^1` with coefficient `3/8`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct ladder: `K_PB_ref_ws`, `K_PB_ref_ws_2`, `K_PB_ref_ws_3`, `K_PB_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient ladder: `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed ladder: `K_PB_ref_ws`, `K_PB_ref_ws_q2`, `K_PB_ref_ws_q3`, `K_PB_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized bridge quotient normalized follow-up `K_PB_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: `D_PK_ws = K_PB_ws - N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge difference `D_PK_ws`: first fails at `t^1` with coefficient `-1/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws = K_PB_ws / N_P_ws`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws`: `Q_PK_ws - 1` first fails at `t^1` with coefficient `-1/8`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_2`, `Q_PK_ref_ws_3`, `Q_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient ladder: `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed ladder: `Q_PK_ref_ws`, `Q_PK_ref_ws_q2`, `Q_PK_ref_ws_q3`, `Q_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient `Q_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws = (Q_PK_ws - 1) / (-1/8*t^1)`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws`: `L_PK_ws - 1` first fails at `t^1` with coefficient `151/12`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` eta templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` modular-unit / eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer templates: `0` / `3` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct ladder: `L_PK_ref_ws`, `L_PK_ref_ws_2`, `L_PK_ref_ws_3`, `L_PK_ref_ws_4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient ladder: `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed ladder: `L_PK_ref_ws`, `L_PK_ref_ws_q2`, `L_PK_ref_ws_q3`, `L_PK_ref_ws_q4`.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` direct prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` quotient prefixes: polynomial `0` / `6` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Morton Weber-Schlafli leading-normalized nested bridge quotient normalized follow-up `L_PK_ws` focused `Weber bridge` mixed prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes.
 - Weber class-invariant coordinate `g12_ws`: `Z_g = ((1 - t*F^2)^2) / (4*t*F^2), g12_ws = 4*t*(Z_g - 1/Z_g)`.
 - Weber class-invariant template on `g12_ws`: `(t^2; t^4)_inf^12`.
 - Weber class-invariant obstruction witness: `Chan--Huang Weber g-coordinate template` first differs from `(t^2; t^4)_inf^12` at `t^1` with coefficient `-4`.
@@ -2250,6 +5959,15 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber class-invariant correction plus-Pochhammer + eta templates: `0` / `12` hit boxes.
 - Weber residual bridge keeps `G_g12_ws` as the current primary residual: `G_g12_ws = g12_ws / (t^2; t^4)_inf^12`.
 - Weber residual bridge reason: The eta-side template `(t^2; t^4)_inf^12` is the simpler named source anchor, so `G_g12_ws` is the current primary residual and `G_p12_ws` is treated as its algebraically constrained companion.
+- Focused source-faithful residual pass: the primary Weber residual is now also pushed directly through the named Chan--Huang / Cho--Koo--Park `GG` modular-equation basis before moving on to the quotient residual.
+- Weber primary residual `G_g12_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber primary residual `G_g12_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber primary residual `G_g12_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber primary residual `G_g12_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-12`.
+- Weber primary residual `G_g12_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-6`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-9`.
 - Weber residual companion `G_p12_ws`: `G_p12_ws = p12_ws / (-t^2; t^4)_inf^12`.
 - Weber residual exact coordinate bridge: `g12_ws^4*p12_ws^2 - g12_ws^2*p12_ws^4 + 48*t^2*g12_ws^2*p12_ws^2 + 4096*t^6 = 0`.
 - Weber residual exact coordinate bridge verdict: matches through the checked truncation.
@@ -2265,6 +5983,14 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Classical Weber `f2` tri-product modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-21`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-28`.
+- Classical Weber `f2` tri-product coordinate `G_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-14`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-21`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws = (G_f2_ws - 1) / (-8*t^1)`.
 - Classical Weber `f2` tri-product normalized follow-up `H_f2_ws`: `H_f2_ws - 1` first fails at `t^1` with coefficient `-3/2`.
 - Classical Weber `f2` tri-product normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -2274,6 +6000,176 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Classical Weber `f2` tri-product normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Classical Weber `f2` tri-product normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-3/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-2`.
+- Classical Weber `f2` tri-product normalized follow-up `H_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-1`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-3/2`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`.
+- Canonical Weber `j`-side reason: Yui--Zagier's Weber cubic `(X - 16)^3 = X*j` turns the classical Weber `f2` coordinate into a canonical `j`-side constant-1 object once the true-source normalization makes `G_f2_ws = 1`.
+- Canonical Weber `j`-side bridge: `3375*J_f2_ws*G_f2_ws - (16 - G_f2_ws)^3 = 0`.
+- Canonical Weber `j`-side coordinate `J_f2_ws`: `J_f2_ws - 1` first fails at `t^1` with coefficient `48/5`.
+- Canonical Weber `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `159/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `212/5`.
+- Canonical Weber `j`-side coordinate `J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `106/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `159/5`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws = (J_f2_ws - 1) / (48/5*t^1)`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws`: `H_J_f2_ws - 1` first fails at `t^1` with coefficient `593/90`.
+- Canonical Weber `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `683/30`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1366/45`.
+- Canonical Weber `j`-side normalized follow-up `H_J_f2_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `683/45`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `683/30`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`.
+- Canonical Weber anchor `j`-side reason: The same signed Weber cubic also turns the squared `g`-side branch `1 / G_X_ws = G_g12_ws^2` into a second canonical `j`-side constant-1 object, so the template-normalized anchor now has its own direct `j` lift.
+- Canonical Weber anchor `j`-side bridge: `4913*J_X_ws*G_X_ws^2 - (1 + 16*G_X_ws)^3 = 0`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws`: `J_X_ws - 1` first fails at `t^1` with coefficient `112/17`.
+- Canonical Weber anchor `j`-side self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `387/17`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `516/17`.
+- Canonical Weber anchor `j`-side coordinate `J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `258/17`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `387/17`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws = (J_X_ws - 1) / (112/17*t^1)`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws`: `H_J_X_ws - 1` first fails at `t^1` with coefficient `1571/238`.
+- Canonical Weber anchor `j`-side normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber anchor `j`-side normalized self-quotient finite-product boxes: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized eta templates: `0` / `4` hit boxes.
+- Canonical Weber anchor `j`-side normalized modular-unit / eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer templates: `0` / `3` hit boxes.
+- Canonical Weber anchor `j`-side normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `5427/238`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `3618/119`.
+- Canonical Weber anchor `j`-side normalized follow-up `H_J_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1809/119`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `5427/238`.
+- Canonical Weber `j`-side anchor bridge difference `D_XJ_ws`: `D_XJ_ws = J_f2_ws - G_X_ws`.
+- Canonical Weber `j`-side anchor bridge difference verdict: first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws = J_f2_ws / G_X_ws`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws`: `Q_XJ_ws - 1` first fails at `t^1` with coefficient `8/5`.
+- Canonical Weber `j`-side anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `39/5`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `52/5`.
+- Canonical Weber `j`-side anchor bridge quotient `Q_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `26/5`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `39/5`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws = (Q_XJ_ws - 1) / (8/5*t^1)`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws`: `K_XJ_ws - 1` first fails at `t^1` with coefficient `-29/30`.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `1/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `2/15`.
+- Canonical Weber `j`-side anchor bridge quotient normalized follow-up `K_XJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `1/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `1/10`.
+- Canonical Weber `j`-side nested anchor bridge difference `D_XKJ_ws`: `D_XKJ_ws = K_XJ_ws - G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge difference verdict: first fails at `t^1` with coefficient `-269/30`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws = K_XJ_ws / G_X_ws`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws`: `Q_XKJ_ws - 1` first fails at `t^1` with coefficient `-269/30`.
+- Canonical Weber `j`-side nested anchor bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-239/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-478/15`.
+- Canonical Weber `j`-side nested anchor bridge quotient `Q_XKJ_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-239/15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-239/10`.
+- Canonical Weber `j`-side lift-bridge difference `D_JX_ws`: `D_JX_ws = J_f2_ws - J_X_ws`.
+- Canonical Weber `j`-side lift-bridge difference verdict: first fails at `t^1` with coefficient `256/85`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws = J_f2_ws / J_X_ws`.
+- Canonical Weber `j`-side lift-bridge quotient `Q_JX_ws`: `Q_JX_ws - 1` first fails at `t^1` with coefficient `256/85`.
+- Canonical Weber `j`-side lift-bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side lift-bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge difference `D_JPB_ws`: `D_JPB_ws = Q_PB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge difference verdict: first fails at `t^1` with coefficient `-207/20`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws = Q_PB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws`: `Q_JPB_ws - 1` first fails at `t^1` with coefficient `-207/20`.
+- Canonical Weber `j`-side vs `P/B` bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-561/20`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-187/5`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient `Q_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-187/10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-561/20`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws = (Q_JPB_ws - 1) / (-207/20*t^1)`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws`: `K_JPB_ws - 1` first fails at `t^1` with coefficient `-85981/24840`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized self-fractional-linear uniqueness boxes: `0` / `9` hit boxes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-61141/8280`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-61141/6210`.
+- Canonical Weber `j`-side vs `P/B` bridge quotient normalized follow-up `K_JPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-61141/12420`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-61141/8280`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference `D_JKPB_ws`: `D_JKPB_ws = K_JPB_ws - J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge difference verdict: first fails at `t^1` with coefficient `-64889/4968`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws = K_JPB_ws / J_f2_ws`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws`: `Q_JKPB_ws - 1` first fails at `t^1` with coefficient `-64889/4968`.
+- Canonical Weber `j`-side vs `P/B` nested bridge polynomial boxes: `0` / `3` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge fractional-linear box: `0` / `1` hit boxes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-59921/1656`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-59921/1242`.
+- Canonical Weber `j`-side vs `P/B` nested bridge quotient `Q_JKPB_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `-59921/2484`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `-59921/1656`.
 - Weber residual quotient-coordinate `X_g_ws`: `X_g_ws = 16*t^2 / g12_ws^2`.
 - Weber residual exact quotient-coordinate bridge: `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0, Q_gp_ws = p12_ws / g12_ws`.
 - Weber residual exact quotient-coordinate bridge verdict: matches through the checked truncation.
@@ -2288,6 +6184,15 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber quotient-coordinate template modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate template plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Focused source-faithful quotient/template pass: the foreground `G_X_ws` lane is now also checked directly against the named `GG` modular-equation coordinates, so we test that template-normalized branch before falling back to the later residual quotient.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `27`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `36`.
+- Weber quotient-coordinate template normalization `G_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `18`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `27`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws = (G_X_ws - 1) / (8*t^1)`.
 - Weber quotient-coordinate normalized follow-up `H_X_ws`: `H_X_ws - 1` first fails at `t^1` with coefficient `13/2`.
 - Weber quotient-coordinate normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -2297,6 +6202,18 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber quotient-coordinate normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-coordinate normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient prefixes: polynomial `0` / `7` hit prefixes; skipped `1`; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` mixed quotient prefixes: polynomial `0` / `8` hit prefixes; skipped `2`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `45/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `30`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `45/2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-coordinate normalized follow-up `H_X_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber normalized follow-up bridge difference `D_XR_ws`: `D_XR_ws = H_gp_ws - H_X_ws`.
 - Weber normalized follow-up bridge difference `D_XR_ws`: first fails at `t^2` with coefficient `-24`.
 - Weber normalized follow-up bridge quotient `Q_XR_ws`: `Q_XR_ws = H_gp_ws / H_X_ws`.
@@ -2310,6 +6227,14 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber normalized follow-up bridge quotient modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `3`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `4`.
+- Weber normalized follow-up bridge quotient `Q_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `2`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `3`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws = (Q_XR_ws - 1) / (-24*t^2)`.
 - Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws`: `K_XR_ws - 1` first fails at `t^1` with coefficient `4`.
 - Weber normalized follow-up bridge quotient normalized self-polynomial uniqueness boxes: `0` / `18` hit boxes.
@@ -2319,6 +6244,18 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber normalized follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber normalized follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` exact templates: `0` / `30` exact template hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `15`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `20`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` named `GG` quotient exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, Q_3)` first fails at `t^1` with coefficient `10`; `Chan--Huang Cor. 3.2(ii) on (F, Q_4)` first fails at `t^1` with coefficient `15`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber normalized follow-up bridge quotient normalized follow-up `K_XR_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: `D_XK_ws = K_XR_ws - H_X_ws`.
 - Weber quotient-follow-up bridge difference `D_XK_ws`: first fails at `t^1` with coefficient `-5/2`.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws`: `Q_XK_ws = K_XR_ws / H_X_ws`.
@@ -2333,9 +6270,9 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber quotient-follow-up bridge quotient plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient plus-Pochhammer + eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient `Q_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `-9/2`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `-6`.
@@ -2349,10 +6286,14 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber quotient-follow-up bridge quotient normalized modular-unit / eta templates: `0` / `9` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber quotient-follow-up bridge quotient normalized plus-Pochhammer + eta templates: `0` / `9` hit boxes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` exact templates: `0` / `30` exact template hits.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient prefixes: polynomial `0` / `8` hit prefixes; multiplicative `0` / `4` hit prefixes; fractional-linear `0` / `4` hit prefixes; two-layer fractional-linear `0` / `3` hit prefixes.
-- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `10` hit prefixes; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
+- Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` mixed quotient prefixes: polynomial `0` / `9` hit prefixes; skipped `1`; multiplicative `0` / `5` hit prefixes; fractional-linear `0` / `5` hit prefixes; two-layer fractional-linear `0` / `4` hit prefixes.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact modular-equation templates: `0` / `2` exact direct Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` quotient exact modular-equation templates: `0` / `2` exact quotient-coordinate Chan--Huang hits.
 - Weber quotient-follow-up bridge quotient normalized follow-up `L_XK_ws` named `GG` direct exact obstruction witnesses: `Chan--Huang Cor. 3.2(i) on (F, GG3)` first fails at `t^1` with coefficient `587/10`; `Chan--Huang Cor. 3.2(ii) on (F, GG4)` first fails at `t^1` with coefficient `1174/15`.
@@ -2375,6 +6316,13 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber residual normalized modular-unit / eta templates: `0` / `12` hit boxes.
 - Weber residual normalized plus-Pochhammer templates: `0` / `3` hit boxes.
 - Weber residual normalized plus-Pochhammer + eta templates: `0` / `12` hit boxes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant preview: direct ladder `GG5, GG7, GG11`; quotient ladder `Q_5, Q_7, Q_11`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant micro-scan: checked direct ladder `GG5, GG7, GG11` and quotient ladder `Q_5, Q_7, Q_11` through order `8` with degree box `(1,)` and max exponent `2`.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant direct micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber residual normalized follow-up `H_gp_ws` odd-prime descendant quotient micro-boxes: polynomial `0` / `3` hit prefixes; multiplicative `0` / `3` hit prefixes; fractional-linear `0` / `3` hit prefixes.
+- Weber odd-prime descendant comparison `H_X_ws` vs `H_gp_ws`: shared direct ladder `GG5, GG7, GG11` and shared quotient ladder `Q_5, Q_7, Q_11`.
+- Weber odd-prime descendant direct micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
+- Weber odd-prime descendant quotient micro-box comparison: `H_X_ws` has `0` / `9` hits, `H_gp_ws` has `0` / `9` hits.
 - GG direct / reciprocal / quotient templates: `0` / `30` exact template hits.
 - GG direct exact modular-equation templates: `0` / `2` exact Chan--Huang direct hits.
 - GG quotient exact modular-equation templates: `0` / `2` exact Chan--Huang quotient-coordinate hits.
@@ -2410,9 +6358,10 @@ U_t4_g3 = (1 - U_t4_g2) / t^1
 - Weber g-class-invariant sample hits found: `0`
 - Weber G-class-invariant sample hits found: `0`
 - Classical Weber `f2` tri-product sample hits found: `0`
+- Canonical Weber anchor `j`-side sample hits found: `0`
 - Weber residual-quotient sample hits found: `0`
 - Weber residual-follow-up sample hits found: `0`
-- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
+- Current reading: the tail-family ladder remains structurally informative, but the sampled `U(x)` objects and their deeper gap residuals still do not collapse into the first direct eta / modular-unit boxes, the first nearby one-core eta-correction boxes, the direct Morton algebraic-function templates, the first Weber-Schlafli coordinate / companion templates, the first Ramanujan-Weber class-invariant compression boxes, the classical Weber `f2` tri-product box, the anchor-derived canonical Weber `j` box, the focused Weber residual-quotient box, the normalized Weber residual-follow-up box, or the first literature-driven GG/Weber modular-equation boxes.
 
-- Build elapsed seconds: `2478.11`
+- Build elapsed seconds: `9703.27`
 

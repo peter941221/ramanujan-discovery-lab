@@ -134,7 +134,9 @@ Current source-family-specific exact lane:
   `G_f2_ws = (g12_ws*p12_ws*(-t^4; t^4)_inf^12) / (64*t^2)` plus its
   normalized follow-up `H_f2_ws = (G_f2_ws - 1) / (-4*t^1)` also stay
   outside the first checked theorem-shaped closure boxes, the same shell now
-  records the source-backed classical Weber trio reading coming from
+  also carries the anchor-derived canonical Weber `j`-side coordinate
+  `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)` plus its normalized
+  follow-up `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`, records the source-backed classical Weber trio reading coming from
   Berndt--Chan--Zhang plus Yui--Zagier, and the focused quotient
   `R_gp_ws = G_p12_ws / G_g12_ws` plus the normalized follow-up
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` still have `0` hits in the first
@@ -457,13 +459,51 @@ theorem weberClassInvariantBridgeResearchWaypoint_true :
     weberClassInvariantBridgeResearchWaypoint := by
   exact Proofs.HeroCase.WeberClassInvariantBridge.currentWaypoint_true
 
+def weberClassInvariantJSideResearchWaypoint : Prop :=
+  Proofs.HeroCase.WeberClassInvariantBridge.canonicalJCoordinateWaypointProp
+
+theorem weberClassInvariantJSideResearchWaypoint_true :
+    weberClassInvariantJSideResearchWaypoint := by
+  exact Proofs.HeroCase.WeberClassInvariantBridge.canonicalJCoordinateWaypoint_true
+
+def weberClassInvariantAnchorJResearchWaypoint : Prop :=
+  Proofs.HeroCase.WeberClassInvariantBridge.anchorCanonicalJCoordinateWaypointProp
+
+theorem weberClassInvariantAnchorJResearchWaypoint_true :
+    weberClassInvariantAnchorJResearchWaypoint := by
+  exact Proofs.HeroCase.WeberClassInvariantBridge.anchorCanonicalJCoordinateWaypoint_true
+
+def weberClassInvariantResearchWaypoint : Prop :=
+  weberClassInvariantBridgeResearchWaypoint ∧
+    weberClassInvariantJSideResearchWaypoint ∧
+    weberClassInvariantAnchorJResearchWaypoint
+
+structure WeberClassInvariantResearchCertificate where
+  bridge : weberClassInvariantBridgeResearchWaypoint
+  jSide : weberClassInvariantJSideResearchWaypoint
+  anchorJSide : weberClassInvariantAnchorJResearchWaypoint
+
+def currentWeberClassInvariantResearchCertificate :
+    WeberClassInvariantResearchCertificate where
+  bridge := weberClassInvariantBridgeResearchWaypoint_true
+  jSide := weberClassInvariantJSideResearchWaypoint_true
+  anchorJSide := weberClassInvariantAnchorJResearchWaypoint_true
+
+theorem currentWeberClassInvariantResearchCertificate_sound :
+    weberClassInvariantResearchWaypoint := by
+  exact ⟨
+    currentWeberClassInvariantResearchCertificate.bridge,
+    currentWeberClassInvariantResearchCertificate.jSide,
+    currentWeberClassInvariantResearchCertificate.anchorJSide
+  ⟩
+
 def weberSchlafliBridgeResearchWaypoint : Prop :=
   weberSchlafliCoordinateExcludedProp ∧
-    weberClassInvariantBridgeResearchWaypoint
+    weberClassInvariantResearchWaypoint
 
 theorem weberSchlafliBridgeResearchWaypoint_true :
     weberSchlafliBridgeResearchWaypoint := by
-  exact ⟨weberSchlafliCoordinateExcluded, weberClassInvariantBridgeResearchWaypoint_true⟩
+  exact ⟨weberSchlafliCoordinateExcluded, currentWeberClassInvariantResearchCertificate_sound⟩
 
 def namedWeberCoordinateBridgeResearchWaypoint : Prop :=
   mortonNamedCoordinateResearchWaypoint ∧

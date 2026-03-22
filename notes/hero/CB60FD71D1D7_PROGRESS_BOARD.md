@@ -1,6 +1,6 @@
 # `cb60fd71d1d7` Progress Board
 
-Status date: `2026-03-20`
+Status date: `2026-03-23`
 
 ## Snapshot
 
@@ -29,7 +29,7 @@ State
 - Strongest current positive structure:
   `T(x) = 1 + x + x*(t + x)/T(t*x)`
 - Strongest current negative structure:
-  exact and bounded exclusion layers now cover page-43 neighborhoods, exact RR/cubic subsequence lanes, bounded Bauer-Muir neighborhoods, exact `GG` quotient-coordinate witnesses on sampled tail objects, and the first weighted `GG` correction ladder.
+  exact and bounded exclusion layers now cover page-43 neighborhoods, exact RR/cubic subsequence lanes, bounded Bauer-Muir neighborhoods, exact `GG` quotient-coordinate witnesses on sampled tail objects, the first weighted `GG` correction ladder, and the direct plus nested `P/B` normalized Weber bridge lane.
 
 ### 2. Lean Gate
 
@@ -144,6 +144,19 @@ Literature status
   differs from `1` at `t^1` with coefficient `4`; its first normalized
   follow-up `H_X_ws = (G_X_ws - 1) / (4*t^1)` still gives `0` hits in the same
   first theorem-shaped closure boxes.
+  The same template-normalized anchor now also carries its own canonical Weber
+  `j`-side lift
+  `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`, and on the hero sample that
+  coordinate first differs from `1` at `t^1` with coefficient `56/17`; its
+  normalized follow-up `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)` then first
+  differs from `1` at `t^1` with coefficient `1083/238`, while both layers
+  still give `0` hits in the same first theorem-shaped closure boxes.
+  The two canonical Weber `j`-side coordinates are now also compared directly
+  through a lightweight lift-bridge:
+  `D_JX_ws = J_f2_ws - J_X_ws` and `Q_JX_ws = J_f2_ws / J_X_ws`.
+  On the hero series, `Q_JX_ws - 1` first fails at `t^1` with coefficient
+  `128/85`, and the bounded degree-`<= 3` polynomial bridge plus the one-coordinate
+  fractional-linear bridge both still report `0` hits.
   The first direct bridge between the two hero-side normalized follow-ups is
   now also explicit:
   `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws`, and both first
@@ -182,6 +195,41 @@ Literature status
   `H_gp_ws = (R_gp_ws - 1) / (96*t^3)` is now also tracked explicitly; it still
   gives `0` hits in the same first theorem-shaped closure boxes.
 
+### A4. Weber-Schlafli normalized P/B bridge
+
+- Bridge note:
+  `notes/hero/CB60FD71D1D7_PB_BRIDGE_DECISION_NOTE.md`
+- Current verdict:
+  `N_P_ws` and `N_B_ws` both show `3 / 18` self-polynomial hits and `0` hits in the first surrounding fractional-linear / eta / product boxes.
+  The direct bridge layer `D_PB_ws`, `Q_PB_ws`, `K_PB_ws` first fails at `t^3` with coefficient `3/4`; its bridge polynomial box has exactly `1` hit, only at degree `3`.
+  The nested bridge layer `D_PK_ws`, `Q_PK_ws`, `L_PK_ws` first fails at `t^3` with coefficient `35/24`; its bridge polynomial box also has exactly `1` hit, again only at degree `3`.
+  `Q_PB_ws`, `K_PB_ws`, `Q_PK_ws`, and `L_PK_ws` all keep the same profile: `3 / 18` self-polynomial hits and `0` hits in the surrounding fractional-linear, self-quotient finite-product, eta, modular-unit / eta, and plus-Pochhammer boxes.
+  The first source-faithful one-coordinate orbit pass on that same ladder is now also complete:
+  on true `GG`, the direct `Q_PB_ref_ws` and `Q_PK_ref_ws` ladders each show `3 / 8` direct polynomial-prefix hits,
+  but on the hero candidate the corresponding focused direct / quotient / mixed boxes stay flat for `Q_PB_ws`, `K_PB_ws`, `Q_PK_ws`, and `L_PK_ws`.
+  Reading: this is still the cleanest local Weber seam, but the first same-orbit compression pass is now exhausted once and still does not give a clean literature-facing coordinate.
+
+### A5. Canonical Weber `j`-side cross-check
+
+- Decision note:
+  `notes/hero/CB60FD71D1D7_WEBER_J_SIDE_DECISION_NOTE.md`
+- Current verdict:
+  `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)` is now the cleanest
+  literature-facing Weber coordinate in the current city.
+  The first focused `J_f2_ws ↔ Q_PB_ws` bridge is now also complete:
+  on the direct hero series, the direct bridge
+  `D_JPB_ws`, `Q_JPB_ws`, `K_JPB_ws`
+  and the nested bridge
+  `D_JKPB_ws`, `Q_JKPB_ws`, `L_JKPB_ws`
+  both stay flat in the checked bridge polynomial / fractional-linear boxes.
+  The follow-up objects
+  `Q_JPB_ws`, `K_JPB_ws`, `Q_JKPB_ws`, and `L_JKPB_ws`
+  also stay flat in the focused named-`GG` direct / quotient / mixed prefix
+  boxes and exact modular-equation template boxes.
+  Reading: `J_f2_ws` remains the best literature-facing Weber lane, but the
+  easiest "maybe it is just the P/B seam in disguise" explanation has now been
+  tested once and stayed flat.
+
 ### B. `GG` quotient-coordinate obstruction
 
 - Obstruction note:
@@ -216,17 +264,21 @@ Literature status
 - Full identify refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery identify --in results/verified.jsonl --candidate-id cb60fd71d1d7 --benchmark-powers 2,3,4,5,6,12,20 --out notes/hero/CB60FD71D1D7_IDENTIFICATION_NOTE.md`
 - Latest identify timing:
-  `Build elapsed seconds before final render: 2091.88`
+  `Build elapsed seconds before final render: 1809.79`
 - Full formalize refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery formalize --in results/verified.jsonl --candidate-id cb60fd71d1d7 --out notes/hero/CB60FD71D1D7_FORMALIZATION_NOTE.md --lean-out proofs/Proofs/Generated/Cb60fd71d1d7.lean`
 - Latest formalize runtime:
-  about `1058s`
+  about `1092s`
+- Quick syntax validation:
+  `python -m py_compile src/ramanujan_discovery/identification.py tests/test_identification.py`
+- Targeted Weber regression slice:
+  `$env:PYTHONPATH='src'; pytest -q tests/test_identification.py::test_scan_weber_class_invariant_bridge_box_matches_true_gg tests/test_identification.py::test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap tests/test_identification.py::test_scan_weber_class_invariant_bridge_box_skips_focused_named_gg_lane_in_smoke_profile tests/test_identification.py::test_build_weber_j_pb_bridge_scan_matches_true_gg_profile tests/test_identification.py::test_build_weber_j_pb_bridge_scan_reports_hero_gap_profile tests/test_identification.py::test_build_weber_j_pb_bridge_scan_skips_named_gg_lane_in_smoke_profile tests/test_identification.py::test_cli_tail_note_writes_tail_family_note`
 - Full tail-family refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery tail-note --in results/verified.jsonl --candidate-id cb60fd71d1d7 --tail-stages 3,4,5 --max-gap-depth 3 --out notes/hero/CB60FD71D1D7_TAIL_FAMILY_NOTE.md`
+- Full tail-family note timing:
+  about `9706s`
 - Full tail-operator refresh:
   `$env:PYTHONPATH='src'; python -m ramanujan_discovery tail-operator-note --in results/verified.jsonl --candidate-id cb60fd71d1d7 --depth 40 --series-order 36 --tail-stages 3,4,5 --max-gap-depth 3 --out notes/hero/CB60FD71D1D7_TAIL_OPERATOR_NOTE.md`
-- Targeted Python validation:
-  `$env:PYTHONPATH='src'; pytest tests/test_identification.py -q -k "test_cli_tail_operator_note_writes_tail_operator_note or test_cli_tail_note_writes_tail_family_note or test_detect_reduced_tail_transfer_equation_finds_stationary_hero_tail or test_build_reduced_tail_anchor_builds_stage_three_tail_and_normalization or test_scan_gg_modular_equation_box_reports_weighted_q3q4_coordinate"`
 - Targeted Lean validation:
   `Set-Location proofs; lake env lean Proofs/HeroCaseGGQuotientCoordinateObstruction.lean`
 - Targeted Lean validation:
@@ -241,7 +293,7 @@ Literature status
 ## Priority Queue
 
 1. Keep the next positive-recognition attempt in the modular-function / eta-recognition trunk rather than widening anonymous boxes again.
-2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, `G2_W34`, `Q_XK_ws`, `L_XK_ws`, and the new classical Weber `f2` tri-product lane `G_f2_ws` / `H_f2_ws`; that product lane also stays negative in the first theorem-shaped boxes, so the cleaner constructive priority still sits on the quotient/template-normalized branch `X_g_ws`, `G_X_ws`, `H_X_ws` rather than on the product branch.
-3. Treat the new Weber class-invariant pair `g12_ws` / `p12_ws` as the current best constructive hand-off: the next narrowing step should try to explain `G_g12_ws` or `G_p12_ws`, not reopen broader anonymous search boxes.
-4. Prefer the new bridge-normalized reading of that hand-off: use `G_g12_ws` as the primary residual, treat `G_p12_ws` as the algebraically constrained companion, keep `X_g_ws = 16*t^2 / g12_ws^2`, `G_X_ws = 1 / G_g12_ws^2`, the direct follow-up bridge `D_XR_ws` / `Q_XR_ws`, and the exact raw quotient bridge `Q_gp_ws^4 - (1 + 3*X_g_ws)*Q_gp_ws^2 - X_g_ws^3 = 0` in the foreground, and explain `R_gp_ws = G_p12_ws / G_g12_ws` only after this template-normalized lane is exhausted.
+2. Keep the named `GG/Weber` coordinate search deeper than `Q_3`, `Q_4`, `W_34`, `G_W34`, `G2_W34`, `Q_XK_ws`, `L_XK_ws`, and the new classical Weber `f2` tri-product lane `G_f2_ws` / `H_f2_ws`; the direct plus nested `P/B` normalized bridge lane is still the best local seam inside that orbit.
+3. Treat the new Weber class-invariant pair `g12_ws` / `p12_ws` as the current best constructive hand-off, but note that the first focused one-coordinate orbit pass on `Q_PB_ws` / `Q_PK_ws` is now complete and flat on the hero candidate.
+4. Prefer the new bridge-normalized reading of that hand-off: use `G_g12_ws` as the primary residual, treat `G_p12_ws` as the algebraically constrained companion, keep `X_g_ws = 16*t^2 / g12_ws^2`, `G_X_ws = 1 / G_g12_ws^2` together with its canonical `j`-side lift `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`, and the `P_ws -> B_ws -> Q_PB_ws -> Q_PK_ws` seam in the foreground; the canonical `J_f2_ws` lane is now the cleanest literature-facing comparison rail, but the first `J_f2_ws ↔ Q_PB_ws` cross-check is also complete and flat, so the next move should be a different named Weber coordinate or only then a different comparison bridge.
 5. Preserve the operator lane as theorem scaffolding, but do not let it outrank source recognition until a stronger source object appears.
