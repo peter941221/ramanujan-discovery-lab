@@ -93,6 +93,11 @@ structure SmallBoxStatus where
   plusPochhammerEtaHits : Nat
 deriving Repr, DecidableEq
 
+structure BridgeLiteSmallBoxStatus where
+  etaHits : Nat
+  modularUnitEtaHits : Nat
+deriving Repr, DecidableEq
+
 def primaryResidualLabel : String := "G_g12_ws"
 
 def primaryResidualExpression : String :=
@@ -280,6 +285,89 @@ def canonicalJAltLiftBridgeQuotientFollowupExpression : String :=
 
 def canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
+def pivotBridgePolynomialDegrees : List Nat := [1, 2, 3]
+
+def pivotBridgeJX15PBDifferenceLabel : String := "D_JX15PB_ws"
+
+def pivotBridgeJX15PBDifferenceExpression : String :=
+  "D_JX15PB_ws = Q_PB_ws - J_X15_ws"
+
+def pivotBridgeJX15PBDifferenceFirstFailure : FirstFailureWitness := ⟨1, (-29 : Rat) / 5⟩
+
+def pivotBridgeJX15PBQuotientLabel : String := "Q_JX15PB_ws"
+
+def pivotBridgeJX15PBQuotientExpression : String :=
+  "Q_JX15PB_ws = Q_PB_ws / J_X15_ws"
+
+def pivotBridgeJX15PBQuotientFirstFailure : FirstFailureWitness := ⟨1, (-29 : Rat) / 5⟩
+
+def pivotBridgeJX15PBPolynomialHitCount : Nat := 0
+
+def pivotBridgeJX15PBFractionalLinearHit : Bool := false
+
+def pivotBridgeJX15PBQuotientSmallBoxStatus : BridgeLiteSmallBoxStatus := ⟨0, 0⟩
+
+def pivotBridgeJX15PBQuotientFollowupLabel : String := "K_JX15PB_ws"
+
+def pivotBridgeJX15PBQuotientFollowupExpression : String :=
+  "K_JX15PB_ws = (Q_JX15PB_ws - 1) / (-29/5*t^1)"
+
+def pivotBridgeJX15PBQuotientFollowupSmallBoxStatus : BridgeLiteSmallBoxStatus := ⟨0, 0⟩
+
+def pivotBridgeJX15JPBDifferenceLabel : String := "D_JX15JPB_ws"
+
+def pivotBridgeJX15JPBDifferenceExpression : String :=
+  "D_JX15JPB_ws = Q_JPB_ws - Q_JX15_ws"
+
+def pivotBridgeJX15JPBDifferenceFirstFailure : FirstFailureWitness := ⟨1, (-29 : Rat) / 5⟩
+
+def pivotBridgeJX15JPBQuotientLabel : String := "Q_JX15JPB_ws"
+
+def pivotBridgeJX15JPBQuotientExpression : String :=
+  "Q_JX15JPB_ws = Q_JPB_ws / Q_JX15_ws"
+
+def pivotBridgeJX15JPBQuotientFirstFailure : FirstFailureWitness := ⟨1, (-29 : Rat) / 5⟩
+
+def pivotBridgeJX15JPBPolynomialHitCount : Nat := 0
+
+def pivotBridgeJX15JPBFractionalLinearHit : Bool := false
+
+def pivotBridgeJX15JPBQuotientSmallBoxStatus : BridgeLiteSmallBoxStatus := ⟨0, 0⟩
+
+def pivotBridgeJX15JPBQuotientFollowupLabel : String := "K_JX15JPB_ws"
+
+def pivotBridgeJX15JPBQuotientFollowupExpression : String :=
+  "K_JX15JPB_ws = (Q_JX15JPB_ws - 1) / (-29/5*t^1)"
+
+def pivotBridgeJX15JPBQuotientFollowupSmallBoxStatus : BridgeLiteSmallBoxStatus := ⟨0, 0⟩
+
+def pivotBridgeJX15XKJDifferenceLabel : String := "D_JX15XKJ_ws"
+
+def pivotBridgeJX15XKJDifferenceExpression : String :=
+  "D_JX15XKJ_ws = Q_XKJ_ws - Q_JX15_ws"
+
+def pivotBridgeJX15XKJDifferenceFirstFailure : FirstFailureWitness := ⟨1, (-97 : Rat) / 30⟩
+
+def pivotBridgeJX15XKJQuotientLabel : String := "Q_JX15XKJ_ws"
+
+def pivotBridgeJX15XKJQuotientExpression : String :=
+  "Q_JX15XKJ_ws = Q_XKJ_ws / Q_JX15_ws"
+
+def pivotBridgeJX15XKJQuotientFirstFailure : FirstFailureWitness := ⟨1, (-97 : Rat) / 30⟩
+
+def pivotBridgeJX15XKJPolynomialHitCount : Nat := 0
+
+def pivotBridgeJX15XKJFractionalLinearHit : Bool := false
+
+def pivotBridgeJX15XKJQuotientSmallBoxStatus : BridgeLiteSmallBoxStatus := ⟨0, 0⟩
+
+def pivotBridgeJX15XKJQuotientFollowupLabel : String := "K_JX15XKJ_ws"
+
+def pivotBridgeJX15XKJQuotientFollowupExpression : String :=
+  "K_JX15XKJ_ws = (Q_JX15XKJ_ws - 1) / (-97/30*t^1)"
+
+def pivotBridgeJX15XKJQuotientFollowupSmallBoxStatus : BridgeLiteSmallBoxStatus := ⟨0, 0⟩
+
 def followupBridgeDifferenceLabel : String := "D_XR_ws"
 
 def followupBridgeDifferenceExpression : String :=
@@ -401,6 +489,61 @@ def canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions :
     ⟨1, (862 : Rat) / 45⟩,
     ⟨1, (431 : Rat) / 45⟩,
     ⟨1, (431 : Rat) / 30⟩
+  ⟩
+
+def pivotBridgeJX15PBNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def pivotBridgeJX15PBQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def pivotBridgeJX15PBNamedGGExactObstructions : NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (-72 : Rat) / 5⟩,
+    ⟨1, (-96 : Rat) / 5⟩,
+    ⟨1, (-48 : Rat) / 5⟩,
+    ⟨1, (-72 : Rat) / 5⟩
+  ⟩
+
+def pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions :
+    NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (-167 : Rat) / 145⟩,
+    ⟨1, (-668 : Rat) / 435⟩,
+    ⟨1, (-334 : Rat) / 435⟩,
+    ⟨1, (-167 : Rat) / 145⟩
+  ⟩
+
+def pivotBridgeJX15JPBNamedGGClosureStatus : NamedGGClosureStatus :=
+  pivotBridgeJX15PBNamedGGClosureStatus
+
+def pivotBridgeJX15JPBQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus :=
+  pivotBridgeJX15PBQuotientFollowupNamedGGClosureStatus
+
+def pivotBridgeJX15JPBNamedGGExactObstructions : NamedGGExactObstructionQuartet :=
+  pivotBridgeJX15PBNamedGGExactObstructions
+
+def pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions :
+    NamedGGExactObstructionQuartet :=
+  pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions
+
+def pivotBridgeJX15XKJNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def pivotBridgeJX15XKJQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def pivotBridgeJX15XKJNamedGGExactObstructions : NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (-67 : Rat) / 10⟩,
+    ⟨1, (-134 : Rat) / 15⟩,
+    ⟨1, (-67 : Rat) / 15⟩,
+    ⟨1, (-67 : Rat) / 10⟩
+  ⟩
+
+def pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions :
+    NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (170113 : Rat) / 1455⟩,
+    ⟨1, (680452 : Rat) / 4365⟩,
+    ⟨1, (340226 : Rat) / 4365⟩,
+    ⟨1, (170113 : Rat) / 1455⟩
   ⟩
 
 def quotientFollowupBridgeNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
@@ -781,6 +924,162 @@ theorem canonicalJAltLiftBridge_true : canonicalJAltLiftBridgeProp := by
     canonicalJAltLiftBridgeQuotientFollowupNamedGGClosureStatus,
     canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions
   ]
+
+def pivotBridgeJX15PBProp : Prop :=
+  pivotBridgeJX15PBDifferenceLabel = "D_JX15PB_ws" ∧
+    pivotBridgeJX15PBDifferenceExpression = "D_JX15PB_ws = Q_PB_ws - J_X15_ws" ∧
+    pivotBridgeJX15PBDifferenceFirstFailure.power = 1 ∧
+    pivotBridgeJX15PBDifferenceFirstFailure.coeff = (-29 : Rat) / 5 ∧
+    pivotBridgeJX15PBQuotientLabel = "Q_JX15PB_ws" ∧
+    pivotBridgeJX15PBQuotientExpression = "Q_JX15PB_ws = Q_PB_ws / J_X15_ws" ∧
+    pivotBridgeJX15PBQuotientFirstFailure.power = 1 ∧
+    pivotBridgeJX15PBQuotientFirstFailure.coeff = (-29 : Rat) / 5 ∧
+    pivotBridgePolynomialDegrees = [1, 2, 3] ∧
+    pivotBridgeJX15PBPolynomialHitCount = 0 ∧
+    pivotBridgeJX15PBFractionalLinearHit = false ∧
+    pivotBridgeJX15PBQuotientSmallBoxStatus.etaHits = 0 ∧
+    pivotBridgeJX15PBQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    pivotBridgeJX15PBNamedGGClosureStatus.directHits = 0 ∧
+    pivotBridgeJX15PBNamedGGClosureStatus.quotientHits = 0 ∧
+    pivotBridgeJX15PBNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.directGG3.power = 1 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.directGG3.coeff = (-72 : Rat) / 5 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.directGG4.power = 1 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.directGG4.coeff = (-96 : Rat) / 5 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.quotientQ3.coeff = (-48 : Rat) / 5 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    pivotBridgeJX15PBNamedGGExactObstructions.quotientQ4.coeff = (-72 : Rat) / 5 ∧
+    pivotBridgeJX15PBQuotientFollowupLabel = "K_JX15PB_ws" ∧
+    pivotBridgeJX15PBQuotientFollowupExpression =
+      "K_JX15PB_ws = (Q_JX15PB_ws - 1) / (-29/5*t^1)" ∧
+    pivotBridgeJX15PBQuotientFollowupSmallBoxStatus.etaHits = 0 ∧
+    pivotBridgeJX15PBQuotientFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGClosureStatus.directHits = 0 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGClosureStatus.quotientHits = 0 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.directGG3.power = 1 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.directGG3.coeff =
+      (-167 : Rat) / 145 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.directGG4.power = 1 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.directGG4.coeff =
+      (-668 : Rat) / 435 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.quotientQ3.coeff =
+      (-334 : Rat) / 435 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    pivotBridgeJX15PBQuotientFollowupNamedGGExactObstructions.quotientQ4.coeff =
+      (-167 : Rat) / 145
+
+theorem pivotBridgeJX15PB_true : pivotBridgeJX15PBProp := by
+  unfold pivotBridgeJX15PBProp
+  native_decide
+
+def pivotBridgeJX15JPBProp : Prop :=
+  pivotBridgeJX15JPBDifferenceLabel = "D_JX15JPB_ws" ∧
+    pivotBridgeJX15JPBDifferenceExpression = "D_JX15JPB_ws = Q_JPB_ws - Q_JX15_ws" ∧
+    pivotBridgeJX15JPBDifferenceFirstFailure.power = 1 ∧
+    pivotBridgeJX15JPBDifferenceFirstFailure.coeff = (-29 : Rat) / 5 ∧
+    pivotBridgeJX15JPBQuotientLabel = "Q_JX15JPB_ws" ∧
+    pivotBridgeJX15JPBQuotientExpression = "Q_JX15JPB_ws = Q_JPB_ws / Q_JX15_ws" ∧
+    pivotBridgeJX15JPBQuotientFirstFailure.power = 1 ∧
+    pivotBridgeJX15JPBQuotientFirstFailure.coeff = (-29 : Rat) / 5 ∧
+    pivotBridgePolynomialDegrees = [1, 2, 3] ∧
+    pivotBridgeJX15JPBPolynomialHitCount = 0 ∧
+    pivotBridgeJX15JPBFractionalLinearHit = false ∧
+    pivotBridgeJX15JPBQuotientSmallBoxStatus.etaHits = 0 ∧
+    pivotBridgeJX15JPBQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    pivotBridgeJX15JPBNamedGGClosureStatus.directHits = 0 ∧
+    pivotBridgeJX15JPBNamedGGClosureStatus.quotientHits = 0 ∧
+    pivotBridgeJX15JPBNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.directGG3.power = 1 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.directGG3.coeff = (-72 : Rat) / 5 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.directGG4.power = 1 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.directGG4.coeff = (-96 : Rat) / 5 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.quotientQ3.coeff = (-48 : Rat) / 5 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    pivotBridgeJX15JPBNamedGGExactObstructions.quotientQ4.coeff = (-72 : Rat) / 5 ∧
+    pivotBridgeJX15JPBQuotientFollowupLabel = "K_JX15JPB_ws" ∧
+    pivotBridgeJX15JPBQuotientFollowupExpression =
+      "K_JX15JPB_ws = (Q_JX15JPB_ws - 1) / (-29/5*t^1)" ∧
+    pivotBridgeJX15JPBQuotientFollowupSmallBoxStatus.etaHits = 0 ∧
+    pivotBridgeJX15JPBQuotientFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGClosureStatus.directHits = 0 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGClosureStatus.quotientHits = 0 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.directGG3.power = 1 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.directGG3.coeff =
+      (-167 : Rat) / 145 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.directGG4.power = 1 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.directGG4.coeff =
+      (-668 : Rat) / 435 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.quotientQ3.coeff =
+      (-334 : Rat) / 435 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    pivotBridgeJX15JPBQuotientFollowupNamedGGExactObstructions.quotientQ4.coeff =
+      (-167 : Rat) / 145
+
+theorem pivotBridgeJX15JPB_true : pivotBridgeJX15JPBProp := by
+  unfold pivotBridgeJX15JPBProp
+  native_decide
+
+def pivotBridgeJX15XKJProp : Prop :=
+  pivotBridgeJX15XKJDifferenceLabel = "D_JX15XKJ_ws" ∧
+    pivotBridgeJX15XKJDifferenceExpression = "D_JX15XKJ_ws = Q_XKJ_ws - Q_JX15_ws" ∧
+    pivotBridgeJX15XKJDifferenceFirstFailure.power = 1 ∧
+    pivotBridgeJX15XKJDifferenceFirstFailure.coeff = (-97 : Rat) / 30 ∧
+    pivotBridgeJX15XKJQuotientLabel = "Q_JX15XKJ_ws" ∧
+    pivotBridgeJX15XKJQuotientExpression = "Q_JX15XKJ_ws = Q_XKJ_ws / Q_JX15_ws" ∧
+    pivotBridgeJX15XKJQuotientFirstFailure.power = 1 ∧
+    pivotBridgeJX15XKJQuotientFirstFailure.coeff = (-97 : Rat) / 30 ∧
+    pivotBridgePolynomialDegrees = [1, 2, 3] ∧
+    pivotBridgeJX15XKJPolynomialHitCount = 0 ∧
+    pivotBridgeJX15XKJFractionalLinearHit = false ∧
+    pivotBridgeJX15XKJQuotientSmallBoxStatus.etaHits = 0 ∧
+    pivotBridgeJX15XKJQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    pivotBridgeJX15XKJNamedGGClosureStatus.directHits = 0 ∧
+    pivotBridgeJX15XKJNamedGGClosureStatus.quotientHits = 0 ∧
+    pivotBridgeJX15XKJNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.directGG3.power = 1 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.directGG3.coeff = (-67 : Rat) / 10 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.directGG4.power = 1 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.directGG4.coeff = (-134 : Rat) / 15 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.quotientQ3.coeff = (-67 : Rat) / 15 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    pivotBridgeJX15XKJNamedGGExactObstructions.quotientQ4.coeff = (-67 : Rat) / 10 ∧
+    pivotBridgeJX15XKJQuotientFollowupLabel = "K_JX15XKJ_ws" ∧
+    pivotBridgeJX15XKJQuotientFollowupExpression =
+      "K_JX15XKJ_ws = (Q_JX15XKJ_ws - 1) / (-97/30*t^1)" ∧
+    pivotBridgeJX15XKJQuotientFollowupSmallBoxStatus.etaHits = 0 ∧
+    pivotBridgeJX15XKJQuotientFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGClosureStatus.directHits = 0 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGClosureStatus.quotientHits = 0 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.directGG3.power = 1 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.directGG3.coeff =
+      (170113 : Rat) / 1455 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.directGG4.power = 1 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.directGG4.coeff =
+      (680452 : Rat) / 4365 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.quotientQ3.coeff =
+      (340226 : Rat) / 4365 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    pivotBridgeJX15XKJQuotientFollowupNamedGGExactObstructions.quotientQ4.coeff =
+      (170113 : Rat) / 1455
+
+theorem pivotBridgeJX15XKJ_true : pivotBridgeJX15XKJProp := by
+  unfold pivotBridgeJX15XKJProp
+  native_decide
+
+def canonicalJAltLiftPivotRailsProp : Prop :=
+  pivotBridgeJX15PBProp ∧ pivotBridgeJX15JPBProp ∧ pivotBridgeJX15XKJProp
+
+theorem canonicalJAltLiftPivotRails_true : canonicalJAltLiftPivotRailsProp := by
+  exact ⟨pivotBridgeJX15PB_true, ⟨pivotBridgeJX15JPB_true, pivotBridgeJX15XKJ_true⟩⟩
 
 def classicalWeberTrioReadingProp : Prop :=
   classicalWeberTrioReading =
@@ -1302,6 +1601,7 @@ structure WaypointCertificate where
   alternateAnchorCanonicalJCoordinate : alternateAnchorCanonicalJCoordinateWaypointProp
   canonicalJLiftBridge : canonicalJLiftBridgeProp
   canonicalJAltLiftBridge : canonicalJAltLiftBridgeProp
+  pivotRails : canonicalJAltLiftPivotRailsProp
   classicalWeberReading : classicalWeberTrioReadingProp
   templateCoordinate : templateNormalizedCoordinateProp
   selection : primaryResidualSelectionProp
@@ -1338,6 +1638,7 @@ def currentWaypointCertificate : WaypointCertificate where
   alternateAnchorCanonicalJCoordinate := alternateAnchorCanonicalJCoordinateWaypoint_true
   canonicalJLiftBridge := canonicalJLiftBridge_true
   canonicalJAltLiftBridge := canonicalJAltLiftBridge_true
+  pivotRails := canonicalJAltLiftPivotRails_true
   classicalWeberReading := classicalWeberTrioReading_true
   templateCoordinate := templateNormalizedCoordinate_true
   selection := primaryResidualSelection_true
@@ -1374,6 +1675,7 @@ def currentWaypoint : Prop :=
     alternateAnchorCanonicalJCoordinateWaypointProp ∧
     canonicalJLiftBridgeProp ∧
     canonicalJAltLiftBridgeProp ∧
+    canonicalJAltLiftPivotRailsProp ∧
     classicalWeberTrioReadingProp ∧
     templateNormalizedCoordinateProp ∧
     primaryResidualSelectionProp ∧
@@ -1410,6 +1712,7 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.alternateAnchorCanonicalJCoordinate,
     currentWaypointCertificate.canonicalJLiftBridge,
     currentWaypointCertificate.canonicalJAltLiftBridge,
+    currentWaypointCertificate.pivotRails,
     currentWaypointCertificate.classicalWeberReading,
     currentWaypointCertificate.templateCoordinate,
     currentWaypointCertificate.selection,
