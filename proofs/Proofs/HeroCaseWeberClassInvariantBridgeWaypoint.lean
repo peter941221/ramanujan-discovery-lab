@@ -46,6 +46,12 @@ class-invariant compression lane:
   `J_X_ws = (1 + 16*G_X_ws)^3 / (4913*G_X_ws^2)`
   together with the normalized follow-up
   `H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)`
+- the same template-normalized anchor also carries the alternate canonical
+  Weber `j`-side lift
+  `J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)`
+  (the `X = 1 / G_X_ws` branch normalized by the CM-scale `-3375`)
+- both `j` lifts are compared back to `J_f2_ws` via lightweight lift-bridges:
+  `D_JX_ws`, `Q_JX_ws`, `K_JX_ws` and `D_JX15_ws`, `Q_JX15_ws`, `K_JX15_ws`
 - the first direct bridge between the two normalized hero-side follow-ups is
   now also recorded:
   `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws`
@@ -203,6 +209,77 @@ def anchorCanonicalJCoordinateFollowupFirstFailure : FirstFailureWitness := ⟨1
 
 def anchorCanonicalJCoordinateFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
 
+def alternateAnchorCanonicalJCoordinateLabel : String := "J_X15_ws"
+
+def alternateAnchorCanonicalJCoordinateExpression : String :=
+  "J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)"
+
+def alternateAnchorCanonicalJCoordinateReason : String :=
+  "The Weber cubic `j = (X - 16)^3 / X` can also be applied to the inverted branch `X = 1 / G_X_ws`, and then normalized by the CM-scale `-3375` so the true-source anchor again yields a constant-1 `j`-side coordinate."
+
+def alternateAnchorCanonicalJCoordinateBridgeExpression : String :=
+  "3375*J_X15_ws*G_X_ws^2 - (16*G_X_ws - 1)^3 = 0"
+
+def alternateAnchorCanonicalJCoordinateFirstFailure : FirstFailureWitness := ⟨1, (24 : Rat) / 5⟩
+
+def canonicalJLiftBridgeDifferenceLabel : String := "D_JX_ws"
+
+def canonicalJLiftBridgeDifferenceExpression : String :=
+  "D_JX_ws = J_f2_ws - J_X_ws"
+
+def canonicalJLiftBridgeDifferenceFirstFailure : FirstFailureWitness := ⟨1, (128 : Rat) / 85⟩
+
+def canonicalJLiftBridgeQuotientLabel : String := "Q_JX_ws"
+
+def canonicalJLiftBridgeQuotientExpression : String :=
+  "Q_JX_ws = J_f2_ws / J_X_ws"
+
+def canonicalJLiftBridgeQuotientFirstFailure : FirstFailureWitness := ⟨1, (128 : Rat) / 85⟩
+
+def canonicalJLiftBridgePolynomialDegrees : List Nat := [1, 2, 3]
+
+def canonicalJLiftBridgePolynomialHitCount : Nat := 0
+
+def canonicalJLiftBridgeFractionalLinearHit : Bool := false
+
+def canonicalJLiftBridgeQuotientSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def canonicalJLiftBridgeQuotientFollowupLabel : String := "K_JX_ws"
+
+def canonicalJLiftBridgeQuotientFollowupExpression : String :=
+  "K_JX_ws = (Q_JX_ws - 1) / (128/85*t^1)"
+
+def canonicalJLiftBridgeQuotientFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def canonicalJAltLiftBridgeDifferenceLabel : String := "D_JX15_ws"
+
+def canonicalJAltLiftBridgeDifferenceExpression : String :=
+  "D_JX15_ws = J_f2_ws - J_X15_ws"
+
+def canonicalJAltLiftBridgeDifferenceFirstFailure : FirstFailureWitness := ⟨3, (-576 : Rat) / 5⟩
+
+def canonicalJAltLiftBridgeQuotientLabel : String := "Q_JX15_ws"
+
+def canonicalJAltLiftBridgeQuotientExpression : String :=
+  "Q_JX15_ws = J_f2_ws / J_X15_ws"
+
+def canonicalJAltLiftBridgeQuotientFirstFailure : FirstFailureWitness := ⟨3, (-576 : Rat) / 5⟩
+
+def canonicalJAltLiftBridgePolynomialDegrees : List Nat := [1, 2, 3]
+
+def canonicalJAltLiftBridgePolynomialHitCount : Nat := 0
+
+def canonicalJAltLiftBridgeFractionalLinearHit : Bool := false
+
+def canonicalJAltLiftBridgeQuotientSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
+def canonicalJAltLiftBridgeQuotientFollowupLabel : String := "K_JX15_ws"
+
+def canonicalJAltLiftBridgeQuotientFollowupExpression : String :=
+  "K_JX15_ws = (Q_JX15_ws - 1) / (-576/5*t^3)"
+
+def canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus : SmallBoxStatus := ⟨0, 0, 0, 0, 0, 0, 0⟩
+
 def followupBridgeDifferenceLabel : String := "D_XR_ws"
 
 def followupBridgeDifferenceExpression : String :=
@@ -288,6 +365,43 @@ def namedGGDirectGG4Label : String := "Chan--Huang Cor. 3.2(ii) on (F, GG4)"
 def namedGGQuotientQ3Label : String := "Chan--Huang Cor. 3.2(i) on (F, Q_3)"
 
 def namedGGQuotientQ4Label : String := "Chan--Huang Cor. 3.2(ii) on (F, Q_4)"
+
+def canonicalJLiftBridgeNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def canonicalJLiftBridgeQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def canonicalJAltLiftBridgeNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def canonicalJAltLiftBridgeQuotientFollowupNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
+
+def canonicalJLiftBridgeNamedGGExactObstructions : NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (639 : Rat) / 85⟩,
+    ⟨1, (852 : Rat) / 85⟩,
+    ⟨1, (426 : Rat) / 85⟩,
+    ⟨1, (639 : Rat) / 85⟩
+  ⟩
+
+def canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions :
+    NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (1141 : Rat) / 170⟩,
+    ⟨1, (2282 : Rat) / 255⟩,
+    ⟨1, (1141 : Rat) / 255⟩,
+    ⟨1, (1141 : Rat) / 170⟩
+  ⟩
+
+def canonicalJAltLiftBridgeNamedGGExactObstructions : NamedGGExactObstructionQuartet :=
+  ⟨⟨1, 3⟩, ⟨1, 4⟩, ⟨1, 2⟩, ⟨1, 3⟩⟩
+
+def canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions :
+    NamedGGExactObstructionQuartet :=
+  ⟨
+    ⟨1, (431 : Rat) / 30⟩,
+    ⟨1, (862 : Rat) / 45⟩,
+    ⟨1, (431 : Rat) / 45⟩,
+    ⟨1, (431 : Rat) / 30⟩
+  ⟩
 
 def quotientFollowupBridgeNamedGGClosureStatus : NamedGGClosureStatus := ⟨0, 0, 0⟩
 
@@ -490,6 +604,184 @@ theorem anchorCanonicalJCoordinateWaypoint_true : anchorCanonicalJCoordinateWayp
     anchorCanonicalJCoordinateFollowupSmallBoxStatus
   ]
 
+def alternateAnchorCanonicalJCoordinateWaypointProp : Prop :=
+  alternateAnchorCanonicalJCoordinateLabel = "J_X15_ws" ∧
+    alternateAnchorCanonicalJCoordinateExpression =
+      "J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)" ∧
+    alternateAnchorCanonicalJCoordinateReason =
+      "The Weber cubic `j = (X - 16)^3 / X` can also be applied to the inverted branch `X = 1 / G_X_ws`, and then normalized by the CM-scale `-3375` so the true-source anchor again yields a constant-1 `j`-side coordinate." ∧
+    alternateAnchorCanonicalJCoordinateBridgeExpression =
+      "3375*J_X15_ws*G_X_ws^2 - (16*G_X_ws - 1)^3 = 0" ∧
+    alternateAnchorCanonicalJCoordinateFirstFailure.power = 1 ∧
+    alternateAnchorCanonicalJCoordinateFirstFailure.coeff = (24 : Rat) / 5
+
+theorem alternateAnchorCanonicalJCoordinateWaypoint_true :
+    alternateAnchorCanonicalJCoordinateWaypointProp := by
+  simp [
+    alternateAnchorCanonicalJCoordinateWaypointProp,
+    alternateAnchorCanonicalJCoordinateLabel,
+    alternateAnchorCanonicalJCoordinateExpression,
+    alternateAnchorCanonicalJCoordinateReason,
+    alternateAnchorCanonicalJCoordinateBridgeExpression,
+    alternateAnchorCanonicalJCoordinateFirstFailure
+  ]
+
+def canonicalJLiftBridgeProp : Prop :=
+  canonicalJLiftBridgeDifferenceLabel = "D_JX_ws" ∧
+    canonicalJLiftBridgeDifferenceExpression = "D_JX_ws = J_f2_ws - J_X_ws" ∧
+    canonicalJLiftBridgeDifferenceFirstFailure.power = 1 ∧
+    canonicalJLiftBridgeDifferenceFirstFailure.coeff = (128 : Rat) / 85 ∧
+    canonicalJLiftBridgeQuotientLabel = "Q_JX_ws" ∧
+    canonicalJLiftBridgeQuotientExpression = "Q_JX_ws = J_f2_ws / J_X_ws" ∧
+    canonicalJLiftBridgeQuotientFirstFailure.power = 1 ∧
+    canonicalJLiftBridgeQuotientFirstFailure.coeff = (128 : Rat) / 85 ∧
+    canonicalJLiftBridgePolynomialDegrees = [1, 2, 3] ∧
+    canonicalJLiftBridgePolynomialHitCount = 0 ∧
+    canonicalJLiftBridgeFractionalLinearHit = false ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.etaHits = 0 ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.selfPolynomialHits = 0 ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.plusPochhammerHits = 0 ∧
+    canonicalJLiftBridgeQuotientSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    canonicalJLiftBridgeNamedGGClosureStatus.directHits = 0 ∧
+    canonicalJLiftBridgeNamedGGClosureStatus.quotientHits = 0 ∧
+    canonicalJLiftBridgeNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.directGG3.power = 1 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.directGG3.coeff = (639 : Rat) / 85 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.directGG4.power = 1 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.directGG4.coeff = (852 : Rat) / 85 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.quotientQ3.coeff = (426 : Rat) / 85 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    canonicalJLiftBridgeNamedGGExactObstructions.quotientQ4.coeff = (639 : Rat) / 85 ∧
+    canonicalJLiftBridgeQuotientFollowupLabel = "K_JX_ws" ∧
+    canonicalJLiftBridgeQuotientFollowupExpression =
+      "K_JX_ws = (Q_JX_ws - 1) / (128/85*t^1)" ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.etaHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGClosureStatus.directHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGClosureStatus.quotientHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG3.power = 1 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG3.coeff =
+      (1141 : Rat) / 170 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG4.power = 1 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG4.coeff =
+      (2282 : Rat) / 255 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ3.coeff =
+      (1141 : Rat) / 255 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ4.coeff =
+      (1141 : Rat) / 170
+
+theorem canonicalJLiftBridge_true : canonicalJLiftBridgeProp := by
+  simp [
+    canonicalJLiftBridgeProp,
+    canonicalJLiftBridgeDifferenceLabel,
+    canonicalJLiftBridgeDifferenceExpression,
+    canonicalJLiftBridgeDifferenceFirstFailure,
+    canonicalJLiftBridgeQuotientLabel,
+    canonicalJLiftBridgeQuotientExpression,
+    canonicalJLiftBridgeQuotientFirstFailure,
+    canonicalJLiftBridgePolynomialDegrees,
+    canonicalJLiftBridgePolynomialHitCount,
+    canonicalJLiftBridgeFractionalLinearHit,
+    canonicalJLiftBridgeQuotientSmallBoxStatus,
+    canonicalJLiftBridgeNamedGGClosureStatus,
+    canonicalJLiftBridgeNamedGGExactObstructions,
+    canonicalJLiftBridgeQuotientFollowupLabel,
+    canonicalJLiftBridgeQuotientFollowupExpression,
+    canonicalJLiftBridgeQuotientFollowupSmallBoxStatus,
+    canonicalJLiftBridgeQuotientFollowupNamedGGClosureStatus,
+    canonicalJLiftBridgeQuotientFollowupNamedGGExactObstructions
+  ]
+
+def canonicalJAltLiftBridgeProp : Prop :=
+  canonicalJAltLiftBridgeDifferenceLabel = "D_JX15_ws" ∧
+    canonicalJAltLiftBridgeDifferenceExpression = "D_JX15_ws = J_f2_ws - J_X15_ws" ∧
+    canonicalJAltLiftBridgeDifferenceFirstFailure.power = 3 ∧
+    canonicalJAltLiftBridgeDifferenceFirstFailure.coeff = (-576 : Rat) / 5 ∧
+    canonicalJAltLiftBridgeQuotientLabel = "Q_JX15_ws" ∧
+    canonicalJAltLiftBridgeQuotientExpression = "Q_JX15_ws = J_f2_ws / J_X15_ws" ∧
+    canonicalJAltLiftBridgeQuotientFirstFailure.power = 3 ∧
+    canonicalJAltLiftBridgeQuotientFirstFailure.coeff = (-576 : Rat) / 5 ∧
+    canonicalJAltLiftBridgePolynomialDegrees = [1, 2, 3] ∧
+    canonicalJAltLiftBridgePolynomialHitCount = 0 ∧
+    canonicalJAltLiftBridgeFractionalLinearHit = false ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.etaHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.selfPolynomialHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.plusPochhammerHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    canonicalJAltLiftBridgeNamedGGClosureStatus.directHits = 0 ∧
+    canonicalJAltLiftBridgeNamedGGClosureStatus.quotientHits = 0 ∧
+    canonicalJAltLiftBridgeNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.directGG3.power = 1 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.directGG3.coeff = 3 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.directGG4.power = 1 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.directGG4.coeff = 4 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.quotientQ3.coeff = 2 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    canonicalJAltLiftBridgeNamedGGExactObstructions.quotientQ4.coeff = 3 ∧
+    canonicalJAltLiftBridgeQuotientFollowupLabel = "K_JX15_ws" ∧
+    canonicalJAltLiftBridgeQuotientFollowupExpression =
+      "K_JX15_ws = (Q_JX15_ws - 1) / (-576/5*t^3)" ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.etaHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.modularUnitEtaHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.selfPolynomialHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.selfFractionalLinearHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.selfQuotientProductHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.plusPochhammerHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus.plusPochhammerEtaHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGClosureStatus.directHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGClosureStatus.quotientHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGClosureStatus.mixedQuotientHits = 0 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG3.power = 1 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG3.coeff =
+      (431 : Rat) / 30 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG4.power = 1 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.directGG4.coeff =
+      (862 : Rat) / 45 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ3.power = 1 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ3.coeff =
+      (431 : Rat) / 45 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ4.power = 1 ∧
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions.quotientQ4.coeff =
+      (431 : Rat) / 30
+
+theorem canonicalJAltLiftBridge_true : canonicalJAltLiftBridgeProp := by
+  simp [
+    canonicalJAltLiftBridgeProp,
+    canonicalJAltLiftBridgeDifferenceLabel,
+    canonicalJAltLiftBridgeDifferenceExpression,
+    canonicalJAltLiftBridgeDifferenceFirstFailure,
+    canonicalJAltLiftBridgeQuotientLabel,
+    canonicalJAltLiftBridgeQuotientExpression,
+    canonicalJAltLiftBridgeQuotientFirstFailure,
+    canonicalJAltLiftBridgePolynomialDegrees,
+    canonicalJAltLiftBridgePolynomialHitCount,
+    canonicalJAltLiftBridgeFractionalLinearHit,
+    canonicalJAltLiftBridgeQuotientSmallBoxStatus,
+    canonicalJAltLiftBridgeNamedGGClosureStatus,
+    canonicalJAltLiftBridgeNamedGGExactObstructions,
+    canonicalJAltLiftBridgeQuotientFollowupLabel,
+    canonicalJAltLiftBridgeQuotientFollowupExpression,
+    canonicalJAltLiftBridgeQuotientFollowupSmallBoxStatus,
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGClosureStatus,
+    canonicalJAltLiftBridgeQuotientFollowupNamedGGExactObstructions
+  ]
+
 def classicalWeberTrioReadingProp : Prop :=
   classicalWeberTrioReading =
       "Berndt--Chan--Zhang identify Ramanujan-Weber `G_n` / `g_n` with classical Weber `f` / `f1`, and Yui--Zagier supplies the classical Weber `f`, `f1`, `f2` trio, so the current `g12_ws` / `p12_ws` / `G_f2_ws` shell should be read as that named Weber trio in the project's normalization; correspondingly `Q_gp_ws`, `X_g_ws`, `G_X_ws`, and `J_X_ws` are the current source-faithful quotient/template branch." ∧
@@ -535,6 +827,23 @@ def primaryResidualSelectionProp : Prop :=
     anchorCanonicalJCoordinateFollowupLabel = "H_J_X_ws" ∧
     anchorCanonicalJCoordinateFollowupExpression =
       "H_J_X_ws = (J_X_ws - 1) / (56/17*t^1)" ∧
+    alternateAnchorCanonicalJCoordinateLabel = "J_X15_ws" ∧
+    alternateAnchorCanonicalJCoordinateExpression =
+      "J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)" ∧
+    canonicalJLiftBridgeDifferenceLabel = "D_JX_ws" ∧
+    canonicalJLiftBridgeDifferenceExpression = "D_JX_ws = J_f2_ws - J_X_ws" ∧
+    canonicalJLiftBridgeQuotientLabel = "Q_JX_ws" ∧
+    canonicalJLiftBridgeQuotientExpression = "Q_JX_ws = J_f2_ws / J_X_ws" ∧
+    canonicalJLiftBridgeQuotientFollowupLabel = "K_JX_ws" ∧
+    canonicalJLiftBridgeQuotientFollowupExpression =
+      "K_JX_ws = (Q_JX_ws - 1) / (128/85*t^1)" ∧
+    canonicalJAltLiftBridgeDifferenceLabel = "D_JX15_ws" ∧
+    canonicalJAltLiftBridgeDifferenceExpression = "D_JX15_ws = J_f2_ws - J_X15_ws" ∧
+    canonicalJAltLiftBridgeQuotientLabel = "Q_JX15_ws" ∧
+    canonicalJAltLiftBridgeQuotientExpression = "Q_JX15_ws = J_f2_ws / J_X15_ws" ∧
+    canonicalJAltLiftBridgeQuotientFollowupLabel = "K_JX15_ws" ∧
+    canonicalJAltLiftBridgeQuotientFollowupExpression =
+      "K_JX15_ws = (Q_JX15_ws - 1) / (-576/5*t^3)" ∧
     followupBridgeDifferenceLabel = "D_XR_ws" ∧
     followupBridgeDifferenceExpression = "D_XR_ws = H_gp_ws - H_X_ws" ∧
     followupBridgeQuotientLabel = "Q_XR_ws" ∧
@@ -577,6 +886,20 @@ theorem primaryResidualSelection_true : primaryResidualSelectionProp := by
     anchorCanonicalJCoordinateExpression,
     anchorCanonicalJCoordinateFollowupLabel,
     anchorCanonicalJCoordinateFollowupExpression,
+    alternateAnchorCanonicalJCoordinateLabel,
+    alternateAnchorCanonicalJCoordinateExpression,
+    canonicalJLiftBridgeDifferenceLabel,
+    canonicalJLiftBridgeDifferenceExpression,
+    canonicalJLiftBridgeQuotientLabel,
+    canonicalJLiftBridgeQuotientExpression,
+    canonicalJLiftBridgeQuotientFollowupLabel,
+    canonicalJLiftBridgeQuotientFollowupExpression,
+    canonicalJAltLiftBridgeDifferenceLabel,
+    canonicalJAltLiftBridgeDifferenceExpression,
+    canonicalJAltLiftBridgeQuotientLabel,
+    canonicalJAltLiftBridgeQuotientExpression,
+    canonicalJAltLiftBridgeQuotientFollowupLabel,
+    canonicalJAltLiftBridgeQuotientFollowupExpression,
     followupBridgeDifferenceLabel,
     followupBridgeDifferenceExpression,
     followupBridgeQuotientLabel,
@@ -976,6 +1299,9 @@ structure WaypointCertificate where
   classicalProductCoordinate : classicalProductCoordinateWaypointProp
   canonicalJCoordinate : canonicalJCoordinateWaypointProp
   anchorCanonicalJCoordinate : anchorCanonicalJCoordinateWaypointProp
+  alternateAnchorCanonicalJCoordinate : alternateAnchorCanonicalJCoordinateWaypointProp
+  canonicalJLiftBridge : canonicalJLiftBridgeProp
+  canonicalJAltLiftBridge : canonicalJAltLiftBridgeProp
   classicalWeberReading : classicalWeberTrioReadingProp
   templateCoordinate : templateNormalizedCoordinateProp
   selection : primaryResidualSelectionProp
@@ -1009,6 +1335,9 @@ def currentWaypointCertificate : WaypointCertificate where
   classicalProductCoordinate := classicalProductCoordinateWaypoint_true
   canonicalJCoordinate := canonicalJCoordinateWaypoint_true
   anchorCanonicalJCoordinate := anchorCanonicalJCoordinateWaypoint_true
+  alternateAnchorCanonicalJCoordinate := alternateAnchorCanonicalJCoordinateWaypoint_true
+  canonicalJLiftBridge := canonicalJLiftBridge_true
+  canonicalJAltLiftBridge := canonicalJAltLiftBridge_true
   classicalWeberReading := classicalWeberTrioReading_true
   templateCoordinate := templateNormalizedCoordinate_true
   selection := primaryResidualSelection_true
@@ -1042,6 +1371,9 @@ def currentWaypoint : Prop :=
     classicalProductCoordinateWaypointProp ∧
     canonicalJCoordinateWaypointProp ∧
     anchorCanonicalJCoordinateWaypointProp ∧
+    alternateAnchorCanonicalJCoordinateWaypointProp ∧
+    canonicalJLiftBridgeProp ∧
+    canonicalJAltLiftBridgeProp ∧
     classicalWeberTrioReadingProp ∧
     templateNormalizedCoordinateProp ∧
     primaryResidualSelectionProp ∧
@@ -1075,6 +1407,9 @@ theorem currentWaypoint_true : currentWaypoint := by
     currentWaypointCertificate.classicalProductCoordinate,
     currentWaypointCertificate.canonicalJCoordinate,
     currentWaypointCertificate.anchorCanonicalJCoordinate,
+    currentWaypointCertificate.alternateAnchorCanonicalJCoordinate,
+    currentWaypointCertificate.canonicalJLiftBridge,
+    currentWaypointCertificate.canonicalJAltLiftBridge,
     currentWaypointCertificate.classicalWeberReading,
     currentWaypointCertificate.templateCoordinate,
     currentWaypointCertificate.selection,

@@ -157,6 +157,19 @@ Literature status
   On the hero series, `Q_JX_ws - 1` first fails at `t^1` with coefficient
   `128/85`, and the bounded degree-`<= 3` polynomial bridge plus the one-coordinate
   fractional-linear bridge both still report `0` hits.
+  The same lift-bridge quotient is now also checked in a focused source-faithful
+  lane (on `Q_JX_ws` and its normalized follow-up `K_JX_ws`):
+  the eta and modular-unit boxes stay flat (`0` hits), and the focused named-`GG`
+  modular-equation lane also stays flat (`0` hits) in the checked
+  direct/quotient/mixed prefix and exact template boxes.
+  The same anchor now also carries an alternate signed `j`-lift
+  `J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)`:
+  on the hero sample it first differs from `1` at `t^1` with coefficient `24/5`.
+  The corresponding alternate lift-bridge
+  `D_JX15_ws = J_f2_ws - J_X15_ws` and `Q_JX15_ws = J_f2_ws / J_X15_ws`
+  is materially tighter: `Q_JX15_ws - 1` first fails only at `t^3` with
+  coefficient `-576/5`, but the focused eta / modular-unit / named-`GG` boxes on
+  `Q_JX15_ws` and its normalized follow-up `K_JX15_ws` still stay flat.
   The first direct bridge between the two hero-side normalized follow-ups is
   now also explicit:
   `D_XR_ws = H_gp_ws - H_X_ws` and `Q_XR_ws = H_gp_ws / H_X_ws`, and both first

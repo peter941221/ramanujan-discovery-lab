@@ -2514,6 +2514,47 @@ def test_scan_weber_class_invariant_bridge_box_matches_true_gg():
     assert scan.canonical_j_lift_bridge_scan.quotient_expression == "Q_JX_ws = J_f2_ws / J_X_ws"
     assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_power is None
     assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_coeff is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_eta_scans is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_modular_unit_eta_scans is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_label is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_expression is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_eta_scans is None
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_modular_unit_eta_scans is None
+    assert scan.alternate_anchor_canonical_j_coordinate_label == "J_X15_ws"
+    assert scan.alternate_anchor_canonical_j_coordinate_expression == (
+        "J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)"
+    )
+    assert "Weber cubic" in (scan.alternate_anchor_canonical_j_coordinate_reason or "")
+    assert scan.alternate_anchor_canonical_j_coordinate_bridge_expression == (
+        "3375*J_X15_ws*G_X_ws^2 - (16*G_X_ws - 1)^3 = 0"
+    )
+    assert scan.alternate_anchor_canonical_j_coordinate_first_failure_power is None
+    assert scan.alternate_anchor_canonical_j_coordinate_first_failure_coeff is None
+    assert scan.canonical_j_alt_lift_bridge_scan is not None
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_label == "D_JX15_ws"
+    assert (
+        scan.canonical_j_alt_lift_bridge_scan.difference_expression
+        == "D_JX15_ws = J_f2_ws - J_X15_ws"
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_first_failure_power is None
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_first_failure_coeff is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_label == "Q_JX15_ws"
+    assert (
+        scan.canonical_j_alt_lift_bridge_scan.quotient_expression
+        == "Q_JX15_ws = J_f2_ws / J_X15_ws"
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_first_failure_power is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_first_failure_coeff is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_eta_scans is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_modular_unit_eta_scans is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_label is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_expression is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_named_gg_modular_equation_scan is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_eta_scans is None
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_modular_unit_eta_scans is None
     assert scan.quotient_coordinate_label == "X_g_ws"
     assert scan.quotient_coordinate_expression == "X_g_ws = 16*t^2 / g12_ws^2"
     assert scan.quotient_coordinate_bridge_expression == (
@@ -2722,6 +2763,92 @@ def test_scan_weber_class_invariant_bridge_box_reports_hero_ratio_gap():
     assert scan.canonical_j_lift_bridge_scan.quotient_expression == "Q_JX_ws = J_f2_ws / J_X_ws"
     assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_power == 1
     assert scan.canonical_j_lift_bridge_scan.quotient_first_failure_coeff == sp.Rational(128, 85)
+    assert scan.canonical_j_lift_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert (
+        scan.canonical_j_lift_bridge_scan.quotient_named_gg_modular_equation_scan.benchmark_name
+        == "gollnitz_gordon_normalized"
+    )
+    assert scan.canonical_j_lift_bridge_scan.quotient_eta_scans is not None
+    assert len(scan.canonical_j_lift_bridge_scan.quotient_eta_scans) == 3
+    assert all(scan.relation is None for scan in scan.canonical_j_lift_bridge_scan.quotient_eta_scans)
+    assert scan.canonical_j_lift_bridge_scan.quotient_modular_unit_eta_scans is not None
+    assert len(scan.canonical_j_lift_bridge_scan.quotient_modular_unit_eta_scans) == 9
+    assert all(
+        scan.relation is None
+        for scan in scan.canonical_j_lift_bridge_scan.quotient_modular_unit_eta_scans
+    )
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_label == "K_JX_ws"
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_expression == (
+        "K_JX_ws = (Q_JX_ws - 1) / (128/85*t^1)"
+    )
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_named_gg_modular_equation_scan is not None
+    assert (
+        scan.canonical_j_lift_bridge_scan.quotient_followup_named_gg_modular_equation_scan.benchmark_name
+        == "gollnitz_gordon_normalized"
+    )
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_eta_scans is not None
+    assert len(scan.canonical_j_lift_bridge_scan.quotient_followup_eta_scans) == 3
+    assert all(
+        scan.relation is None for scan in scan.canonical_j_lift_bridge_scan.quotient_followup_eta_scans
+    )
+    assert scan.canonical_j_lift_bridge_scan.quotient_followup_modular_unit_eta_scans is not None
+    assert len(scan.canonical_j_lift_bridge_scan.quotient_followup_modular_unit_eta_scans) == 9
+    assert all(
+        scan.relation is None
+        for scan in scan.canonical_j_lift_bridge_scan.quotient_followup_modular_unit_eta_scans
+    )
+    assert scan.alternate_anchor_canonical_j_coordinate_label == "J_X15_ws"
+    assert scan.alternate_anchor_canonical_j_coordinate_expression == (
+        "J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)"
+    )
+    assert scan.alternate_anchor_canonical_j_coordinate_bridge_expression == (
+        "3375*J_X15_ws*G_X_ws^2 - (16*G_X_ws - 1)^3 = 0"
+    )
+    assert scan.alternate_anchor_canonical_j_coordinate_first_failure_power == 1
+    assert scan.alternate_anchor_canonical_j_coordinate_first_failure_coeff == sp.Rational(24, 5)
+    assert scan.canonical_j_alt_lift_bridge_scan is not None
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_label == "D_JX15_ws"
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_expression == "D_JX15_ws = J_f2_ws - J_X15_ws"
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_first_failure_power == 3
+    assert scan.canonical_j_alt_lift_bridge_scan.difference_first_failure_coeff == sp.Rational(-576, 5)
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_label == "Q_JX15_ws"
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_expression == "Q_JX15_ws = J_f2_ws / J_X15_ws"
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_first_failure_power == 3
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_first_failure_coeff == sp.Rational(-576, 5)
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_named_gg_modular_equation_scan is not None
+    assert (
+        scan.canonical_j_alt_lift_bridge_scan.quotient_named_gg_modular_equation_scan.benchmark_name
+        == "gollnitz_gordon_normalized"
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_eta_scans is not None
+    assert len(scan.canonical_j_alt_lift_bridge_scan.quotient_eta_scans) == 3
+    assert all(scan.relation is None for scan in scan.canonical_j_alt_lift_bridge_scan.quotient_eta_scans)
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_modular_unit_eta_scans is not None
+    assert len(scan.canonical_j_alt_lift_bridge_scan.quotient_modular_unit_eta_scans) == 9
+    assert all(
+        scan.relation is None
+        for scan in scan.canonical_j_alt_lift_bridge_scan.quotient_modular_unit_eta_scans
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_label == "K_JX15_ws"
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_expression == (
+        "K_JX15_ws = (Q_JX15_ws - 1) / (-576/5*t^3)"
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_named_gg_modular_equation_scan is not None
+    assert (
+        scan.canonical_j_alt_lift_bridge_scan.quotient_followup_named_gg_modular_equation_scan.benchmark_name
+        == "gollnitz_gordon_normalized"
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_eta_scans is not None
+    assert len(scan.canonical_j_alt_lift_bridge_scan.quotient_followup_eta_scans) == 3
+    assert all(
+        scan.relation is None for scan in scan.canonical_j_alt_lift_bridge_scan.quotient_followup_eta_scans
+    )
+    assert scan.canonical_j_alt_lift_bridge_scan.quotient_followup_modular_unit_eta_scans is not None
+    assert len(scan.canonical_j_alt_lift_bridge_scan.quotient_followup_modular_unit_eta_scans) == 9
+    assert all(
+        scan.relation is None
+        for scan in scan.canonical_j_alt_lift_bridge_scan.quotient_followup_modular_unit_eta_scans
+    )
     assert scan.quotient_coordinate_template_scan.first_failure_power == 1
     assert scan.quotient_coordinate_template_scan.first_failure_coeff == 4
     assert not scan.quotient_coordinate_template_scan.self_polynomial_scan.hits

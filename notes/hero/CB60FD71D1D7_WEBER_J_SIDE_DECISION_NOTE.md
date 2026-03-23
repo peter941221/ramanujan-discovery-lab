@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Date: `2026-03-22`
+- Date: `2026-03-23`
 - Scope: compare the current one-coordinate Weber-facing lanes
   - canonical classical-Weber `j`-side lane
     `J_f2_ws = (16 - G_f2_ws)^3 / (3375*G_f2_ws)`
@@ -76,10 +76,47 @@ J/PB Bridge Status
    └─ Verdict: the same bridge boxes and named-GG boxes stay flat
 ```
 
+## Focused `J_f2_ws ↔ J_X_ws` Lift-Bridge Cross-Check
+
+```text
+J_f2_ws vs J_X_ws Lift-Bridge
+├─ Objects
+│  ├─ D_JX_ws = J_f2_ws - J_X_ws
+│  ├─ Q_JX_ws = J_f2_ws / J_X_ws
+│  └─ K_JX_ws = (Q_JX_ws - 1) / (128/85*t^1)   (hero gap-normalized follow-up)
+├─ Hero reading
+│  ├─ Q_JX_ws - 1 first fails at t^1 with coefficient 128/85
+│  └─ Bridge-box verdict: polynomial 0 / 3, fractional-linear 0 / 1
+└─ Named-GG modular-equation reading (focused order 16)
+   ├─ Q_JX_ws: 0 exact template hits; 0 direct/quotient/mixed prefix hits
+   └─ K_JX_ws: 0 exact template hits; 0 direct/quotient/mixed prefix hits
+```
+
+## Alternate Anchor `j`-Lift: `J_X15_ws`
+
+```text
+J_f2_ws vs J_X15_ws Alternate Lift-Bridge
+├─ Alternate anchor coordinate
+│  ├─ J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)
+│  └─ Hero first failure: J_X15_ws - 1 at t^1 with coefficient 24/5
+├─ Bridge objects
+│  ├─ D_JX15_ws = J_f2_ws - J_X15_ws
+│  ├─ Q_JX15_ws = J_f2_ws / J_X15_ws
+│  └─ K_JX15_ws = (Q_JX15_ws - 1) / (-576/5*t^3)   (hero gap-normalized follow-up)
+├─ Hero reading
+│  ├─ Q_JX15_ws - 1 first fails at t^3 with coefficient -576/5
+│  └─ Bridge-box verdict: polynomial 0 / 3, fractional-linear 0 / 1
+└─ Source-faithful verdict (focused order 16)
+   ├─ eta boxes: 0 hits (Q_JX15_ws and K_JX15_ws)
+   ├─ modular-unit / eta boxes: 0 hits (Q_JX15_ws and K_JX15_ws)
+   └─ named-GG modular-equation boxes: 0 hits (Q_JX15_ws and K_JX15_ws)
+```
+
 ## Reading
 
 - `G_X_ws` is still the cleanest positive-recognition anchor.
-- `J_X_ws` is now the cleanest `j`-side lift of that same anchor, but it still inherits the same template-driven origin.
+- `J_X_ws` is still the cleanest *template-lifted* `j`-side coordinate of that anchor, but it inherits the same template-driven origin.
+- The alternate signed lift `J_X15_ws` is materially closer to `J_f2_ws` on the hero side (the bridge quotient first breaks at `t^3`, not `t^1`).
 - `Q_PB_ws` is still the strongest structural bridge seam.
 - `J_f2_ws` now becomes the cleanest literature-facing next step.
 - The new bridge says `J_f2_ws` is not secretly the same object as the current `P/B` seam inside the first focused bridge and named-`GG` boxes.
@@ -103,9 +140,24 @@ Decision
 │  └─ J_f2_ws as the cleanest literature-facing comparison lane
 ├─ Mark Complete
 │  └─ the first focused J_f2_ws ↔ Q_PB_ws bridge pass and its nested follow-up
-└─ Do Next
+   └─ Do Next
    ├─ prefer a different named Weber coordinate or a different comparison bridge
    └─ do not blindly widen the same J/PB box again until a new source-faithful clue appears
+
+- Update (2026-03-23):
+  the focused named-`GG` modular-equation scan on the new lift-bridge quotient
+  `Q_JX_ws` (and its follow-up `K_JX_ws`) stays flat in the first theorem-shaped
+  boxes; the added eta / modular-unit boxes also stay flat, so `J_f2_ws` and
+  `J_X_ws` still look genuinely distinct in the source-faithful lane rather
+  than being a small named `GG` orbit disguise.
+
+- Update (2026-03-23):
+  the alternate anchor lift `J_X15_ws = (16*G_X_ws - 1)^3 / (3375*G_X_ws^2)`
+  is now a better comparator against `J_f2_ws` than `J_X_ws` in the
+  bridge-first sense: `Q_JX15_ws - 1` first breaks only at `t^3` (not `t^1`),
+  but the focused named-`GG` + eta + modular-unit boxes on `Q_JX15_ws` and
+  `K_JX15_ws` still stay flat, so this is a strong *alignment* clue without a
+  positive recognition hit yet.
 ```
 
 ## Why `J_f2_ws` Still Leads, But Not The Same Box
