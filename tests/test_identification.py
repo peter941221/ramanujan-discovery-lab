@@ -58,6 +58,7 @@ from ramanujan_discovery.identification import (
     scan_weber_class_invariant_bridge_box,
     scan_weber_p_class_invariant_box,
     _build_weber_j_pb_bridge_scan,
+    _build_weber_j_lift_pivot_bridge_scans,
     search_modular_unit_eta_relation,
     search_eta_quotient_relation,
     search_fractional_linear_relation,
@@ -3352,6 +3353,51 @@ def test_build_weber_j_pb_bridge_scan_skips_named_gg_lane_in_smoke_profile():
     assert scan.quotient_scan.normalized_followup is not None
     assert scan.quotient_followup_bridge_scan is not None
     assert scan.quotient_followup_bridge_scan.quotient_named_gg_modular_equation_scan is None
+
+
+def test_build_weber_j_lift_pivot_bridge_scans_reports_hero_gap_profile():
+    order = 24
+    hero_template = QCFTemplate(
+        numerator_scale=1,
+        numerator_q_shift=3,
+        numerator_q_step=3,
+        numerator_extra_scale=1,
+        numerator_extra_q_shift=6,
+        numerator_extra_q_step=6,
+        denominator_constant=1,
+        denominator_scale=1,
+        denominator_q_shift=3,
+        denominator_q_step=3,
+    ).normalized()
+    hero_series = continued_fraction_series_coeffs(hero_template, depth=40, order=order)
+
+    scans = _build_weber_j_lift_pivot_bridge_scans(
+        target_series=hero_series,
+        order=order,
+        max_abs_exponent=8,
+    )
+
+    by_label = {scan.quotient_label: scan for scan in scans}
+    assert "Q_JX15PB_ws" in by_label
+    assert by_label["Q_JX15PB_ws"].difference_expression == "D_JX15PB_ws = Q_PB_ws - J_X15_ws"
+    assert by_label["Q_JX15PB_ws"].quotient_expression == "Q_JX15PB_ws = Q_PB_ws / J_X15_ws"
+    assert "Q_JX15JPB_ws" in by_label
+    assert by_label["Q_JX15JPB_ws"].difference_expression == "D_JX15JPB_ws = Q_JPB_ws - Q_JX15_ws"
+    assert by_label["Q_JX15JPB_ws"].quotient_expression == "Q_JX15JPB_ws = Q_JPB_ws / Q_JX15_ws"
+    assert "Q_JX15XKJ_ws" in by_label
+    assert by_label["Q_JX15XKJ_ws"].difference_expression == "D_JX15XKJ_ws = Q_XKJ_ws - Q_JX15_ws"
+    assert by_label["Q_JX15XKJ_ws"].quotient_expression == "Q_JX15XKJ_ws = Q_XKJ_ws / Q_JX15_ws"
+    assert by_label["Q_JX15XKJ_ws"].quotient_first_failure_power is not None
+    assert by_label["Q_JX15XKJ_ws"].quotient_first_failure_coeff is not None
+
+    assert (
+        _build_weber_j_lift_pivot_bridge_scans(
+            target_series=hero_series,
+            order=order,
+            max_abs_exponent=4,
+        )
+        == ()
+    )
 
 
 def test_append_named_gg_bridge_lines_formats_hx_followup_prefix():

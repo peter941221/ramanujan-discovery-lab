@@ -112,6 +112,24 @@ J_f2_ws vs J_X15_ws Alternate Lift-Bridge
    └─ named-GG modular-equation boxes: 0 hits (Q_JX15_ws and K_JX15_ws)
 ```
 
+## Pivot Rails Around `Q_JX15_ws`
+
+```text
+Q_JX15 Pivot Bridges (hero order 24)
+├─ J_X15_ws ↔ Q_PB_ws
+│  ├─ D_JX15PB_ws = Q_PB_ws - J_X15_ws
+│  ├─ Q_JX15PB_ws = Q_PB_ws / J_X15_ws
+│  └─ Hero first failure: Q_JX15PB_ws - 1 at t^1 with coefficient -24/5 (0 hits in eta / modular-unit / named-GG)
+├─ Q_JX15_ws ↔ Q_JPB_ws
+│  ├─ D_JX15JPB_ws = Q_JPB_ws - Q_JX15_ws
+│  ├─ Q_JX15JPB_ws = Q_JPB_ws / Q_JX15_ws
+│  └─ Hero first failure: Q_JX15JPB_ws - 1 at t^1 with coefficient -24/5 (0 hits in eta / modular-unit / named-GG)
+└─ Q_JX15_ws ↔ Q_XKJ_ws
+   ├─ D_JX15XKJ_ws = Q_XKJ_ws - Q_JX15_ws
+   ├─ Q_JX15XKJ_ws = Q_XKJ_ws / Q_JX15_ws
+   └─ Hero first failure: Q_JX15XKJ_ws - 1 at t^1 with coefficient -97/30 (0 hits in eta / modular-unit / named-GG)
+```
+
 ## Reading
 
 - `G_X_ws` is still the cleanest positive-recognition anchor.
@@ -158,6 +176,13 @@ Decision
   but the focused named-`GG` + eta + modular-unit boxes on `Q_JX15_ws` and
   `K_JX15_ws` still stay flat, so this is a strong *alignment* clue without a
   positive recognition hit yet.
+
+- Update (2026-03-23):
+  added three pivot rails to compare `Q_JX15_ws` back to the strongest local seams
+  (`Q_PB_ws` and `Q_XKJ_ws`) and to the completed `J/PB` quotient `Q_JPB_ws`.
+  All three pivots break immediately at `t^1` and stay flat in the same focused
+  eta / modular-unit / named-`GG` boxes, so this still reads as a “tighter
+  alignment lens” rather than a positive recognition.
 ```
 
 ## Why `J_f2_ws` Still Leads, But Not The Same Box

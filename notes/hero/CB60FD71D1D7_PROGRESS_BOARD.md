@@ -242,6 +242,11 @@ Literature status
   Reading: `J_f2_ws` remains the best literature-facing Weber lane, but the
   easiest "maybe it is just the P/B seam in disguise" explanation has now been
   tested once and stayed flat.
+  The new `Q_JX15_ws` pivot rails now also compare that tighter lift-bridge quotient
+  back to the strongest local seams:
+  `Q_JX15PB_ws` and `Q_JX15JPB_ws` first fail at `t^1` with coefficient `-24/5`,
+  while `Q_JX15XKJ_ws` first fails at `t^1` with coefficient `-97/30`.
+  All three pivots stay flat in the same focused eta / modular-unit / named-`GG` boxes.
 
 ### B. `GG` quotient-coordinate obstruction
 

@@ -397,6 +397,7 @@ class TailFamilySourceEtaSample:
     weber_p_class_invariant_scan: WeberClassInvariantScan | None = None
     weber_residual_bridge_scan: WeberResidualBridgeScan | None = None
     weber_j_pb_bridge_scan: "ConstantOnePairBridgeScan | None" = None
+    weber_j_lift_pivot_bridge_scans: tuple[ConstantOnePairBridgeLiteScan, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -3725,6 +3726,13 @@ def scan_tail_family_source_eta_ladder(
                 moduli=powers,
                 max_abs_exponent=max_abs_exponent,
             )
+            weber_j_lift_pivot_bridge_scans = _build_weber_j_lift_pivot_bridge_scans(
+                target_series=current_series[:morton_scan_order],
+                order=morton_scan_order,
+                eta_levels=eta_levels,
+                moduli=powers,
+                max_abs_exponent=max_abs_exponent,
+            )
             samples.append(
                 TailFamilySourceEtaSample(
                     label=current_label,
@@ -3742,6 +3750,7 @@ def scan_tail_family_source_eta_ladder(
                     weber_p_class_invariant_scan=weber_p_class_invariant_scan,
                     weber_residual_bridge_scan=weber_residual_bridge_scan,
                     weber_j_pb_bridge_scan=weber_j_pb_bridge_scan,
+                    weber_j_lift_pivot_bridge_scans=weber_j_lift_pivot_bridge_scans,
                 )
             )
             if gap_depth == max_gap_depth:
@@ -7962,6 +7971,7 @@ def scan_weber_class_invariant_bridge_box(
     if max_abs_exponent > 4:
         focused_named_gg_order = min(order, 16)
         focused_named_gg_solve_order = min(focused_named_gg_order, 12)
+        lift_bridge_named_gg_supplemental_powers = focused_named_gg_supplemental_powers[:2]
         canonical_j_lift_bridge_scan = _scan_constant_one_series_pair_bridge_lite(
             left_label=anchor_canonical_j_coordinate_scan.label,
             left_series=anchor_canonical_j_coordinate_series,
@@ -8000,7 +8010,7 @@ def scan_weber_class_invariant_bridge_box(
             named_gg_degree_values=(1, 2),
             named_gg_max_abs_exponent=max_abs_exponent,
             named_gg_solve_order=focused_named_gg_solve_order,
-            named_gg_supplemental_powers=(),
+            named_gg_supplemental_powers=lift_bridge_named_gg_supplemental_powers,
             named_gg_include_weighted_coordinate_diagnostics=False,
             quotient_followup_label="K_JX15_ws",
         )
@@ -8431,6 +8441,224 @@ def _build_weber_j_pb_bridge_scan(
         nested_quotient_followup_named_gg_descendant_focus_max_abs_exponent=2,
         named_gg_include_weighted_coordinate_diagnostics=False,
     )
+
+
+def _build_weber_j_lift_pivot_bridge_scans(
+    *,
+    target_series: Series,
+    order: int,
+    eta_levels: tuple[int, ...] = (1, 2, 4),
+    moduli: tuple[int, ...] = (2, 3, 4),
+    max_abs_exponent: int = 8,
+) -> tuple[ConstantOnePairBridgeLiteScan, ...]:
+    """Focused cross-rail comparisons using the `Q_JX15_ws` lift-bridge quotient as a pivot.
+
+    Motivation (analogy): `Q_JX15_ws` is a tighter “lens” between two `j`-side lifts; this
+    function checks whether that lens is just a thin coating on top of other already-tracked
+    Weber seams (the `P/B` seam or the nested anchor seam) without widening anonymous boxes.
+    """
+
+    if order < 2:
+        return ()
+    if max_abs_exponent <= 4:
+        return ()
+    if len(target_series) < order:
+        raise ValueError("target_series is shorter than requested order")
+
+    g_coordinate_series = _normalized_weber_g_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    p_coordinate_series = _normalized_weber_p_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if g_coordinate_series is None or p_coordinate_series is None:
+        return ()
+
+    g_template_series = _normalized_weber_g_template_series(order=order)
+    p_template_series = _normalized_weber_p_template_series(order=order)
+    g_correction_series = series_div(g_coordinate_series, g_template_series)
+    p_correction_series = series_div(p_coordinate_series, p_template_series)
+    classical_product_coordinate_series = series_mul(g_correction_series, p_correction_series)
+
+    canonical_j_numerator_series = series_pow(
+        [
+            sp.simplify((sp.Integer(16) if index == 0 else sp.Integer(0)) - value)
+            for index, value in enumerate(classical_product_coordinate_series)
+        ],
+        3,
+    )
+    canonical_j_coordinate_series = series_div(
+        canonical_j_numerator_series,
+        [sp.simplify(3375 * value) for value in classical_product_coordinate_series],
+    )
+
+    quotient_coordinate_template_series = series_div(
+        [sp.Integer(1)] + [sp.Integer(0) for _ in range(order - 1)],
+        series_pow(g_correction_series, 2),
+    )
+
+    alternate_anchor_canonical_j_coordinate_series = series_div(
+        series_pow(
+            [
+                sp.simplify(
+                    (sp.Integer(16) * value)
+                    - (sp.Integer(1) if index == 0 else sp.Integer(0))
+                )
+                for index, value in enumerate(quotient_coordinate_template_series)
+            ],
+            3,
+        ),
+        [sp.simplify(3375 * value) for value in series_pow(quotient_coordinate_template_series, 2)],
+    )
+
+    q_jx15_series = series_div(
+        canonical_j_coordinate_series,
+        alternate_anchor_canonical_j_coordinate_series,
+    )
+    _, q_jx15_first_failure_power, q_jx15_first_failure_coeff = _constant_one_residual_series(
+        target_series=q_jx15_series,
+        order=order,
+    )
+    if q_jx15_first_failure_power is None or q_jx15_first_failure_coeff is None:
+        return ()
+
+    gg_series = list(
+        _canonical_benchmark_series(
+            "gollnitz_gordon_normalized",
+            depth=order,
+            order=order,
+        )
+    )
+    focused_named_gg_order = min(order, 16)
+    focused_named_gg_solve_order = min(focused_named_gg_order, 12)
+
+    scans: list[ConstantOnePairBridgeLiteScan] = []
+
+    # (Step 3) Tie back to the Weber-Schlafli coordinate seam via the leading-normalized `Q_PB_ws`.
+    p_ws_coordinate_series = _weber_schlafli_coordinate_series(
+        target_series=target_series,
+        order=order,
+    )
+    if p_ws_coordinate_series is not None:
+        b_ws_coordinate_series = _weber_companion_coordinate_series(
+            p_series=p_ws_coordinate_series,
+            order=order,
+        )
+        if b_ws_coordinate_series is not None:
+            p_leading_normalized_scan = _build_leading_normalized_coordinate_scan(
+                source_label="P_ws",
+                target_series=p_ws_coordinate_series,
+                order=order,
+                max_abs_exponent=min(max_abs_exponent, 4),
+                eta_levels=eta_levels,
+                moduli=moduli,
+            )
+            b_leading_normalized_scan = _build_leading_normalized_coordinate_scan(
+                source_label="B_ws",
+                target_series=b_ws_coordinate_series,
+                order=order,
+                max_abs_exponent=min(max_abs_exponent, 4),
+                eta_levels=eta_levels,
+                moduli=moduli,
+            )
+            if p_leading_normalized_scan is not None and b_leading_normalized_scan is not None:
+                q_pb_series = series_div(
+                    list(b_leading_normalized_scan.normalized_series),
+                    list(p_leading_normalized_scan.normalized_series),
+                )
+                scans.append(
+                    _scan_constant_one_series_pair_bridge_lite(
+                        left_label="J_X15_ws",
+                        left_series=alternate_anchor_canonical_j_coordinate_series,
+                        right_label="Q_PB_ws",
+                        right_series=q_pb_series,
+                        order=order,
+                        difference_label="D_JX15PB_ws",
+                        quotient_label="Q_JX15PB_ws",
+                        solve_order=min(order, 24),
+                        eta_levels=eta_levels,
+                        moduli=moduli,
+                        named_gg_benchmark_name="gollnitz_gordon_normalized",
+                        named_gg_series=gg_series,
+                        named_gg_order=focused_named_gg_order,
+                        named_gg_degree_values=(1, 2),
+                        named_gg_max_abs_exponent=max_abs_exponent,
+                        named_gg_solve_order=focused_named_gg_solve_order,
+                        named_gg_supplemental_powers=(),
+                        named_gg_include_weighted_coordinate_diagnostics=False,
+                        quotient_followup_label="K_JX15PB_ws",
+                    )
+                )
+
+                q_jpb_series = series_div(
+                    q_pb_series,
+                    canonical_j_coordinate_series,
+                )
+                scans.append(
+                    _scan_constant_one_series_pair_bridge_lite(
+                        left_label="Q_JX15_ws",
+                        left_series=q_jx15_series,
+                        right_label="Q_JPB_ws",
+                        right_series=q_jpb_series,
+                        order=order,
+                        difference_label="D_JX15JPB_ws",
+                        quotient_label="Q_JX15JPB_ws",
+                        solve_order=min(order, 24),
+                        eta_levels=eta_levels,
+                        moduli=moduli,
+                        named_gg_benchmark_name="gollnitz_gordon_normalized",
+                        named_gg_series=gg_series,
+                        named_gg_order=focused_named_gg_order,
+                        named_gg_degree_values=(1, 2),
+                        named_gg_max_abs_exponent=max_abs_exponent,
+                        named_gg_solve_order=focused_named_gg_solve_order,
+                        named_gg_supplemental_powers=(),
+                        named_gg_include_weighted_coordinate_diagnostics=False,
+                        quotient_followup_label="K_JX15JPB_ws",
+                    )
+                )
+
+    # (Step 1) Compare against the nested anchor seam `Q_XKJ_ws` (defined by `K_XJ_ws / G_X_ws`).
+    q_xj_series = series_div(
+        canonical_j_coordinate_series,
+        quotient_coordinate_template_series,
+    )
+    k_xj_series = _normalized_constant_one_followup_series(
+        target_series=q_xj_series,
+        order=order,
+    )
+    if k_xj_series is not None:
+        q_xkj_series = series_div(
+            k_xj_series,
+            quotient_coordinate_template_series,
+        )
+        scans.append(
+            _scan_constant_one_series_pair_bridge_lite(
+                left_label="Q_JX15_ws",
+                left_series=q_jx15_series,
+                right_label="Q_XKJ_ws",
+                right_series=q_xkj_series,
+                order=order,
+                difference_label="D_JX15XKJ_ws",
+                quotient_label="Q_JX15XKJ_ws",
+                solve_order=min(order, 24),
+                eta_levels=eta_levels,
+                moduli=moduli,
+                named_gg_benchmark_name="gollnitz_gordon_normalized",
+                named_gg_series=gg_series,
+                named_gg_order=focused_named_gg_order,
+                named_gg_degree_values=(1, 2),
+                named_gg_max_abs_exponent=max_abs_exponent,
+                named_gg_solve_order=focused_named_gg_solve_order,
+                named_gg_supplemental_powers=(),
+                named_gg_include_weighted_coordinate_diagnostics=False,
+                quotient_followup_label="K_JX15XKJ_ws",
+            )
+        )
+
+    return tuple(scans)
 
 
 def scan_morton_periodic_point_box(
@@ -16211,6 +16439,120 @@ def build_candidate_tail_family_note(
                                     f"`{j_pb_nested_bridge.quotient_label}`"
                                 ),
                                 gg_scan=j_pb_nested_bridge.quotient_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
+                            )
+                if sample.weber_j_lift_pivot_bridge_scans:
+                    pivot_prefix = "Canonical Weber `j`-side pivot bridge"
+                    for pivot_bridge in sample.weber_j_lift_pivot_bridge_scans:
+                        lines.append(
+                            f"- {pivot_prefix} difference `{pivot_bridge.difference_label}`: "
+                            f"`{pivot_bridge.difference_expression}`."
+                        )
+                        if (
+                            pivot_bridge.difference_first_failure_power is None
+                            or pivot_bridge.difference_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- {pivot_prefix} difference verdict: matches `0` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- {pivot_prefix} difference verdict: first fails at "
+                                f"`{series_symbol}^{pivot_bridge.difference_first_failure_power}` with coefficient "
+                                f"`{_format_expr(pivot_bridge.difference_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- {pivot_prefix} quotient `{pivot_bridge.quotient_label}`: "
+                            f"`{pivot_bridge.quotient_expression}`."
+                        )
+                        if (
+                            pivot_bridge.quotient_first_failure_power is None
+                            or pivot_bridge.quotient_first_failure_coeff is None
+                        ):
+                            lines.append(
+                                f"- {pivot_prefix} quotient `{pivot_bridge.quotient_label}`: "
+                                "matches `1` through the checked truncation."
+                            )
+                        else:
+                            lines.append(
+                                f"- {pivot_prefix} quotient `{pivot_bridge.quotient_label}`: "
+                                f"`{pivot_bridge.quotient_label} - 1` first fails at "
+                                f"`{series_symbol}^{pivot_bridge.quotient_first_failure_power}` with coefficient "
+                                f"`{_format_expr(pivot_bridge.quotient_first_failure_coeff)}`."
+                            )
+                        lines.append(
+                            f"- {pivot_prefix} polynomial boxes: "
+                            f"`{sum(1 for scan in pivot_bridge.polynomial_scans if scan.relation is not None)}` / "
+                            f"`{len(pivot_bridge.polynomial_scans)}` hit boxes."
+                        )
+                        lines.append(
+                            f"- {pivot_prefix} fractional-linear box: "
+                            f"`{1 if pivot_bridge.fractional_linear_relation is not None else 0}` / `1` hit boxes."
+                        )
+                        if pivot_bridge.quotient_eta_scans is not None:
+                            pivot_quotient_eta_hit_count = sum(
+                                1 for scan in pivot_bridge.quotient_eta_scans if scan.relation is not None
+                            )
+                            lines.append(
+                                f"- {pivot_prefix} quotient eta templates: "
+                                f"`{pivot_quotient_eta_hit_count}` / `{len(pivot_bridge.quotient_eta_scans)}` hit boxes."
+                            )
+                        if pivot_bridge.quotient_modular_unit_eta_scans is not None:
+                            pivot_quotient_mu_eta_hit_count = sum(
+                                1
+                                for scan in pivot_bridge.quotient_modular_unit_eta_scans
+                                if scan.relation is not None
+                            )
+                            lines.append(
+                                f"- {pivot_prefix} quotient modular-unit / eta templates: "
+                                f"`{pivot_quotient_mu_eta_hit_count}` / `{len(pivot_bridge.quotient_modular_unit_eta_scans)}` hit boxes."
+                            )
+                        if pivot_bridge.quotient_named_gg_modular_equation_scan is not None:
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    f"{pivot_prefix} quotient "
+                                    f"`{pivot_bridge.quotient_label}`"
+                                ),
+                                gg_scan=pivot_bridge.quotient_named_gg_modular_equation_scan,
+                                series_symbol=series_symbol,
+                            )
+                        if (
+                            pivot_bridge.quotient_followup_named_gg_modular_equation_scan is not None
+                            and pivot_bridge.quotient_followup_label is not None
+                            and pivot_bridge.quotient_followup_expression is not None
+                        ):
+                            lines.append(
+                                f"- {pivot_prefix} quotient normalized follow-up `{pivot_bridge.quotient_followup_label}`: "
+                                f"`{pivot_bridge.quotient_followup_expression}`."
+                            )
+                            if pivot_bridge.quotient_followup_eta_scans is not None:
+                                pivot_followup_eta_hit_count = sum(
+                                    1
+                                    for scan in pivot_bridge.quotient_followup_eta_scans
+                                    if scan.relation is not None
+                                )
+                                lines.append(
+                                    f"- {pivot_prefix} quotient normalized follow-up `{pivot_bridge.quotient_followup_label}` eta templates: "
+                                    f"`{pivot_followup_eta_hit_count}` / `{len(pivot_bridge.quotient_followup_eta_scans)}` hit boxes."
+                                )
+                            if pivot_bridge.quotient_followup_modular_unit_eta_scans is not None:
+                                pivot_followup_mu_eta_hit_count = sum(
+                                    1
+                                    for scan in pivot_bridge.quotient_followup_modular_unit_eta_scans
+                                    if scan.relation is not None
+                                )
+                                lines.append(
+                                    f"- {pivot_prefix} quotient normalized follow-up `{pivot_bridge.quotient_followup_label}` modular-unit / eta templates: "
+                                    f"`{pivot_followup_mu_eta_hit_count}` / `{len(pivot_bridge.quotient_followup_modular_unit_eta_scans)}` hit boxes."
+                                )
+                            _append_named_gg_bridge_lines(
+                                lines,
+                                prefix=(
+                                    f"{pivot_prefix} quotient normalized follow-up "
+                                    f"`{pivot_bridge.quotient_followup_label}`"
+                                ),
+                                gg_scan=pivot_bridge.quotient_followup_named_gg_modular_equation_scan,
                                 series_symbol=series_symbol,
                             )
                 lines.append(
